@@ -1,0 +1,239 @@
+classDiagram
+
+    %% Core BE Classes
+    class Persona {
+        +Id : int
+        +Dni : int
+        +Nombre : string
+        +Apellido : string
+        +NombreCompleto : string
+        +TipoEntidad : string
+        +ToString() : string
+        +CompareTo(Persona) : int
+    }
+
+    class Usuario {
+        +Email : string
+        +Password : string
+        +FechaAlta : DateTime
+        +Activo : bool
+        +RolId : int
+        +RolAsignado : Rol
+        +Vehiculos : List_Vehiculo
+        +IntentosFallidos : int
+        +Clone() : object
+    }
+
+    class Rol {
+        +Id : int
+        +Nombre : string
+        +Descripcion : string
+        +Activo : bool
+        +ToString() : string
+    }
+
+    class Vehiculo {
+        +Id : int
+        +Patente : string
+        +Marca : string
+        +Modelo : string
+        +UsuarioId : int
+        +ToString() : string
+    }
+
+    class Alerta {
+        +Mensaje : string
+        +FechaHora : DateTime
+        +Nivel : string
+        +UsuarioGenerador : string
+    }
+
+    class IEntidadAcceso {
+        <<interface>>
+    }
+
+    class IVisitante {
+        <<interface>>
+    }
+
+    class IAdministrador {
+        <<interface>>
+    }
+
+    class IGestor_T {
+        <<interface>>
+    }
+
+    class IObservado {
+        <<interface>>
+    }
+
+    class IObserver {
+        <<interface>>
+    }
+
+    %% DAL Layer
+    class Conexion {
+        +connectionString : string
+        +Instancia : Conexion
+        +ObtenerConexion() : SqlConnection
+        +RUD(command, params) : int
+        +Leer(storedProcedure, params) : DataTable
+    }
+
+    class UsuarioDAL {
+        +Instancia : UsuarioDAL
+        +Listar() : List_Usuario
+        +BuscarPorEmail(email) : Usuario
+        +ExisteDni(dni) : bool
+        +Insertar(u) : int
+        +Registrar(u) : int
+        +Modificar(u) : int
+        +Eliminar(u) : int
+        +SumarIntentoFallido(email) : void
+        +ResetearIntentos(email) : void
+        +BloquearUsuario(email) : void
+    }
+
+    class RolDAL {
+        +Instancia : RolDAL
+        +Listar() : List_Rol
+        +Insertar(r) : int
+        +Modificar(r) : int
+        +Eliminar(id) : int
+    }
+
+    %% MPP Layer
+    class UsuarioMPP {
+        +Instancia : UsuarioMPP
+        +MapearUsuario(row) : Usuario
+        +MapearLista(dt) : List_Usuario
+    }
+
+    class RolMPP {
+        +Instancia : RolMPP
+        +MapearRol(row) : Rol
+        +MapearLista(dt) : List_Rol
+    }
+
+    %% BLL Layer
+    class UsuarioBLL {
+        +ListarTodos() : List_Usuario
+        +Guardar(u) : void
+        +Eliminar(id) : void
+        +Listar() : List_Usuario
+        +Eliminar(u) : void
+        +Insertar(u, pass) : void
+        +Modificar(u, newPass) : void
+        +Login(email, pass) : Usuario
+        +Registrar(u, pass) : void
+    }
+
+    class RolBLL {
+        +ListarTodos() : List_Rol
+        +Guardar(r) : void
+        +Eliminar(id) : void
+        +Listar() : List_Rol
+        +Modificar(r) : int
+    }
+
+    %% Services
+    class Encriptador {
+        +Hash(texto) : string
+    }
+
+    class LogManager {
+        +Instancia : LogManager
+        +RegistrarAlerta(a) : void
+    }
+
+    class Session {
+        +Instance : Session
+        +Usuario : Usuario
+        +FechaInicio : DateTime
+        +Login(u) : void
+        +Logout() : void
+        +IsLogged() : bool
+    }
+
+    %% UI Layer
+    class Login {
+        +visitanteBLL : IVisitante
+        +Principal_Load() : void
+        +ConfigurarFormulario() : void
+        +btnIniciarSesion_Click() : void
+        +btnRegistro_Click() : void
+        +ValidarEntradas(email, pass) : bool
+        +ProcesarLogin(email, pass) : void
+        +NavegarAlSistema(u) : void
+        +AbrirFormularioPrincipal(f) : void
+        +CerrarSesionYRestaurarLogin() : void
+        +MostrarRegistro() : void
+        +Registro_OnRegresar() : void
+    }
+
+    class UC_Registro {
+        +usuarioBLL : IVisitante
+        +rolBLL : RolBLL
+        +OnRegresar : event
+        +btnRegistrar_Click() : void
+        +btnVolver_Click() : void
+    }
+
+    %% Relationships
+    Persona <|-- Usuario
+    Persona <|.. IEntidadAcceso
+
+    Usuario --> Rol
+    Usuario --> Vehiculo : "tiene"
+
+    UsuarioBLL ..|> IVisitante
+    UsuarioBLL ..|> IAdministrador
+    UsuarioBLL ..|> IGestor_T
+
+    RolBLL ..|> IGestor_T
+
+    UsuarioDAL --> Conexion : "usa"
+    RolDAL --> Conexion : "usa"
+
+    UsuarioDAL --> UsuarioMPP : "usa"
+    RolDAL --> RolMPP : "usa"
+
+    UsuarioBLL --> UsuarioDAL : "usa"
+    RolBLL --> RolDAL : "usa"
+
+    UsuarioBLL --> Encriptador : "usa"
+
+    LogManager --> Alerta : "registra"
+
+    Login --> UsuarioBLL : "usa"
+    Login --> Session : "usa"
+    Login --> UC_Registro : "contiene"
+
+    UC_Registro --> UsuarioBLL : "usa"
+    UC_Registro --> RolBLL : "usa"
+
+    Session --> Usuario : "mantiene"
+
+    style Persona fill:#e1f5ff
+    style Usuario fill:#e1f5ff
+    style Rol fill:#e1f5ff
+    style Vehiculo fill:#e1f5ff
+    style Alerta fill:#e1f5ff
+
+    style Conexion fill:#fff3e0
+    style UsuarioDAL fill:#fff3e0
+    style RolDAL fill:#fff3e0
+
+    style UsuarioMPP fill:#f3e5f5
+    style RolMPP fill:#f3e5f5
+
+    style UsuarioBLL fill:#e8f5e9
+    style RolBLL fill:#e8f5e9
+
+    style Encriptador fill:#fce4ec
+    style LogManager fill:#fce4ec
+    style Session fill:#fce4ec
+
+    style Login fill:#fff9c4
+    style UC_Registro fill:#fff9c4
