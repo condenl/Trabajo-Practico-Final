@@ -50,6 +50,7 @@ version: 1.0
 ### T00. Documentos de Aspectos T√©cnicos
 - [T01. Arquitectura Base](#t01-arquitectura-base)
 - [T02. Gesti√≥n de Login/Logout y Gesti√≥n de Usuarios](#t02-gesti√≥n-de-loginlogout-y-gesti√≥n-de-usuarios)
+- [T03. Gesti√≥n de Encriptado](#t03-gesti√≥n-de-encriptado)
 - [T06a. Gesti√≥n de Bit√°cora](#t06a-gesti√≥n-de-bit√°cora)
 
 ---
@@ -2290,42 +2291,116 @@ Trabajo Practico Final/
 \
 ---
 
-# T06a. GESTI”N DE BIT¡CORA
+# T03. GESTI√ìN DE ENCRIPTADO
+
+## T03.1 Objetivo
+
+El objetivo de la gesti√≥n de encriptado es proteger los datos sensibles almacenados en el sistema mediante algoritmos criptogr√°ficos robustos. Esto asegura que la informaci√≥n confidencial (como contrase√±as) no sea legible en caso de acceso no autorizado a la base de datos, y permite el resguardo reversible de otros datos sensibles.
+
+## T03.2 Descripci√≥n Detallada de Funcionamiento
+
+### 2.1 Hashing de Datos Sensibles (SHA256)
+
+El sistema implementa una funci√≥n de **Hash unidireccional** utilizando el algoritmo **SHA256** para la protecci√≥n de datos sensibles (como contrase√±as). El proceso es el siguiente:
+1. El usuario ingresa el dato en texto plano.
+2. El sistema aplica SHA256 para generar una cadena hexadecimal de 64 caracteres.
+3. Se almacena el hash resultante, garantizando que el dato original sea irreversible.
+4. Para la validaci√≥n, se compara el hash del dato ingresado con el valor almacenado.
+
+### 2.2 Capa de Servicios
+
+La l√≥gica de protecci√≥n de datos est√° centralizada en la clase est√°tica `Encriptador` dentro del proyecto `Servicios`, permitiendo que cualquier capa de la aplicaci√≥n (principalmente BLL) acceda a esta funci√≥n de forma estandarizada.
+
+---
+
+## T03.3 Diagrama de Clases (Encriptado)
+
+```mermaid
+classDiagram
+    class Encriptador {
+        <<static>>
+        +string Hash(string texto)
+    }
+```
+
+---
+
+## T03.4 Diagrama de Secuencia (Generaci√≥n de Hash)
+
+```mermaid
+sequenceDiagram
+    participant BLL as L√≥gica de Negocio
+    participant Enc as Encriptador (Servicios)
+    participant Lib as System.Security.Cryptography
+
+    BLL->>Enc: Hash(texto)
+    Enc->>Lib: SHA256.Create()
+    Lib-->>Enc: shaInstance
+    Enc->>Lib: ComputeHash(bytes)
+    Lib-->>Enc: hashBytes
+    Enc->>Enc: Conversi√≥n a Hexadecimal
+    Enc-->>BLL: hashHex (64 caracteres)
+```
+
+---
+
+## T03.5 Dise√±o de Algoritmos
+
+### 5.1 Algoritmo: Generaci√≥n de Hash SHA256
+
+```
+ALGORITMO: GenerarHashSHA256
+
+ENTRADA: texto (string)
+SALIDA: hashHexadecimal (string)
+
+PROCESO:
+    1. Convertir texto a bytes (UTF-8)
+    2. Instanciar proveedor SHA256
+    3. Computar hash de los bytes
+    4. Convertir cada byte del hash a su representaci√≥n hexadecimal (2 caracteres)
+    5. Concatenar resultados
+    6. RETORNAR cadena resultante
+```
+
+---
+
+# T06a. GESTIN DE BITCORA
 
 ## T06a.1 Objetivo
 
-El objetivo del subsistema de bit·cora es registrar de manera autom·tica e Ìntegra todas las operaciones realizadas por los usuarios dentro del sistema. Esto permite garantizar la trazabilidad de las actividades, facilitar procesos de auditorÌa y mejorar la seguridad general de la aplicaciÛn mediante el seguimiento de acciones crÌticas.
+El objetivo del subsistema de bitÔøΩcora es registrar de manera automÔøΩtica e ÔøΩntegra todas las operaciones realizadas por los usuarios dentro del sistema. Esto permite garantizar la trazabilidad de las actividades, facilitar procesos de auditorÔøΩa y mejorar la seguridad general de la aplicaciÔøΩn mediante el seguimiento de acciones crÔøΩticas.
 
-## T06a.2 DescripciÛn Detallada de Funcionamiento
+## T06a.2 DescripciÔøΩn Detallada de Funcionamiento
 
-### 2.1 Registro Autom·tico mediante PatrÛn Observer
+### 2.1 Registro AutomÔøΩtico mediante PatrÔøΩn Observer
 
-El sistema utiliza el **PatrÛn de DiseÒo Observer** para desacoplar la lÛgica de negocio de la auditorÌa. Las clases de negocio (como UsuarioBLL) act˙an como sujetos observados (IObservado), notificando a la BitacoraBLL (IObserver) ante cada evento relevante.
+El sistema utiliza el **PatrÔøΩn de DiseÔøΩo Observer** para desacoplar la lÔøΩgica de negocio de la auditorÔøΩa. Las clases de negocio (como UsuarioBLL) actÔøΩan como sujetos observados (IObservado), notificando a la BitacoraBLL (IObserver) ante cada evento relevante.
 
-Cada registro de bit·cora incluye los siguientes datos mÌnimos:
+Cada registro de bitÔøΩcora incluye los siguientes datos mÔøΩnimos:
 - **Fecha y Hora**: Timestamp exacto del suceso.
-- **Usuario**: Identificador (email) del usuario que ejecutÛ la acciÛn.
-- **Actividad**: CategorÌa de la acciÛn (LOGIN, ALTA_USUARIO, MODIFICACION, BLOQUEO, etc.).
-- **InformaciÛn Asociada**: Detalle descriptivo del evento.
+- **Usuario**: Identificador (email) del usuario que ejecutÔøΩ la acciÔøΩn.
+- **Actividad**: CategorÔøΩa de la acciÔøΩn (LOGIN, ALTA_USUARIO, MODIFICACION, BLOQUEO, etc.).
+- **InformaciÔøΩn Asociada**: Detalle descriptivo del evento.
 
 ### 2.2 Arquitectura del Subsistema
 
 El subsistema sigue la arquitectura en 4 capas del proyecto:
 - **BE (Business Entities)**: Provee la clase EventoBitacora para el transporte de datos.
-- **BLL (Business Logic Layer)**: BitacoraBLL (Singleton) gestiona la lÛgica de auditorÌa y coordina con la DAL.
+- **BLL (Business Logic Layer)**: BitacoraBLL (Singleton) gestiona la lÔøΩgica de auditorÔøΩa y coordina con la DAL.
 - **DAL (Data Access Layer)**: BitacoraDAL gestiona la persistencia en SQL Server mediante procedimientos almacenados.
-- **UI (PresentaciÛn)**: El User Control UC_Bitacora ofrece la interfaz para que los administradores consulten los registros.
+- **UI (PresentaciÔøΩn)**: El User Control UC_Bitacora ofrece la interfaz para que los administradores consulten los registros.
 
-### 2.3 B˙squeda Avanzada y Filtrado Combinado
+### 2.3 BÔøΩsqueda Avanzada y Filtrado Combinado
 
-La interfaz de bit·cora permite realizar b˙squedas combinadas utilizando los siguientes criterios:
+La interfaz de bitÔøΩcora permite realizar bÔøΩsquedas combinadas utilizando los siguientes criterios:
 1. **Rango de Fechas**: Filtrado por fecha desde y hasta.
-2. **Usuario**: B˙squeda por email de usuario.
-3. **Actividad**: SelecciÛn de tipo de actividad mediante un control desplegable.
+2. **Usuario**: BÔøΩsqueda por email de usuario.
+3. **Actividad**: SelecciÔøΩn de tipo de actividad mediante un control desplegable.
 
-El procedimiento almacenado en la base de datos est· diseÒado para manejar par·metros opcionales, permitiendo combinar estos filtros de manera flexible (ej: ver todos los 'BLOQUEOS' del 'Usuario X' en la '⁄ltima Semana').\
+El procedimiento almacenado en la base de datos estÔøΩ diseÔøΩado para manejar parÔøΩmetros opcionales, permitiendo combinar estos filtros de manera flexible (ej: ver todos los 'BLOQUEOS' del 'Usuario X' en la 'ÔøΩltima Semana').\
 \
-## T06a.3 Diagrama de Clases (Bit·cora)
+## T06a.3 Diagrama de Clases (BitÔøΩcora)
 
 \\\mermaid
 classDiagram
@@ -2405,7 +2480,7 @@ sequenceDiagram
     BitaBLL-->>UI: List~EventoBitacora~
     UI->>UI: Mostrar en DataGridView
 \\\'n
-## T06a.6 Modelo de Datos (DER - Bit·cora)
+## T06a.6 Modelo de Datos (DER - BitÔøΩcora)
 
 \\\mermaid
 erDiagram
