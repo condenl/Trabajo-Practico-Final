@@ -10,5 +10,6 @@ namespace BE.Interfaces
     {
         Usuario Login(string email, string passwordSinHash);
         void Registrar(Usuario usuario, string passwordSinHash);
+        void Logout();
     }
 }

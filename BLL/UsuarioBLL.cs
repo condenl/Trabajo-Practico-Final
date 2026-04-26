@@ -129,6 +129,16 @@ namespace BLL
 
         public void Registrar(Usuario u, string pass) => Insertar(u, pass);
 
+        public void Logout()
+        {
+            if (Session.Instance.IsLogged())
+            {
+                string email = Session.Instance.Usuario.Email;
+                Session.Instance.Logout();
+                Notificar(new EventoBitacora(email, "LOGOUT", "Cierre de sesión exitoso."));
+            }
+        }
+
         private bool EsEmailValido(string email)
         {
             if (string.IsNullOrWhiteSpace(email)) return false;

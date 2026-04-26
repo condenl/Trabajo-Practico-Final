@@ -104,7 +104,7 @@ namespace UI
 
         private void CerrarSesionYRestaurarLogin()
         {
-            Session.Instance.Logout();
+            visitanteBLL.Logout();
 
             txtEmail.Clear();
             txtPassword.Clear();

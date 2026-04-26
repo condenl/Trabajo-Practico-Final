@@ -1,0 +1,56 @@
+---
+title: Mapa de Navegación - Interfaz de Usuario
+config:
+    theme: default
+---
+graph TD
+    Login["🔐 Login"]
+    MenuPrincipal["📋 Menú Principal<br/>(MDI - FormPrincipal)"]
+
+    MenuPrincipal -->|Visitante| GestAlt["👤 Gestión de Altas<br/>(Registros)"]
+    MenuPrincipal -->|Administrador| GestUsu["👥 Gestión de Usuarios<br/>(CRUD Completo)"]
+    MenuPrincipal -->|Administrador| GestRol["🏷️ Gestión de Roles"]
+    MenuPrincipal -->|Cualquier Rol| VerBit["📊 Ver Bitácora<br/>(Auditoría)"]
+
+    Login -->|Credenciales OK| MenuPrincipal
+    Login -->|Sin Cuenta| GestAlt
+
+    GestAlt -->|Crear Usuario| Registro["📝 Formulario Registro<br/>(UC_Registro)"]
+    Registro -->|Guardar| ValidEmail["✓ Validación Email"]
+    Registro -->|Guardar| ValidDNI["✓ Validación DNI"]
+    Registro -->|Guardar| HashPass["🔐 Encriptación Password"]
+    Registro -->|Éxito| BitacoraEvent1["📌 Evento: ALTA_USUARIO"]
+
+    GestUsu -->|Ver| ListaUsuarios["📋 Listar Usuarios"]
+    GestUsu -->|Editar| ModUser["✏️ Modificar Datos<br/>o Password"]
+    GestUsu -->|Eliminar| DelUser["🗑️ Eliminar Usuario"]
+
+    ModUser -->|Guardar| HashPass
+    ModUser -->|Éxito| BitacoraEvent2["📌 Evento: MODIFICACION"]
+
+    GestRol -->|Ver| ListaRoles["📋 Listar Roles"]
+    GestRol -->|Crear| CrearRol["➕ Crear Nuevo Rol"]
+    GestRol -->|Editar| ModRol["✏️ Editar Rol"]
+
+    VerBit -->|Ver| ListaBitacora["📊 Bitácora de Auditoría<br/>(UC_Bitacora)"]
+    ListaBitacora -->|Filtros| FiltroActividad["🔍 Por Actividad"]
+    ListaBitacora -->|Filtros| FiltroUsuario["🔍 Por Usuario"]
+    ListaBitacora -->|Filtros| FiltroFecha["🔍 Por Rango Fecha"]
+
+    BitacoraEvent1 -->|Registra| ListaBitacora
+    BitacoraEvent2 -->|Registra| ListaBitacora
+
+    MenuPrincipal -->|Opción| Salir["❌ Cerrar Sesión"]
+    Salir --> Login
+
+    style Login fill:#FF6B6B
+    style MenuPrincipal fill:#4ECDC4
+    style GestAlt fill:#FFE66D
+    style GestUsu fill:#FFE66D
+    style GestRol fill:#FFE66D
+    style VerBit fill:#FFE66D
+    style Registro fill:#A8E6CF
+    style ListaUsuarios fill:#A8E6CF
+    style ModUser fill:#A8E6CF
+    style ListaRoles fill:#A8E6CF
+    style ListaBitacora fill:#A8E6CF
