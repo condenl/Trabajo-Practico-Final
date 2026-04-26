@@ -50,6 +50,7 @@ version: 1.0
 ### T00. Documentos de Aspectos TÃ©cnicos
 - [T01. Arquitectura Base](#t01-arquitectura-base)
 - [T02. GestiÃ³n de Login/Logout y GestiÃ³n de Usuarios](#t02-gestiÃ³n-de-loginlogout-y-gestiÃ³n-de-usuarios)
+- [T06a. GestiÃ³n de BitÃ¡cora](#t06a-gestiÃ³n-de-bitÃ¡cora)
 
 ---
 
@@ -2286,3 +2287,135 @@ Trabajo Practico Final/
 *Fecha: [Fecha de GeneraciÃ³n]*  
 *Estudiante: [Nombre del Estudiante]*  
 *Docente: [Nombre del Docente]*
+\
+---
+
+# T06a. GESTIÓN DE BITÁCORA
+
+## T06a.1 Objetivo
+
+El objetivo del subsistema de bitácora es registrar de manera automática e íntegra todas las operaciones realizadas por los usuarios dentro del sistema. Esto permite garantizar la trazabilidad de las actividades, facilitar procesos de auditoría y mejorar la seguridad general de la aplicación mediante el seguimiento de acciones críticas.
+
+## T06a.2 Descripción Detallada de Funcionamiento
+
+### 2.1 Registro Automático mediante Patrón Observer
+
+El sistema utiliza el **Patrón de Diseño Observer** para desacoplar la lógica de negocio de la auditoría. Las clases de negocio (como UsuarioBLL) actúan como sujetos observados (IObservado), notificando a la BitacoraBLL (IObserver) ante cada evento relevante.
+
+Cada registro de bitácora incluye los siguientes datos mínimos:
+- **Fecha y Hora**: Timestamp exacto del suceso.
+- **Usuario**: Identificador (email) del usuario que ejecutó la acción.
+- **Actividad**: Categoría de la acción (LOGIN, ALTA_USUARIO, MODIFICACION, BLOQUEO, etc.).
+- **Información Asociada**: Detalle descriptivo del evento.
+
+### 2.2 Arquitectura del Subsistema
+
+El subsistema sigue la arquitectura en 4 capas del proyecto:
+- **BE (Business Entities)**: Provee la clase EventoBitacora para el transporte de datos.
+- **BLL (Business Logic Layer)**: BitacoraBLL (Singleton) gestiona la lógica de auditoría y coordina con la DAL.
+- **DAL (Data Access Layer)**: BitacoraDAL gestiona la persistencia en SQL Server mediante procedimientos almacenados.
+- **UI (Presentación)**: El User Control UC_Bitacora ofrece la interfaz para que los administradores consulten los registros.
+
+### 2.3 Búsqueda Avanzada y Filtrado Combinado
+
+La interfaz de bitácora permite realizar búsquedas combinadas utilizando los siguientes criterios:
+1. **Rango de Fechas**: Filtrado por fecha desde y hasta.
+2. **Usuario**: Búsqueda por email de usuario.
+3. **Actividad**: Selección de tipo de actividad mediante un control desplegable.
+
+El procedimiento almacenado en la base de datos está diseñado para manejar parámetros opcionales, permitiendo combinar estos filtros de manera flexible (ej: ver todos los 'BLOQUEOS' del 'Usuario X' en la 'Última Semana').\
+\
+## T06a.3 Diagrama de Clases (Bitácora)
+
+\\\mermaid
+classDiagram
+    class BitacoraBLL {
+        -BitacoraBLL _instancia
+        +static BitacoraBLL Instancia
+        +void Actualizar(EventoBitacora evento)
+        +List~EventoBitacora~ Consultar(DateTime? desde, DateTime? hasta, string usuario, string actividad)
+    }
+
+    class IObserver {
+        <<interface>>
+        +void Actualizar(EventoBitacora evento)
+    }
+
+    class BitacoraDAL {
+        -BitacoraDAL _instancia
+        +static BitacoraDAL Instancia
+        +void Insertar(EventoBitacora evento)
+        +List~EventoBitacora~ LeerFiltrado(DateTime? desde, DateTime? hasta, string usuario, string actividad)
+    }
+
+    class BitacoraMPP {
+        -BitacoraMPP _instancia
+        +static BitacoraMPP Instancia
+        +EventoBitacora Mapear(DataRow row)
+        +List~EventoBitacora~ MapearLista(DataTable dt)
+    }
+
+    class EventoBitacora {
+        +int Id
+        +DateTime FechaHora
+        +string UsuarioEmail
+        +string Actividad
+        +string InformacionAsociada
+    }
+
+    BitacoraBLL ..|> IObserver
+    BitacoraBLL --> BitacoraDAL : utiliza
+    BitacoraDAL --> BitacoraMPP : utiliza
+    BitacoraDAL ..> EventoBitacora : usa
+    BitacoraMPP ..> EventoBitacora : crea
+\\\'n
+## T06a.4 Diagrama de Secuencia (Registro de Evento)
+
+\\\mermaid
+sequenceDiagram
+    participant Usu as UsuarioBLL
+    participant BitaBLL as BitacoraBLL (IObserver)
+    participant BitaDAL as BitacoraDAL
+    participant BD as SQL Server
+
+    Usu->>BitaBLL: Notificar(evento)
+    BitaBLL->>BitaBLL: Actualizar(evento)
+    BitaBLL->>BitaDAL: Insertar(evento)
+    BitaDAL->>BD: EXEC sp_Bitacora_Insertar
+    BD-->>BitaDAL: OK
+    BitaDAL-->>BitaBLL: OK
+\\\'n
+## T06a.5 Diagrama de Secuencia (Consulta con Filtros)
+
+\\\mermaid
+sequenceDiagram
+    participant UI as UC_Bitacora
+    participant BitaBLL as BitacoraBLL
+    participant BitaDAL as BitacoraDAL
+    participant MPP as BitacoraMPP
+    participant BD as SQL Server
+
+    UI->>BitaBLL: Consultar(filtros)
+    BitaBLL->>BitaDAL: LeerFiltrado(filtros)
+    BitaDAL->>BD: EXEC sp_Bitacora_Consultar
+    BD-->>BitaDAL: DataTable
+    BitaDAL->>MPP: MapearLista(DataTable)
+    MPP-->>BitaDAL: List~EventoBitacora~
+    BitaDAL-->>BitaBLL: List~EventoBitacora~
+    BitaBLL-->>UI: List~EventoBitacora~
+    UI->>UI: Mostrar en DataGridView
+\\\'n
+## T06a.6 Modelo de Datos (DER - Bitácora)
+
+\\\mermaid
+erDiagram
+    USUARIO ||--o{ EVENTO_BITACORA : \genera\
+
+    EVENTO_BITACORA {
+        int id PK
+        datetime fecha_hora
+        string usuario_email FK
+        string actividad
+        string informacion_asociada
+    }
+\\\'n\
