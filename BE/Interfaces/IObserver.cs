@@ -4,6 +4,6 @@ namespace BE.Interfaces
 {
     public interface IObserver
     {
-        void Actualizar(Alerta alerta);
+        void Actualizar(EventoBitacora alerta);
     }
 }

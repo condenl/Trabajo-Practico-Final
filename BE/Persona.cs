@@ -3,7 +3,7 @@ using BE.Interfaces;
 
 namespace BE
 {
-    public abstract class Persona : IEntidadAcceso, IComparable<Persona>
+    public abstract class Persona : IEntidadBase, IComparable<Persona>
     {
         public int Id { get; set; }
         public int Dni { get; set; }

@@ -28,11 +28,12 @@ namespace Servicios
 
         private string rutaArchivo = "bitacora_alertas.log";
 
-        public void RegistrarAlerta(Alerta alerta)
+        public void RegistrarAlerta(EventoBitacora evento)
         {
             try
             {
-                string linea = $"{alerta.FechaHora:yyyy-MM-dd HH:mm:ss} | {alerta.Nivel} | {alerta.UsuarioGenerador} | {alerta.Mensaje}";
+                string linea = $"{evento.FechaHora:yyyy-MM-dd HH:mm:ss} | {evento.Actividad} | {evento.UsuarioEmail} | {evento.InformacionAsociada}";
+
                 using (FileStream fs = new FileStream(rutaArchivo, FileMode.Append, FileAccess.Write))
                 {
                     using (StreamWriter sw = new StreamWriter(fs))

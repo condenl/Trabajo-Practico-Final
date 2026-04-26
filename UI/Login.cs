@@ -3,9 +3,9 @@ using System.Windows.Forms;
 using BE;
 using BLL;
 using BE.Interfaces;
+using BE.Excepciones;
 using Servicios;
 using UI.UserControls;
-using static System.Collections.Specialized.BitVector32;
 
 namespace UI
 {
@@ -47,7 +47,11 @@ namespace UI
 
                 ProcesarLogin(email, password);
             }
-            catch (Exception ex)
+            catch (UsuarioBloqueadoException ex) 
+            {
+                MessageBox.Show(ex.Message, "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+            catch (Exception ex) 
             {
                 MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -80,11 +84,10 @@ namespace UI
 
         private void NavegarAlSistema(Usuario usuario)
         {
-
             MessageBox.Show($"Bienvenido: {usuario.Nombre} ({usuario.RolAsignado})", "Acceso Concedido", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            FormAdmin formAdmin = new FormAdmin(usuario);
+            FormPrincipal formPrincipal = new FormPrincipal(usuario);
 
-            AbrirFormularioPrincipal(formAdmin);
+            AbrirFormularioPrincipal(formPrincipal);
         }
 
         private void AbrirFormularioPrincipal(Form formularioDestino)
@@ -130,6 +133,14 @@ namespace UI
         private void Login_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnRegistro_Click_1(object sender, EventArgs e)
+        {
+            UC_Registro registro = new UC_Registro();
+            panel1.Controls.Clear();
+            panel1.Controls.Add(registro);
+            registro.Show();
         }
     }
 }

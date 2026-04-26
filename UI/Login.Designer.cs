@@ -30,14 +30,13 @@
         {
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btnRegistro = new System.Windows.Forms.Button();
             this.btnIniciarSesion = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnRegistro = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label4
@@ -60,27 +59,6 @@
             this.label3.Size = new System.Drawing.Size(408, 30);
             this.label3.TabIndex = 44;
             this.label3.Text = "SCA: SISTEMA DE CONTROL DE ACCESO";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(27, 374);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(262, 21);
-            this.label2.TabIndex = 43;
-            this.label2.Text = "Todavia no tenes una cuenta creada?";
-            // 
-            // btnRegistro
-            // 
-            this.btnRegistro.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegistro.Location = new System.Drawing.Point(28, 417);
-            this.btnRegistro.Name = "btnRegistro";
-            this.btnRegistro.Size = new System.Drawing.Size(184, 40);
-            this.btnRegistro.TabIndex = 37;
-            this.btnRegistro.Text = "Registrar";
-            this.btnRegistro.UseVisualStyleBackColor = true;
-            this.btnRegistro.Click += new System.EventHandler(this.btnRegistro_Click);
             // 
             // btnIniciarSesion
             // 
@@ -137,15 +115,25 @@
             this.panel1.Size = new System.Drawing.Size(745, 589);
             this.panel1.TabIndex = 36;
             // 
+            // btnRegistro
+            // 
+            this.btnRegistro.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegistro.Location = new System.Drawing.Point(116, 394);
+            this.btnRegistro.Name = "btnRegistro";
+            this.btnRegistro.Size = new System.Drawing.Size(133, 36);
+            this.btnRegistro.TabIndex = 46;
+            this.btnRegistro.Text = "Iniciar Sesion";
+            this.btnRegistro.UseVisualStyleBackColor = true;
+            this.btnRegistro.Click += new System.EventHandler(this.btnRegistro_Click_1);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1520, 623);
+            this.Controls.Add(this.btnRegistro);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.btnRegistro);
             this.Controls.Add(this.btnIniciarSesion);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtEmail);
@@ -164,13 +152,12 @@
 
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnRegistro;
         private System.Windows.Forms.Button btnIniciarSesion;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnRegistro;
     }
 }

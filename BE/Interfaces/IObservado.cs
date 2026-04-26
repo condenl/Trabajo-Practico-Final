@@ -6,6 +6,6 @@ namespace BE.Interfaces
     {
         void Suscribir(IObserver observador);
         void Desuscribir(IObserver observador);
-        void Notificar(Alerta alerta);
+        void Notificar(EventoBitacora alerta);
     }
 }

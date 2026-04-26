@@ -4,7 +4,7 @@ using BE.Interfaces;
 
 namespace BE
 {
-    public class Usuario : Persona, ICloneable
+    public class Usuario : Persona, IEntidadBase, ILogueable, ICloneable
     {
         public string Email { get; set; }
         public string Password { get; set; }
@@ -13,7 +13,6 @@ namespace BE
 
         public int RolId { get; set; }
         public Rol RolAsignado { get; set; }
-        public List<Vehiculo> Vehiculos { get; set; }
 
         public int IntentosFallidos { get; set; }
 
@@ -24,7 +23,6 @@ namespace BE
 
         public Usuario()
         {
-            Vehiculos = new List<Vehiculo>();
             Activo = true;
             FechaAlta = DateTime.Now;
             IntentosFallidos = 0;
@@ -32,10 +30,7 @@ namespace BE
 
         public object Clone()
         {
-            Usuario clon = (Usuario)this.MemberwiseClone();
-            clon.Vehiculos = new List<Vehiculo>(this.Vehiculos);
-
-            return clon;
+            return (Usuario)this.MemberwiseClone();
         }
     }
 }
