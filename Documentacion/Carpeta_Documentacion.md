@@ -1,28 +1,28 @@
 ﻿---
-title: Gestión de Usuarios y Auditoría - Documentación del Sistema
+title: Sistema de Gestion - Documentación del Sistema
 version: 1.0
 ---
 
 | | | | |
 | :--- | :--- | :--- | :--- |
-| **UNIVERSIDAD ABIERTA INTERAMERICANA**<br>**Facultad de Tecnología Informática** | **Materia:** Trabajo de Campo I / Trabajo de Diploma<br>**Alumno:** [Nombre del estáudiante]<br>**Localización:** [Localización]<br>**Comisión:** [Comisión] | **Docente:** [Nombre del Docente]<br>**Turno:** [Turno] | **Legajo:** [Número de Legajo]<br>**Año:** 2024<br>**Fecha:** [Fecha de Entrega] |
-| **Gestión DE USUARIOS Y Auditoría** | | | **Versión:** 1.0 |
+| **UAI - Facultad de Tecnología Informática** | **Materia:** Ingenieria de Software<br>**Alumno:** Perazzo, Martin Alejo y Conde Nicolas<br>**Localización:** Centro<br>**Comisión:** 3-A | **Docente:** Silva Juan Ignacio y Avila Javier Ramón<br>**Turno:** Noche | **Legajo:** -<br>**Año:** 2026<br>**Fecha:** 2026-04-30 |
+| **Sistema de Gestion** | | | **Versión:** 1.0 |
 | **DOCUMENTACIÓN DEL SISTEMA** | | | |
 
 ---
 
 ## Carátula
 
-### Gestión DE USUARIOS Y Auditoría
+### Sistema de Gestion
 ### Sistema de Administración con Auditoría Integrada
 
-**estáudiante:** [Nombre del estáudiante]  
-**Localización:** [Localización]  
-**Comisión:** [Comisión]  
-**Turno:** [Turno]  
-**Año de Cursada:** 2024  
-**Docente:** [Nombre del Docente]  
-**Fecha de Entrega:** [Fecha]
+**Alumno:** Perazzo, Martin Alejo y Conde Nicolas
+**Localización:** Centro  
+**Comisión:** 3-A  
+**Turno:** Noche  
+**Año de Cursada:** 2026  
+**Docente:** Silva Juan Ignacio y Avila Javier Ramón  
+**Fecha de Entrega:** 2026-04-30
 
 ---
 
@@ -30,7 +30,7 @@ version: 1.0
 
 | Fecha | Versión | Autor | Descripción |
 |:---|:---|:---|:---|
-| 2024-04-26 | 1.0 | Gemini CLI | Arquitectura Base (T01), Autenticación (T02), Encriptado (T03) y Bitácora (T06a) |
+| 2026-04-26 | 1.0 | Gemini CLI | Arquitectura Base (T01), Autenticación (T02), Encriptado (T03) y Bitácora (T06a) |
 | | | | |
 
 ---
@@ -58,7 +58,7 @@ version: 1.0
 
 ## G01. Propósito
 
-El sistema **Gestión de Usuarios y Auditoría** ha sido desarrollado con el propósito de:
+El sistema **Sistema de Gestion** ha sido desarrollado con el propósito de:
 
 - Proporcionar un mecanismo seguro y confiable de autenticación de usuarios
 - Centralizar la Gestión de usuarios y roles en una única plataforma
@@ -158,8 +158,8 @@ El sistema implementa las siguientes gestáiones dentro de su alcance:
 
 | Nombre | Descripción | Responsabilidad |
 |:---|:---|:---|
-| estáudiante | Desarrollador del proyecto | Análisis, diseño, implementación y documentación |
-| Docente | Supervisor del proyecto | Evaluación, retroalimentación y validación de artefactos |
+| Perazzo, Martin Alejo y Conde Nicolas | Desarrollador del proyecto | Análisis, diseño, implementación y documentación |
+| Silva Juan Ignacio y Avila Javier Ramón | Supervisor del proyecto | Evaluación, retroalimentación y validación de artefactos |
 
 ### 4.2 Usuarios del Sistema
 
@@ -2416,9 +2416,9 @@ Trabajo Practico Final/
 
 *Documento: Carpeta de Documentación - Trabajo Práctico Final UAI*  
 *Versión: 1.0*  
-*Fecha: [Fecha de Generación]*  
-*estáudiante: [Nombre del estáudiante]*  
-*Docente: [Nombre del Docente]*
+*Fecha: 2026-04-30*  
+*Alumno: Perazzo, Martin Alejo y Conde Nicolas*  
+*Docente: Silva Juan Ignacio y Avila Javier Ramón*
 \
 ---
 
