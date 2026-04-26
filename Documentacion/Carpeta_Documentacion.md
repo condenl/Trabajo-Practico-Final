@@ -1,20 +1,20 @@
 ﻿---
-title: Gestáión de Usuarios y auditoría - Documentación del Sistema
+title: Gestión de Usuarios y Auditoría - Documentación del Sistema
 version: 1.0
 ---
 
 | | | | |
 | :--- | :--- | :--- | :--- |
 | **UNIVERSIDAD ABIERTA INTERAMERICANA**<br>**Facultad de Tecnología Informática** | **Materia:** Trabajo de Campo I / Trabajo de Diploma<br>**Alumno:** [Nombre del estáudiante]<br>**Localización:** [Localización]<br>**Comisión:** [Comisión] | **Docente:** [Nombre del Docente]<br>**Turno:** [Turno] | **Legajo:** [Número de Legajo]<br>**Año:** 2024<br>**Fecha:** [Fecha de Entrega] |
-| **GestáIÓN DE USUARIOS Y auditoría** | | | **Versión:** 1.0 |
+| **Gestión DE USUARIOS Y Auditoría** | | | **Versión:** 1.0 |
 | **DOCUMENTACIÓN DEL SISTEMA** | | | |
 
 ---
 
 ## Carátula
 
-### GestáIÓN DE USUARIOS Y auditoría
-### Sistema de Administración con auditoría Integrada
+### Gestión DE USUARIOS Y Auditoría
+### Sistema de Administración con Auditoría Integrada
 
 **estáudiante:** [Nombre del estáudiante]  
 **Localización:** [Localización]  
@@ -30,7 +30,7 @@ version: 1.0
 
 | Fecha | Versión | Autor | Descripción |
 |:---|:---|:---|:---|
-| 2024-04-26 | 1.0 | Gemini CLI | Arquitectura Base (T01), Autenticación (T02), Encriptado (T03) y bitácora (T06a) |
+| 2024-04-26 | 1.0 | Gemini CLI | Arquitectura Base (T01), Autenticación (T02), Encriptado (T03) y Bitácora (T06a) |
 | | | | |
 
 ---
@@ -48,9 +48,9 @@ version: 1.0
 
 ### T00. Documentos de Aspectos Técnicos
 - [T01. Arquitectura Base](#t01-arquitectura-base)
-- [T02. Gestáión de Login/Logout y Gestáión de Usuarios](#t02-gestáión-de-loginlogout-y-gestáión-de-usuarios)
-- [T03. Gestáión de Encriptado](#t03-gestáión-de-encriptado)
-- [T06a. Gestáión de bitácora](#t06a-gestáión-de-bitácora)
+- [T02. GESTIÓN DE LOGIN/Logout y Gestión de Usuarios](#t02-Gestión-de-loginlogout-y-Gestión-de-usuarios)
+- [T03. Gestión de Encriptado](#t03-Gestión-de-encriptado)
+- [T06a. Gestión de Bitácora](#t06a-Gestión-de-Bitácora)
 
 ---
 
@@ -58,11 +58,11 @@ version: 1.0
 
 ## G01. Propósito
 
-El sistema **Gestáión de Usuarios y auditoría** ha sido desarrollado con el propósito de:
+El sistema **Gestión de Usuarios y Auditoría** ha sido desarrollado con el propósito de:
 
 - Proporcionar un mecanismo seguro y confiable de autenticación de usuarios
-- Centralizar la gestáión de usuarios y roles en una única plataforma
-- Implementar un sistema integral de auditoría y trazabilidad de operaciones
+- Centralizar la Gestión de usuarios y roles en una única plataforma
+- Implementar un sistema integral de Auditoría y trazabilidad de operaciones
 - Garantizar la integridad y seguridad de los datos mediante encriptación y validaciones
 - Facilitar la administración de permisos y roles de forma flexible y extensible
 - Mejorar la gobernanza y compliance mediante registros detallados de actividades
@@ -75,24 +75,24 @@ El sistema **Gestáión de Usuarios y auditoría** ha sido desarrollado con el p
 
 El sistema implementa las siguientes gestáiones dentro de su alcance:
 
-#### Gestáión de Autenticación
+#### Gestión de Autenticación
 - Login y logout de usuarios
 - Validación segura de credenciales
 - Bloqueo por intentos fallidos
 - Encriptación de contraseñas
 
-#### Gestáión de Usuarios
+#### Gestión de Usuarios
 - Alta de nuevos usuarios
 - Modificación de datos y contraseña
 - Baja lógica de usuarios
 - Listado y Búsqueda de usuarios
 
-#### Gestáión de Roles
+#### Gestión de Roles
 - Administración de roles disponibles
 - Asignación de roles a usuarios
 - Definición de responsabilidades por rol
 
-#### auditoría y bitácora
+#### Auditoría y Bitácora
 - Registro automático de todas las operaciones
 - Búsqueda y filtrado de eventos
 - Trazabilidad completa de actividades
@@ -100,15 +100,15 @@ El sistema implementa las siguientes gestáiones dentro de su alcance:
 ### 2.2 Características Sobresalientes
 
 - **Seguridad Robusta**: Encriptación de datos sensibles y validaciones exhaustivas
-- **auditoría Integrada**: Registro automático de todas las operaciones mediante patrón Observer
+- **Auditoría Integrada**: Registro automático de todas las operaciones mediante patrón Observer
 - **Arquitectura Escalable**: Diseño en capas que permite extensión sin modificar código existente
 - **Interfaz Intuitiva**: UI basada en MDI (Multiple Document Interface) para facilidad de uso
 
 ### 2.3 Límites del Alcance
 
-- El sistema no incluye gestáión de permisos granulares compostos (T04 será una extensión futura)
+- El sistema no incluye Gestión de permisos granulares compostos (T04 será una extensión futura)
 - No implementa múltiples idiomas en estáa versión (T05 será una extensión futura)
-- No incluye gestáión de backup automático (T07 será una extensión futura)
+- No incluye Gestión de backup automático (T07 será una extensión futura)
 - No implementa dígitos verificadores (T08 será una extensión futura)
 
 ---
@@ -119,9 +119,9 @@ El sistema implementa las siguientes gestáiones dentro de su alcance:
 
 - **Usuario**: Persona registrada en el sistema con credenciales de acceso
 - **Rol**: Perfil de usuario que determina sus permisos y acceso a funcionalidades
-- **bitácora**: Registro integral de todas las operaciones realizadas en el sistema
-- **Evento**: Acción registrada en la bitácora (login, alta usuario, modificación, etc.)
-- **auditoría**: Proceso de revisión y seguimiento de operaciones para garantizar integridad
+- **Bitácora**: Registro integral de todas las operaciones realizadas en el sistema
+- **Evento**: Acción registrada en la Bitácora (login, alta usuario, modificación, etc.)
+- **Auditoría**: Proceso de revisión y seguimiento de operaciones para garantizar integridad
 - **Visitante**: Usuario no autenticado que puede acceder solo a registro
 - **Administrador**: Usuario con acceso completo a todas las funcionalidades
 
@@ -166,8 +166,8 @@ El sistema implementa las siguientes gestáiones dentro de su alcance:
 | Nombre | Rol | Acceso |
 |:---|:---|:---|
 | Visitante | Visitante | Registro de nuevos usuarios |
-| Administrador del Sistema | Administrador | Gestáión completa de usuarios, roles, y auditoría |
-| Usuario Regular | Usuario | Visualización de bitácora de sus propias operaciones |
+| Administrador del Sistema | Administrador | Gestión completa de usuarios, roles, y Auditoría |
+| Usuario Regular | Usuario | Visualización de Bitácora de sus propias operaciones |
 
 ---
 
@@ -175,8 +175,8 @@ El sistema implementa las siguientes gestáiones dentro de su alcance:
 
 ### 5.1 Requisitos del Producto
 
-#### estáándares Aplicables
-- Cumplimiento de estáándares de seguridad y encriptación
+#### estándares Aplicables
+- Cumplimiento de estándares de seguridad y encriptación
 - Adherencia a principios SOLID y buenas prácticas de POO
 - Cumplimiento de arquitectura en capas de 4 niveles
 
@@ -189,8 +189,8 @@ El sistema implementa las siguientes gestáiones dentro de su alcance:
 
 #### Requisitos de Desempeño
 - Autenticación en menos de 1 segundo
-- Búsqueda en bitácora en menos de 2 segundos
-- Respuestáa de gestáión de usuarios en menos de 500ms
+- Búsqueda en Bitácora en menos de 2 segundos
+- Respuestáa de Gestión de usuarios en menos de 500ms
 
 #### Requisitos de Entorno
 - Visual Studio Community 2026 o superior para desarrollo
@@ -466,11 +466,11 @@ classDiagram
 **Responsabilidades - Conocer:**
 - Los datos de usuarios
 - Las reglas de validación de email y contraseña
-- El estáado de intentos fallidos de login
+- El estado de intentos fallidos de login
 
 #### Clase: BitacoraBLL
 **Responsabilidades - Hacer:**
-- Registrar eventos en la bitácora
+- Registrar eventos en la Bitácora
 - Notificar a observadores sobre nuevos eventos
 - Coordinar la persistencia de eventos
 
@@ -486,7 +486,7 @@ classDiagram
 **Responsabilidades - Conocer:**
 - Sus datos (email, contraseña, DNI, etc.)
 - Su rol asignado
-- Su estáado de actividad
+- Su estado de actividad
 
 ---
 
@@ -545,7 +545,7 @@ El modelo de datos cumple con:
 | id | int | PK, AI | Identificador único del rol |
 | nombre | varchar(100) | UK, NOT NULL | Nombre del rol (único) |
 | Descripción | varchar(500) | | Descripción de responsabilidades |
-| activo | bit | NOT NULL | estáado del rol (1=activo, 0=inactivo) |
+| activo | bit | NOT NULL | estado del rol (1=activo, 0=inactivo) |
 
 #### USUARIO
 **Propósito:** Almacenar la información de usuarios del sistema
@@ -559,17 +559,17 @@ El modelo de datos cumple con:
 | email | varchar(100) | UK, NOT NULL | Correo electrónico (único) |
 | password | varchar(256) | NOT NULL | Contraseña encriptada (hash) |
 | fecha_alta | datetime | NOT NULL | Fecha y hora de registro |
-| activo | bit | NOT NULL | estáado de la cuenta (1=activo, 0=inactivo) |
+| activo | bit | NOT NULL | estado de la cuenta (1=activo, 0=inactivo) |
 | rol_id | int | FK, NOT NULL | Referencias a ROL.id |
 | intentos_fallidos | int | NOT NULL | Contador de intentos fallidos de login |
 
 #### EVENTO_BITACORA
-**Propósito:** Registrar todas las operaciones realizadas en el sistema para auditoría
+**Propósito:** Registrar todas las operaciones realizadas en el sistema para Auditoría
 
 | Atributo | Tipo | Restáricción | Descripción |
 |:---|:---|:---|:---|
 | id | int | PK, AI | Identificador único del evento |
-| fecha_hora | datetime | NOT NULL | Timestamp del evento (UTC) |
+| fecha_hora | datetime | NOT NULL | timestamp del evento (UTC) |
 | usuario_email | varchar(100) | NOT NULL | Email del usuario que generó el evento |
 | actividad | varchar(50) | NOT NULL | Tipo de actividad (LOGIN, ALTA_USUARIO, MODIFICACION, ELIMINACION, etc.) |
 | informacion_asociada | varchar(500) | | Detalles adicionales del evento |
@@ -594,14 +594,14 @@ El modelo de datos cumple con:
 
 ## T01.1 Objetivo
 
-Documentar, diseñar e implementar la arquitectura base del sistema de gestáión de usuarios y auditoría, asegurando:
+Documentar, diseñar e implementar la arquitectura base del sistema de Gestión de usuarios y Auditoría, asegurando:
 
-- Una estáructura en capas que promueva separación de responsabilidades
+- Una estructura en capas que promueva separación de responsabilidades
 - Patrones de diseño que faciliten mantenibilidad y extensibilidad
 - Criterios de POO que aseguren código de calidad
 - Esquema de persistencia normalizado y eficiente
 - Navegación intuitiva en la interfaz de usuario
-- Trazabilidad completa de operaciones mediante auditoría integrada
+- Trazabilidad completa de operaciones mediante Auditoría integrada
 
 ---
 
@@ -616,14 +616,14 @@ El sistema implementa una arquitectura de **4 capas principales** más capas tra
 │  UI (Presentación)                                   │
 │  - Formularios MDI para múltiples ventanas           │
 │  - User Controls reutilizables                       │
-│  - Gestáión de eventos de usuario                     │
+│  - Gestión de eventos de usuario                     │
 └──────────────────────┬───────────────────────────────┘
                        │ Depende de
 ┌──────────────────────▼───────────────────────────────┐
 │  BLL (lógica de Negocio)                             │
 │  - Validaciones exhaustivas                          │
 │  - Reglas de negocio                                 │
-│  - Patrón Observer para auditoría                    │
+│  - Patrón Observer para Auditoría                    │
 │  - Orquestáación de operaciones                       │
 └──────────────────────┬───────────────────────────────┘
                        │ Depende de
@@ -682,8 +682,8 @@ Capas Transversales:
 
 | Patrón | Ubicación | Implementación | Beneficio |
 |:---|:---|:---|:---|
-| **Observer** | BLL/BitacoraBLL | UsuarioBLL implementa IObservado, BitacoraBLL implementa IObserver | Desacoplamiento de auditoría del flujo de negocio |
-| **Singleton** | DAL | UsuarioDAL, RolDAL, BitacoraDAL con instancia única | Gestáión de conexiones y recursos |
+| **Observer** | BLL/BitacoraBLL | UsuarioBLL implementa IObservado, BitacoraBLL implementa IObserver | Desacoplamiento de Auditoría del flujo de negocio |
+| **Singleton** | DAL | UsuarioDAL, RolDAL, BitacoraDAL con instancia única | Gestión de conexiones y recursos |
 | **Repository** | DAL | Encapsulación de lógica de acceso a datos | Abstracción del almacenamiento |
 | **DTO/Entity** | BE | Clases Usuario, Rol, EventoBitacora | Transferencia de datos entre capas |
 | **Facade** | BLL | BLL proporciona interfaz unificada | Simplificación de uso desde UI |
@@ -715,7 +715,7 @@ Capas Transversales:
 5. DAL construye comando SQL (INSERT/UPDATE/DELETE)
 6. DAL abre transacción
 7. DAL ejecuta comando
-8. DAL invoca auditoría mediante patrón Observer
+8. DAL invoca Auditoría mediante patrón Observer
 9. BitacoraBLL crea evento
 10. BitacoraDAL registra evento en BD
 11. DAL confirma transacción (COMMIT)
@@ -723,10 +723,10 @@ Capas Transversales:
 13. BLL retorna confirmación a UI
 ```
 
-### 2.5 Gestáión de Sesión
+### 2.5 Gestión de Sesión
 
 - La sesión se mantiene en memoria en UI
-- Al logout, se limpia la sesión y se registra evento en bitácora
+- Al logout, se limpia la sesión y se registra evento en Bitácora
 - Al cierre de aplicación, se valida integridad de BD (T08 - Futuro)
 
 ---
@@ -738,7 +738,7 @@ graph TD
     subgraph "Presentación (UI)"
         FormPrincipal["FormPrincipal<br/>(MDI Container)"]
         UCRegistro["UC_Registro<br/>(User Control)"]
-        UCbitácora["UC_Bitacora<br/>(User Control)"]
+        UCBitácora["UC_Bitacora<br/>(User Control)"]
         LoginForm["Login<br/>(Formulario)"]
     end
 
@@ -773,7 +773,7 @@ graph TD
     FormPrincipal -->|Invoca| BitacoraBLL
 
     UCRegistro -->|Invoca| UsuarioBLL
-    UCbitácora -->|Invoca| BitacoraBLL
+    UCBitácora -->|Invoca| BitacoraBLL
     LoginForm -->|Invoca| UsuarioBLL
 
     UsuarioBLL -->|Utiliza| Usuario
@@ -806,7 +806,7 @@ graph TD
 
     style FormPrincipal fill:#FF6B6B
     style UCRegistro fill:#FF6B6B
-    style UCbitácora fill:#FF6B6B
+    style UCBitácora fill:#FF6B6B
     style LoginForm fill:#FF6B6B
 
     style UsuarioBLL fill:#4ECDC4
@@ -875,10 +875,10 @@ graph TD
     Login["🔐 Login"]
     MenuPrincipal["📋 Menú Principal<br/>(MDI - FormPrincipal)"]
 
-    MenuPrincipal -->|Visitante| GestáAlt["👤 Gestáión de Altas<br/>(Registros)"]
-    MenuPrincipal -->|Administrador| GestáUsu["👥 Gestáión de Usuarios<br/>(CRUD Completo)"]
-    MenuPrincipal -->|Administrador| GestáRol["🏷️ Gestáión de Roles"]
-    MenuPrincipal -->|Cualquier Rol| VerBit["📊 Ver bitácora<br/>(auditoría)"]
+    MenuPrincipal -->|Visitante| GestáAlt["👤 Gestión de Altas<br/>(Registros)"]
+    MenuPrincipal -->|Administrador| GestáUsu["👥 Gestión de Usuarios<br/>(CRUD Completo)"]
+    MenuPrincipal -->|Administrador| GestáRol["🏷️ Gestión de Roles"]
+    MenuPrincipal -->|Cualquier Rol| VerBit["📊 Ver Bitácora<br/>(Auditoría)"]
 
     Login -->|Credenciales OK| MenuPrincipal
     Login -->|Sin Cuenta| GestáAlt
@@ -887,26 +887,26 @@ graph TD
     Registro -->|Guardar| ValidEmail["✓ Validación Email"]
     Registro -->|Guardar| ValidDNI["✓ Validación DNI"]
     Registro -->|Guardar| HashPass["🔐 Encriptación Password"]
-    Registro -->|Éxito| bitácoraEvent1["📌 Evento: ALTA_USUARIO"]
+    Registro -->|Éxito| BitácoraEvent1["📌 Evento: ALTA_USUARIO"]
 
     GestáUsu -->|Ver| ListaUsuarios["📋 Listar Usuarios"]
     GestáUsu -->|Editar| ModUser["✏️ Modificar Datos<br/>o Password"]
     GestáUsu -->|Eliminar| DelUser["🗑️ Eliminar Usuario"]
 
     ModUser -->|Guardar| HashPass
-    ModUser -->|Éxito| bitácoraEvent2["📌 Evento: MODIFICACION"]
+    ModUser -->|Éxito| BitácoraEvent2["📌 Evento: MODIFICACION"]
 
     GestáRol -->|Ver| ListaRoles["📋 Listar Roles"]
     GestáRol -->|Crear| CrearRol["➕ Crear Nuevo Rol"]
     GestáRol -->|Editar| ModRol["✏️ Editar Rol"]
 
-    VerBit -->|Ver| Listabitácora["📊 bitácora de auditoría<br/>(UC_Bitacora)"]
-    Listabitácora -->|Filtros| FiltroActividad["🔍 Por Actividad"]
-    Listabitácora -->|Filtros| FiltroUsuario["🔍 Por Usuario"]
-    Listabitácora -->|Filtros| FiltroFecha["🔍 Por Rango Fecha"]
+    VerBit -->|Ver| ListaBitácora["📊 Bitácora de Auditoría<br/>(UC_Bitacora)"]
+    ListaBitácora -->|Filtros| FiltroActividad["🔍 Por Actividad"]
+    ListaBitácora -->|Filtros| FiltroUsuario["🔍 Por Usuario"]
+    ListaBitácora -->|Filtros| FiltroFecha["🔍 Por Rango Fecha"]
 
-    bitácoraEvent1 -->|Registra| Listabitácora
-    bitácoraEvent2 -->|Registra| Listabitácora
+    BitácoraEvent1 -->|Registra| ListaBitácora
+    BitácoraEvent2 -->|Registra| ListaBitácora
 
     MenuPrincipal -->|Opción| Salir["❌ Cerrar Sesión"]
     Salir --> Login
@@ -921,7 +921,7 @@ graph TD
     style ListaUsuarios fill:#A8E6CF
     style ModUser fill:#A8E6CF
     style ListaRoles fill:#A8E6CF
-    style Listabitácora fill:#A8E6CF
+    style ListaBitácora fill:#A8E6CF
 ```
 
 ### Códigos de Navegación
@@ -930,10 +930,10 @@ graph TD
 |:---|:---|:---|:---|
 | **L001** | Login | Formulario de autenticación | Todos |
 | **P001** | FormPrincipal | Menú principal MDI | Autenticados |
-| **U001** | Gestáión de Altas | Registro de nuevos usuarios | Visitantes |
-| **U002** | Gestáión de Usuarios | ABM completo de usuarios | Administradores |
-| **R001** | Gestáión de Roles | Administración de roles | Administradores |
-| **A001** | bitácora de auditoría | Visualización de eventos | Todos los autenticados |
+| **U001** | Gestión de Altas | Registro de nuevos usuarios | Visitantes |
+| **U002** | Gestión de Usuarios | ABM completo de usuarios | Administradores |
+| **R001** | Gestión de Roles | Administración de roles | Administradores |
+| **A001** | Bitácora de Auditoría | Visualización de eventos | Todos los autenticados |
 
 ---
 
@@ -941,7 +941,7 @@ graph TD
 
 ### 6.1 Cohesión
 
-**Definición:** Grado en que los elementos de una clase estáán relacionados entre sí.
+**Definición:** Grado en que los elementos de una clase están relacionados entre sí.
 
 **Implementación:**
 
@@ -961,7 +961,7 @@ graph TD
   - Persona: Clase abstracta con atributos comunes
   - Usuario: Extiende Persona con propiedades específicas
 
-- **EventoBitacora**: Encapsula datos de auditoría sin comportamiento mixto
+- **EventoBitacora**: Encapsula datos de Auditoría sin comportamiento mixto
 
 **Ventajas:**
 - Código más mantenible y comprensible
@@ -1199,7 +1199,7 @@ public abstract class Persona
 
 - **Encriptación de Contraseñas**: Hash SHA256 no reversible
 - **Bloqueo por Intentos**: 5 intentos fallidos = bloqueo de cuenta
-- **auditoría Completa**: Todos los login (exitosos y fallidos) registrados
+- **Auditoría Completa**: Todos los login (exitosos y fallidos) registrados
 - **Manejo de Excepciones**: Excepciones específicas para distintos escenarios
 
 ---
@@ -1240,7 +1240,7 @@ La arquitectura implementada cumple exitosamente con:
 
 ✅ **Arquitectura en 4 capas bien definidas** separando Presentación, lógica, acceso a datos y persistencia
 
-✅ **Aplicación de patrones de diseño** (Observer para auditoría, Singleton para DAL, Repository para acceso)
+✅ **Aplicación de patrones de diseño** (Observer para Auditoría, Singleton para DAL, Repository para acceso)
 
 ✅ **Criterios de POO**: 
    - Cohesión: Clases con responsabilidad única
@@ -1249,9 +1249,9 @@ La arquitectura implementada cumple exitosamente con:
    - Extensibilidad: Fácil agregar nuevas funcionalidades
    - Encapsulamiento: Ocultamiento de detalles internos
 
-✅ **Seguridad integral**: Encriptación, validaciones exhaustivas, auditoría completa
+✅ **Seguridad integral**: Encriptación, validaciones exhaustivas, Auditoría completa
 
-✅ **Mantenibilidad**: Código modular, testáeable y documentado
+✅ **Mantenibilidad**: Código modular, testeable y documentado
 
 ✅ **Escalabilidad**: Fácil extender con nuevas funcionalidades sin modificar código existente
 
@@ -1259,17 +1259,17 @@ La arquitectura implementada cumple exitosamente con:
 
 ---
 
-# T02. GestáIÓN DE LOGIN/LOGOUT Y GestáIÓN DE USUARIOS
+# T02. GESTIÓN DE LOGIN/LOGOUT Y Gestión DE USUARIOS
 
 ## T02.1 Objetivo
 
-Documentar, diseñar e implementar el subsistema de autenticación, gestáión de sesiones y control de acceso que permite:
+Documentar, diseñar e implementar el subsistema de autenticación, Gestión de sesiones y control de acceso que permite:
 
 - **Autenticación Segura**: Verificación de identidad del usuario mediante credenciales (email y contraseña)
-- **Gestáión de Sesiones**: Mantener y controlar la sesión activa del usuario durante su permanencia en el sistema
+- **Gestión de Sesiones**: Mantener y controlar la sesión activa del usuario durante su permanencia en el sistema
 - **Control de Acceso**: Validar permisos basados en el rol asignado al usuario
 - **Política de Seguridad**: Implementar bloqueos por intentos fallidos y timeout de sesión
-- **Trazabilidad de Acceso**: Registrar todos los eventos de login, logout y cambios de permisos en la bitácora
+- **Trazabilidad de Acceso**: Registrar todos los eventos de login, logout y cambios de permisos en la Bitácora
 - **Arranque/Apagado Seguro**: Garantizar integridad del sistema en startup, operación y shutdown
 - **Patrón Singleton**: Asegurar instancia única y centralizada de sesión en toda la aplicación
 
@@ -1301,7 +1301,7 @@ INICIO: Usuario accede a la aplicación
    │  └─ SALIR (no revelar si email existe)
    │
    ├─ SI usuario existe:
-   │  ├─ Verificar si estáá activo (activo = 1)
+   │  ├─ Verificar si está activo (activo = 1)
    │  ├─ SI usuario inactivo:
    │  │  └─ Registrar evento: INTENTO_LOGIN_FALLIDO (usuario inactivo)
    │  │  └─ Mostrar: "Usuario inactivo. Contacte al administrador"
@@ -1359,7 +1359,7 @@ INICIO: Usuario accede a la aplicación
 - **Timeout Inactividad**: Sesión cierra si no hay actividad por 30 minutos
 - **Validación Email**: Formato RFC 5322 simplificado
 - **Validación Contraseña**: Se compara hash SHA256 con valor en BD
-- **auditoría**: Cada intento registrado (exitoso o fallido) en EVENTO_BITACORA
+- **Auditoría**: Cada intento registrado (exitoso o fallido) en EVENTO_BITACORA
 
 ### 2.2 Política de Logout
 
@@ -1369,14 +1369,14 @@ INICIO: Usuario accede a la aplicación
 INICIO: Usuario solicita logout
    ↓
 [Confirmación Usuario]
-   ├─ FormPrincipal muestára diálogo: "¿Desea cerrar sesión?"
+   ├─ FormPrincipal muestra diálogo: "¿Desea cerrar sesión?"
    ├─ SI usuario cancela → Continuar en aplicación → SALIR
    │
    ├─ SI usuario confirma:
    │  ├─ SessionManager.CerrarSesion()
    │  │  ├─ Obtener sesión activa
    │  │  ├─ Cambiar Sesion.Activa = false
-   │  │  ├─ estáablecer FechaCierre = DateTime.UtcNow
+   │  │  ├─ establecer FechaCierre = DateTime.UtcNow
    │  │  ├─ Registrar evento: LOGOUT (mediante BitacoraBLL)
    │  │  │
    │  │  ├─ Limpiar recursos:
@@ -1397,7 +1397,7 @@ INICIO: Usuario solicita logout
 
 - **Confirmación Explícita**: Usuario debe confirmar cierre de sesión
 - **Limpieza Completa**: Liberación total de recursos y memoria
-- **auditoría**: Registro de logout con Timestamp
+- **Auditoría**: Registro de logout con timestamp
 - **Bloqueo de Acceso**: Tras logout, usuario no puede usar datos de sesión anterior
 - **Retorno a Login**: Siempre volver al formulario de inicio sin retener datos
 
@@ -1439,7 +1439,7 @@ ANTES DE MOSTRAR LOGIN:
 - **Verificar BD**: Conectividad y disponibilidad
 - **Validar Integridad**: Verificación de checksums (T08 futuro)
 - **Inicializar SessionManager**: Singleton listo para gestionar sesiones
-- **Registrar en auditoría**: Evento SISTEMA_INICIADO
+- **Registrar en Auditoría**: Evento SISTEMA_INICIADO
 - **Mostrar Login**: Pantalla de autenticación
 
 ### 2.4 Procesos de Apagado del Sistema (Shutdown)
@@ -1457,11 +1457,11 @@ USUARIO CIERRA APLICACIÓN:
    ├─ SI no hay sesiones activas:
    │  └─ Continuar
    ↓
-[2. Guardar estáado de la Aplicación]
+[2. Guardar estado de la Aplicación]
    ├─ Cerrar conexiones de BD
-   ├─ Flushing de buffer de bitácora (garantizar que todos los eventos estáén guardados)
+   ├─ Flushing de buffer de Bitácora (garantizar que todos los eventos estén guardados)
    │
-   ├─ Registrar evento: SISTEMA_APAGADO (con Timestamp)
+   ├─ Registrar evento: SISTEMA_APAGADO (con timestamp)
    │
    ├─ Liberar recursos del Singleton SessionManager
    │
@@ -1471,12 +1471,12 @@ USUARIO CIERRA APLICACIÓN:
 #### Acciones de Shutdown
 
 - **Cerrar Sesiones**: Logout de todos los usuarios activos
-- **Persistir auditoría**: Asegurar que todos los eventos se guardaron
+- **Persistir Auditoría**: Asegurar que todos los eventos se guardaron
 - **Liberar Conexiones**: Cierre limpio de conexión a BD
-- **Registrar Apagado**: Evento SISTEMA_APAGADO en bitácora
-- **Liberar Singleton**: Destáruir instancia de SessionManager
+- **Registrar Apagado**: Evento SISTEMA_APAGADO en Bitácora
+- **Liberar Singleton**: Destruir instancia de SessionManager
 
-### 2.5 Gestáión de Permisos en Sesión
+### 2.5 Gestión de Permisos en Sesión
 
 ```
 DURANTE LA SESIÓN ACTIVA:
@@ -1496,7 +1496,7 @@ DURANTE LA SESIÓN ACTIVA:
    │
    ├─ SI usuario NO tiene permiso:
    │  ├─ Deshabilitar UI/funcionalidad
-   │  ├─ Mostrar mensaje: "No tiene permisos para acceder a estáe recurso"
+   │  ├─ Mostrar mensaje: "No tiene permisos para acceder a este recurso"
    │  ├─ Registrar evento: ACCESO_DENEGADO (en BD)
    │  └─ Retornar sin ejecutar operación
    │
@@ -1535,7 +1535,7 @@ CONTROL DE INACTIVIDAD:
 
 ```mermaid
 ---
-title: Diagrama de Clases - T02 Gestáión de Login/Logout y Sesiones
+title: Diagrama de Clases - T02 GESTIÓN DE LOGIN/Logout y Sesiones
 config:
     theme: default
 ---
@@ -1730,7 +1730,7 @@ classDiagram
 - Todas las sesiones activas en el sistema
 - Permisos asociados a cada rol
 - Tiempo de timeout configurado
-- estáado de cada sesión (activa/expirada)
+- estado de cada sesión (activa/expirada)
 
 #### Clase: Sesion (BE)
 **Responsabilidades - Hacer:**
@@ -1741,7 +1741,7 @@ classDiagram
 - Datos del usuario en sesión
 - Rol del usuario
 - Tiempos de login y úúltimas actividades
-- estáado de actividad
+- estado de actividad
 
 #### Clase: LoginProcessor (BLL)
 **Responsabilidades - Hacer:**
@@ -1759,19 +1759,19 @@ classDiagram
 **Responsabilidades - Hacer:**
 - Cerrar sesión del usuario
 - Liberar recursos asignados a la sesión
-- Registrar logout en bitácora
+- Registrar logout en Bitácora
 - Cerrar formularios abiertos
 - Limpiar memoria
 
 **Responsabilidades - Conocer:**
-- estáado de la sesión a cerrar
+- estado de la sesión a cerrar
 - Recursos asociados a la sesión
 - Formularios abiertos
 
 #### Clase: PermissionValidator (BLL)
 **Responsabilidades - Hacer:**
 - Validar si usuario tiene permiso para funcionalidad
-- Registrar accesos denegados en auditoría
+- Registrar accesos denegados en Auditoría
 
 **Responsabilidades - Conocer:**
 - Permisos por rol
@@ -1922,7 +1922,7 @@ sequenceDiagram
         SessionMgr->>SessionMgr: Obtener sesión activa
 
         SessionMgr->>SessionMgr: Marcar sesion.Activa = false
-        SessionMgr->>SessionMgr: estáablecer FechaCierre = DateTime.UtcNow
+        SessionMgr->>SessionMgr: establecer FechaCierre = DateTime.UtcNow
 
         SessionMgr->>LogoutProc: CerrarSesion(sesion)
 
@@ -1931,7 +1931,7 @@ sequenceDiagram
 
         LogoutProc->>LogoutProc: CerrarFormulariosAbiertos()
         LogoutProc->>UI: Cerrar FormPrincipal
-        LogoutProc->>UI: Cerrar UC_Bitacora (si estáá abierto)
+        LogoutProc->>UI: Cerrar UC_Bitacora (si está abierto)
         LogoutProc->>UI: Cerrar otros formularios
 
         LogoutProc->>LogoutProc: LiberarConexiones()
@@ -2226,18 +2226,18 @@ erDiagram
 
 ### Descripción de Nueva Entidad: SESION
 
-**Propósito:** Almacenar registro de sesiones activas y cerradas para auditoría y análisis de acceso
+**Propósito:** Almacenar registro de sesiones activas y cerradas para Auditoría y análisis de acceso
 
 | Atributo | Tipo | Restáricción | Descripción |
 |:---|:---|:---|:---|
 | id | int | PK, AI | Identificador único de la sesión |
 | usuario_id | int | FK, NOT NULL | Referencias a USUARIO.id |
-| email | varchar(100) | NOT NULL | Email del usuario (desnormalizado para auditoría) |
-| rol_id | int | FK, NOT NULL | Referencias a ROL.id (desnormalizado para auditoría) |
+| email | varchar(100) | NOT NULL | Email del usuario (desnormalizado para Auditoría) |
+| rol_id | int | FK, NOT NULL | Referencias a ROL.id (desnormalizado para Auditoría) |
 | fecha_login | datetime | NOT NULL | Fecha y hora cuando sesión se inició |
 | fecha_uúltima_actividad | datetime | NOT NULL | Úúltima acción del usuario en estáa sesión |
 | fecha_cierre | datetime | | Fecha y hora cuando sesión cerró (NULL si activa) |
-| activa | bit | NOT NULL | estáado de sesión (1=activa, 0=cerrada) |
+| activa | bit | NOT NULL | estado de sesión (1=activa, 0=cerrada) |
 | timeout_minutos | int | NOT NULL | Duración timeout configurada (por defecto 30) |
 
 ### Relaciones Actualizadas
@@ -2272,14 +2272,14 @@ public class UsuarioBloqueadoException : ApplicationException
 }
 
 /// <summary>
-/// Excepción lanzada cuando usuario existe pero estáá inactivo
+/// Excepción lanzada cuando usuario existe pero está inactivo
 /// </summary>
 public class UsuarioInactivoException : ApplicationException
 {
     public string Email { get; set; }
 
     public UsuarioInactivoException(string email) 
-        : base($"Usuario {email} estáá inactivo")
+        : base($"Usuario {email} está inactivo")
     {
         Email = email;
     }
@@ -2335,7 +2335,7 @@ public class PermisoDenegadoException : ApplicationException
 | **Timeout Sesión** | 30 minutos de inactividad = cierre automático | Timer en SessionManager cada 1 min |
 | **Validación Email** | RFC 5322 simplificado antes de buscar en BD | Regex en LoginProcessor |
 | **Encriptación Password** | SHA256 hash no reversible | Encriptador.VerificarHash() |
-| **auditoría Completa** | Todos eventos registrados en EVENTO_BITACORA | BitacoraBLL notificado de cada acción |
+| **Auditoría Completa** | Todos eventos registrados en EVENTO_BITACORA | BitacoraBLL notificado de cada acción |
 | **Permisos por Rol** | Usuario solo accede según su ROL.id | PermissionValidator en cada operación |
 | **Cleanup Logout** | Liberación total de recursos tras cierre | LogoutProcessor.LimpiarRecursos() |
 | **Singleton SessionManager** | Instancia única en toda la aplicación | Patrón Singleton con thread-safety |
@@ -2348,7 +2348,7 @@ La implementación de T02 cumple exitosamente con:
 
 ✅ **Autenticación Segura**: Validación de credenciales con hash SHA256 y manejo de intentos fallidos
 
-✅ **Gestáión de Sesiones**: SessionManager Singleton mantiene control centralizado y único
+✅ **Gestión de Sesiones**: SessionManager Singleton mantiene control centralizado y único
 
 ✅ **Control de Acceso**: Validación de permisos por rol en cada operación crítica
 
@@ -2357,7 +2357,7 @@ La implementación de T02 cumple exitosamente con:
    - Timeout por inactividad (30 min)
    - Logout limpio con liberación de recursos
 
-✅ **auditoría Integrada**: Todos los eventos de login/logout registrados en bitácora
+✅ **Auditoría Integrada**: Todos los eventos de login/logout registrados en Bitácora
 
 ✅ **Seguridad en Startup/Shutdown**: Inicialización y cierre controlados del sistema
 
@@ -2379,7 +2379,7 @@ La implementación de T02 cumple exitosamente con:
 - **Diagramas\02_esquema_persistencia_DER.mmd** - Diagrama Entidad-Relación
 - **Diagramas\03_mapa_navegacion.mmd** - Mapa de navegación de UI
 
-### Anexo B: estáructura de Proyectos en Solución
+### Anexo B: estructura de Proyectos en Solución
 
 ```
 Trabajo Practico Final/
@@ -2394,22 +2394,22 @@ Trabajo Practico Final/
 
 ### Anexo C: Consideraciones para Futuras Iteraciones
 
-**T03. Gestáión de Encriptado**
+**T03. Gestión de Encriptado**
 - Implementar encriptación asimétrica para datos sensibles
 
-**T04. Gestáión de Perfiles de Usuario**
+**T04. Gestión de Perfiles de Usuario**
 - Implementar permisos compuestos con patrón Composite
 
-**T05. Gestáión de Múltiples Idiomas**
+**T05. Gestión de Múltiples Idiomas**
 - Implementar Observer para cambio dinámico de idiomas
 
-**T06. Gestáión de bitácora y Control de Cambios**
-- Extender bitácora con trazabilidad de cambios en campos
+**T06. Gestión de Bitácora y Control de Cambios**
+- Extender Bitácora con trazabilidad de cambios en campos
 
-**T07. Gestáión de Backup**
+**T07. Gestión de Backup**
 - Implementar copia de seguridad automática y restáauración
 
-**T08. Gestáión de Dígitos Verificadores**
+**T08. Gestión de Dígitos Verificadores**
 - Implementar validación de integridad de datos
 
 ---
@@ -2422,11 +2422,11 @@ Trabajo Practico Final/
 \
 ---
 
-# T03. GestáIÓN DE ENCRIPTADO
+# T03. Gestión DE ENCRIPTADO
 
 ## T03.1 Objetivo
 
-El objetivo de la gestáión de encriptado es proteger los datos sensibles almacenados en el sistema mediante algoritmos criptográficos robustos. esto asegura que la información confidencial (como contraseñas) no sea legible en caso de acceso no autorizado a la base de datos, y permite el resguardo reversible de otros datos sensibles.
+El objetivo de la Gestión de encriptado es proteger los datos sensibles almacenados en el sistema mediante algoritmos criptográficos robustos. esto asegura que la información confidencial (como contraseñas) no sea legible en caso de acceso no autorizado a la base de datos, y permite el resguardo reversible de otros datos sensibles.
 
 ## T03.2 Descripción Detallada de Funcionamiento
 
@@ -2440,7 +2440,7 @@ El sistema implementa una función de **Hash unidireccional** utilizando el algo
 
 ### 2.2 Capa de Servicios
 
-La lógica de protección de datos estáá centralizada en la clase estáática `Encriptador` dentro del proyecto `Servicios`, permitiendo que cualquier capa de la aplicación (principalmente BLL) acceda a estáa función de forma estáandarizada.
+La lógica de protección de datos está centralizada en la clase estática `Encriptador` dentro del proyecto `Servicios`, permitiendo que cualquier capa de la aplicación (principalmente BLL) acceda a estáa función de forma estáandarizada.
 
 ---
 
@@ -2496,21 +2496,21 @@ PROCESO:
 
 ---
 
-# T06a. GestáIÓN DE bitácora
+# T06a. Gestión DE Bitácora
 
 ## T06a.1 Objetivo
 
-El objetivo del subsistema de bitácora es registrar de manera automática e íntegra todas las operaciones realizadas por los usuarios dentro del sistema. Esto permite garantizar la trazabilidad de las actividades, facilitar procesos de auditoría y mejorar la seguridad general de la aplicación mediante el seguimiento de acciones críticas.
+El objetivo del subsistema de Bitácora es registrar de manera automática e íntegra todas las operaciones realizadas por los usuarios dentro del sistema. Esto permite garantizar la trazabilidad de las actividades, facilitar procesos de Auditoría y mejorar la seguridad general de la aplicación mediante el seguimiento de acciones críticas.
 
 ## T06a.2 Descripción Detallada de Funcionamiento
 
 ### 2.1 Registro Automático mediante Patrón Observer
 
-El sistema utiliza el **Patrón de Diseño Observer** para desacoplar la lógica de negocio de la auditoría. Las clases de negocio (como UsuarioBLL) actúan como sujetos observados (IObservado), notificando a la BitacoraBLL (IObserver) ante cada evento relevante.
+El sistema utiliza el **Patrón de Diseño Observer** para desacoplar la lógica de negocio de la Auditoría. Las clases de negocio (como UsuarioBLL) actúan como sujetos observados (IObservado), notificando a la BitacoraBLL (IObserver) ante cada evento relevante.
 
 
-Cada registro de bitácora incluye los siguientes datos mínimos:
-- **Fecha y Hora**: Timestamp exacto del suceso.
+Cada registro de Bitácora incluye los siguientes datos mínimos:
+- **Fecha y Hora**: timestamp exacto del suceso.
 - **Usuario**: Identificador (email) del usuario que ejecutó la acción.
 - **Actividad**: Categoría de la acción (LOGIN, ALTA_USUARIO, MODIFICACION, BLOQUEO, etc.).
 - **Información Asociada**: Detalle descriptivo del evento.
@@ -2520,20 +2520,20 @@ Cada registro de bitácora incluye los siguientes datos mínimos:
 
 El subsistema sigue la arquitectura en 4 capas del proyecto:
 - **BE (Business Entities)**: Provee la clase EventoBitacora para el transporte de datos.
-- **BLL (Business Logic Layer)**: BitacoraBLL (Singleton) gestiona la lógica de auditoría y coordina con la DAL.
+- **BLL (Business Logic Layer)**: BitacoraBLL (Singleton) gestiona la lógica de Auditoría y coordina con la DAL.
 - **DAL (Data Access Layer)**: BitacoraDAL gestiona la persistencia en SQL Server mediante procedimientos almacenados.
 - **UI (Presentación)**: El User Control UC_Bitacora ofrece la interfaz para que los administradores consulten los registros.
 
 ### 2.3 Búsqueda Avanzada y Filtrado Combinado
 
-La interfaz de bitácora permite realizar Búsquedas combinadas utilizando los siguientes criterios:
+La interfaz de Bitácora permite realizar Búsquedas combinadas utilizando los siguientes criterios:
 1. **Rango de Fechas**: Filtrado por fecha desde y hasta.
 2. **Usuario**: Búsqueda por email de usuario.
 3. **Actividad**: Selección de tipo de actividad mediante un control desplegable.
 
 El procedimiento almacenado en la base de datos está� dise�ado para manejar par�metros opcionales, permitiendo combinar estos filtros de manera flexible (ej: ver todos los 'BLOQUEOS' del 'Usuario X' en la '�última Semana').\
 \
-## T06a.3 Diagrama de Clases (bitácora)
+## T06a.3 Diagrama de Clases (Bitácora)
 
 ```mermaid
 classDiagram
@@ -2590,7 +2590,7 @@ sequenceDiagram
     Usu->>BitaBLL: Notificar(evento)
     BitaBLL->>BitaBLL: Actualizar(evento)
     BitaBLL->>BitaDAL: Insertar(evento)
-    BitaDAL->>BD: EXEC sp_bitácora_Insertar
+    BitaDAL->>BD: EXEC sp_Bitácora_Insertar
     BD-->>BitaDAL: OK
     BitaDAL-->>BitaBLL: OK
 ```
@@ -2614,7 +2614,7 @@ sequenceDiagram
     BitaBLL-->>UI: List~EventoBitacora~
     UI->>UI: Mostrar en DataGridView
 ```
-## T06a.6 Modelo de Datos (DER - bitácora)
+## T06a.6 Modelo de Datos (DER - Bitácora)
 
 ```mermaid
 erDiagram
