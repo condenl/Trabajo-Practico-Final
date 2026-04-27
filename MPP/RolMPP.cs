@@ -33,10 +33,11 @@ namespace MPP
             rol.Id = Convert.ToInt32(fila["Id"]);
             rol.Nombre = fila["Nombre"].ToString();
 
-            if (fila["Descripcion"] != DBNull.Value)
+            if (fila.Table.Columns.Contains("Descripcion") && fila["Descripcion"] != DBNull.Value)
                 rol.Descripcion = fila["Descripcion"].ToString();
 
-            rol.Activo = Convert.ToBoolean(fila["Activo"]);
+            if (fila.Table.Columns.Contains("Activo"))
+                rol.Activo = Convert.ToBoolean(fila["Activo"]);
 
             return rol;
         }

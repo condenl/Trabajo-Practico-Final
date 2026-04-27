@@ -3,7 +3,7 @@
     public interface IEntidadBase
     {
         int Id { get; set; }
-        int Dni { get; set; }
+        string Dni { get; set; } 
         string Nombre { get; set; }
         string Apellido { get; set; }
 

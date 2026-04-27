@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using BE;
+using Servicios;
 
 namespace MPP
 {
@@ -31,7 +32,9 @@ namespace MPP
                 Usuario usuario = new Usuario();
 
                 usuario.Id = Convert.ToInt32(fila["Id"]);
-                usuario.Dni = Convert.ToInt32(fila["Dni"]);
+                string dniCifrado = fila["Dni"].ToString();
+                usuario.Dni = Encriptador.DesencriptarAES(dniCifrado);
+
                 usuario.Nombre = fila["Nombre"].ToString();
                 usuario.Apellido = fila["Apellido"].ToString();
                 usuario.Email = fila["Email"].ToString();
@@ -39,18 +42,19 @@ namespace MPP
                 usuario.FechaAlta = Convert.ToDateTime(fila["FechaAlta"]);
                 usuario.Activo = Convert.ToBoolean(fila["Activo"]);
 
+
                 if (fila["RolId"] != DBNull.Value)
                     usuario.RolId = Convert.ToInt32(fila["RolId"]);
 
-                if (fila.Table.Columns.Contains("RolNombre") && fila["RolNombre"] != DBNull.Value)
+                if (fila.Table.Columns.Contains("NombreRol") && fila["NombreRol"] != DBNull.Value)
                 {
                     usuario.RolAsignado = new Rol();
                     usuario.RolAsignado.Id = usuario.RolId;
-                    usuario.RolAsignado.Nombre = fila["RolNombre"].ToString();
+                    usuario.RolAsignado.Nombre = fila["NombreRol"].ToString();
                 }
                 else
                 {
-                    usuario.RolAsignado = new Rol { Id = usuario.RolId, Nombre = "Desconocido" };
+                    usuario.RolAsignado = new Rol { Id = usuario.RolId, Nombre = "Sin Asignar" };
                 }
 
                 if (fila.Table.Columns.Contains("IntentosFallidos") && fila["IntentosFallidos"] != DBNull.Value)

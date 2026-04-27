@@ -60,6 +60,10 @@
       <Project>{6fee37dc-d54b-4308-889d-4ec081cea04c}</Project>
       <Name>MPP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Servicios\Servicios.csproj">
+      <Project>{6e6fe359-5d39-4b41-bd15-e90a99b8fb54}</Project>
+      <Name>Servicios</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

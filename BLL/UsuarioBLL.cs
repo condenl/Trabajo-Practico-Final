@@ -43,63 +43,78 @@ namespace BLL
         public void Guardar(Usuario u)
         {
             if (!EsEmailValido(u.Email)) throw new Exception("Email inválido.");
+
             if (u.Id == 0)
             {
                 if (string.IsNullOrEmpty(u.Password)) throw new Exception("Contraseña obligatoria.");
+                u.Dni = Encriptador.EncriptarAES(u.Dni);                                                       
                 UsuarioDAL.Instancia.Insertar(u);
-                
-                Notificar(new EventoBitacora(u.Email, "ALTA_USUARIO", "Nuevo usuario guardado."));
+                Notificar(new EventoBitacora(u.Email, "ALTA_USUARIO", $"Nuevo usuario guardado."));
             }
             else
             {
-                UsuarioDAL.Instancia.Modificar(u);            
-                Notificar(new EventoBitacora(u.Email, "MODIFICACION", "Usuario actualizado."));
+                u.Dni = Encriptador.EncriptarAES(u.Dni);
+                UsuarioDAL.Instancia.Modificar(u);
+                Notificar(new EventoBitacora(u.Email, "MODIFICACION", $"Datos actualizados. ID: {u.Id}"));
             }
         }
 
         public void Eliminar(int id) => UsuarioDAL.Instancia.Eliminar(new Usuario { Id = id });
+
         public List<Usuario> Listar() => ListarTodos();
-        public void Eliminar(Usuario u) => UsuarioDAL.Instancia.Eliminar(u);
+
+        public void Eliminar(Usuario u)
+        {
+            UsuarioDAL.Instancia.Eliminar(u);
+            Notificar(new EventoBitacora(Session.Instance.Usuario?.Email ?? "SYSTEM", "BAJA_USUARIO", $"Usuario eliminado: {u.Email}"));
+        }
 
         public void Insertar(Usuario u, string pass)
         {
             if (!EsEmailValido(u.Email)) throw new Exception("Email inválido.");
-            if (UsuarioDAL.Instancia.ExisteDni(u.Dni)) throw new Exception("DNI ya existe.");
-            if (UsuarioDAL.Instancia.BuscarPorEmail(u.Email) != null) throw new Exception("Email ya existe.");
 
+            string dniCifrado = Encriptador.EncriptarAES(u.Dni);
+            if (UsuarioDAL.Instancia.ExisteDni(dniCifrado)) throw new Exception("El DNI ya se encuentra registrado.");
+
+            if (UsuarioDAL.Instancia.BuscarPorEmail(u.Email) != null) throw new Exception("El Email ya existe.");
+
+            u.Dni = dniCifrado;
             u.Password = Encriptador.Hash(pass);
+
             if (u.FechaAlta == DateTime.MinValue) u.FechaAlta = DateTime.Now;
+
             UsuarioDAL.Instancia.Insertar(u);
-            Notificar(new EventoBitacora(u.Email, "ALTA_USUARIO", $"Registro exitoso DNI: {u.Dni}"));
+            Notificar(new EventoBitacora(u.Email, "ALTA_USUARIO", "Auto-registro exitoso."));
         }
 
         public void Modificar(Usuario u, string newPass)
         {
             if (!EsEmailValido(u.Email)) throw new Exception("Email inválido.");
-            var existente = UsuarioDAL.Instancia.BuscarPorEmail(u.Email);
-            if (existente != null && existente.Id != u.Id) throw new Exception("Email duplicado.");
 
+            var existente = UsuarioDAL.Instancia.BuscarPorEmail(u.Email);
+            if (existente != null && existente.Id != u.Id) throw new Exception("El Email ya pertenece a otro usuario.");
             if (!string.IsNullOrEmpty(newPass)) u.Password = Encriptador.Hash(newPass);
+
             UsuarioDAL.Instancia.Modificar(u);
-            Notificar(new EventoBitacora(u.Email, "MODIFICACION", "Cambio de datos/password."));
+            Notificar(new EventoBitacora(u.Email, "MODIFICACION", "Cambio de credenciales o datos personales."));
         }
 
         public Usuario Login(string email, string passwordSinHash)
         {
-            if (!EsEmailValido(email)) throw new Exception("Formato de email inválido.");
+            if (!EsEmailValido(email)) throw new Exception("El formato del email no es válido.");
 
             Usuario usuario = UsuarioDAL.Instancia.BuscarPorEmail(email);
 
             if (usuario == null)
             {
-                Notificar(new EventoBitacora(email, "LOGIN_FALLIDO", "Usuario inexistente."));
+                Notificar(new EventoBitacora(email, "LOGIN_FALLIDO", "Intento de acceso con usuario inexistente."));
                 return null;
             }
 
             if (!usuario.Activo)
             {
-                Notificar(new EventoBitacora(email, "SEGURIDAD", "Intento en cuenta bloqueada."));
-                throw new UsuarioBloqueadoException("Su cuenta está bloqueada. Contacte a soporte.");
+                Notificar(new EventoBitacora(email, "SEGURIDAD", "Intento de acceso en cuenta bloqueada."));
+                throw new UsuarioBloqueadoException("Su cuenta se encuentra bloqueada. Por favor, contacte al administrador.");
             }
 
             string passHash = Encriptador.Hash(passwordSinHash);
@@ -107,22 +122,23 @@ namespace BLL
             if (usuario.Password == passHash)
             {
                 UsuarioDAL.Instancia.ResetearIntentos(email);
-                Notificar(new EventoBitacora(email, "LOGIN", "Sesión iniciada correctamente."));
+
+                Notificar(new EventoBitacora(email, "LOGIN", "Inicio de sesión exitoso."));
 
                 return usuario;
             }
             else
             {
                 UsuarioDAL.Instancia.SumarIntentoFallido(email);
-                int intentosActuales = usuario.IntentosFallidos + 1;
 
+                int intentosActuales = usuario.IntentosFallidos + 1;
                 if (intentosActuales >= 4)
                 {
-                    Notificar(new EventoBitacora(email, "BLOQUEO", "Cuenta bloqueada por reintentos."));
-                    throw new UsuarioBloqueadoException("Ha excedido los intentos permitidos. Cuenta bloqueada.");
+                    Notificar(new EventoBitacora(email, "BLOQUEO", "Cuenta bloqueada por alcanzar el máximo de intentos fallidos."));
+                    throw new UsuarioBloqueadoException("Ha excedido los intentos permitidos. Su cuenta ha sido bloqueada.");
                 }
 
-                Notificar(new EventoBitacora(email, "LOGIN_FALLIDO", $"Password incorrecta. Intento {intentosActuales}."));
+                Notificar(new EventoBitacora(email, "LOGIN_FALLIDO", $"Contraseña incorrecta. Intento nro: {intentosActuales}."));
                 return null;
             }
         }
@@ -135,14 +151,19 @@ namespace BLL
             {
                 string email = Session.Instance.Usuario.Email;
                 Session.Instance.Logout();
-                Notificar(new EventoBitacora(email, "LOGOUT", "Cierre de sesión exitoso."));
+                Notificar(new EventoBitacora(email, "LOGOUT", "Cierre de sesión manual realizado por el usuario."));
             }
         }
 
         private bool EsEmailValido(string email)
         {
             if (string.IsNullOrWhiteSpace(email)) return false;
-            try { return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase); }
+            try
+            {
+                return Regex.IsMatch(email,
+                    @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+                    RegexOptions.IgnoreCase);
+            }
             catch { return false; }
         }
     }

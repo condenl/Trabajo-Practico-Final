@@ -43,9 +43,9 @@ namespace DAL
             return null;
         }
 
-        public bool ExisteDni(int dni)
+        public bool ExisteDni(string dniCifrado) 
         {
-            SqlParameter[] p = { new SqlParameter("@Dni", dni) };
+            SqlParameter[] p = { new SqlParameter("@Dni", dniCifrado) };
             DataTable dt = Conexion.Instancia.Leer("sp_BuscarUsuarioPorDni", p);
             return dt.Rows.Count > 0;
         }
@@ -81,10 +81,6 @@ namespace DAL
         {
             SqlParameter[] p = { new SqlParameter("@Email", email) };
             Conexion.Instancia.RUD("sp_ResetearIntentos", p);
-        }
-
-        public void BloquearUsuario(string email)
-        {
         }
 
         private SqlParameter[] CrearParametrosUsuario(Usuario usuario)

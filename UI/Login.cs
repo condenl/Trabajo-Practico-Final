@@ -17,11 +17,11 @@ namespace UI
         {
             InitializeComponent();
             visitanteBLL = new UsuarioBLL();
+            ConfigurarFormulario();
         }
 
         private void Principal_Load(object sender, EventArgs e)
         {
-            ConfigurarFormulario();
         }
 
         private void ConfigurarFormulario()
