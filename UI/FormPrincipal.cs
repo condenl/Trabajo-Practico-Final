@@ -29,5 +29,20 @@ namespace UI
             panel1.Controls.Add(bitacora);
             bitacora.Show();
         }
+
+        private void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            DialogResult respuesta = MessageBox.Show(
+                "¿Está seguro que desea cerrar la sesión actual?",
+                "Confirmar Cierre de Sesión",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (respuesta == DialogResult.Yes)
+            {
+                this.Close();
+            }
+        }
     }
 }

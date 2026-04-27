@@ -13,8 +13,6 @@ namespace BLL
         {
             try
             {
-                // Un simple llamado para ver si la base de datos responde
-                // Usamos el Singleton de Conexion que ya existe
                 Conexion.Instancia.Leer("SELECT 1", null);
                 return true;
             }
