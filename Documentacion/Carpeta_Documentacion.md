@@ -502,13 +502,13 @@ erDiagram
     ROL {
         int id PK
         string nombre UK
-        string Descripción
+        string descripcion
         bool activo
     }
 
     USUARIO {
         int id PK
-        int dni UK
+        string dni UK
         string nombre
         string apellido
         string email UK
@@ -735,97 +735,32 @@ Capas Transversales:
 
 ```mermaid
 graph TD
-    subgraph "Presentación (UI)"
-        FormPrincipal["FormPrincipal<br/>(MDI Container)"]
-        UCRegistro["UC_Registro<br/>(User Control)"]
-        UCBitácora["UC_Bitacora<br/>(User Control)"]
-        LoginForm["Login<br/>(Formulario)"]
+    subgraph UI ["Presentación (UI)"]
     end
 
-    subgraph "lógica de Negocio (BLL)"
-        UsuarioBLL["UsuarioBLL<br/>(IGestor, IObservado)"]
-        RolBLL["RolBLL"]
-        BitacoraBLL["BitacoraBLL<br/>(Singleton, IObserver)"]
+    subgraph BLL ["Lógica de Negocio (BLL)"]
     end
 
-    subgraph "Entidades (BE)"
-        Usuario["Usuario<br/>(Persona)"]
-        Persona["Persona<br/>(Abstract)"]
-        Rol["Rol"]
-        EventoBitacora["EventoBitacora"]
-        Ifaces["Interfaces<br/>(IGestor, IObservado,<br/>IObserver, ILogueable)"]
-        Excepciones["Excepciones<br/>(UsuarioBloqueadoException)"]
+    subgraph BE ["Entidades (BE)"]
     end
 
-    subgraph "Acceso a Datos (DAL)"
-        UsuarioDAL["UsuarioDAL<br/>(Singleton)"]
-        RolDAL["RolDAL<br/>(Singleton)"]
-        BitacoraDAL["BitacoraDAL<br/>(Singleton)"]
-        Conexion["Conexion<br/>(DB Connection)"]
+    subgraph DAL ["Acceso a Datos (DAL)"]
     end
 
-    subgraph "Servicios"
-        Encriptador["Encriptador<br/>(Hash, Seguridad)"]
+    subgraph Servicios ["Servicios"]
     end
 
-    FormPrincipal -->|Invoca| UsuarioBLL
-    FormPrincipal -->|Invoca| RolBLL
-    FormPrincipal -->|Invoca| BitacoraBLL
-
-    UCRegistro -->|Invoca| UsuarioBLL
-    UCBitácora -->|Invoca| BitacoraBLL
-    LoginForm -->|Invoca| UsuarioBLL
-
-    UsuarioBLL -->|Utiliza| Usuario
-    UsuarioBLL -->|Utiliza| Rol
-    UsuarioBLL -->|Utiliza| EventoBitacora
-    UsuarioBLL -->|Implementa| Ifaces
-    UsuarioBLL -->|Lanza| Excepciones
-    UsuarioBLL -->|Notifica| BitacoraBLL
-    UsuarioBLL -->|Invoca| Encriptador
-
-    RolBLL -->|Utiliza| Rol
-    RolBLL -->|Invoca| RolDAL
-
-    BitacoraBLL -->|Utiliza| EventoBitacora
-    BitacoraBLL -->|Implementa| Ifaces
-    BitacoraBLL -->|Invoca| BitacoraDAL
-
-    UsuarioBLL -->|Invoca| UsuarioDAL
-    UsuarioDAL -->|Utiliza| Usuario
-    UsuarioDAL -->|Utiliza| Conexion
-
-    RolDAL -->|Utiliza| Rol
-    RolDAL -->|Utiliza| Conexion
-
-    BitacoraDAL -->|Utiliza| EventoBitacora
-    BitacoraDAL -->|Utiliza| Conexion
-
-    Usuario -->|Hereda de| Persona
-    Persona -->|Implementa| Ifaces
-
-    style FormPrincipal fill:#FF6B6B
-    style UCRegistro fill:#FF6B6B
-    style UCBitácora fill:#FF6B6B
-    style LoginForm fill:#FF6B6B
-
-    style UsuarioBLL fill:#4ECDC4
-    style RolBLL fill:#4ECDC4
-    style BitacoraBLL fill:#4ECDC4
-
-    style UsuarioDAL fill:#95E1D3
-    style RolDAL fill:#95E1D3
-    style BitacoraDAL fill:#95E1D3
-    style Conexion fill:#95E1D3
-
-    style Usuario fill:#FFE66D
-    style Persona fill:#FFE66D
-    style Rol fill:#FFE66D
-    style EventoBitacora fill:#FFE66D
-    style Ifaces fill:#FFE66D
-    style Excepciones fill:#FFE66D
-
-    style Encriptador fill:#A8E6CF
+    UI --> BLL
+    BLL --> DAL
+    BLL --> BE
+    DAL --> BE
+    BLL --> Servicios
+    
+    style UI fill:#FF6B6B
+    style BLL fill:#4ECDC4
+    style DAL fill:#95E1D3
+    style BE fill:#FFE66D
+    style Servicios fill:#A8E6CF
 ```
 
 ---
@@ -840,13 +775,13 @@ erDiagram
     ROL {
         int id PK
         string nombre UK
-        string Descripción
+        string descripcion
         bool activo
     }
 
     USUARIO {
         int id PK
-        int dni UK
+        string dni UK
         string nombre
         string apellido
         string email UK
@@ -2375,9 +2310,7 @@ La implementación de T02 cumple exitosamente con:
 
 ### Anexo A: Referencias de Diagramas
 
-- **Diagramas\01_componentes_arquitectura.mmd** - Diagrama de componentes del sistema
-- **Diagramas\02_esquema_persistencia_DER.mmd** - Diagrama Entidad-Relación
-- **Diagramas\03_mapa_navegacion.mmd** - Mapa de navegación de UI
+- Los diagramas de componentes, entidad-relación y navegación se encuentran embebidos directamente en las secciones **T01.3**, **T01.4/G07.1** y **T01.5** respectivamente, utilizando el estándar Mermaid para garantizar una única fuente de verdad.
 
 ### Anexo B: estructura de Proyectos en Solución
 
@@ -2388,8 +2321,7 @@ Trabajo Practico Final/
 ├── DAL/                   # Data Access Layer - Acceso a datos
 ├── UI/                    # User Interface - Presentación
 ├── Servicios/             # Servicios compartidos (Encriptación, etc.)
-├── Documentacion/         # Documentación del sistema
-└── Diagramas/             # Diagramas UML y arquitectura
+└── Documentacion/         # Documentación del sistema (incluye diagramas Mermaid)
 ```
 
 ### Anexo C: Consideraciones para Futuras Iteraciones
@@ -2422,55 +2354,129 @@ Trabajo Practico Final/
 \
 ---
 
-# T03. Gestión DE ENCRIPTADO
+# T03. GESTIÓN DE ENCRIPTADO
 
 ## T03.1 Objetivo
 
-El objetivo de la Gestión de encriptado es proteger los datos sensibles almacenados en el sistema mediante algoritmos criptográficos robustos. esto asegura que la información confidencial (como contraseñas) no sea legible en caso de acceso no autorizado a la base de datos, y permite el resguardo reversible de otros datos sensibles.
+El objetivo de la Gestión de encriptado es proteger los datos sensibles almacenados en el sistema mediante algoritmos criptográficos robustos, asegurando tanto la irreversibilidad de credenciales como la confidencialidad recuperable de datos personales.
+
+- **Irreversibilidad**: Garantizar que las contraseñas no puedan ser obtenidas en texto plano (Hashing).
+- **Confidencialidad**: Proteger datos sensibles como el DNI permitiendo su recuperación solo por personal autorizado (Encriptación Simétrica).
 
 ## T03.2 Descripción Detallada de Funcionamiento
 
-### 2.1 Hashing de Datos Sensibles (SHA256)
+El sistema implementa dos mecanismos principales de protección de datos:
 
-El sistema implementa una función de **Hash unidireccional** utilizando el algoritmo **SHA256** para la protección de datos sensibles (como contraseñas). El proceso es el siguiente:
-1. El usuario ingresa el dato en texto plano.
-2. El sistema aplica SHA256 para generar una cadena hexadecimal de 64 caracteres.
-3. Se almacena el hash resultante, garantizando que el dato original sea irreversible.
-4. Para la validación, se compara el hash del dato ingresado con el valor almacenado.
+### 2.1 Hashing de Contraseñas (SHA256)
+Para las contraseñas, se utiliza el algoritmo **SHA256**. Es un método unidireccional que genera una huella digital única.
+1. El sistema recibe la contraseña en texto plano.
+2. Se genera el hash SHA256.
+3. El hash resultante se almacena en el campo `Password` de la tabla `USUARIO`.
+4. Durante el login, se aplica el mismo proceso al input del usuario y se comparan los hashes.
 
-### 2.2 Capa de Servicios
+### 2.2 Encriptación Simétrica de DNIs (AES-256)
+Para los DNIs, se utiliza **AES (Advanced Encryption Standard)** con una clave de 256 bits y un vector de inicialización (IV).
+1. **Cifrado**: Al guardar un usuario, el DNI en texto plano se cifra y se almacena como una cadena Base64.
+2. **Descifrado**: Al listar o consultar usuarios, el sistema recupera la cadena Base64 y la descifra utilizando la misma clave e IV para mostrar el DNI original.
 
-La lógica de protección de datos está centralizada en la clase estática `Encriptador` dentro del proyecto `Servicios`, permitiendo que cualquier capa de la aplicación (principalmente BLL) acceda a estáa función de forma estáandarizada.
-
----
-
-## T03.3 Diagrama de Clases (Encriptado)
+## T03.3 Diagrama de Clases (Análisis y Diseño)
 
 ```mermaid
 classDiagram
     class Encriptador {
         <<static>>
+        -string ClaveMaestra
+        -string IV
         +string Hash(string texto)
+        +string EncriptarAES(string textoPlano)
+        +string DesencriptarAES(string textoCifrado)
+    }
+    
+    class UsuarioBLL {
+        +Guardar(u: Usuario)
+        +Login(email: string, pass: string)
+    }
+    
+    class UsuarioMPP {
+        +MapearUsuario(fila: DataRow)
+    }
+
+    UsuarioBLL --> Encriptador : utiliza
+    UsuarioMPP --> Encriptador : utiliza
+```
+
+## T03.4 Modelo de Datos (DER Técnico)
+
+```mermaid
+erDiagram
+    USUARIO {
+        int id PK
+        string dni "Cifrado (AES)"
+        string password "Hash (SHA256)"
+        string email UK
     }
 ```
 
----
+## T03.5 Diagramas de Secuencia (Implementación)
 
-## T03.4 Diagrama de Secuencia (Generación de Hash)
-
+### Secuencia: Cifrado de DNI en Registro
 ```mermaid
 sequenceDiagram
-    participant BLL as lógica de Negocio
-    participant Enc as Encriptador (Servicios)
-    participant Lib as System.Security.Cryptography
+    participant UI as UC_Registro
+    participant BLL as UsuarioBLL
+    participant Enc as Encriptador
+    participant DAL as UsuarioDAL
 
-    BLL->>Enc: Hash(texto)
-    Enc->>Lib: SHA256.Create()
-    Lib-->>Enc: shaInstance
-    Enc->>Lib: ComputeHash(bytes)
-    Lib-->>Enc: hashBytes
-    Enc->>Enc: Conversión a Hexadecimal
-    Enc-->>BLL: hashHex (64 caracteres)
+    UI->>BLL: Insertar(usuario, pass)
+    BLL->>Enc: EncriptarAES(dni)
+    Enc-->>BLL: dniCifrado (Base64)
+    BLL->>Enc: Hash(pass)
+    Enc-->>BLL: passHash
+    BLL->>DAL: Insertar(usuarioCifrado)
+```
+
+### Secuencia: Descifrado de DNI en Consulta
+```mermaid
+sequenceDiagram
+    participant DAL as UsuarioDAL
+    participant MPP as UsuarioMPP
+    participant Enc as Encriptador
+    participant UI as ListaUsuarios
+
+    DAL->>MPP: MapearUsuario(fila)
+    MPP->>Enc: DesencriptarAES(dniCifrado)
+    Enc-->>MPP: dniPlano
+    MPP-->>DAL: usuarioObjeto
+    DAL-->>UI: Mostrar DNI Plano
+```
+
+## T03.6 Diseño de los Algoritmos
+
+### Algoritmo 1: Generación de Hash (SHA256)
+```text
+Entrada: texto (string)
+Salida: hash (string hexadecimal)
+
+1. Crear instancia de SHA256.
+2. Convertir texto de entrada a array de bytes (UTF8).
+3. Computar Hash del array de bytes.
+4. Convertir cada byte resultante a su representación hexadecimal (x2).
+5. Concatenar y retornar el string resultante (64 caracteres).
+```
+
+### Algoritmo 2: Encriptación Simétrica (AES-256)
+```text
+Entrada: textoPlano (string), ClaveMaestra, IV
+Salida: textoCifrado (string Base64)
+
+1. Crear instancia de algoritmo AES.
+2. Configurar Clave y IV (32 bytes y 16 bytes respectivamente).
+3. Crear un Encryptor con la Clave e IV configurados.
+4. Crear un MemoryStream para almacenar el flujo cifrado.
+5. Utilizar un CryptoStream para transformar el texto plano mediante el Encryptor.
+6. Escribir el texto plano en el CryptoStream.
+7. Convertir el contenido del MemoryStream a una cadena Base64.
+8. Retornar la cadena Base64.
 ```
 
 ---

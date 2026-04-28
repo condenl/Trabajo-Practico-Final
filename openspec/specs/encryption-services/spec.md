@@ -1,21 +1,22 @@
 ## ADDED Requirements
 
-### Requirement: Hashing de datos sensibles
-El sistema DEBE utilizar el algoritmo SHA256 para generar el hash de las contraseñas y otros datos sensibles, garantizando que sean almacenados de forma irreversible.
+### Requirement: Encriptación simétrica AES para DNIs
+El sistema DEBE utilizar el algoritmo AES (Advanced Encryption Standard) para cifrar los DNIs de los usuarios, permitiendo su recuperación (desencriptación) para visualización en la interfaz de usuario.
 
-#### Scenario: Generación de hash consistente
-- **WHEN** se solicita el hash de un mismo texto plano en distintas ocasiones
-- **THEN** el sistema DEBE retornar siempre el mismo resultado hexadecimal de 64 caracteres.
+#### Scenario: Cifrado y descifrado exitoso
+- **WHEN** un usuario ingresa su DNI durante el registro
+- **THEN** el sistema DEBE almacenarlo cifrado en la base de datos y mostrarlo correctamente descifrado en los listados de administración.
 
-### Requirement: Documentación del proceso de Hashing
-El sistema DEBE documentar el objetivo y el diseño del algoritmo de hashing en la carpeta de documentación global.
+### Requirement: Hashing irreversible para contraseñas
+El sistema DEBE utilizar el algoritmo SHA256 para el resguardo de contraseñas, asegurando que no puedan ser recuperadas en texto plano.
 
-#### Scenario: Reflejo en Carpeta Documentación
-- **WHEN** se consulta la sección T03 de la documentación
-- **THEN** se DEBE encontrar la descripción técnica del algoritmo SHA256 y su aplicación en el sistema.
+#### Scenario: Validación de contraseña en login
+- **WHEN** un usuario intenta iniciar sesión
+- **THEN** el sistema DEBE comparar el hash de la contraseña ingresada con el hash almacenado en la base de datos.
 
-## REMOVED Requirements
+### Requirement: Documentación Técnica T03 Sincronizada
+El sistema DEBE mantener la sección T03 de la Carpeta_Documentacion.md actualizada con los algoritmos AES y SHA256, incluyendo sus objetivos y detalles de implementación.
 
-### Requirement: Encriptación simétrica reversible
-**Reason**: Se ha decidido simplificar el sistema utilizando únicamente hashing unidireccional para los requisitos actuales.
-**Migration**: Eliminar cualquier referencia o implementación de AES en la capa de servicios.
+#### Scenario: Verificación de documentación
+- **WHEN** se revisa el archivo Carpeta_Documentacion.md
+- **THEN** la sección T03 DEBE detallar el uso de AES para DNI y SHA256 para contraseñas, alineándose con carpeta_modelo.md.
