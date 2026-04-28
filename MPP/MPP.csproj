@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitacoraMPP.cs" />
-    <Compile Include="RolMPP.cs" />
     <Compile Include="UsuarioMPP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

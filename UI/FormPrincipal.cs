@@ -44,5 +44,13 @@ namespace UI
                 this.Close();
             }
         }
+
+        private void btnUsuarios_Click(object sender, EventArgs e)
+        {
+            UC_Usuarios usuarios = new UC_Usuarios();
+            panel1.Controls.Clear();
+            panel1.Controls.Add(usuarios);
+            usuarios.Show();
+        }
     }
 }

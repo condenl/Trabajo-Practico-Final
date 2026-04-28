@@ -43,7 +43,7 @@ namespace DAL
             return null;
         }
 
-        public bool ExisteDni(string dniCifrado) 
+        public bool ExisteDni(string dniCifrado)
         {
             SqlParameter[] p = { new SqlParameter("@Dni", dniCifrado) };
             DataTable dt = Conexion.Instancia.Leer("sp_BuscarUsuarioPorDni", p);
@@ -93,8 +93,7 @@ namespace DAL
                 new SqlParameter("@Email", usuario.Email),
                 new SqlParameter("@Password", usuario.Password),
                 new SqlParameter("@FechaAlta", usuario.FechaAlta),
-                new SqlParameter("@Activo", usuario.Activo),
-                new SqlParameter("@RolId", usuario.RolId)
+                new SqlParameter("@Activo", usuario.Activo)
             };
         }
     }

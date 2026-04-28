@@ -31,6 +31,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnBitacora = new System.Windows.Forms.Button();
             this.btnCerrarSesion = new System.Windows.Forms.Button();
+            this.btnUsuarios = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panel1
@@ -42,7 +43,7 @@
             // 
             // btnBitacora
             // 
-            this.btnBitacora.Location = new System.Drawing.Point(12, 78);
+            this.btnBitacora.Location = new System.Drawing.Point(12, 12);
             this.btnBitacora.Name = "btnBitacora";
             this.btnBitacora.Size = new System.Drawing.Size(120, 43);
             this.btnBitacora.TabIndex = 0;
@@ -60,11 +61,22 @@
             this.btnCerrarSesion.UseVisualStyleBackColor = true;
             this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
             // 
+            // btnUsuarios
+            // 
+            this.btnUsuarios.Location = new System.Drawing.Point(12, 76);
+            this.btnUsuarios.Name = "btnUsuarios";
+            this.btnUsuarios.Size = new System.Drawing.Size(120, 43);
+            this.btnUsuarios.TabIndex = 2;
+            this.btnUsuarios.Text = "Usuarios";
+            this.btnUsuarios.UseVisualStyleBackColor = true;
+            this.btnUsuarios.Click += new System.EventHandler(this.btnUsuarios_Click);
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1520, 623);
+            this.Controls.Add(this.btnUsuarios);
             this.Controls.Add(this.btnCerrarSesion);
             this.Controls.Add(this.btnBitacora);
             this.Controls.Add(this.panel1);
@@ -79,5 +91,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnBitacora;
         private System.Windows.Forms.Button btnCerrarSesion;
+        private System.Windows.Forms.Button btnUsuarios;
     }
 }
