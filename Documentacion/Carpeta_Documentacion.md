@@ -735,97 +735,32 @@ Capas Transversales:
 
 ```mermaid
 graph TD
-    subgraph "Presentación (UI)"
-        FormPrincipal["FormPrincipal<br/>(MDI Container)"]
-        UCRegistro["UC_Registro<br/>(User Control)"]
-        UCBitacora["UC_Bitacora<br/>(User Control)"]
-        LoginForm["Login<br/>(Formulario)"]
+    subgraph UI ["Presentación (UI)"]
     end
 
-    subgraph "Lógica de Negocio (BLL)"
-        UsuarioBLL["UsuarioBLL<br/>(IGestor, IObservado)"]
-        RolBLL["RolBLL"]
-        BitacoraBLL["BitacoraBLL<br/>(Singleton, IObserver)"]
+    subgraph BLL ["Lógica de Negocio (BLL)"]
     end
 
-    subgraph "Entidades (BE)"
-        Usuario["Usuario<br/>(Persona)"]
-        Persona["Persona<br/>(Abstract)"]
-        Rol["Rol"]
-        EventoBitacora["EventoBitacora"]
-        Ifaces["Interfaces<br/>(IGestor, IObservado,<br/>IObserver, ILogueable)"]
-        Excepciones["Excepciones<br/>(UsuarioBloqueadoException)"]
+    subgraph BE ["Entidades (BE)"]
     end
 
-    subgraph "Acceso a Datos (DAL)"
-        UsuarioDAL["UsuarioDAL<br/>(Singleton)"]
-        RolDAL["RolDAL<br/>(Singleton)"]
-        BitacoraDAL["BitacoraDAL<br/>(Singleton)"]
-        Conexion["Conexion<br/>(DB Connection)"]
+    subgraph DAL ["Acceso a Datos (DAL)"]
     end
 
-    subgraph "Servicios"
-        Encriptador["Encriptador<br/>(Hash, Seguridad)"]
+    subgraph Servicios ["Servicios"]
     end
 
-    FormPrincipal -->|Invoca| UsuarioBLL
-    FormPrincipal -->|Invoca| RolBLL
-    FormPrincipal -->|Invoca| BitacoraBLL
-
-    UCRegistro -->|Invoca| UsuarioBLL
-    UCBitacora -->|Invoca| BitacoraBLL
-    LoginForm -->|Invoca| UsuarioBLL
-
-    UsuarioBLL -->|Utiliza| Usuario
-    UsuarioBLL -->|Utiliza| Rol
-    UsuarioBLL -->|Utiliza| EventoBitacora
-    UsuarioBLL -->|Implementa| Ifaces
-    UsuarioBLL -->|Lanza| Excepciones
-    UsuarioBLL -->|Notifica| BitacoraBLL
-    UsuarioBLL -->|Invoca| Encriptador
-
-    RolBLL -->|Utiliza| Rol
-    RolBLL -->|Invoca| RolDAL
-
-    BitacoraBLL -->|Utiliza| EventoBitacora
-    BitacoraBLL -->|Implementa| Ifaces
-    BitacoraBLL -->|Invoca| BitacoraDAL
-
-    UsuarioBLL -->|Invoca| UsuarioDAL
-    UsuarioDAL -->|Utiliza| Usuario
-    UsuarioDAL -->|Utiliza| Conexion
-
-    RolDAL -->|Utiliza| Rol
-    RolDAL -->|Utiliza| Conexion
-
-    BitacoraDAL -->|Utiliza| EventoBitacora
-    BitacoraDAL -->|Utiliza| Conexion
-
-    Usuario -->|Hereda de| Persona
-    Persona -->|Implementa| Ifaces
-
-    style FormPrincipal fill:#FF6B6B
-    style UCRegistro fill:#FF6B6B
-    style UCBitacora fill:#FF6B6B
-    style LoginForm fill:#FF6B6B
-
-    style UsuarioBLL fill:#4ECDC4
-    style RolBLL fill:#4ECDC4
-    style BitacoraBLL fill:#4ECDC4
-
-    style UsuarioDAL fill:#95E1D3
-    style RolDAL fill:#95E1D3
-    style BitacoraDAL fill:#95E1D3
-    style Conexion fill:#95E1D3
-
-    style Usuario fill:#FFE66D
-    style Persona fill:#FFE66D
-    style Rol fill:#FFE66D
-    style EventoBitacora fill:#FFE66D
-    style Ifaces fill:#FFE66D
-    style Excepciones fill:#FFE66D
-
-    style Encriptador fill:#A8E6CF
+    UI --> BLL
+    BLL --> DAL
+    BLL --> BE
+    DAL --> BE
+    BLL --> Servicios
+    
+    style UI fill:#FF6B6B
+    style BLL fill:#4ECDC4
+    style DAL fill:#95E1D3
+    style BE fill:#FFE66D
+    style Servicios fill:#A8E6CF
 ```
 
 ---
