@@ -502,13 +502,13 @@ erDiagram
     ROL {
         int id PK
         string nombre UK
-        string Descripción
+        string descripcion
         bool activo
     }
 
     USUARIO {
         int id PK
-        int dni UK
+        string dni UK
         string nombre
         string apellido
         string email UK
@@ -738,11 +738,11 @@ graph TD
     subgraph "Presentación (UI)"
         FormPrincipal["FormPrincipal<br/>(MDI Container)"]
         UCRegistro["UC_Registro<br/>(User Control)"]
-        UCBitácora["UC_Bitacora<br/>(User Control)"]
+        UCBitacora["UC_Bitacora<br/>(User Control)"]
         LoginForm["Login<br/>(Formulario)"]
     end
 
-    subgraph "lógica de Negocio (BLL)"
+    subgraph "Lógica de Negocio (BLL)"
         UsuarioBLL["UsuarioBLL<br/>(IGestor, IObservado)"]
         RolBLL["RolBLL"]
         BitacoraBLL["BitacoraBLL<br/>(Singleton, IObserver)"]
@@ -773,7 +773,7 @@ graph TD
     FormPrincipal -->|Invoca| BitacoraBLL
 
     UCRegistro -->|Invoca| UsuarioBLL
-    UCBitácora -->|Invoca| BitacoraBLL
+    UCBitacora -->|Invoca| BitacoraBLL
     LoginForm -->|Invoca| UsuarioBLL
 
     UsuarioBLL -->|Utiliza| Usuario
@@ -806,7 +806,7 @@ graph TD
 
     style FormPrincipal fill:#FF6B6B
     style UCRegistro fill:#FF6B6B
-    style UCBitácora fill:#FF6B6B
+    style UCBitacora fill:#FF6B6B
     style LoginForm fill:#FF6B6B
 
     style UsuarioBLL fill:#4ECDC4
@@ -840,13 +840,13 @@ erDiagram
     ROL {
         int id PK
         string nombre UK
-        string Descripción
+        string descripcion
         bool activo
     }
 
     USUARIO {
         int id PK
-        int dni UK
+        string dni UK
         string nombre
         string apellido
         string email UK
@@ -2375,9 +2375,7 @@ La implementación de T02 cumple exitosamente con:
 
 ### Anexo A: Referencias de Diagramas
 
-- **Diagramas\01_componentes_arquitectura.mmd** - Diagrama de componentes del sistema
-- **Diagramas\02_esquema_persistencia_DER.mmd** - Diagrama Entidad-Relación
-- **Diagramas\03_mapa_navegacion.mmd** - Mapa de navegación de UI
+- Los diagramas de componentes, entidad-relación y navegación se encuentran embebidos directamente en las secciones **T01.3**, **T01.4/G07.1** y **T01.5** respectivamente, utilizando el estándar Mermaid para garantizar una única fuente de verdad.
 
 ### Anexo B: estructura de Proyectos en Solución
 
@@ -2388,8 +2386,7 @@ Trabajo Practico Final/
 ├── DAL/                   # Data Access Layer - Acceso a datos
 ├── UI/                    # User Interface - Presentación
 ├── Servicios/             # Servicios compartidos (Encriptación, etc.)
-├── Documentacion/         # Documentación del sistema
-└── Diagramas/             # Diagramas UML y arquitectura
+└── Documentacion/         # Documentación del sistema (incluye diagramas Mermaid)
 ```
 
 ### Anexo C: Consideraciones para Futuras Iteraciones
