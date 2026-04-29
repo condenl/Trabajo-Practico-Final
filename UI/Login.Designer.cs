@@ -37,6 +37,7 @@
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnRegistro = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label4
@@ -63,7 +64,7 @@
             // btnIniciarSesion
             // 
             this.btnIniciarSesion.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnIniciarSesion.Location = new System.Drawing.Point(133, 263);
+            this.btnIniciarSesion.Location = new System.Drawing.Point(159, 267);
             this.btnIniciarSesion.Name = "btnIniciarSesion";
             this.btnIniciarSesion.Size = new System.Drawing.Size(133, 36);
             this.btnIniciarSesion.TabIndex = 42;
@@ -118,7 +119,7 @@
             // btnRegistro
             // 
             this.btnRegistro.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegistro.Location = new System.Drawing.Point(116, 394);
+            this.btnRegistro.Location = new System.Drawing.Point(159, 393);
             this.btnRegistro.Name = "btnRegistro";
             this.btnRegistro.Size = new System.Drawing.Size(133, 36);
             this.btnRegistro.TabIndex = 46;
@@ -126,11 +127,22 @@
             this.btnRegistro.UseVisualStyleBackColor = true;
             this.btnRegistro.Click += new System.EventHandler(this.btnRegistro_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(57, 363);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(386, 17);
+            this.label2.TabIndex = 47;
+            this.label2.Text = "Aun no tenes un usuario? Create una cuenta haciendo click abajo";
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1520, 623);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnRegistro);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -159,5 +171,6 @@
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnRegistro;
+        private System.Windows.Forms.Label label2;
     }
 }
