@@ -72,6 +72,12 @@
     <Compile Include="UserControls\UC_Registro.Designer.cs">
       <DependentUpon>UC_Registro.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\UC_Usuarios.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UC_Usuarios.Designer.cs">
+      <DependentUpon>UC_Usuarios.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="FormPrincipal.resx">
       <DependentUpon>FormPrincipal.cs</DependentUpon>
     </EmbeddedResource>
@@ -92,6 +98,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UC_Registro.resx">
       <DependentUpon>UC_Registro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UC_Usuarios.resx">
+      <DependentUpon>UC_Usuarios.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

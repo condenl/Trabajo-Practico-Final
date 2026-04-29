@@ -11,9 +11,6 @@ namespace BE
         public DateTime FechaAlta { get; set; }
         public bool Activo { get; set; }
 
-        public int RolId { get; set; }
-        public Rol RolAsignado { get; set; }
-
         public int IntentosFallidos { get; set; }
 
         public override string TipoEntidad

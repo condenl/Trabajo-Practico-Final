@@ -17,44 +17,14 @@ namespace UI.UserControls
     {
         public event EventHandler OnRegresar;
         private IVisitante usuarioBLL;
-        private RolBLL rolBLL;
 
         public UC_Registro()
         {
             InitializeComponent();
             usuarioBLL = new UsuarioBLL();
-            rolBLL = new RolBLL();
 
             if (txtPassword != null)
                 txtPassword.UseSystemPasswordChar = true;
-            this.Load += UC_Registro_Load;
-        }
-
-        private void UC_Registro_Load(object sender, EventArgs e)
-        {
-            CargarRoles();
-        }
-
-        private void CargarRoles()
-        {
-            try
-            {
-                List<Rol> roles = rolBLL.ListarTodos();
-
-                if (roles != null && roles.Count > 0)
-                {
-                    cmbRol.DataSource = null;
-                    cmbRol.DataSource = roles;
-                    cmbRol.DisplayMember = "Nombre";
-                    cmbRol.ValueMember = "Id";      
-
-                    cmbRol.SelectedIndex = 0; 
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar la lista de roles: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void btnRegistrar_Click(object sender, EventArgs e)
@@ -65,10 +35,9 @@ namespace UI.UserControls
                     string.IsNullOrWhiteSpace(txtNombre.Text) ||
                     string.IsNullOrWhiteSpace(txtApellido.Text) ||
                     string.IsNullOrWhiteSpace(txtEmail.Text) ||
-                    string.IsNullOrWhiteSpace(txtPassword.Text) ||
-                    cmbRol.SelectedValue == null)
+                    string.IsNullOrWhiteSpace(txtPassword.Text))
                 {
-                    MessageBox.Show("Por favor, complete todos los campos y seleccione un rol.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Por favor, complete todos los campos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -84,8 +53,7 @@ namespace UI.UserControls
                     Nombre = txtNombre.Text.Trim(),
                     Apellido = txtApellido.Text.Trim(),
                     Email = txtEmail.Text.Trim(),
-                    Activo = true,
-                    RolId = (int)cmbRol.SelectedValue
+                    Activo = true
                 };
 
                 usuarioBLL.Registrar(nuevoUsuario, txtPassword.Text);
@@ -108,7 +76,6 @@ namespace UI.UserControls
             txtApellido.Clear();
             txtEmail.Clear();
             txtPassword.Clear();
-            if (cmbRol.Items.Count > 0) cmbRol.SelectedIndex = 0;
         }
 
         private void btnVolver_Click(object sender, EventArgs e)

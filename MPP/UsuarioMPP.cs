@@ -42,21 +42,6 @@ namespace MPP
                 usuario.FechaAlta = Convert.ToDateTime(fila["FechaAlta"]);
                 usuario.Activo = Convert.ToBoolean(fila["Activo"]);
 
-
-                if (fila["RolId"] != DBNull.Value)
-                    usuario.RolId = Convert.ToInt32(fila["RolId"]);
-
-                if (fila.Table.Columns.Contains("NombreRol") && fila["NombreRol"] != DBNull.Value)
-                {
-                    usuario.RolAsignado = new Rol();
-                    usuario.RolAsignado.Id = usuario.RolId;
-                    usuario.RolAsignado.Nombre = fila["NombreRol"].ToString();
-                }
-                else
-                {
-                    usuario.RolAsignado = new Rol { Id = usuario.RolId, Nombre = "Sin Asignar" };
-                }
-
                 if (fila.Table.Columns.Contains("IntentosFallidos") && fila["IntentosFallidos"] != DBNull.Value)
                 {
                     usuario.IntentosFallidos = Convert.ToInt32(fila["IntentosFallidos"]);

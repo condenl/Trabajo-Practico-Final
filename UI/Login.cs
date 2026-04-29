@@ -20,16 +20,13 @@ namespace UI
             ConfigurarFormulario();
         }
 
-        private void Principal_Load(object sender, EventArgs e)
-        {
-        }
-
         private void ConfigurarFormulario()
         {
             if (txtPassword != null)
                 txtPassword.UseSystemPasswordChar = true;
 
             panel1.Controls.Clear();
+            panel1.Visible = false; // El panel solo se ve cuando hay un UserControl
         }
 
         private void btnIniciarSesion_Click(object sender, EventArgs e)
@@ -47,16 +44,17 @@ namespace UI
 
                 ProcesarLogin(email, password);
             }
-            catch (UsuarioBloqueadoException ex) 
+            catch (UsuarioBloqueadoException ex)
             {
                 MessageBox.Show(ex.Message, "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+        // UNIFICAMOS el evento del botón registro (borrá el btnRegistro_Click_1 si existe en el diseñador)
         private void btnRegistro_Click(object sender, EventArgs e)
         {
             MostrarRegistro();
@@ -84,63 +82,50 @@ namespace UI
 
         private void NavegarAlSistema(Usuario usuario)
         {
-            MessageBox.Show($"Bienvenido: {usuario.Nombre} ({usuario.RolAsignado})", "Acceso Concedido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"Bienvenido: {usuario.Nombre}", "Acceso Concedido", MessageBoxButtons.OK, MessageBoxIcon.Information);
             FormPrincipal formPrincipal = new FormPrincipal(usuario);
-
             AbrirFormularioPrincipal(formPrincipal);
         }
 
         private void AbrirFormularioPrincipal(Form formularioDestino)
         {
             this.Hide();
-
-            formularioDestino.FormClosed += (s, args) =>
-            {
-                CerrarSesionYRestaurarLogin();
-            };
-
+            formularioDestino.FormClosed += (s, args) => CerrarSesionYRestaurarLogin();
             formularioDestino.Show();
         }
 
         private void CerrarSesionYRestaurarLogin()
         {
             visitanteBLL.Logout();
-
             txtEmail.Clear();
             txtPassword.Clear();
-            txtPassword.UseSystemPasswordChar = true;
-
             txtEmail.Focus();
             this.Show();
         }
 
+        // MÉTODO CLAVE: Aquí es donde "escuchamos" al UserControl
         private void MostrarRegistro()
         {
-            panel1.Controls.Clear();
             UC_Registro registro = new UC_Registro();
             registro.Dock = DockStyle.Fill;
+
+            // Enganchamos el evento que creaste en el UC con el método de aquí abajo
             registro.OnRegresar += Registro_OnRegresar;
 
+            panel1.Controls.Clear();
             panel1.Controls.Add(registro);
-            registro.BringToFront();
+            panel1.Visible = true; // Mostramos el panel
+            panel1.BringToFront();
         }
 
         private void Registro_OnRegresar(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
+            panel1.Visible = false; // Ocultamos el panel para volver a ver el Login
         }
 
         private void Login_Load(object sender, EventArgs e)
         {
-
-        }
-
-        private void btnRegistro_Click_1(object sender, EventArgs e)
-        {
-            UC_Registro registro = new UC_Registro();
-            panel1.Controls.Clear();
-            panel1.Controls.Add(registro);
-            registro.Show();
         }
     }
 }
