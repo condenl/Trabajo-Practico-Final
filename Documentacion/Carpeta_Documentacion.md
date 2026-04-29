@@ -214,279 +214,256 @@ El sistema implementa las siguientes gestáiones dentro de su alcance:
 
 ```mermaid
 classDiagram
+    %% Interfaces
+    class IEntidadBase {
+        <<interface>>
+        +int Id
+        +string Dni
+        +string Nombre
+        +string Apellido
+        +string NombreCompleto
+        +string TipoEntidad
+    }
+    class ILogueable {
+        <<interface>>
+    }
+    class IGestor_T_ {
+        <<interface>>
+        +List~T~ Listar()
+        +void Guardar(T objeto)
+        +void Eliminar(T objeto)
+    }
+    class IObservado {
+        <<interface>>
+        +void Suscribir(IObserver obs)
+        +void Desuscribir(IObserver obs)
+        +void Notificar(EventoBitacora evento)
+    }
+    class IObserver {
+        <<interface>>
+        +void Actualizar(EventoBitacora evento)
+    }
 
     %% Core BE Classes
     class Persona {
-        +Id : int
-        +Dni : int
-        +Nombre : string
-        +Apellido : string
-        +NombreCompleto : string
-        +TipoEntidad : string
-        +ToString() : string
-        +CompareTo(Persona) : int
+        <<abstract>>
+        +int Id
+        +string Dni
+        +string Nombre
+        +string Apellido
+        +string NombreCompleto
+        +string TipoEntidad
+        +CompareTo(Persona) int
     }
 
     class Usuario {
-        +Email : string
-        +Password : string
-        +FechaAlta : DateTime
-        +Activo : bool
-        +RolId : int
-        +RolAsignado : Rol
-        +Vehiculos : List_Vehiculo
-        +IntentosFallidos : int
-        +Clone() : object
+        +string Email
+        +string Password
+        +DateTime FechaAlta
+        +bool Activo
+        +int RolId
+        +Rol RolAsignado
+        +int IntentosFallidos
+        +Clone() object
     }
 
     class Rol {
-        +Id : int
-        +Nombre : string
-        +Descripción : string
-        +Activo : bool
-        +ToString() : string
+        +int Id
+        +string Nombre
+        +string Descripcion
+        +bool Activo
     }
 
-    class Vehiculo {
-        +Id : int
-        +Patente : string
-        +Marca : string
-        +Modelo : string
-        +UsuarioId : int
-        +ToString() : string
-    }
-
-    class Alerta {
-        +Mensaje : string
-        +FechaHora : DateTime
-        +Nivel : string
-        +UsuarioGenerador : string
-    }
-
-    class IEntidadAcceso {
-        <<interface>>
-    }
-
-    class IVisitante {
-        <<interface>>
-    }
-
-    class IAdministrador {
-        <<interface>>
-    }
-
-    class IGestor_T {
-        <<interface>>
-    }
-
-    class IObservado {
-        <<interface>>
-    }
-
-    class IObserver {
-        <<interface>>
+    class EventoBitacora {
+        +int Id
+        +DateTime FechaHora
+        +string UsuarioEmail
+        +string Actividad
+        +string InformacionAsociada
     }
 
     %% DAL Layer
     class Conexion {
-        +connectionString : string
-        +Instancia : Conexion
-        +ObtenerConexion() : SqlConnection
-        +RUD(command, params) : int
-        +Leer(storedProcedure, params) : DataTable
+        <<Singleton>>
+        -string connectionString
+        +static Conexion Instancia
+        +RUD(string sp, SqlParameter[] p) int
+        +Leer(string sp, SqlParameter[] p) DataTable
     }
 
     class UsuarioDAL {
-        +Instancia : UsuarioDAL
-        +Listar() : List_Usuario
-        +BuscarPorEmail(email) : Usuario
-        +ExisteDni(dni) : bool
-        +Insertar(u) : int
-        +Registrar(u) : int
-        +Modificar(u) : int
-        +Eliminar(u) : int
-        +SumarIntentoFallido(email) : void
-        +ResetearIntentos(email) : void
-        +BloquearUsuario(email) : void
+        <<Singleton>>
+        +static UsuarioDAL Instancia
+        +List~Usuario~ Listar()
+        +Usuario BuscarPorEmail(string email)
+        +bool ExisteDni(string dniCifrado)
+        +int Insertar(Usuario u)
+        +int Modificar(Usuario u)
+        +int Eliminar(Usuario u)
+        +void SumarIntentoFallido(string email)
+        +void ResetearIntentos(string email)
     }
 
     class RolDAL {
-        +Instancia : RolDAL
-        +Listar() : List_Rol
-        +Insertar(r) : int
-        +Modificar(r) : int
-        +Eliminar(id) : int
+        <<Singleton>>
+        +static RolDAL Instancia
+        +List~Rol~ Listar()
+        +int Insertar(Rol r)
+        +int Modificar(Rol r)
+        +int Eliminar(int id)
+    }
+
+    class BitacoraDAL {
+        <<Singleton>>
+        +static BitacoraDAL Instancia
+        +int Insertar(EventoBitacora e)
+        +List~EventoBitacora~ LeerFiltrado(DateTime? d, DateTime? h, string u, string a)
     }
 
     %% MPP Layer
     class UsuarioMPP {
-        +Instancia : UsuarioMPP
-        +MapearUsuario(row) : Usuario
-        +MapearLista(dt) : List_Usuario
+        <<Singleton>>
+        +static UsuarioMPP Instancia
+        +Usuario MapearUsuario(DataRow row)
+        +List~Usuario~ MapearLista(DataTable dt)
     }
 
     class RolMPP {
-        +Instancia : RolMPP
-        +MapearRol(row) : Rol
-        +MapearLista(dt) : List_Rol
+        <<Singleton>>
+        +static RolMPP Instancia
+        +Rol MapearRol(DataRow row)
+        +List~Rol~ MapearLista(DataTable dt)
+    }
+
+    class BitacoraMPP {
+        <<Singleton>>
+        +static BitacoraMPP Instancia
+        +List~EventoBitacora~ MapearLista(DataTable dt)
     }
 
     %% BLL Layer
     class UsuarioBLL {
-        +ListarTodos() : List_Usuario
-        +Guardar(u) : void
-        +Eliminar(id) : void
-        +Listar() : List_Usuario
-        +Eliminar(u) : void
-        +Insertar(u, pass) : void
-        +Modificar(u, newPass) : void
-        +Login(email, pass) : Usuario
-        +Registrar(u, pass) : void
+        -List~IObserver~ observadores
+        +List~Usuario~ ListarTodos()
+        +void Guardar(Usuario u)
+        +void Insertar(Usuario u, string pass)
+        +void Modificar(Usuario u, string newPass)
+        +Usuario Login(string email, string pass)
+        +void Logout()
     }
 
     class RolBLL {
-        +ListarTodos() : List_Rol
-        +Guardar(r) : void
-        +Eliminar(id) : void
-        +Listar() : List_Rol
-        +Modificar(r) : int
+        +List~Rol~ ListarTodos()
+        +void Guardar(Rol r)
+        +void Eliminar(int id)
+    }
+
+    class BitacoraBLL {
+        <<Singleton>>
+        +static BitacoraBLL Instancia
+        +void Actualizar(EventoBitacora e)
+        +List~EventoBitacora~ Consultar(DateTime? d, DateTime? d, string u, string a)
     }
 
     %% Services
     class Encriptador {
-        +Hash(texto) : string
-    }
-
-    class LogManager {
-        +Instancia : LogManager
-        +RegistrarAlerta(a) : void
+        <<static>>
+        +static string Hash(string t)
+        +static string EncriptarAES(string p)
+        +static string DesencriptarAES(string c)
     }
 
     class Session {
-        +Instance : Session
-        +Usuario : Usuario
-        +FechaInicio : DateTime
-        +Login(u) : void
-        +Logout() : void
-        +IsLogged() : bool
-    }
-
-    %% UI Layer
-    class Login {
-        +visitanteBLL : IVisitante
-        +Principal_Load() : void
-        +ConfigurarFormulario() : void
-        +btnIniciarSesion_Click() : void
-        +btnRegistro_Click() : void
-        +ValidarEntradas(email, pass) : bool
-        +ProcesarLogin(email, pass) : void
-        +NavegarAlSistema(u) : void
-        +AbrirFormularioPrincipal(f) : void
-        +CerrarSesionYRestáaurarLogin() : void
-        +MostrarRegistro() : void
-        +Registro_OnRegresar() : void
-    }
-
-    class UC_Registro {
-        +usuarioBLL : IVisitante
-        +rolBLL : RolBLL
-        +OnRegresar : event
-        +btnRegistrar_Click() : void
-        +btnVolver_Click() : void
+        <<Singleton>>
+        +static Session Instance
+        +Usuario Usuario
+        +DateTime FechaInicio
+        +void Login(Usuario u)
+        +void Logout()
+        +bool IsLogged()
     }
 
     %% Relationships
     Persona <|-- Usuario
-    Persona <|.. IEntidadAcceso
-
-    Usuario --> Rol
-    Usuario --> Vehiculo : "tiene"
-
-    UsuarioBLL ..|> IVisitante
-    UsuarioBLL ..|> IAdministrador
-    UsuarioBLL ..|> IGestor_T
-
-    RolBLL ..|> IGestor_T
-
-    UsuarioDAL --> Conexion : "usa"
-    RolDAL --> Conexion : "usa"
-
-    UsuarioDAL --> UsuarioMPP : "usa"
-    RolDAL --> RolMPP : "usa"
-
-    UsuarioBLL --> UsuarioDAL : "usa"
-    RolBLL --> RolDAL : "usa"
-
-    UsuarioBLL --> Encriptador : "usa"
-
-    LogManager --> Alerta : "registra"
-
-    Login --> UsuarioBLL : "usa"
-    Login --> Session : "usa"
-    Login --> UC_Registro : "contiene"
-
-    UC_Registro --> UsuarioBLL : "usa"
-    UC_Registro --> RolBLL : "usa"
-
-    Session --> Usuario : "mantiene"
+    Persona ..|> IEntidadBase
+    Usuario ..|> ILogueable
+    
+    UsuarioBLL ..|> IObservado
+    UsuarioBLL ..|> IGestor_Usuario_
+    BitacoraBLL ..|> IObserver
+    
+    UsuarioDAL --> UsuarioMPP : usa
+    RolDAL --> RolMPP : usa
+    BitacoraDAL --> BitacoraMPP : usa
+    
+    UsuarioDAL --> Conexion : usa
+    RolDAL --> Conexion : usa
+    BitacoraDAL --> Conexion : usa
+    
+    UsuarioBLL --> UsuarioDAL : usa
+    RolBLL --> RolDAL : usa
+    BitacoraBLL --> BitacoraDAL : usa
+    
+    UsuarioBLL --> Encriptador : usa
+    UsuarioBLL --> BitacoraBLL : notifica
 
     style Persona fill:#e1f5ff
     style Usuario fill:#e1f5ff
     style Rol fill:#e1f5ff
-    style Vehiculo fill:#e1f5ff
-    style Alerta fill:#e1f5ff
+    style EventoBitacora fill:#e1f5ff
 
     style Conexion fill:#fff3e0
     style UsuarioDAL fill:#fff3e0
     style RolDAL fill:#fff3e0
+    style BitacoraDAL fill:#fff3e0
 
     style UsuarioMPP fill:#f3e5f5
     style RolMPP fill:#f3e5f5
+    style BitacoraMPP fill:#f3e5f5
 
     style UsuarioBLL fill:#e8f5e9
     style RolBLL fill:#e8f5e9
+    style BitacoraBLL fill:#e8f5e9
 
     style Encriptador fill:#fce4ec
-    style LogManager fill:#fce4ec
     style Session fill:#fce4ec
-
-    style Login fill:#fff9c4
-    style UC_Registro fill:#fff9c4
 ```
 
 ### Descripción de Responsabilidades por Clase
 
 #### Clase: UsuarioBLL
 **Responsabilidades - Hacer:**
-- Registrar nuevos usuarios en el sistema
-- Autenticar usuarios mediante validación de credenciales
-- Modificar datos y contraseña de usuarios
-- Eliminar usuarios (baja lógica)
+- Registrar nuevos usuarios en el sistema.
+- Autenticar usuarios mediante validación de credenciales.
+- Modificar datos y contraseña de usuarios.
+- Eliminar usuarios (baja lógica).
+- Notificar a la bitácora sobre eventos de seguridad.
 
 **Responsabilidades - Conocer:**
-- Los datos de usuarios
-- Las reglas de validación de email y contraseña
-- El estado de intentos fallidos de login
+- Los datos de usuarios.
+- Las reglas de validación de email y contraseña.
+- El estado de intentos fallidos de login.
 
 #### Clase: BitacoraBLL
 **Responsabilidades - Hacer:**
-- Registrar eventos en la Bitácora
-- Notificar a observadores sobre nuevos eventos
-- Coordinar la persistencia de eventos
+- Registrar eventos en la Bitácora.
+- Notificar a observadores sobre nuevos eventos.
+- Coordinar la persistencia de eventos mediante la DAL.
 
 **Responsabilidades - Conocer:**
-- Los eventos ocurridos
-- Las entidades observadoras interesadas
+- Los eventos ocurridos.
+- Las entidades observadoras interesadas.
 
 #### Clase: Usuario
 **Responsabilidades - Hacer:**
-- Validarse a sí misma
-- Encapsular sus datos personales
+- Validarse a sí misma.
+- Encapsular sus datos personales.
+- Clonar su estado para operaciones de edición.
 
 **Responsabilidades - Conocer:**
-- Sus datos (email, contraseña, DNI, etc.)
-- Su rol asignado
-- Su estado de actividad
+- Sus datos (email, contraseña, DNI, etc.).
+- Su rol asignado.
+- Su estado de actividad.
 
 ---
 
@@ -633,6 +610,12 @@ El sistema implementa una arquitectura de **4 capas principales** más capas tra
 │  - Conexión a BD                                     │
 │  - Singletons para instancia única                   │
 └──────────────────────┬───────────────────────────────┘
+                       │ Depende de
+┌──────────────────────▼───────────────────────────────┐
+│  MPP (Mapeadores)                                    │
+│  - Mapeo de DataRows a Entidades (BE)                │
+│  - Lógica de descifrado AES para lectura             │
+└──────────────────────┬───────────────────────────────┘
                        │ Accede a
 ┌──────────────────────▼───────────────────────────────┐
 │  BD (Base de Datos)                                  │
@@ -747,18 +730,24 @@ graph TD
     subgraph DAL ["Acceso a Datos (DAL)"]
     end
 
+    subgraph MPP ["Mapeadores (MPP)"]
+    end
+
     subgraph Servicios ["Servicios"]
     end
 
     UI --> BLL
     BLL --> DAL
     BLL --> BE
-    DAL --> BE
+    DAL --> MPP
+    MPP --> BE
+    MPP --> Servicios
     BLL --> Servicios
     
     style UI fill:#FF6B6B
     style BLL fill:#4ECDC4
     style DAL fill:#95E1D3
+    style MPP fill:#f3e5f5
     style BE fill:#FFE66D
     style Servicios fill:#A8E6CF
 ```
