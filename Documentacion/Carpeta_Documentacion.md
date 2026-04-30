@@ -2352,6 +2352,8 @@ El objetivo de la Gestión de encriptado es proteger los datos sensibles almacen
 - **Irreversibilidad**: Garantizar que las contraseñas no puedan ser obtenidas en texto plano (Hashing).
 - **Confidencialidad**: Proteger datos sensibles como el DNI permitiendo su recuperación solo por personal autorizado (Encriptación Simétrica).
 
+> **Nota**: Para una descripción detallada de los casos de uso de encriptación, consulte el documento de [Casos de Uso T03 Encriptado](t02-login-logout-gestion-usuarios/Casos_de_Uso_T03_Encriptado.md).
+
 ## T03.2 Descripción Detallada de Funcionamiento
 
 El sistema implementa dos mecanismos principales de protección de datos:
