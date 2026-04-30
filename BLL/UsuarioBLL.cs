@@ -100,8 +100,6 @@ namespace BLL
 
             var existente = UsuarioDAL.Instancia.BuscarPorEmail(u.Email);
             if (existente != null && existente.Id != u.Id) throw new Exception("El Email ya pertenece a otro usuario.");
-
-            // VALIDACIÓN: Solo si intenta cambiar la contraseña
             if (!string.IsNullOrEmpty(newPass))
             {
                 ValidarPassword(newPass);

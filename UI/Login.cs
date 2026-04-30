@@ -26,7 +26,7 @@ namespace UI
                 txtPassword.UseSystemPasswordChar = true;
 
             panel1.Controls.Clear();
-            panel1.Visible = false; // El panel solo se ve cuando hay un UserControl
+            panel1.Visible = false;
         }
 
         private void btnIniciarSesion_Click(object sender, EventArgs e)
@@ -54,7 +54,6 @@ namespace UI
             }
         }
 
-        // UNIFICAMOS el evento del botón registro (borrá el btnRegistro_Click_1 si existe en el diseñador)
         private void btnRegistro_Click(object sender, EventArgs e)
         {
             MostrarRegistro();
@@ -103,25 +102,22 @@ namespace UI
             this.Show();
         }
 
-        // MÉTODO CLAVE: Aquí es donde "escuchamos" al UserControl
         private void MostrarRegistro()
         {
             UC_Registro registro = new UC_Registro();
             registro.Dock = DockStyle.Fill;
-
-            // Enganchamos el evento que creaste en el UC con el método de aquí abajo
             registro.OnRegresar += Registro_OnRegresar;
 
             panel1.Controls.Clear();
             panel1.Controls.Add(registro);
-            panel1.Visible = true; // Mostramos el panel
+            panel1.Visible = true;
             panel1.BringToFront();
         }
 
         private void Registro_OnRegresar(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
-            panel1.Visible = false; // Ocultamos el panel para volver a ver el Login
+            panel1.Visible = false;
         }
 
         private void Login_Load(object sender, EventArgs e)
