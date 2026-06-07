@@ -50,6 +50,7 @@
     <Compile Include="Interfaces\IObserver.cs" />
     <Compile Include="Interfaces\IVisitante.cs" />
     <Compile Include="Persona.cs" />
+	<Compile Include="DVV.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Excepciones\UsuarioBloqueadoException.cs" />

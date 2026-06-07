@@ -40,6 +40,13 @@ namespace BLL
 
         public List<Usuario> ListarTodos() => UsuarioDAL.Instancia.Listar();
 
+        public List<string> VerificarIntegridad()
+        {
+            var usuarios = UsuarioDAL.Instancia.Listar();
+            var storedDVV = DVVDAL.Instancia.Obtener("Usuario");
+            return Servicios.Integridad.VerificarIntegridad(usuarios, storedDVV);
+        }
+
         public void Guardar(Usuario u)
         {
             ValidarFormatoEmail(u.Email);
@@ -51,6 +58,7 @@ namespace BLL
 
                 u.Dni = Encriptador.EncriptarAES(u.Dni);
                 UsuarioDAL.Instancia.Insertar(u);
+                
                 Notificar(new EventoBitacora(responsable, "ALTA_USUARIO", $"Se creó el usuario: {u.Email}"));
             }
             else

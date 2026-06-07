@@ -12,6 +12,7 @@ namespace BE
         public bool Activo { get; set; }
 
         public int IntentosFallidos { get; set; }
+        public string DVH { get; set; }
 
         public override string TipoEntidad
         {

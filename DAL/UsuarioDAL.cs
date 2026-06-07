@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
 using BE;
 using MPP;
+using Servicios;
 
 namespace DAL
 {
@@ -53,7 +56,9 @@ namespace DAL
         public int Insertar(Usuario usuario)
         {
             SqlParameter[] p = CrearParametrosUsuario(usuario);
-            return Conexion.Instancia.RUD("SP_InsertarUsuario", p);
+            int res = Conexion.Instancia.RUD("SP_InsertarUsuario", p);
+            ModificarDV(usuario.Email);
+            return res;
         }
 
         public int Registrar(Usuario usuario) => Insertar(usuario);
@@ -62,25 +67,54 @@ namespace DAL
         {
             List<SqlParameter> lista = new List<SqlParameter>(CrearParametrosUsuario(usuario));
             lista.Insert(0, new SqlParameter("@Id", usuario.Id));
-            return Conexion.Instancia.RUD("SP_ModificarUsuario", lista.ToArray());
+            int res = Conexion.Instancia.RUD("SP_ModificarUsuario", lista.ToArray());
+            ModificarDV(usuario.Email);
+            return res;
+        }
+
+        public void ModificarDV(string email)
+        {
+            var usuario = BuscarPorEmail(email);
+            if (usuario == null)
+            {
+                return;
+            }
+            usuario.DVH = Servicios.Integridad.CalcularDVH(usuario);
+            SqlParameter[] p = {
+                new SqlParameter("@Id", usuario.Id),
+                new SqlParameter("@DVH", usuario.DVH)
+            };
+            Conexion.Instancia.RUD("sp_ModificarDVH", p);
+            ActualizarDVV();
         }
 
         public int Eliminar(Usuario usuario)
         {
             SqlParameter[] p = { new SqlParameter("@Id", usuario.Id) };
-            return Conexion.Instancia.RUD("SP_EliminarUsuario", p);
+            int res = Conexion.Instancia.RUD("SP_EliminarUsuario", p);
+            ActualizarDVV();
+            return res;
         }
 
         public void SumarIntentoFallido(string email)
         {
             SqlParameter[] p = { new SqlParameter("@Email", email) };
             Conexion.Instancia.RUD("sp_RegistrarFalloLogin", p);
+            ModificarDV(email);
         }
 
         public void ResetearIntentos(string email)
         {
             SqlParameter[] p = { new SqlParameter("@Email", email) };
             Conexion.Instancia.RUD("sp_ResetearIntentos", p);
+            ModificarDV(email);
+        }
+
+        public void ActualizarDVV()
+        {
+            List<Usuario> todos = Listar();
+            string dvv = Servicios.Integridad.CalcularDVV(todos);
+            DVVDAL.Instancia.Guardar("Usuario", dvv);
         }
 
         private SqlParameter[] CrearParametrosUsuario(Usuario usuario)
@@ -93,7 +127,8 @@ namespace DAL
                 new SqlParameter("@Email", usuario.Email),
                 new SqlParameter("@Password", usuario.Password),
                 new SqlParameter("@FechaAlta", usuario.FechaAlta),
-                new SqlParameter("@Activo", usuario.Activo)
+                new SqlParameter("@Activo", usuario.Activo),
+                new SqlParameter("@DVH", usuario.DVH != null ? usuario.DVH : (object) DBNull.Value)
             };
         }
     }

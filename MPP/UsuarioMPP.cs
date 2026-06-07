@@ -47,6 +47,11 @@ namespace MPP
                     usuario.IntentosFallidos = Convert.ToInt32(fila["IntentosFallidos"]);
                 }
 
+                if (fila.Table.Columns.Contains("DVH") && fila["DVH"] != DBNull.Value)
+                {
+                    usuario.DVH = fila["DVH"].ToString();
+                }
+
                 return usuario;
             }
             catch (Exception ex)
