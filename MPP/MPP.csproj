@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="BitacoraMPP.cs" />
     <Compile Include="SeguridadMPP.cs" />
+    <Compile Include="SoporteMPP.cs" />
     <Compile Include="UsuarioMPP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

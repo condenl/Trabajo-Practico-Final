@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using BE;
+using BE.Interfaces;
 
 namespace Servicios
 {
-    public class LogManager
+    public class LogManager : IObserver
     {
         #region Singleton
         private static LogManager instancia;
@@ -28,6 +28,18 @@ namespace Servicios
 
         private string rutaArchivo = "bitacora_alertas.log";
 
+        // IMPLEMENTAMOS EL MÉTODO DEL CONTRATO
+        public void Actualizar(EventoBitacora evento)
+        {
+            // Magia pura: El LogManager recibe TODOS los eventos, pero él mismo
+            // decide que SOLO le interesan los fallos y bloqueos de seguridad.
+            // La base de datos guarda todo, el archivo de texto guarda solo lo crítico.
+            if (evento.Actividad == "BLOQUEO" || evento.Actividad == "LOGIN_FALLIDO" || evento.Actividad == "SEGURIDAD")
+            {
+                RegistrarAlerta(evento);
+            }
+        }
+
         public void RegistrarAlerta(EventoBitacora evento)
         {
             try
@@ -42,9 +54,7 @@ namespace Servicios
                     }
                 }
             }
-            catch (Exception)
-            {
-            }
+            catch (Exception) { }
         }
     }
 }

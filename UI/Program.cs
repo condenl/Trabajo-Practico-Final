@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL;
+using Servicios;
 
 namespace UI
 {
@@ -28,6 +29,8 @@ namespace UI
                 BLL.BitacoraBLL.Instancia.Actualizar(new BE.EventoBitacora("SYSTEM", "FALLA_INTEGRIDAD", "Brecha de integridad detectada: " + string.Join(" | ", errores)));
                 return;
             }
+            GestorEventos.Instancia.Suscribir(BitacoraBLL.Instancia);
+            GestorEventos.Instancia.Suscribir(LogManager.Instancia);
             Application.Run(new Login());
         }
     }

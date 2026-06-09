@@ -9,13 +9,9 @@ using Servicios;
 
 namespace BLL
 {
-    // Quitamos IObservado de la firma, UsuarioBLL solo hace lógica de negocio
     public class UsuarioBLL : IVisitante, IAdministrador, IGestor<Usuario>
     {
-        public UsuarioBLL()
-        {
-            // Ya no hay Suscribir() acoplado aquí.
-        }
+        public UsuarioBLL() { }
 
         public List<Usuario> ListarTodos() => UsuarioDAL.Instancia.Listar();
 
@@ -37,7 +33,6 @@ namespace BLL
                 u.Dni = Encriptador.EncriptarAES(u.Dni);
                 UsuarioDAL.Instancia.Insertar(u);
 
-                // Disparamos el evento a través del Gestor centralizado
                 GestorEventos.Instancia.Notificar(new EventoBitacora(responsable, "ALTA_USUARIO", $"Se creó el usuario: {u.Email}"));
             }
             else
@@ -111,7 +106,7 @@ namespace BLL
             if (usuario == null)
             {
                 GestorEventos.Instancia.Notificar(new EventoBitacora(email, "LOGIN_FALLIDO", "Intento de inicio de sesión con email no registrado."));
-                return null; 
+                return null;
             }
 
             if (!usuario.Activo)
@@ -125,8 +120,16 @@ namespace BLL
             if (usuario.Password == passHash)
             {
                 UsuarioDAL.Instancia.ResetearIntentos(email);
+
                 SeguridadBLL seguridadBLL = new SeguridadBLL();
                 seguridadBLL.CargarEstructuraPermisos(usuario);
+
+
+                if (usuario.Permisos == null || usuario.Permisos.Count == 0)
+                {
+                    GestorEventos.Instancia.Notificar(new EventoBitacora(email, "SEGURIDAD", "Acceso denegado: Usuario sin roles en el sistema."));
+                    throw new UsuarioSinRolException("Su cuenta no tiene un perfil asignado.\nPor favor, contacte a Soporte Técnico o al Administrador del Edificio.");
+                }
 
                 Session.Instance.Login(usuario);
                 GestorEventos.Instancia.Notificar(new EventoBitacora(email, "LOGIN", "Inicio de sesión exitoso."));

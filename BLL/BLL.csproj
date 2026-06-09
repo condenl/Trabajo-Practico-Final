@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="BitacoraBLL.cs" />
     <Compile Include="SeguridadBLL.cs" />
+    <Compile Include="SoporteBLL.cs" />
     <Compile Include="UsuarioBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -38,6 +38,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnRegistro = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btnSoporte = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label4
@@ -137,11 +139,34 @@
             this.label2.TabIndex = 47;
             this.label2.Text = "Aun no tenes un usuario? Create una cuenta haciendo click abajo";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(130, 522);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(210, 17);
+            this.label5.TabIndex = 48;
+            this.label5.Text = "En caso de no poder iniciar sesion";
+            // 
+            // btnSoporte
+            // 
+            this.btnSoporte.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSoporte.Location = new System.Drawing.Point(28, 559);
+            this.btnSoporte.Name = "btnSoporte";
+            this.btnSoporte.Size = new System.Drawing.Size(466, 36);
+            this.btnSoporte.TabIndex = 49;
+            this.btnSoporte.Text = "Contacta con el soporte";
+            this.btnSoporte.UseVisualStyleBackColor = true;
+            this.btnSoporte.Click += new System.EventHandler(this.btnSoporte_Click);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1520, 623);
+            this.Controls.Add(this.btnSoporte);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnRegistro);
             this.Controls.Add(this.label4);
@@ -172,5 +197,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnRegistro;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnSoporte;
     }
 }

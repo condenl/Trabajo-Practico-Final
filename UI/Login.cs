@@ -18,7 +18,6 @@ namespace UI
             InitializeComponent();
             visitanteBLL = new UsuarioBLL();
             ConfigurarFormulario();
-            GestorEventos.Instancia.Suscribir(BitacoraBLL.Instancia);
         }
 
         private void ConfigurarFormulario()
@@ -48,6 +47,11 @@ namespace UI
             catch (UsuarioBloqueadoException ex)
             {
                 MessageBox.Show(ex.Message, "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+            catch (UsuarioSinRolException ex)
+            {
+                // Atajamos a los usuarios huérfanos y los mandamos a soporte
+                MessageBox.Show(ex.Message, "Falta de Permisos", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -114,6 +118,28 @@ namespace UI
             panel1.BringToFront();
         }
 
+        private void MostrarPanelSoporte()
+        {
+            // Le pasamos el email que haya escrito, si es que escribió algo
+            UC_Soporte panelSoporte = new UC_Soporte(txtEmail.Text.Trim());
+            panelSoporte.Dock = DockStyle.Fill;
+
+            // Escuchamos el evento OnCerrar que creamos en el UserControl
+            panelSoporte.OnCerrar += Soporte_OnCerrar;
+
+            panel1.Controls.Clear();
+            panel1.Controls.Add(panelSoporte);
+            panel1.Visible = true;
+            panel1.BringToFront();
+        }
+
+        private void Soporte_OnCerrar(object sender, EventArgs e)
+        {
+            // Limpiamos y ocultamos el panel cuando el usuario termina o cancela
+            panel1.Controls.Clear();
+            panel1.Visible = false;
+        }
+
         private void Registro_OnRegresar(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
@@ -122,6 +148,11 @@ namespace UI
 
         private void Login_Load(object sender, EventArgs e)
         {
+        }
+
+        private void btnSoporte_Click(object sender, EventArgs e)
+        {
+            MostrarPanelSoporte();
         }
     }
 }

@@ -33,6 +33,7 @@
             this.btnCerrarSesion = new System.Windows.Forms.Button();
             this.btnUsuarios = new System.Windows.Forms.Button();
             this.btnRoles = new System.Windows.Forms.Button();
+            this.btnSoporteTecnico = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panel1
@@ -82,11 +83,22 @@
             this.btnRoles.UseVisualStyleBackColor = true;
             this.btnRoles.Click += new System.EventHandler(this.btnRoles_Click);
             // 
+            // btnSoporteTecnico
+            // 
+            this.btnSoporteTecnico.Location = new System.Drawing.Point(12, 220);
+            this.btnSoporteTecnico.Name = "btnSoporteTecnico";
+            this.btnSoporteTecnico.Size = new System.Drawing.Size(120, 43);
+            this.btnSoporteTecnico.TabIndex = 4;
+            this.btnSoporteTecnico.Text = "Soporte Tecnico";
+            this.btnSoporteTecnico.UseVisualStyleBackColor = true;
+            this.btnSoporteTecnico.Click += new System.EventHandler(this.btnSoporteTecnico_Click);
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1520, 623);
+            this.Controls.Add(this.btnSoporteTecnico);
             this.Controls.Add(this.btnRoles);
             this.Controls.Add(this.btnUsuarios);
             this.Controls.Add(this.btnCerrarSesion);
@@ -105,5 +117,6 @@
         private System.Windows.Forms.Button btnCerrarSesion;
         private System.Windows.Forms.Button btnUsuarios;
         private System.Windows.Forms.Button btnRoles;
+        private System.Windows.Forms.Button btnSoporteTecnico;
     }
 }

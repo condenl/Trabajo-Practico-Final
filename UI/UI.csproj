@@ -78,6 +78,18 @@
     <Compile Include="UserControls\UC_Roles.Designer.cs">
       <DependentUpon>UC_Roles.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\UC_Soporte.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UC_Soporte.Designer.cs">
+      <DependentUpon>UC_Soporte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UC_SoporteAdmin.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UC_SoporteAdmin.Designer.cs">
+      <DependentUpon>UC_SoporteAdmin.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\UC_Usuarios.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -107,6 +119,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UC_Roles.resx">
       <DependentUpon>UC_Roles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UC_Soporte.resx">
+      <DependentUpon>UC_Soporte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UC_SoporteAdmin.resx">
+      <DependentUpon>UC_SoporteAdmin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UC_Usuarios.resx">
       <DependentUpon>UC_Usuarios.cs</DependentUpon>

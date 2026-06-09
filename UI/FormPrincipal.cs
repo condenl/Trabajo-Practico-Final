@@ -72,5 +72,13 @@ namespace UI
             panel1.Controls.Add(roles);
             roles.Show();
         }
+
+        private void btnSoporteTecnico_Click(object sender, EventArgs e)
+        {
+            UC_SoporteAdmin soporteadmin = new UC_SoporteAdmin();
+            panel1.Controls.Clear();
+            panel1.Controls.Add(soporteadmin);
+            soporteadmin.Show();
+        }
     }
 }
