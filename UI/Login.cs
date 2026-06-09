@@ -18,6 +18,7 @@ namespace UI
             InitializeComponent();
             visitanteBLL = new UsuarioBLL();
             ConfigurarFormulario();
+            GestorEventos.Instancia.Suscribir(BitacoraBLL.Instancia);
         }
 
         private void ConfigurarFormulario()
@@ -70,7 +71,6 @@ namespace UI
 
             if (usuarioLogueado != null)
             {
-                Session.Instance.Login(usuarioLogueado);
                 NavegarAlSistema(usuarioLogueado);
             }
             else

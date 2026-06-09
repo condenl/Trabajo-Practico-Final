@@ -43,6 +43,7 @@
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.txtContrasenia = new System.Windows.Forms.TextBox();
             this.btnAlta = new System.Windows.Forms.Button();
+            this.cmbRoles = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.SuspendLayout();
             // 
@@ -177,10 +178,19 @@
             this.btnAlta.UseVisualStyleBackColor = true;
             this.btnAlta.Click += new System.EventHandler(this.btnAlta_Click);
             // 
+            // cmbRoles
+            // 
+            this.cmbRoles.FormattingEnabled = true;
+            this.cmbRoles.Location = new System.Drawing.Point(481, 9);
+            this.cmbRoles.Name = "cmbRoles";
+            this.cmbRoles.Size = new System.Drawing.Size(121, 21);
+            this.cmbRoles.TabIndex = 36;
+            // 
             // UC_Usuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.cmbRoles);
             this.Controls.Add(this.btnAlta);
             this.Controls.Add(this.txtContrasenia);
             this.Controls.Add(this.txtEmail);
@@ -222,5 +232,6 @@
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.TextBox txtContrasenia;
         private System.Windows.Forms.Button btnAlta;
+        private System.Windows.Forms.ComboBox cmbRoles;
     }
 }

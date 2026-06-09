@@ -9,34 +9,13 @@ using Servicios;
 
 namespace BLL
 {
-    public class UsuarioBLL : IVisitante, IAdministrador, IGestor<Usuario>, IObservado
+    // Quitamos IObservado de la firma, UsuarioBLL solo hace lógica de negocio
+    public class UsuarioBLL : IVisitante, IAdministrador, IGestor<Usuario>
     {
-        private List<IObserver> observadores = new List<IObserver>();
-
         public UsuarioBLL()
         {
-            Suscribir(BitacoraBLL.Instancia);
+            // Ya no hay Suscribir() acoplado aquí.
         }
-
-        #region Implementación de IObservado
-        public void Suscribir(IObserver observador)
-        {
-            if (!observadores.Contains(observador)) observadores.Add(observador);
-        }
-
-        public void Desuscribir(IObserver observador)
-        {
-            if (observadores.Contains(observador)) observadores.Remove(observador);
-        }
-
-        public void Notificar(EventoBitacora evento)
-        {
-            foreach (var obs in observadores)
-            {
-                obs.Actualizar(evento);
-            }
-        }
-        #endregion
 
         public List<Usuario> ListarTodos() => UsuarioDAL.Instancia.Listar();
 
@@ -55,19 +34,19 @@ namespace BLL
             if (u.Id == 0)
             {
                 ValidarPassword(u.Password);
-
                 u.Dni = Encriptador.EncriptarAES(u.Dni);
                 UsuarioDAL.Instancia.Insertar(u);
-                
-                Notificar(new EventoBitacora(responsable, "ALTA_USUARIO", $"Se creó el usuario: {u.Email}"));
+
+                // Disparamos el evento a través del Gestor centralizado
+                GestorEventos.Instancia.Notificar(new EventoBitacora(responsable, "ALTA_USUARIO", $"Se creó el usuario: {u.Email}"));
             }
             else
             {
                 if (!string.IsNullOrEmpty(u.Password)) ValidarPassword(u.Password);
-
                 u.Dni = Encriptador.EncriptarAES(u.Dni);
                 UsuarioDAL.Instancia.Modificar(u);
-                Notificar(new EventoBitacora(responsable, "MODIFICACION", $"Se actualizaron datos del usuario ID: {u.Id} ({u.Email})"));
+
+                GestorEventos.Instancia.Notificar(new EventoBitacora(responsable, "MODIFICACION", $"Se actualizaron datos del usuario ID: {u.Id} ({u.Email})"));
             }
         }
 
@@ -79,7 +58,7 @@ namespace BLL
         {
             UsuarioDAL.Instancia.Eliminar(u);
             string responsable = Session.Instance.Usuario?.Email ?? "SISTEMA";
-            Notificar(new EventoBitacora(responsable, "BAJA_USUARIO", $"Eliminación física del usuario: {u.Email}"));
+            GestorEventos.Instancia.Notificar(new EventoBitacora(responsable, "BAJA_USUARIO", $"Eliminación física del usuario: {u.Email}"));
         }
 
         public void Insertar(Usuario u, string pass)
@@ -99,7 +78,7 @@ namespace BLL
             UsuarioDAL.Instancia.Insertar(u);
 
             string responsable = Session.Instance.Usuario?.Email ?? u.Email;
-            Notificar(new EventoBitacora(responsable, "ALTA_USUARIO", $"Nuevo usuario registrado: {u.Email}"));
+            GestorEventos.Instancia.Notificar(new EventoBitacora(responsable, "ALTA_USUARIO", $"Nuevo usuario registrado: {u.Email}"));
         }
 
         public void Modificar(Usuario u, string newPass)
@@ -121,7 +100,7 @@ namespace BLL
             string tipoEvento = u.Activo ? "MODIFICACION" : "BAJA_LOGICA";
             string descripcion = u.Activo ? $"Se actualizaron credenciales/datos de: {u.Email}" : $"Se desactivó la cuenta de: {u.Email}";
 
-            Notificar(new EventoBitacora(responsable, tipoEvento, descripcion));
+            GestorEventos.Instancia.Notificar(new EventoBitacora(responsable, tipoEvento, descripcion));
         }
 
         public Usuario Login(string email, string passwordSinHash)
@@ -131,14 +110,14 @@ namespace BLL
 
             if (usuario == null)
             {
-                Notificar(new EventoBitacora(email, "LOGIN_FALLIDO", "Intento de acceso: Correo no registrado."));
-                return null;
+                GestorEventos.Instancia.Notificar(new EventoBitacora(email, "LOGIN_FALLIDO", "Intento de inicio de sesión con email no registrado."));
+                return null; 
             }
 
             if (!usuario.Activo)
             {
-                Notificar(new EventoBitacora(email, "SEGURIDAD", "Intento de acceso en cuenta inactiva."));
-                throw new UsuarioBloqueadoException("Su cuenta se encuentra bloqueada por seguridad.");
+                GestorEventos.Instancia.Notificar(new EventoBitacora(email, "BLOQUEO", "Intento de inicio de sesión sobre una cuenta bloqueada."));
+                throw new UsuarioBloqueadoException("Su cuenta se encuentra bloqueada. Contacte al administrador.");
             }
 
             string passHash = Encriptador.Hash(passwordSinHash);
@@ -146,7 +125,11 @@ namespace BLL
             if (usuario.Password == passHash)
             {
                 UsuarioDAL.Instancia.ResetearIntentos(email);
-                Notificar(new EventoBitacora(email, "LOGIN", "Inicio de sesión exitoso."));
+                SeguridadBLL seguridadBLL = new SeguridadBLL();
+                seguridadBLL.CargarEstructuraPermisos(usuario);
+
+                Session.Instance.Login(usuario);
+                GestorEventos.Instancia.Notificar(new EventoBitacora(email, "LOGIN", "Inicio de sesión exitoso."));
                 return usuario;
             }
             else
@@ -156,13 +139,19 @@ namespace BLL
 
                 if (intentosActuales >= 4)
                 {
-                    Notificar(new EventoBitacora(email, "BLOQUEO", "Cuenta bloqueada por alcanzar el máximo de intentos."));
+                    GestorEventos.Instancia.Notificar(new EventoBitacora(email, "BLOQUEO", "Cuenta bloqueada por alcanzar el máximo de intentos."));
                     throw new UsuarioBloqueadoException("Ha excedido los intentos permitidos. Su cuenta ha sido bloqueada.");
                 }
 
-                Notificar(new EventoBitacora(email, "LOGIN_FALLIDO", $"Contraseña incorrecta. Intento nro: {intentosActuales}."));
+                GestorEventos.Instancia.Notificar(new EventoBitacora(email, "LOGIN_FALLIDO", $"Contraseña incorrecta. Intento nro: {intentosActuales}."));
                 return null;
             }
+        }
+
+        public Usuario BuscarPorEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email)) return null;
+            return UsuarioDAL.Instancia.BuscarPorEmail(email);
         }
 
         public void Registrar(Usuario u, string pass) => Insertar(u, pass);
@@ -173,7 +162,7 @@ namespace BLL
             {
                 string email = Session.Instance.Usuario.Email;
                 Session.Instance.Logout();
-                Notificar(new EventoBitacora(email, "LOGOUT", "Sesión cerrada por el usuario."));
+                GestorEventos.Instancia.Notificar(new EventoBitacora(email, "LOGOUT", "Sesión cerrada por el usuario."));
             }
         }
 

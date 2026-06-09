@@ -32,6 +32,7 @@
             this.btnBitacora = new System.Windows.Forms.Button();
             this.btnCerrarSesion = new System.Windows.Forms.Button();
             this.btnUsuarios = new System.Windows.Forms.Button();
+            this.btnRoles = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panel1
@@ -71,11 +72,22 @@
             this.btnUsuarios.UseVisualStyleBackColor = true;
             this.btnUsuarios.Click += new System.EventHandler(this.btnUsuarios_Click);
             // 
+            // btnRoles
+            // 
+            this.btnRoles.Location = new System.Drawing.Point(12, 146);
+            this.btnRoles.Name = "btnRoles";
+            this.btnRoles.Size = new System.Drawing.Size(120, 43);
+            this.btnRoles.TabIndex = 3;
+            this.btnRoles.Text = "Roles";
+            this.btnRoles.UseVisualStyleBackColor = true;
+            this.btnRoles.Click += new System.EventHandler(this.btnRoles_Click);
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1520, 623);
+            this.Controls.Add(this.btnRoles);
             this.Controls.Add(this.btnUsuarios);
             this.Controls.Add(this.btnCerrarSesion);
             this.Controls.Add(this.btnBitacora);
@@ -92,5 +104,6 @@
         private System.Windows.Forms.Button btnBitacora;
         private System.Windows.Forms.Button btnCerrarSesion;
         private System.Windows.Forms.Button btnUsuarios;
+        private System.Windows.Forms.Button btnRoles;
     }
 }

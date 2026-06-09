@@ -72,6 +72,12 @@
     <Compile Include="UserControls\UC_Registro.Designer.cs">
       <DependentUpon>UC_Registro.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\UC_Roles.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UC_Roles.Designer.cs">
+      <DependentUpon>UC_Roles.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\UC_Usuarios.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -98,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UC_Registro.resx">
       <DependentUpon>UC_Registro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UC_Roles.resx">
+      <DependentUpon>UC_Roles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UC_Usuarios.resx">
       <DependentUpon>UC_Usuarios.cs</DependentUpon>

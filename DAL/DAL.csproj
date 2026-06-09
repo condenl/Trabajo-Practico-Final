@@ -47,8 +47,9 @@
   <ItemGroup>
     <Compile Include="BitacoraDAL.cs" />
     <Compile Include="Conexion.cs" />
+    <Compile Include="SeguridadDAL.cs" />
     <Compile Include="UsuarioDAL.cs" />
-	<Compile Include="DVVDAL.cs" />
+    <Compile Include="DVVDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

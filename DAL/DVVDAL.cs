@@ -28,7 +28,6 @@ namespace DAL
         public string Obtener(string nombreEntidad)
         {
             SqlParameter[] p = { new SqlParameter("@NombreEntidad", nombreEntidad) };
-            // Asumimos un select directo o SP
             DataTable dt = Conexion.Instancia.Leer("sp_DVV_Consultar", p);
             if (dt.Rows.Count > 0)
                 return dt.Rows[0]["Valor"].ToString();

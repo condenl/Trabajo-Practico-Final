@@ -5,43 +5,133 @@ using System.Windows.Forms;
 using BE;
 using BLL;
 using Servicios;
+using BE.Seguridad;
 
 namespace UI.UserControls
 {
     public partial class UC_Usuarios : UserControl
     {
         private UsuarioBLL usuarioBLL;
+        private SeguridadBLL seguridadBLL;
         private Usuario usuarioSeleccionado;
 
         public UC_Usuarios()
         {
             InitializeComponent();
             usuarioBLL = new UsuarioBLL();
+            seguridadBLL = new SeguridadBLL();
 
             if (txtContrasenia != null)
                 txtContrasenia.UseSystemPasswordChar = true;
 
             this.Load += UC_Usuarios_Load;
+            dgvUsuarios.CellFormatting += DgvUsuarios_CellFormatting;
         }
 
         private void UC_Usuarios_Load(object sender, EventArgs e)
         {
+            CargarComboRoles();
             CargarGrilla();
+            AplicarPermisosDeSeguridad();
+        }
+
+        private void AplicarPermisosDeSeguridad()
+        {
+            Usuario logueado = Session.Instance.Usuario;
+
+            if (logueado == null) return;
+
+            btnAgregar.Enabled = logueado.TienePermiso(TipoPermiso.Usuarios_Alta);
+            btnModificar.Enabled = logueado.TienePermiso(TipoPermiso.Usuarios_Modificar);
+
+            btnAlta.Enabled = logueado.TienePermiso(TipoPermiso.Usuarios_Baja);
+            btnBaja.Enabled = logueado.TienePermiso(TipoPermiso.Usuarios_Baja);
+
+            if (cmbRoles != null)
+            {
+                cmbRoles.Enabled = logueado.TienePermiso(TipoPermiso.Roles_Gestion);
+            }
+
+            if (!btnAgregar.Enabled && !btnModificar.Enabled)
+            {
+                txtDni.ReadOnly = true;
+                txtNombre.ReadOnly = true;
+                txtApellido.ReadOnly = true;
+                txtEmail.ReadOnly = true;
+                txtContrasenia.ReadOnly = true;
+            }
+            else
+            {
+                txtDni.ReadOnly = false;
+                txtNombre.ReadOnly = false;
+                txtApellido.ReadOnly = false;
+                txtEmail.ReadOnly = false;
+                txtContrasenia.ReadOnly = false;
+            }
+        }
+
+        private void CargarComboRoles()
+        {
+            try
+            {
+                if (cmbRoles == null) return;
+
+                List<Componente> roles = seguridadBLL.ObtenerRolesDisponibles();
+                cmbRoles.DataSource = roles;
+                cmbRoles.DisplayMember = "Nombre";
+                cmbRoles.ValueMember = "Id";
+                cmbRoles.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar roles: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void CargarGrilla()
         {
             try
             {
+                var listaUsuarios = usuarioBLL.ListarTodos();
+
+                foreach (var u in listaUsuarios)
+                {
+                    seguridadBLL.CargarEstructuraPermisos(u);
+                }
+
                 dgvUsuarios.DataSource = null;
-                dgvUsuarios.DataSource = usuarioBLL.ListarTodos();
+                dgvUsuarios.DataSource = listaUsuarios;
 
                 if (dgvUsuarios.Columns.Contains("Password")) dgvUsuarios.Columns["Password"].Visible = false;
                 if (dgvUsuarios.Columns.Contains("Id")) dgvUsuarios.Columns["Id"].Visible = false;
+                if (dgvUsuarios.Columns.Contains("DVH")) dgvUsuarios.Columns["DVH"].Visible = false;
+                if (dgvUsuarios.Columns.Contains("Permisos")) dgvUsuarios.Columns["Permisos"].Visible = false;
+                if (dgvUsuarios.Columns.Contains("IntentosFallidos")) dgvUsuarios.Columns["IntentosFallidos"].Visible = false;
+
+                if (!dgvUsuarios.Columns.Contains("ColRol"))
+                {
+                    DataGridViewTextBoxColumn colRol = new DataGridViewTextBoxColumn();
+                    colRol.Name = "ColRol";
+                    colRol.HeaderText = "Rol Asignado";
+                    dgvUsuarios.Columns.Add(colRol);
+                }
+
+                dgvUsuarios.Columns["ColRol"].DisplayIndex = dgvUsuarios.Columns.Count - 1;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al cargar la grilla: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void DgvUsuarios_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvUsuarios.Columns[e.ColumnIndex].Name == "ColRol" && e.RowIndex >= 0)
+            {
+                Usuario u = (Usuario)dgvUsuarios.Rows[e.RowIndex].DataBoundItem;
+
+                var rol = u.Permisos?.FirstOrDefault(p => p is Familia);
+                e.Value = rol != null ? rol.Nombre : "Sin Rol";
             }
         }
 
@@ -52,11 +142,33 @@ namespace UI.UserControls
                 if (dgvUsuarios.SelectedRows.Count > 0)
                 {
                     usuarioSeleccionado = (Usuario)dgvUsuarios.SelectedRows[0].DataBoundItem;
-                    txtDni.Text = usuarioSeleccionado.Dni; 
+
+                    try
+                    {
+                        txtDni.Text = Servicios.Encriptador.DesencriptarAES(usuarioSeleccionado.Dni);
+                    }
+                    catch (System.Security.Cryptography.CryptographicException)
+                    {
+                        txtDni.Text = usuarioSeleccionado.Dni;
+                    }
+
                     txtNombre.Text = usuarioSeleccionado.Nombre;
                     txtApellido.Text = usuarioSeleccionado.Apellido;
                     txtEmail.Text = usuarioSeleccionado.Email;
                     txtContrasenia.Clear();
+
+                    if (cmbRoles != null)
+                    {
+                        var rolActual = usuarioSeleccionado.Permisos?.FirstOrDefault(p => p is Familia);
+                        if (rolActual != null)
+                        {
+                            cmbRoles.SelectedValue = rolActual.Id;
+                        }
+                        else
+                        {
+                            cmbRoles.SelectedIndex = -1;
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -81,6 +193,13 @@ namespace UI.UserControls
                 };
 
                 usuarioBLL.Insertar(nuevoUsuario, txtContrasenia.Text);
+
+                if (cmbRoles != null && cmbRoles.SelectedItem != null)
+                {
+                    Usuario usuarioInsertado = usuarioBLL.BuscarPorEmail(nuevoUsuario.Email);
+                    Componente rolSeleccionado = (Componente)cmbRoles.SelectedItem;
+                    seguridadBLL.AsignarRolAUsuario(usuarioInsertado, rolSeleccionado);
+                }
 
                 MessageBox.Show("Usuario agregado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarYRecargar();
@@ -109,6 +228,13 @@ namespace UI.UserControls
                 usuarioSeleccionado.Email = txtEmail.Text.Trim();
 
                 usuarioBLL.Modificar(usuarioSeleccionado, txtContrasenia.Text);
+
+                if (cmbRoles != null && cmbRoles.SelectedItem != null)
+                {
+                    Componente rolSeleccionado = (Componente)cmbRoles.SelectedItem;
+                    seguridadBLL.AsignarRolAUsuario(usuarioSeleccionado, rolSeleccionado);
+                }
+
                 MessageBox.Show("Usuario modificado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarYRecargar();
             }
@@ -152,6 +278,7 @@ namespace UI.UserControls
 
                 usuarioSeleccionado.Activo = nuevoEstado;
                 usuarioBLL.Modificar(usuarioSeleccionado, "");
+
                 MessageBox.Show($"El usuario fue {accion} correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarYRecargar();
             }
@@ -173,6 +300,9 @@ namespace UI.UserControls
             txtApellido.Clear();
             txtEmail.Clear();
             txtContrasenia.Clear();
+
+            if (cmbRoles != null) cmbRoles.SelectedIndex = -1;
+
             usuarioSeleccionado = null;
             CargarGrilla();
         }
