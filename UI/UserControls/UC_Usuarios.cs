@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -6,13 +6,15 @@ using BE;
 using BLL;
 using Servicios;
 using BE.Seguridad;
+using BE.Interfaces;
 
 namespace UI.UserControls
 {
-    public partial class UC_Usuarios : UserControl
+    public partial class UC_Usuarios : UserControl, IIdiomaObserver
     {
         private UsuarioBLL usuarioBLL;
         private SeguridadBLL seguridadBLL;
+        private TraduccionBLL traduccionBLL;
         private Usuario usuarioSeleccionado;
 
         public UC_Usuarios()
@@ -20,6 +22,7 @@ namespace UI.UserControls
             InitializeComponent();
             usuarioBLL = new UsuarioBLL();
             seguridadBLL = new SeguridadBLL();
+            traduccionBLL = new TraduccionBLL();
 
             if (txtContrasenia != null)
                 txtContrasenia.UseSystemPasswordChar = true;
@@ -30,9 +33,36 @@ namespace UI.UserControls
 
         private void UC_Usuarios_Load(object sender, EventArgs e)
         {
+            GestorIdioma.Instancia.Suscribir(this);
+            ActualizarTextos();
             CargarComboRoles();
             CargarGrilla();
             AplicarPermisosDeSeguridad();
+        }
+
+        public void ActualizarIdioma(Idioma idioma)
+        {
+            ActualizarTextos();
+        }
+
+        private void ActualizarTextos()
+        {
+            ActualizarTextosRecursivo(this.Controls);
+        }
+
+        private void ActualizarTextosRecursivo(Control.ControlCollection controles)
+        {
+            foreach (Control control in controles)
+            {
+                if (control.Tag != null && !string.IsNullOrWhiteSpace(control.Tag.ToString()))
+                {
+                    control.Text = traduccionBLL.Traducir(control.Tag.ToString());
+                }
+                if (control.HasChildren)
+                {
+                    ActualizarTextosRecursivo(control.Controls);
+                }
+            }
         }
 
         private void AplicarPermisosDeSeguridad()
@@ -84,7 +114,7 @@ namespace UI.UserControls
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar roles: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(traduccionBLL.Traducir("msg_error_loading_roles") + ": " + ex.Message, traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -112,15 +142,25 @@ namespace UI.UserControls
                 {
                     DataGridViewTextBoxColumn colRol = new DataGridViewTextBoxColumn();
                     colRol.Name = "ColRol";
-                    colRol.HeaderText = "Rol Asignado";
+                    colRol.HeaderText = traduccionBLL.Traducir("grid_assigned_role");
                     dgvUsuarios.Columns.Add(colRol);
                 }
+                else
+                {
+                    dgvUsuarios.Columns["ColRol"].HeaderText = traduccionBLL.Traducir("grid_assigned_role");
+                }
+
+                if (dgvUsuarios.Columns.Contains("Dni")) dgvUsuarios.Columns["Dni"].HeaderText = traduccionBLL.Traducir("lbl_dni");
+                if (dgvUsuarios.Columns.Contains("Nombre")) dgvUsuarios.Columns["Nombre"].HeaderText = traduccionBLL.Traducir("lbl_nombre");
+                if (dgvUsuarios.Columns.Contains("Apellido")) dgvUsuarios.Columns["Apellido"].HeaderText = traduccionBLL.Traducir("lbl_apellido");
+                if (dgvUsuarios.Columns.Contains("Email")) dgvUsuarios.Columns["Email"].HeaderText = traduccionBLL.Traducir("lbl_email");
+                if (dgvUsuarios.Columns.Contains("Activo")) dgvUsuarios.Columns["Activo"].HeaderText = traduccionBLL.Traducir("lbl_active");
 
                 dgvUsuarios.Columns["ColRol"].DisplayIndex = dgvUsuarios.Columns.Count - 1;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar la grilla: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(traduccionBLL.Traducir("msg_error_loading_grid") + ": " + ex.Message, traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -131,7 +171,7 @@ namespace UI.UserControls
                 Usuario u = (Usuario)dgvUsuarios.Rows[e.RowIndex].DataBoundItem;
 
                 var rol = u.Permisos?.FirstOrDefault(p => p is Familia);
-                e.Value = rol != null ? rol.Nombre : "Sin Rol";
+                e.Value = rol != null ? rol.Nombre : traduccionBLL.Traducir("lbl_no_role");
             }
         }
 
@@ -173,7 +213,7 @@ namespace UI.UserControls
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al seleccionar usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(traduccionBLL.Traducir("msg_error_selecting_user") + ": " + ex.Message, traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -201,12 +241,12 @@ namespace UI.UserControls
                     seguridadBLL.AsignarRolAUsuario(usuarioInsertado, rolSeleccionado);
                 }
 
-                MessageBox.Show("Usuario agregado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(traduccionBLL.Traducir("msg_user_added_success"), traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarYRecargar();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error al agregar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -216,7 +256,7 @@ namespace UI.UserControls
             {
                 if (usuarioSeleccionado == null)
                 {
-                    MessageBox.Show("Debe seleccionar un usuario de la grilla.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(traduccionBLL.Traducir("msg_select_user_warn"), traduccionBLL.Traducir("lbl_warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -235,12 +275,12 @@ namespace UI.UserControls
                     seguridadBLL.AsignarRolAUsuario(usuarioSeleccionado, rolSeleccionado);
                 }
 
-                MessageBox.Show("Usuario modificado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(traduccionBLL.Traducir("msg_user_modified_success"), traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarYRecargar();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error al modificar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -260,31 +300,31 @@ namespace UI.UserControls
             {
                 if (nuevoEstado == false && usuarioSeleccionado.Email == Session.Instance.Usuario.Email)
                 {
-                    MessageBox.Show("Por cuestiones de seguridad, no podés dar de baja tu propia cuenta mientras estás en sesión.", "Acción Denegada", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show(traduccionBLL.Traducir("msg_self_deactivate_stop"), traduccionBLL.Traducir("lbl_denied"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return;
                 }
 
                 if (usuarioSeleccionado == null)
                 {
-                    MessageBox.Show("Debe seleccionar un usuario de la grilla.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(traduccionBLL.Traducir("msg_select_user_warn"), traduccionBLL.Traducir("lbl_warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 if (usuarioSeleccionado.Activo == nuevoEstado)
                 {
-                    MessageBox.Show($"El usuario ya se encuentra {accion}.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(traduccionBLL.Traducir("msg_user_already_status"), traduccionBLL.Traducir("lbl_warning"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
                 usuarioSeleccionado.Activo = nuevoEstado;
                 usuarioBLL.Modificar(usuarioSeleccionado, "");
 
-                MessageBox.Show($"El usuario fue {accion} correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(traduccionBLL.Traducir("msg_user_status_changed_success"), traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarYRecargar();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cambiar estado: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(traduccionBLL.Traducir("msg_error_changing_status") + ": " + ex.Message, traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -314,19 +354,19 @@ namespace UI.UserControls
                 string.IsNullOrWhiteSpace(txtApellido.Text) ||
                 string.IsNullOrWhiteSpace(txtEmail.Text))
             {
-                MessageBox.Show("Por favor, complete todos los campos de texto.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(traduccionBLL.Traducir("msg_complete_all_text_fields"), traduccionBLL.Traducir("lbl_warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
             if (requierePassword && string.IsNullOrWhiteSpace(txtContrasenia.Text))
             {
-                MessageBox.Show("La contraseña es obligatoria para crear un usuario.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(traduccionBLL.Traducir("msg_password_required"), traduccionBLL.Traducir("lbl_warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
             if (!txtDni.Text.All(char.IsDigit))
             {
-                MessageBox.Show("El DNI debe contener solo números.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(traduccionBLL.Traducir("msg_dni_digits_only"), traduccionBLL.Traducir("lbl_warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 

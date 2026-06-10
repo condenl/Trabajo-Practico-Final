@@ -1,4 +1,4 @@
-﻿namespace UI.UserControls
+namespace UI.UserControls
 {
     partial class UC_Usuarios
     {
@@ -13,9 +13,13 @@
         /// <param name="disposing">true si los recursos administrados se deben desechar; false en caso contrario.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                Servicios.GestorIdioma.Instancia.Desuscribir(this);
+                if (components != null)
+                {
+                    components.Dispose();
+                }
             }
             base.Dispose(disposing);
         }
@@ -64,6 +68,7 @@
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(128, 43);
             this.btnAgregar.TabIndex = 21;
+            this.btnAgregar.Tag = "btn_agregar";
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
             this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
@@ -75,6 +80,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(26, 13);
             this.label1.TabIndex = 15;
+            this.label1.Tag = "lbl_dni";
             this.label1.Text = "DNI";
             // 
             // btnModificar
@@ -83,6 +89,7 @@
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(128, 43);
             this.btnModificar.TabIndex = 24;
+            this.btnModificar.Tag = "btn_modificar";
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
             this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
@@ -94,6 +101,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(44, 13);
             this.label5.TabIndex = 25;
+            this.label5.Tag = "lbl_nombre";
             this.label5.Text = "Nombre";
             // 
             // label6
@@ -103,6 +111,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(44, 13);
             this.label6.TabIndex = 26;
+            this.label6.Tag = "lbl_apellido";
             this.label6.Text = "Apellido";
             // 
             // label7
@@ -112,6 +121,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(32, 13);
             this.label7.TabIndex = 27;
+            this.label7.Tag = "lbl_email";
             this.label7.Text = "Email";
             // 
             // label8
@@ -121,6 +131,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(61, 13);
             this.label8.TabIndex = 28;
+            this.label8.Tag = "lbl_password";
             this.label8.Text = "Contraseña";
             // 
             // btnBaja
@@ -129,6 +140,7 @@
             this.btnBaja.Name = "btnBaja";
             this.btnBaja.Size = new System.Drawing.Size(128, 43);
             this.btnBaja.TabIndex = 29;
+            this.btnBaja.Tag = "btn_baja";
             this.btnBaja.Text = "Dar de baja";
             this.btnBaja.UseVisualStyleBackColor = true;
             this.btnBaja.Click += new System.EventHandler(this.btnBaja_Click);
@@ -174,6 +186,7 @@
             this.btnAlta.Name = "btnAlta";
             this.btnAlta.Size = new System.Drawing.Size(128, 43);
             this.btnAlta.TabIndex = 35;
+            this.btnAlta.Tag = "btn_alta";
             this.btnAlta.Text = "Dar de alta";
             this.btnAlta.UseVisualStyleBackColor = true;
             this.btnAlta.Click += new System.EventHandler(this.btnAlta_Click);

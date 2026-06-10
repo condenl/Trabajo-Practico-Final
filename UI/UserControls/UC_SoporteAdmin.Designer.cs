@@ -1,4 +1,4 @@
-﻿namespace UI.UserControls
+namespace UI.UserControls
 {
     partial class UC_SoporteAdmin
     {
@@ -13,9 +13,12 @@
         /// <param name="disposing">true si los recursos administrados se deben desechar; false en caso contrario.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                if (components != null)
+                {
+                    components.Dispose();
+                }
             }
             base.Dispose(disposing);
         }
@@ -47,6 +50,7 @@
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(128, 43);
             this.btnGuardar.TabIndex = 68;
+            this.btnGuardar.Tag = "btn_guardar";
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = true;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
@@ -58,6 +62,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(48, 13);
             this.label2.TabIndex = 67;
+            this.label2.Tag = "lbl_filter";
             this.label2.Text = "FILTRO:";
             // 
             // cmbFiltroEstado
@@ -93,6 +98,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(58, 13);
             this.label1.TabIndex = 60;
+            this.label1.Tag = "lbl_detail";
             this.label1.Text = "DETALLE:";
             // 
             // label3
@@ -102,6 +108,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(101, 13);
             this.label3.TabIndex = 72;
+            this.label3.Tag = "lbl_observations";
             this.label3.Text = "OBSERVACIONES:";
             // 
             // txtObservaciones
@@ -119,6 +126,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 13);
             this.label4.TabIndex = 75;
+            this.label4.Tag = "lbl_status";
             this.label4.Text = "ESTADO:";
             // 
             // cmbCambiarEstado

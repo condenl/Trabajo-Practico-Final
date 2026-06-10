@@ -41,16 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alerta.cs" />
     <Compile Include="EventoBitacora.cs" />
     <Compile Include="Excepciones\UsuarioSinRolException.cs" />
     <Compile Include="Interfaces\IAdministrador.cs" />
     <Compile Include="Interfaces\IEntidadBase.cs" />
     <Compile Include="Interfaces\IGestor.cs" />
     <Compile Include="Interfaces\ILogueable.cs" />
+    <Compile Include="Interfaces\IIdiomaObserver.cs" />
     <Compile Include="Interfaces\IObservado.cs" />
     <Compile Include="Interfaces\IObserver.cs" />
     <Compile Include="Interfaces\IVisitante.cs" />
+    <Compile Include="Idioma.cs" />
     <Compile Include="Persona.cs" />
+    <Compile Include="Traduccion.cs" />
     <Compile Include="DVV.cs" />
     <Compile Include="Seguridad\Componente.cs" />
     <Compile Include="Seguridad\Familia.cs" />
@@ -58,6 +62,7 @@
     <Compile Include="Seguridad\TipoPermiso.cs" />
     <Compile Include="Soporte.cs" />
     <Compile Include="Usuario.cs" />
+    <Compile Include="Vehiculo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Excepciones\UsuarioBloqueadoException.cs" />
   </ItemGroup>

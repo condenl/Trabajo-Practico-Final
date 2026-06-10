@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Encriptador.cs" />
     <Compile Include="GestorEventos.cs" />
+    <Compile Include="GestorIdioma.cs" />
     <Compile Include="Integridad.cs" />
     <Compile Include="LogManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

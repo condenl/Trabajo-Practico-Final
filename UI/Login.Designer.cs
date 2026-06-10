@@ -40,6 +40,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.btnSoporte = new System.Windows.Forms.Button();
+            this.cmbIdioma = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label4
@@ -50,6 +51,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(683, 17);
             this.label4.TabIndex = 45;
+            this.label4.Tag = "login_welcome";
             this.label4.Text = "Bienvenido al sistema de gestion de edificios inteligentes mas elegido de la actu" +
     "alidad! Inicia sesion para continuar.";
             // 
@@ -61,6 +63,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(408, 30);
             this.label3.TabIndex = 44;
+            this.label3.Tag = "login_title";
             this.label3.Text = "SCA: SISTEMA DE CONTROL DE ACCESO";
             // 
             // btnIniciarSesion
@@ -70,6 +73,7 @@
             this.btnIniciarSesion.Name = "btnIniciarSesion";
             this.btnIniciarSesion.Size = new System.Drawing.Size(133, 36);
             this.btnIniciarSesion.TabIndex = 42;
+            this.btnIniciarSesion.Tag = "login_btn";
             this.btnIniciarSesion.Text = "Iniciar Sesion";
             this.btnIniciarSesion.UseVisualStyleBackColor = true;
             this.btnIniciarSesion.Click += new System.EventHandler(this.btnIniciarSesion_Click);
@@ -82,6 +86,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(48, 21);
             this.label6.TabIndex = 41;
+            this.label6.Tag = "login_user";
             this.label6.Text = "email";
             // 
             // txtEmail
@@ -100,6 +105,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(86, 21);
             this.label1.TabIndex = 39;
+            this.label1.Tag = "login_pass";
             this.label1.Text = "contraseña";
             // 
             // txtPassword
@@ -125,6 +131,7 @@
             this.btnRegistro.Name = "btnRegistro";
             this.btnRegistro.Size = new System.Drawing.Size(133, 36);
             this.btnRegistro.TabIndex = 46;
+            this.btnRegistro.Tag = "login_register_btn";
             this.btnRegistro.Text = "Registrar";
             this.btnRegistro.UseVisualStyleBackColor = true;
             this.btnRegistro.Click += new System.EventHandler(this.btnRegistro_Click);
@@ -137,6 +144,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(386, 17);
             this.label2.TabIndex = 47;
+            this.label2.Tag = "login_no_user";
             this.label2.Text = "Aun no tenes un usuario? Create una cuenta haciendo click abajo";
             // 
             // label5
@@ -147,6 +155,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(210, 17);
             this.label5.TabIndex = 48;
+            this.label5.Tag = "login_help";
             this.label5.Text = "En caso de no poder iniciar sesion";
             // 
             // btnSoporte
@@ -156,15 +165,27 @@
             this.btnSoporte.Name = "btnSoporte";
             this.btnSoporte.Size = new System.Drawing.Size(466, 36);
             this.btnSoporte.TabIndex = 49;
+            this.btnSoporte.Tag = "login_soporte_btn";
             this.btnSoporte.Text = "Contacta con el soporte";
             this.btnSoporte.UseVisualStyleBackColor = true;
             this.btnSoporte.Click += new System.EventHandler(this.btnSoporte_Click);
+            // 
+            // cmbIdioma
+            // 
+            this.cmbIdioma.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbIdioma.FormattingEnabled = true;
+            this.cmbIdioma.Location = new System.Drawing.Point(587, 19);
+            this.cmbIdioma.Name = "cmbIdioma";
+            this.cmbIdioma.Size = new System.Drawing.Size(121, 21);
+            this.cmbIdioma.TabIndex = 50;
+            this.cmbIdioma.SelectedIndexChanged += new System.EventHandler(this.cmbIdioma_SelectedIndexChanged);
             // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1520, 623);
+            this.Controls.Add(this.cmbIdioma);
             this.Controls.Add(this.btnSoporte);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label2);
@@ -199,5 +220,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnSoporte;
+        private System.Windows.Forms.ComboBox cmbIdioma;
     }
 }

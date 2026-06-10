@@ -1,34 +1,67 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using BE.Soporte;
 using BLL;
-using Servicios; 
+using Servicios;
+using BE.Interfaces;
+using BE;
 
 namespace UI.UserControls
 {
-    public partial class UC_SoporteAdmin : UserControl
+    public partial class UC_SoporteAdmin : UserControl, IIdiomaObserver
     {
         private SoporteBLL soporteBLL;
+        private TraduccionBLL traduccionBLL;
         private SolicitudSoporte solicitudSeleccionada;
 
         public UC_SoporteAdmin()
         {
             InitializeComponent();
             soporteBLL = new SoporteBLL();
+            traduccionBLL = new TraduccionBLL();
 
             this.Load += UC_SoporteAdmin_Load;
             dgvSolicitudes.CellFormatting += DgvSolicitudes_CellFormatting;
             dgvSolicitudes.CellClick += dgvSolicitudes_CellClick;
             btnGuardar.Click += btnGuardar_Click;
+            this.Disposed += (s, e) => GestorIdioma.Instancia.Desuscribir(this);
         }
+
 
         private void UC_SoporteAdmin_Load(object sender, EventArgs e)
         {
+            GestorIdioma.Instancia.Suscribir(this);
+            ActualizarTextos();
             CargarCombos();
             CargarGrilla(null); 
             cmbFiltroEstado.SelectedIndexChanged += cmbFiltroEstado_SelectedIndexChanged;
+        }
+
+        public void ActualizarIdioma(Idioma idioma)
+        {
+            ActualizarTextos();
+        }
+
+        private void ActualizarTextos()
+        {
+            ActualizarTextosRecursivo(this.Controls);
+        }
+
+        private void ActualizarTextosRecursivo(Control.ControlCollection controles)
+        {
+            foreach (Control control in controles)
+            {
+                if (control.Tag != null && !string.IsNullOrWhiteSpace(control.Tag.ToString()))
+                {
+                    control.Text = traduccionBLL.Traducir(control.Tag.ToString());
+                }
+                if (control.HasChildren)
+                {
+                    ActualizarTextosRecursivo(control.Controls);
+                }
+            }
         }
 
         private void CargarCombos()
@@ -43,7 +76,8 @@ namespace UI.UserControls
                 cmbCambiarEstado.SelectedIndex = -1;
 
                 var estadosParaFiltro = new List<EstadoSolicitud>();
-                estadosParaFiltro.Add(new EstadoSolicitud { Id = 0, Nombre = "-- Todas las solicitudes --" });
+                string todas = traduccionBLL.Traducir("lbl_all_requests");
+                estadosParaFiltro.Add(new EstadoSolicitud { Id = 0, Nombre = todas });
                 estadosParaFiltro.AddRange(estadosParaEdicion);
 
                 cmbFiltroEstado.DataSource = estadosParaFiltro;
@@ -53,7 +87,7 @@ namespace UI.UserControls
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar los estados: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(traduccionBLL.Traducir("msg_error_loading_status") + ": " + ex.Message, traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -69,27 +103,47 @@ namespace UI.UserControls
                 if (dgvSolicitudes.Columns.Contains("Id")) dgvSolicitudes.Columns["Id"].Width = 40;
                 if (dgvSolicitudes.Columns.Contains("TipoProblema")) dgvSolicitudes.Columns["TipoProblema"].Visible = false;
                 if (dgvSolicitudes.Columns.Contains("Estado")) dgvSolicitudes.Columns["Estado"].Visible = false;
-                if (dgvSolicitudes.Columns.Contains("Descripcion")) dgvSolicitudes.Columns["Descripcion"].Visible = false; // Se ve en el txtDetalle
-                if (dgvSolicitudes.Columns.Contains("ObservacionesAdmin")) dgvSolicitudes.Columns["ObservacionesAdmin"].Visible = false; // Se ve en el txtObservaciones
-                if (dgvSolicitudes.Columns.Contains("EmailSolicitante")) dgvSolicitudes.Columns["EmailSolicitante"].HeaderText = "Usuario / Email";
+                if (dgvSolicitudes.Columns.Contains("Descripcion")) dgvSolicitudes.Columns["Descripcion"].Visible = false;
+                if (dgvSolicitudes.Columns.Contains("ObservacionesAdmin")) dgvSolicitudes.Columns["ObservacionesAdmin"].Visible = false;
+                
+                if (dgvSolicitudes.Columns.Contains("EmailSolicitante")) 
+                    dgvSolicitudes.Columns["EmailSolicitante"].HeaderText = traduccionBLL.Traducir("grid_user_email");
+                
                 if (dgvSolicitudes.Columns.Contains("FechaCreacion"))
                 {
-                    dgvSolicitudes.Columns["FechaCreacion"].HeaderText = "Fecha";
+                    dgvSolicitudes.Columns["FechaCreacion"].HeaderText = traduccionBLL.Traducir("grid_date");
                     dgvSolicitudes.Columns["FechaCreacion"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
                 }
 
                 if (!dgvSolicitudes.Columns.Contains("ColTipoProblema"))
                 {
-                    dgvSolicitudes.Columns.Add(new DataGridViewTextBoxColumn { Name = "ColTipoProblema", HeaderText = "Problema", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
+                    dgvSolicitudes.Columns.Add(new DataGridViewTextBoxColumn { 
+                        Name = "ColTipoProblema", 
+                        HeaderText = traduccionBLL.Traducir("grid_problem"), 
+                        AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill 
+                    });
                 }
+                else
+                {
+                    dgvSolicitudes.Columns["ColTipoProblema"].HeaderText = traduccionBLL.Traducir("grid_problem");
+                }
+
                 if (!dgvSolicitudes.Columns.Contains("ColEstado"))
                 {
-                    dgvSolicitudes.Columns.Add(new DataGridViewTextBoxColumn { Name = "ColEstado", HeaderText = "Estado", Width = 100 });
+                    dgvSolicitudes.Columns.Add(new DataGridViewTextBoxColumn { 
+                        Name = "ColEstado", 
+                        HeaderText = traduccionBLL.Traducir("grid_status"), 
+                        Width = 100 
+                    });
+                }
+                else
+                {
+                    dgvSolicitudes.Columns["ColEstado"].HeaderText = traduccionBLL.Traducir("grid_status");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar las solicitudes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(traduccionBLL.Traducir("msg_error_loading_requests") + ": " + ex.Message, traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -127,11 +181,17 @@ namespace UI.UserControls
             if (dgvSolicitudes.SelectedRows.Count > 0)
             {
                 solicitudSeleccionada = (SolicitudSoporte)dgvSolicitudes.SelectedRows[0].DataBoundItem;
-                txtDetalle.Text = $"FECHA: {solicitudSeleccionada.FechaCreacion:dd/MM/yyyy HH:mm}\r\n" +
-                                  $"USUARIO: {solicitudSeleccionada.EmailSolicitante}\r\n" +
-                                  $"MOTIVO: {solicitudSeleccionada.TipoProblema.Nombre}\r\n" +
+                
+                string fechaLbl = traduccionBLL.Traducir("lbl_date");
+                string usuarioLbl = traduccionBLL.Traducir("lbl_user");
+                string motivoLbl = traduccionBLL.Traducir("lbl_reason");
+                string descLbl = traduccionBLL.Traducir("lbl_report_desc");
+
+                txtDetalle.Text = $"{fechaLbl}: {solicitudSeleccionada.FechaCreacion:dd/MM/yyyy HH:mm}\r\n" +
+                                  $"{usuarioLbl}: {solicitudSeleccionada.EmailSolicitante}\r\n" +
+                                  $"{motivoLbl}: {solicitudSeleccionada.TipoProblema.Nombre}\r\n" +
                                   $"------------------------------------------------------\r\n" +
-                                  $"DESCRIPCIÓN DEL REPORTE:\r\n{solicitudSeleccionada.Descripcion}";
+                                  $"{descLbl}:\r\n{solicitudSeleccionada.Descripcion}";
 
                 txtObservaciones.Text = solicitudSeleccionada.ObservacionesAdmin;
 
@@ -146,13 +206,13 @@ namespace UI.UserControls
         {
             if (solicitudSeleccionada == null)
             {
-                MessageBox.Show("Por favor, seleccione una solicitud de la lista para actualizarla.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(traduccionBLL.Traducir("msg_select_request_warn"), traduccionBLL.Traducir("lbl_warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (cmbCambiarEstado.SelectedItem == null)
             {
-                MessageBox.Show("Debe seleccionar un estado para la solicitud.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(traduccionBLL.Traducir("msg_select_status_warn"), traduccionBLL.Traducir("lbl_warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -162,7 +222,7 @@ namespace UI.UserControls
                 solicitudSeleccionada.Estado = (EstadoSolicitud)cmbCambiarEstado.SelectedItem;
                 soporteBLL.ModificarSolicitudPorAdmin(solicitudSeleccionada);
 
-                MessageBox.Show("La solicitud fue actualizada y registrada exitosamente.", "Soporte Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(traduccionBLL.Traducir("msg_request_updated_success"), traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 var estadoFiltro = (EstadoSolicitud)cmbFiltroEstado.SelectedItem;
                 int? idFiltro = estadoFiltro.Id == 0 ? (int?)null : estadoFiltro.Id;
@@ -171,7 +231,7 @@ namespace UI.UserControls
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al intentar guardar los cambios: " + ex.Message, "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(traduccionBLL.Traducir("msg_error_saving_changes") + ": " + ex.Message, traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

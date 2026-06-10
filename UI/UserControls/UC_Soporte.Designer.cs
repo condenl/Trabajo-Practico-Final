@@ -7,19 +7,6 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Limpiar los recursos que se estén usando.
-        /// </summary>
-        /// <param name="disposing">true si los recursos administrados se deben desechar; false en caso contrario.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Código generado por el Diseñador de componentes
 
         /// <summary> 
@@ -47,6 +34,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(276, 30);
             this.label7.TabIndex = 42;
+            this.label7.Tag = "lbl_titulo_soporte";
             this.label7.Text = "FORMULARIO DE SOPORTE";
             // 
             // btnCancelar
@@ -56,6 +44,7 @@
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(114, 35);
             this.btnCancelar.TabIndex = 41;
+            this.btnCancelar.Tag = "btn_cancelar";
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
@@ -67,6 +56,7 @@
             this.btnEnviar.Name = "btnEnviar";
             this.btnEnviar.Size = new System.Drawing.Size(114, 35);
             this.btnEnviar.TabIndex = 40;
+            this.btnEnviar.Tag = "btn_enviar";
             this.btnEnviar.Text = "Enviar";
             this.btnEnviar.UseVisualStyleBackColor = true;
             this.btnEnviar.Click += new System.EventHandler(this.btnEnviar_Click);
@@ -79,6 +69,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(48, 21);
             this.label6.TabIndex = 39;
+            this.label6.Tag = "lbl_email";
             this.label6.Text = "email";
             // 
             // txtEmail
@@ -97,6 +88,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(129, 21);
             this.label1.TabIndex = 31;
+            this.label1.Tag = "lbl_tipo_problema";
             this.label1.Text = "tipo de problema";
             // 
             // cmbTipoProblema
@@ -125,6 +117,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(185, 21);
             this.label2.TabIndex = 45;
+            this.label2.Tag = "lbl_descripcion_problema";
             this.label2.Text = "descripcion del problema";
             // 
             // UC_Soporte

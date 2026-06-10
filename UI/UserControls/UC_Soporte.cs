@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -7,14 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BE;
+using BE.Interfaces;
 using BE.Soporte;
 using BLL;
+using Servicios;
 
 namespace UI.UserControls
 {
-    public partial class UC_Soporte : UserControl
+    public partial class UC_Soporte : UserControl, IIdiomaObserver
     {
         private SoporteBLL soporteBLL;
+        private TraduccionBLL traduccionBLL = new TraduccionBLL();
         public event EventHandler OnCerrar;
 
         public UC_Soporte(string emailSugerido = "")
@@ -25,8 +29,49 @@ namespace UI.UserControls
             this.Load += UC_Soporte_Load;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                GestorIdioma.Instancia.Desuscribir(this);
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        public void ActualizarIdioma(Idioma idioma)
+        {
+            ActualizarTextos();
+        }
+
+        private void ActualizarTextos()
+        {
+            ActualizarTextosRecursivo(this.Controls);
+        }
+
+        private void ActualizarTextosRecursivo(Control.ControlCollection controles)
+        {
+            foreach (Control control in controles)
+            {
+                if (control.Tag != null && !string.IsNullOrWhiteSpace(control.Tag.ToString()))
+                {
+                    control.Text = traduccionBLL.Traducir(control.Tag.ToString());
+                }
+                if (control.HasChildren)
+                {
+                    ActualizarTextosRecursivo(control.Controls);
+                }
+            }
+        }
+
         private void UC_Soporte_Load(object sender, EventArgs e)
         {
+            GestorIdioma.Instancia.Suscribir(this);
+            ActualizarTextos();
+            
             try
             {
                 cmbTipoProblema.DataSource = soporteBLL.ObtenerTipos();
@@ -36,7 +81,7 @@ namespace UI.UserControls
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error de conexión: " + ex.Message);
+                MessageBox.Show($"{traduccionBLL.Traducir("msg_error_connection")}: {ex.Message}");
             }
         }
 
@@ -57,12 +102,12 @@ namespace UI.UserControls
 
                 soporteBLL.CrearSolicitud(nuevaSolicitud);
 
-                MessageBox.Show("Tu solicitud fue registrada con éxito. Un administrador revisará tu caso pronto.", "Soporte Técnico", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(traduccionBLL.Traducir("msg_request_registered_success"), traduccionBLL.Traducir("lbl_titulo_soporte"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 OnCerrar?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ex.Message, traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

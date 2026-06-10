@@ -1,15 +1,19 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using BE;
+using BE.Interfaces;
 using BE.Seguridad;
 using BLL;
+using Servicios;
 
 namespace UI.UserControls
 {
-    public partial class UC_Roles : UserControl
+    public partial class UC_Roles : UserControl, IIdiomaObserver
     {
         private SeguridadBLL seguridadBLL;
         private Componente rolSeleccionado;
+        private TraduccionBLL traduccionBLL = new TraduccionBLL();
 
         public UC_Roles()
         {
@@ -19,8 +23,48 @@ namespace UI.UserControls
             lbRoles.SelectedIndexChanged += lbRoles_SelectedIndexChanged;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                GestorIdioma.Instancia.Desuscribir(this);
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        public void ActualizarIdioma(Idioma idioma)
+        {
+            ActualizarTextos();
+        }
+
+        private void ActualizarTextos()
+        {
+            ActualizarTextosRecursivo(this.Controls);
+        }
+
+        private void ActualizarTextosRecursivo(Control.ControlCollection controles)
+        {
+            foreach (Control control in controles)
+            {
+                if (control.Tag != null && !string.IsNullOrWhiteSpace(control.Tag.ToString()))
+                {
+                    control.Text = traduccionBLL.Traducir(control.Tag.ToString());
+                }
+                if (control.HasChildren)
+                {
+                    ActualizarTextosRecursivo(control.Controls);
+                }
+            }
+        }
+
         private void UC_Roles_Load(object sender, EventArgs e)
         {
+            GestorIdioma.Instancia.Suscribir(this);
+            ActualizarTextos();
             CargarListaRoles();
             CargarComboPatentes();
         }
@@ -38,7 +82,7 @@ namespace UI.UserControls
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar roles: " + ex.Message);
+                MessageBox.Show($"{traduccionBLL.Traducir("msg_error_loading_roles")}: {ex.Message}", traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -53,7 +97,7 @@ namespace UI.UserControls
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar permisos: " + ex.Message);
+                MessageBox.Show($"{traduccionBLL.Traducir("msg_error_loading_permissions")}: {ex.Message}", traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -80,7 +124,7 @@ namespace UI.UserControls
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar permisos del rol: " + ex.Message);
+                MessageBox.Show($"{traduccionBLL.Traducir("msg_error_loading_role_permissions")}: {ex.Message}", traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -95,12 +139,12 @@ namespace UI.UserControls
         {
             if (string.IsNullOrWhiteSpace(txtNombreRol.Text))
             {
-                MessageBox.Show("Ingrese un nombre para el nuevo rol.");
+                MessageBox.Show(traduccionBLL.Traducir("msg_enter_role_name"), traduccionBLL.Traducir("lbl_warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             seguridadBLL.CrearRol(txtNombreRol.Text.Trim());
-            MessageBox.Show("Rol creado con éxito.");
+            MessageBox.Show(traduccionBLL.Traducir("msg_role_created_success"), traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             CargarListaRoles();
         }
 
@@ -110,12 +154,12 @@ namespace UI.UserControls
 
             if (string.IsNullOrWhiteSpace(txtNombreRol.Text))
             {
-                MessageBox.Show("El nombre no puede estar vacío.");
+                MessageBox.Show(traduccionBLL.Traducir("msg_name_empty_warn"), traduccionBLL.Traducir("lbl_warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             seguridadBLL.ModificarRol(rolSeleccionado.Id, txtNombreRol.Text.Trim());
-            MessageBox.Show("Rol modificado.");
+            MessageBox.Show(traduccionBLL.Traducir("msg_role_modified_success"), traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             CargarListaRoles();
         }
 
@@ -123,11 +167,12 @@ namespace UI.UserControls
         {
             if (rolSeleccionado == null) return;
 
-            var confirm = MessageBox.Show($"¿Desea eliminar el rol '{rolSeleccionado.Nombre}'?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            string confirmMsg = string.Format(traduccionBLL.Traducir("msg_confirm_delete_role"), rolSeleccionado.Nombre);
+            var confirm = MessageBox.Show(confirmMsg, traduccionBLL.Traducir("msg_confirm_delete_role_title"), MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm == DialogResult.Yes)
             {
                 seguridadBLL.EliminarRol(rolSeleccionado.Id);
-                MessageBox.Show("Rol eliminado.");
+                MessageBox.Show(traduccionBLL.Traducir("msg_role_deleted_success"), traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarListaRoles();
             }
         }
@@ -136,7 +181,7 @@ namespace UI.UserControls
         {
             if (rolSeleccionado == null || cmbPermisosDisponibles.SelectedItem == null)
             {
-                MessageBox.Show("Seleccione un rol y un permiso disponible.");
+                MessageBox.Show(traduccionBLL.Traducir("msg_select_role_permission_warn"), traduccionBLL.Traducir("lbl_warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -149,7 +194,7 @@ namespace UI.UserControls
         {
             if (rolSeleccionado == null || lbPermisosAsignados.SelectedItem == null)
             {
-                MessageBox.Show("Seleccione un permiso asignado para quitar.");
+                MessageBox.Show(traduccionBLL.Traducir("msg_select_assigned_permission_warn"), traduccionBLL.Traducir("lbl_warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

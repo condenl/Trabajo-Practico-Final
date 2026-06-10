@@ -7,19 +7,6 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Limpiar los recursos que se estén usando.
-        /// </summary>
-        /// <param name="disposing">true si los recursos administrados se deben desechar; false en caso contrario.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Código generado por el Diseñador de componentes
 
         /// <summary> 
@@ -64,6 +51,7 @@
             this.btnCrearRol.Name = "btnCrearRol";
             this.btnCrearRol.Size = new System.Drawing.Size(128, 43);
             this.btnCrearRol.TabIndex = 45;
+            this.btnCrearRol.Tag = "btn_crear_rol";
             this.btnCrearRol.Text = "Crear Rol";
             this.btnCrearRol.UseVisualStyleBackColor = true;
             this.btnCrearRol.Click += new System.EventHandler(this.btnCrearRol_Click);
@@ -85,6 +73,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(32, 13);
             this.label1.TabIndex = 37;
+            this.label1.Tag = "lbl_rol";
             this.label1.Text = "ROL:";
             // 
             // btnModificarRol
@@ -93,6 +82,7 @@
             this.btnModificarRol.Name = "btnModificarRol";
             this.btnModificarRol.Size = new System.Drawing.Size(128, 43);
             this.btnModificarRol.TabIndex = 53;
+            this.btnModificarRol.Tag = "btn_modificar_rol";
             this.btnModificarRol.Text = "Modificar Rol";
             this.btnModificarRol.UseVisualStyleBackColor = true;
             this.btnModificarRol.Click += new System.EventHandler(this.btnModificarRol_Click);
@@ -103,6 +93,7 @@
             this.btnEliminarRol.Name = "btnEliminarRol";
             this.btnEliminarRol.Size = new System.Drawing.Size(128, 43);
             this.btnEliminarRol.TabIndex = 54;
+            this.btnEliminarRol.Tag = "btn_eliminar_rol";
             this.btnEliminarRol.Text = "Eliminar Rol";
             this.btnEliminarRol.UseVisualStyleBackColor = true;
             this.btnEliminarRol.Click += new System.EventHandler(this.btnEliminarRol_Click);
@@ -114,6 +105,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(66, 13);
             this.label2.TabIndex = 55;
+            this.label2.Tag = "lbl_permisos";
             this.label2.Text = "PERMISOS:";
             // 
             // btnQuitarPermiso
@@ -122,6 +114,7 @@
             this.btnQuitarPermiso.Name = "btnQuitarPermiso";
             this.btnQuitarPermiso.Size = new System.Drawing.Size(128, 43);
             this.btnQuitarPermiso.TabIndex = 57;
+            this.btnQuitarPermiso.Tag = "btn_quitar_permiso";
             this.btnQuitarPermiso.Text = "Quitar Permiso";
             this.btnQuitarPermiso.UseVisualStyleBackColor = true;
             this.btnQuitarPermiso.Click += new System.EventHandler(this.btnQuitarPermiso_Click);
@@ -132,6 +125,7 @@
             this.btnAgregarPermiso.Name = "btnAgregarPermiso";
             this.btnAgregarPermiso.Size = new System.Drawing.Size(128, 43);
             this.btnAgregarPermiso.TabIndex = 56;
+            this.btnAgregarPermiso.Tag = "btn_agregar_permiso";
             this.btnAgregarPermiso.Text = "Agregar Permiso";
             this.btnAgregarPermiso.UseVisualStyleBackColor = true;
             this.btnAgregarPermiso.Click += new System.EventHandler(this.btnAgregarPermiso_Click);

@@ -7,19 +7,6 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Limpiar los recursos que se estén usando.
-        /// </summary>
-        /// <param name="disposing">true si los recursos administrados se deben desechar; false en caso contrario.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Código generado por el Diseñador de componentes
 
         /// <summary> 
@@ -50,6 +37,7 @@
             this.chkFechas.Name = "chkFechas";
             this.chkFechas.Size = new System.Drawing.Size(104, 17);
             this.chkFechas.TabIndex = 0;
+            this.chkFechas.Tag = "chk_filtrar_fechas";
             this.chkFechas.Text = "Filtrar por fechas";
             this.chkFechas.UseVisualStyleBackColor = true;
             this.chkFechas.CheckedChanged += new System.EventHandler(this.chkFechas_CheckedChanged);
@@ -77,6 +65,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 3;
+            this.label1.Tag = "lbl_desde";
             this.label1.Text = "Desde";
             // 
             // label2
@@ -86,6 +75,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 4;
+            this.label2.Tag = "lbl_hasta";
             this.label2.Text = "Hasta";
             // 
             // txtUsuario
@@ -102,6 +92,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(46, 13);
             this.label3.TabIndex = 6;
+            this.label3.Tag = "lbl_usuario";
             this.label3.Text = "Usuario:";
             // 
             // cmbActividad
@@ -119,6 +110,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 13);
             this.label4.TabIndex = 8;
+            this.label4.Tag = "lbl_actividad";
             this.label4.Text = "Actividad:";
             // 
             // btnLimpiar
@@ -127,6 +119,7 @@
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(128, 43);
             this.btnLimpiar.TabIndex = 9;
+            this.btnLimpiar.Tag = "btn_limpiar";
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
@@ -137,6 +130,7 @@
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(128, 43);
             this.btnBuscar.TabIndex = 10;
+            this.btnBuscar.Tag = "btn_buscar";
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);

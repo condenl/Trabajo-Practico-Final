@@ -1,21 +1,27 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using BE;
 using UI.UserControls;
 using BE.Seguridad;
+using BE.Interfaces;
+using BLL;
+using Servicios;
 
 namespace UI
 {
-    public partial class FormPrincipal : Form
+    public partial class FormPrincipal : Form, IIdiomaObserver
     {
         private Usuario _usuarioLogueado;
+        private readonly IdiomaBLL idiomaBLL;
+        private readonly TraduccionBLL traduccionBLL;
 
         public FormPrincipal(Usuario usuario)
         {
             InitializeComponent();
             _usuarioLogueado = usuario;
-
-            this.Text = $"Menú Principal - Usuario: {_usuarioLogueado.Nombre}";
+            idiomaBLL = new IdiomaBLL();
+            traduccionBLL = new TraduccionBLL();
 
             ConfigurarAccesos();
         }
@@ -23,6 +29,8 @@ namespace UI
         public FormPrincipal()
         {
             InitializeComponent();
+            idiomaBLL = new IdiomaBLL();
+            traduccionBLL = new TraduccionBLL();
         }
 
         private void ConfigurarAccesos()
@@ -32,6 +40,45 @@ namespace UI
             btnUsuarios.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.Usuarios_Ver);
             btnRoles.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.Roles_Gestion);
             btnBitacora.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.VerReportes);
+        }
+
+        private void ConfigurarIdiomas()
+        {
+            cmbIdioma.DataSource = null;
+            cmbIdioma.DataSource = idiomaBLL.Listar();
+            cmbIdioma.DisplayMember = "Nombre";
+
+            GestorIdioma.Instancia.Suscribir(this);
+
+            if (GestorIdioma.Instancia.IdiomaActual != null)
+            {
+                List<Idioma> idiomas = (List<Idioma>)cmbIdioma.DataSource;
+                cmbIdioma.SelectedItem = idiomas.Find(i => i.Id == GestorIdioma.Instancia.IdiomaActual.Id);
+            }
+            
+            ActualizarTextos();
+        }
+
+        public void ActualizarIdioma(Idioma idioma)
+        {
+            ActualizarTextos();
+        }
+
+        private void ActualizarTextos()
+        {
+            foreach (Control control in this.Controls)
+            {
+                if (control.Tag != null)
+                {
+                    control.Text = traduccionBLL.Traducir(control.Tag.ToString());
+                }
+            }
+            
+            if (_usuarioLogueado != null)
+            {
+                string title = traduccionBLL.Traducir("main_form_title");
+                this.Text = $"{title} - {traduccionBLL.Traducir("login_user")}: {_usuarioLogueado.Nombre}";
+            }
         }
 
         private void btnBitacora_Click(object sender, EventArgs e)
@@ -45,8 +92,8 @@ namespace UI
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
             DialogResult respuesta = MessageBox.Show(
-                "¿Está seguro que desea cerrar la sesión actual?",
-                "Confirmar Cierre de Sesión",
+                traduccionBLL.Traducir("msg_confirm_logout"),
+                traduccionBLL.Traducir("title_confirm_logout"),
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question
             );
@@ -79,6 +126,28 @@ namespace UI
             panel1.Controls.Clear();
             panel1.Controls.Add(soporteadmin);
             soporteadmin.Show();
+        }
+
+        private void FormPrincipal_Load(object sender, EventArgs e)
+        {
+            ConfigurarIdiomas();
+        }
+
+        private void cmbIdioma_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbIdioma.SelectedItem != null)
+            {
+                Idioma seleccionado = (Idioma)cmbIdioma.SelectedItem;
+                if (GestorIdioma.Instancia.IdiomaActual == null || GestorIdioma.Instancia.IdiomaActual.Id != seleccionado.Id)
+                {
+                    GestorIdioma.Instancia.SeleccionarIdioma(seleccionado);
+                }
+            }
+        }
+
+        private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            GestorIdioma.Instancia.Desuscribir(this);
         }
     }
 }
