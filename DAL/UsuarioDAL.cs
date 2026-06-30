@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -115,6 +115,24 @@ namespace DAL
             List<Usuario> todos = Listar();
             string dvv = Servicios.Integridad.CalcularDVV(todos);
             DVVDAL.Instancia.Guardar("Usuario", dvv);
+        }
+
+        public void RecalcularDV()
+        {
+            List<Usuario> usuarios = Listar();
+            foreach (var u in usuarios)
+            {
+                string dvhCalculado = Servicios.Integridad.CalcularDVH(u);
+                if (u.DVH != dvhCalculado)
+                {
+                    SqlParameter[] p = {
+                        new SqlParameter("@Id", u.Id),
+                        new SqlParameter("@DVH", dvhCalculado)
+                    };
+                    Conexion.Instancia.RUD("sp_ModificarDVH", p);
+                }
+            }
+            ActualizarDVV();
         }
 
         private SqlParameter[] CrearParametrosUsuario(Usuario usuario)

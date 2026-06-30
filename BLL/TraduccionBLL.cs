@@ -28,5 +28,22 @@ namespace BLL
 
             return $"[{key}]";
         }
+
+        public void Guardar(Traduccion traduccion)
+        {
+            if (traduccion.Id == 0)
+            {
+                TraduccionDAL.Instancia.Insertar(traduccion);
+            }
+            else
+            {
+                TraduccionDAL.Instancia.Modificar(traduccion);
+            }
+        }
+
+        public void Eliminar(Traduccion traduccion)
+        {
+            TraduccionDAL.Instancia.Eliminar(traduccion);
+        }
     }
 }

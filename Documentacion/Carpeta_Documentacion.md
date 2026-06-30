@@ -243,6 +243,10 @@ classDiagram
         <<interface>>
         +void Actualizar(EventoBitacora evento)
     }
+    class IIdiomaObserver {
+        <<interface>>
+        +void ActualizarIdioma(Idioma i)
+    }
 
     %% Core BE Classes
     class Persona {
@@ -261,10 +265,21 @@ classDiagram
         +string Password
         +DateTime FechaAlta
         +bool Activo
-        +int RolId
-        +Rol RolAsignado
         +int IntentosFallidos
+        +string DVH
+        +List~Componente~ Permisos
+        +bool TienePermiso(TipoPermiso p)
         +Clone() object
+    }
+
+    class UsuarioAuditoria {
+        <<Simulated>>
+        +string Email
+        +string Password
+        +DateTime FechaAlta
+        +bool Activo
+        +int IntentosFallidos
+        +string DVH
     }
 
     class Rol {
@@ -274,6 +289,11 @@ classDiagram
         +bool Activo
     }
 
+    class DVV {
+        +string NombreEntidad
+        +string Valor
+    }
+
     class EventoBitacora {
         +int Id
         +DateTime FechaHora
@@ -281,6 +301,30 @@ classDiagram
         +string Actividad
         +string InformacionAsociada
     }
+
+    %% Composite Pattern Subgraph
+    subgraph Composite_Pattern_Security
+        class Componente {
+            <<abstract>>
+            +int Id
+            +string Nombre
+            +TipoPermiso? PermisoAsociado
+            +abstract AgregarHijo(Componente c)
+            +abstract VaciarHijos()
+            +abstract ObtenerHijos() List~Componente~
+        }
+        class Familia {
+            -List~Componente~ _hijos
+            +AgregarHijo(Componente c)
+            +VaciarHijos()
+            +ObtenerHijos() List~Componente~
+        }
+        class Patente {
+            +AgregarHijo(Componente c)
+            +VaciarHijos()
+            +ObtenerHijos() List~Componente~
+        }
+    end
 
     %% DAL Layer
     class Conexion {
@@ -296,137 +340,71 @@ classDiagram
         +static UsuarioDAL Instancia
         +List~Usuario~ Listar()
         +Usuario BuscarPorEmail(string email)
-        +bool ExisteDni(string dniCifrado)
         +int Insertar(Usuario u)
-        +int Modificar(Usuario u)
-        +int Eliminar(Usuario u)
-        +void SumarIntentoFallido(string email)
-        +void ResetearIntentos(string email)
+        +void ActualizarDVV()
     }
 
-    class RolDAL {
+    class DVVDAL {
         <<Singleton>>
-        +static RolDAL Instancia
-        +List~Rol~ Listar()
-        +int Insertar(Rol r)
-        +int Modificar(Rol r)
-        +int Eliminar(int id)
+        +static DVVDAL Instancia
+        +string Obtener(string entidad)
+        +void Guardar(string entidad, string valor)
     }
 
-    class BitacoraDAL {
+    class SeguridadDAL {
         <<Singleton>>
-        +static BitacoraDAL Instancia
-        +int Insertar(EventoBitacora e)
-        +List~EventoBitacora~ LeerFiltrado(DateTime? d, DateTime? h, string u, string a)
-    }
-
-    %% MPP Layer
-    class UsuarioMPP {
-        <<Singleton>>
-        +static UsuarioMPP Instancia
-        +Usuario MapearUsuario(DataRow row)
-        +List~Usuario~ MapearLista(DataTable dt)
-    }
-
-    class RolMPP {
-        <<Singleton>>
-        +static RolMPP Instancia
-        +Rol MapearRol(DataRow row)
-        +List~Rol~ MapearLista(DataTable dt)
-    }
-
-    class BitacoraMPP {
-        <<Singleton>>
-        +static BitacoraMPP Instancia
-        +List~EventoBitacora~ MapearLista(DataTable dt)
+        +static SeguridadDAL Instancia
+        +List~Componente~ ObtenerPermisosDeUsuario(int id)
+        +List~Componente~ ObtenerTodasLasFamilias()
     }
 
     %% BLL Layer
     class UsuarioBLL {
         -List~IObserver~ observadores
-        +List~Usuario~ ListarTodos()
-        +void Guardar(Usuario u)
-        +void Insertar(Usuario u, string pass)
-        +void Modificar(Usuario u, string newPass)
         +Usuario Login(string email, string pass)
         +void Logout()
     }
 
-    class RolBLL {
-        +List~Rol~ ListarTodos()
-        +void Guardar(Rol r)
-        +void Eliminar(int id)
+    class SeguridadBLL {
+        +void CargarEstructuraPermisos(Usuario u)
+        +void AsignarRolAUsuario(Usuario u, Componente r)
+        +List~Componente~ ObtenerRolesDisponibles()
     }
 
-    class BitacoraBLL {
-        <<Singleton>>
-        +static BitacoraBLL Instancia
-        +void Actualizar(EventoBitacora e)
-        +List~EventoBitacora~ Consultar(DateTime? d, DateTime? d, string u, string a)
-    }
-
-    %% Services
-    class Encriptador {
-        <<static>>
-        +static string Hash(string t)
-        +static string EncriptarAES(string p)
-        +static string DesencriptarAES(string c)
-    }
-
-    class Session {
-        <<Singleton>>
-        +static Session Instance
-        +Usuario Usuario
-        +DateTime FechaInicio
-        +void Login(Usuario u)
-        +void Logout()
-        +bool IsLogged()
-    }
+    %% Observer Pattern Subgraph (Multi-Language)
+    subgraph Observer_Pattern_Localization
+        class GestorIdioma {
+            <<Singleton>>
+            -List~IIdiomaObserver~ observadores
+            +Idioma IdiomaActual
+            +static GestorIdioma Instancia
+            +void Suscribir(IIdiomaObserver o)
+            +void Desuscribir(IIdiomaObserver o)
+            +void SeleccionarIdioma(Idioma i)
+            -void Notificar()
+        }
+    end
 
     %% Relationships
     Persona <|-- Usuario
-    Persona ..|> IEntidadBase
-    Usuario ..|> ILogueable
+    Usuario "1" *-- "n" Componente : tiene
+    Componente <|-- Familia
+    Componente <|-- Patente
+    Familia "1" *-- "n" Componente : hijos
     
     UsuarioBLL ..|> IObservado
-    UsuarioBLL ..|> IGestor_Usuario_
     BitacoraBLL ..|> IObserver
     
-    UsuarioDAL --> UsuarioMPP : usa
-    RolDAL --> RolMPP : usa
-    BitacoraDAL --> BitacoraMPP : usa
-    
     UsuarioDAL --> Conexion : usa
-    RolDAL --> Conexion : usa
-    BitacoraDAL --> Conexion : usa
+    DVVDAL --> Conexion : usa
     
     UsuarioBLL --> UsuarioDAL : usa
-    RolBLL --> RolDAL : usa
-    BitacoraBLL --> BitacoraDAL : usa
+    SeguridadBLL --> SeguridadDAL : usa
     
-    UsuarioBLL --> Encriptador : usa
-    UsuarioBLL --> BitacoraBLL : notifica
+    GestorIdioma "1" --> "n" IIdiomaObserver : notifica
 
-    style Persona fill:#e1f5ff
-    style Usuario fill:#e1f5ff
-    style Rol fill:#e1f5ff
-    style EventoBitacora fill:#e1f5ff
-
-    style Conexion fill:#fff3e0
-    style UsuarioDAL fill:#fff3e0
-    style RolDAL fill:#fff3e0
-    style BitacoraDAL fill:#fff3e0
-
-    style UsuarioMPP fill:#f3e5f5
-    style RolMPP fill:#f3e5f5
-    style BitacoraMPP fill:#f3e5f5
-
-    style UsuarioBLL fill:#e8f5e9
-    style RolBLL fill:#e8f5e9
-    style BitacoraBLL fill:#e8f5e9
-
-    style Encriptador fill:#fce4ec
-    style Session fill:#fce4ec
+    style Composite_Pattern_Security fill:#f9f9f9,stroke:#333,stroke-dasharray: 5 5
+    style Observer_Pattern_Localization fill:#f0fff0,stroke:#333,stroke-dasharray: 5 5
 ```
 
 ### Descripción de Responsabilidades por Clase
@@ -473,15 +451,12 @@ classDiagram
 
 ```mermaid
 erDiagram
-    ROL ||--o{ USUARIO : "asigna"
+    USUARIO ||--o{ USUARIO_COMPONENTE : "posee"
+    COMPONENTE ||--o{ USUARIO_COMPONENTE : "asignado_a"
+    COMPONENTE ||--o{ COMPONENTE_RELACION : "padre"
+    COMPONENTE ||--o{ COMPONENTE_RELACION : "hijo"
     USUARIO ||--o{ EVENTO_BITACORA : "genera"
-
-    ROL {
-        int id PK
-        string nombre UK
-        string descripcion
-        bool activo
-    }
+    DVV ||--|| INTEGRIDAD : "valida"
 
     USUARIO {
         int id PK
@@ -492,8 +467,30 @@ erDiagram
         string password
         datetime fecha_alta
         bool activo
-        int rol_id FK
         int intentos_fallidos
+        string dvh
+    }
+
+    COMPONENTE {
+        int id PK
+        string nombre
+        string permiso_asociado
+        string tipo_componente
+    }
+
+    COMPONENTE_RELACION {
+        int id_padre FK
+        int id_hijo FK
+    }
+
+    USUARIO_COMPONENTE {
+        int id_usuario FK
+        int id_componente FK
+    }
+
+    DVV {
+        string nombre_entidad PK
+        string valor
     }
 
     EVENTO_BITACORA {
@@ -758,27 +755,39 @@ graph TD
 
 ```mermaid
 erDiagram
-    ROL ||--o{ USUARIO : "asigna"
+    USUARIO ||--o{ USUARIO_COMPONENTE : "posee"
+    COMPONENTE ||--o{ USUARIO_COMPONENTE : "asignado_a"
+    COMPONENTE ||--o{ COMPONENTE_RELACION : "padre"
+    COMPONENTE ||--o{ COMPONENTE_RELACION : "hijo"
     USUARIO ||--o{ EVENTO_BITACORA : "genera"
-
-    ROL {
-        int id PK
-        string nombre UK
-        string descripcion
-        bool activo
-    }
+    DVV ||--|| INTEGRIDAD : "valida"
 
     USUARIO {
         int id PK
-        string dni UK
-        string nombre
-        string apellido
         string email UK
         string password
-        datetime fecha_alta
-        bool activo
-        int rol_id FK
-        int intentos_fallidos
+        string dvh
+    }
+
+    COMPONENTE {
+        int id PK
+        string nombre
+        string tipo_componente
+    }
+
+    COMPONENTE_RELACION {
+        int id_padre FK
+        int id_hijo FK
+    }
+
+    USUARIO_COMPONENTE {
+        int id_usuario FK
+        int id_componente FK
+    }
+
+    DVV {
+        string nombre_entidad PK
+        string valor
     }
 
     EVENTO_BITACORA {
@@ -786,7 +795,6 @@ erDiagram
         datetime fecha_hora
         string usuario_email
         string actividad
-        string informacion_asociada
     }
 ```
 
@@ -1216,7 +1224,7 @@ INICIO: Usuario accede a la aplicación
    ↓ (Formato válido)
 
 [Verificación en BD]
-   ├─ SessionManager (Singleton) invoca UsuarioBLL.AutenticarUsuario(email, password)
+   ├─ Session (Singleton) invoca UsuarioBLL.AutenticarUsuario(email, password)
    ├─ UsuarioBLL busca usuario por email en BD
    │
    ├─ SI usuario NO existe:
@@ -1255,7 +1263,7 @@ INICIO: Usuario accede a la aplicación
    │  │  │  │  ├─ ÉXITO: Credenciales válidas
    │  │  │  │  ├─ Resetear intentos_fallidos = 0
    │  │  │  │  ├─ Actualizar usuario en BD
-   │  │  │  │  ├─ SessionManager.CrearSesion(usuario)
+   │  │  │  │  ├─ Session.CrearSesion(usuario)
    │  │  │  │  │  ├─ Crear objeto Sesion con:
    │  │  │  │  │  │  ├─ UsuarioID
    │  │  │  │  │  │  ├─ Email
@@ -1297,7 +1305,7 @@ INICIO: Usuario solicita logout
    ├─ SI usuario cancela → Continuar en aplicación → SALIR
    │
    ├─ SI usuario confirma:
-   │  ├─ SessionManager.CerrarSesion()
+   │  ├─ Session.CerrarSesion()
    │  │  ├─ Obtener sesión activa
    │  │  ├─ Cambiar Sesion.Activa = false
    │  │  ├─ establecer FechaCierre = DateTime.UtcNow
@@ -1348,8 +1356,8 @@ ANTES DE MOSTRAR LOGIN:
    │  ├─ Mostrar alerta al administrador
    │  └─ Permitir acceso solo a Admin para mantenimiento
    ↓
-[3. Inicializar Singleton: SessionManager]
-   ├─ Crear instancia única de SessionManager
+[3. Inicializar Singleton: Session]
+   ├─ Crear instancia única de Session
    ├─ Inicializar colección de sesiones activas
    ├─ Inicializar temporizador de timeout (verificar cada minuto)
    │
@@ -1362,7 +1370,7 @@ ANTES DE MOSTRAR LOGIN:
 
 - **Verificar BD**: Conectividad y disponibilidad
 - **Validar Integridad**: Verificación de checksums (T08 futuro)
-- **Inicializar SessionManager**: Singleton listo para gestionar sesiones
+- **Inicializar Session**: Singleton listo para gestionar sesiones
 - **Registrar en Auditoría**: Evento SISTEMA_INICIADO
 - **Mostrar Login**: Pantalla de autenticación
 
@@ -1372,7 +1380,7 @@ ANTES DE MOSTRAR LOGIN:
 USUARIO CIERRA APLICACIÓN:
    ↓
 [1. Verificar Sesiones Activas]
-   ├─ SessionManager.ObtenerSesionesActivas()
+   ├─ Session.ObtenerSesionesActivas()
    ├─ SI hay sesiones activas:
    │  ├─ Registrar evento: LOGOUT para cada sesión
    │  ├─ Cerrar cada sesión (limpiar recursos)
@@ -1387,7 +1395,7 @@ USUARIO CIERRA APLICACIÓN:
    │
    ├─ Registrar evento: SISTEMA_APAGADO (con timestamp)
    │
-   ├─ Liberar recursos del Singleton SessionManager
+   ├─ Liberar recursos del Singleton Session
    │
    └─ Cerrar aplicación
 ```
@@ -1398,7 +1406,7 @@ USUARIO CIERRA APLICACIÓN:
 - **Persistir Auditoría**: Asegurar que todos los eventos se guardaron
 - **Liberar Conexiones**: Cierre limpio de conexión a BD
 - **Registrar Apagado**: Evento SISTEMA_APAGADO en Bitácora
-- **Liberar Singleton**: Destruir instancia de SessionManager
+- **Liberar Singleton**: Destruir instancia de Session
 
 ### 2.5 Gestión de Permisos en Sesión
 
@@ -1407,8 +1415,8 @@ DURANTE LA SESIÓN ACTIVA:
    ↓
 [Verificación de Permisos en Cada Operación]
    ├─ Usuario intenta acceder a funcionalidad
-   ├─ UI obtiene SessionManager.SesionActual
-   ├─ SessionManager.ValidarPermiso(usuario.rol_id, funcionalidad)
+   ├─ UI obtiene Session.SesionActual
+   ├─ Session.ValidarPermiso(usuario.rol_id, funcionalidad)
    │
    ├─ PermissionValidator consulta rol en BD
    ├─ PermissionValidator obtiene lista de permisos para rol
@@ -1433,7 +1441,7 @@ DURANTE LA SESIÓN ACTIVA:
 CONTROL DE INACTIVIDAD:
    ↓
 [Timer: Ejecuta cada 1 minuto]
-   ├─ SessionManager verifica todas las sesiones activas
+   ├─ Session verifica todas las sesiones activas
    ├─ Para cada Sesion:
    │  ├─ Calcular: MinutosInactividad = (DateTime.UtcNow - FechaUúltimaActividad).TotalMinutes
    │  │
@@ -1464,184 +1472,61 @@ config:
     theme: default
 ---
 classDiagram
-    class SessionManager {
-        -SessionManager _instancia
-        -List~Sesion~ sesionesActivas
-        -Timer timerTimeout
-        -SessionManager()
-        +static SessionManager ObtenerInstancia()
-        +Sesion CrearSesion(Usuario usuario)
-        +void CerrarSesion(int sesionID)
-        +Sesion ObtenerSesionActual()
-        +bool ValidarPermiso(int rolID, string funcionalidad)
-        +void VerificarTimeout()
-        +void LogoutPorTimeout(Sesion sesion)
-        +List~Sesion~ ObtenerSesionesActivas()
-    }
-
-    class Sesion {
-        -int id
-        -int usuarioID
-        -string email
-        -int rolID
-        -DateTime fechaLogin
-        -DateTime fechaUúltimaActividad
-        -DateTime fechaCierre
-        -bool activa
-        -int timeoutMinutos
-        +int UsuarioID
-        +string Email
-        +int RolID
-        +DateTime FechaLogin
-        +DateTime FechaUúltimaActividad
-        +bool Activa
-        +void ActualizarActividad()
-        +int CalcularMinutosInactividad()
-    }
-
-    class LoginProcessor {
-        -UsuarioBLL usuarioBLL
-        -Encriptador encriptador
-        +LoginProcessor()
-        +Usuario AutenticarUsuario(string email, string password)
-        +void ValidarFormatoEmail(string email)
-        +void VerificarIntentosBloqueo(string email)
-        +void IncrementarIntentoFallido(int usuarioID)
-        +void ResetearIntentosFallidos(int usuarioID)
-        +void BloquearUsuario(int usuarioID)
-    }
-
-    class LogoutProcessor {
-        -UsuarioBLL usuarioBLL
-        -BitacoraBLL BitacoraBLL
-        +LogoutProcessor()
-        +void CerrarSesion(Sesion sesion)
-        +void LimpiarRecursos(Sesion sesion)
-        +void RegistrarLogout(Sesion sesion)
-        +void CerrarFormulariosAbiertos()
-        +void LiberarConexiones()
-    }
-
-    class PermissionValidator {
-        -RolBLL rolBLL
-        +PermissionValidator()
-        +bool ValidarPermiso(int rolID, string funcionalidad)
-        +List~string~ ObtenerPermisosRol(int rolID)
-        +void RegistrarAccesoDenegado(string usuario, string funcionalidad)
-    }
-
-    class UsuarioBLL {
-        -UsuarioDAL usuarioDAL
-        +List~Usuario~ ListarTodos()
-        +Usuario ObtenerPorEmail(string email)
-        +Usuario ObtenerPorID(int id)
-        +void Guardar(Usuario usuario)
-        +void Eliminar(int id)
-        +void ActualizarIntentosBloqueo(int usuarioID, int intentos)
-    }
-
-    class RolBLL {
-        -RolDAL rolDAL
-        +List~Rol~ ListarTodos()
-        +Rol ObtenerPorID(int id)
-        +List~string~ ObtenerPermisosRol(int rolID)
-    }
-
-    class BitacoraBLL {
-        -BitacoraDAL BitacoraDAL
-        +void Registrar(EventoBitacora evento)
-        +void RegistrarLogin(Usuario usuario, bool exitoso)
-        +void RegistrarLogout(Usuario usuario)
-        +void RegistrarIntento(Usuario usuario, string razon)
+    class Session {
+        -static Session _instance
+        +static Session Instance
+        +Usuario Usuario
+        +DateTime FechaInicio
+        +void Login(Usuario u)
+        +void Logout()
+        +bool IsLogged()
     }
 
     class Usuario {
-        -int id
-        -int dni
-        -string nombre
-        -string apellido
-        -string email
-        -string password
-        -DateTime fechaAlta
-        -bool activo
-        -int rolID
-        -int intentosFallidos
-        +int ID
-        +int DNI
-        +string Nombre
         +string Email
+        +string Password
+        +DateTime FechaAlta
         +bool Activo
-        +int RolID
         +int IntentosFallidos
-        +bool Validar()
+        +string DVH
+        +List~Componente~ Permisos
+        +bool TienePermiso(TipoPermiso p)
     }
 
-    class Rol {
-        -int id
-        -string nombre
-        -string Descripción
-        -bool activo
-        +int ID
+    class Componente {
+        <<abstract>>
+        +int Id
         +string Nombre
-        +string Descripción
-        +bool Activo
+        +TipoPermiso? PermisoAsociado
+        +abstract AgregarHijo(Componente c)
+        +abstract ObtenerHijos() List~Componente~
     }
 
-    class EventoBitacora {
-        -int id
-        -DateTime fechaHora
-        -string usuarioEmail
-        -string actividad
-        -string informacionAsociada
-        +int ID
-        +DateTime FechaHora
-        +string UsuarioEmail
-        +string Actividad
-        +string InformacionAsociada
+    class UsuarioBLL {
+        +Usuario Login(string email, string pass)
+        +void Logout()
+    }
+
+    class SeguridadBLL {
+        +void CargarEstructuraPermisos(Usuario u)
     }
 
     class Encriptador {
-        +static string GenerarHash(string texto)
-        +static bool VerificarHash(string texto, string hash)
+        <<static>>
+        +static string Hash(string t)
+        +static bool VerificarHash(string t, string h)
     }
 
-    SessionManager "1" *-- "n" Sesion : gestiona
-    SessionManager "1" --> "1" LoginProcessor : utiliza
-    SessionManager "1" --> "1" LogoutProcessor : utiliza
-    SessionManager "1" --> "1" PermissionValidator : utiliza
-
-    LoginProcessor "1" --> "1" UsuarioBLL : invoca
-    LoginProcessor "1" --> "1" Encriptador : utiliza
-
-    LogoutProcessor "1" --> "1" UsuarioBLL : invoca
-    LogoutProcessor "1" --> "1" BitacoraBLL : utiliza
-
-    PermissionValidator "1" --> "1" RolBLL : invoca
-
-    Sesion "1" --> "1" Usuario : referencia
-    Sesion "1" --> "1" Rol : referencia
-
-    UsuarioBLL "1" --> "n" Usuario : gestiona
-    RolBLL "1" --> "n" Rol : gestiona
-    BitacoraBLL "1" --> "n" EventoBitacora : registra
-
-    style SessionManager fill:#FF6B6B
-    style LoginProcessor fill:#4ECDC4
-    style LogoutProcessor fill:#4ECDC4
-    style PermissionValidator fill:#4ECDC4
-    style Sesion fill:#FFE66D
-    style Usuario fill:#FFE66D
-    style Rol fill:#FFE66D
-    style EventoBitacora fill:#FFE66D
-    style UsuarioBLL fill:#A8E6CF
-    style RolBLL fill:#A8E6CF
-    style BitacoraBLL fill:#A8E6CF
-    style Encriptador fill:#95E1D3
+    Session "1" --> "1" Usuario : mantiene
+    Usuario "1" *-- "n" Componente : tiene
+    UsuarioBLL --> UsuarioDAL : usa
+    UsuarioBLL --> Encriptador : usa
+    SeguridadBLL --> SeguridadDAL : usa
 ```
 
 ### Descripción de Responsabilidades por Clase
 
-#### Clase: SessionManager (Singleton)
+#### Clase: Session (Singleton)
 **Responsabilidades - Hacer:**
 - Crear y mantener sesiones activas de usuarios
 - Validar permisos durante operaciones
@@ -1714,100 +1599,49 @@ config:
 sequenceDiagram
     actor Usuario
     participant UI as Login Form
-    participant SessionMgr as SessionManager
-    participant LoginProc as LoginProcessor
-    participant UsuBLL as UsuarioBLL
-    participant UsuDAL as UsuarioDAL
-    participant Encript as Encriptador
-    participant BitaBLL as BitacoraBLL
-    participant BD as Base de Datos
+    participant BLL as UsuarioBLL
+    participant DAL as UsuarioDAL
+    participant Enc as Encriptador
+    participant Seg as SeguridadBLL
+    participant Ses as Session
+    participant Evt as GestorEventos
+    participant BD as SQL Server
 
     Usuario->>UI: Ingresa email y password
-    UI->>UI: Validar formato email
-    alt Email inválido
-        UI->>Usuario: Mostrar error "Email inválido"
-        Note over Usuario,UI: Fin del flujo
-    end
-
-    UI->>SessionMgr: ObtenerInstancia()
-    SessionMgr-->>UI: Instancia de SessionManager
-
-    UI->>SessionMgr: CrearSesion(email, password)
-
-    SessionMgr->>LoginProc: AutenticarUsuario(email, password)
-
-    LoginProc->>UsuBLL: ObtenerPorEmail(email)
-    UsuBLL->>UsuDAL: ObtenerPorEmail(email)
-    UsuDAL->>BD: SELECT * FROM USUARIO WHERE email = ?
-    BD-->>UsuDAL: Usuario (si existe)
-    UsuDAL-->>UsuBLL: Usuario
-    UsuBLL-->>LoginProc: Usuario
+    UI->>BLL: Login(email, password)
+    
+    BLL->>BLL: ValidarFormatoEmail(email)
+    BLL->>DAL: BuscarPorEmail(email)
+    DAL->>BD: SELECT * FROM Usuario
+    BD-->>DAL: DataRow
+    DAL-->>BLL: Usuario objeto
 
     alt Usuario no existe
-        LoginProc->>BitaBLL: RegistrarIntento(email, FALLIDO, "Usuario no existe")
-        BitaBLL->>BD: INSERT EVENT
-        LoginProc-->>SessionMgr: null
-        SessionMgr-->>UI: null
-        UI->>Usuario: Mostrar "Email o contraseña incorrectos"
-        Note over Usuario,UI: Fin del flujo
-    end
-
-    alt Usuario inactivo
-        LoginProc->>BitaBLL: RegistrarIntento(email, FALLIDO, "Usuario inactivo")
-        BitaBLL->>BD: INSERT EVENT
-        LoginProc-->>SessionMgr: Excepción UsuarioInactivoException
-        UI->>Usuario: Mostrar "Usuario inactivo"
-        Note over Usuario,UI: Fin del flujo
-    end
-
-    alt Usuario bloqueado (intentos >= 5)
-        LoginProc->>BitaBLL: RegistrarIntento(email, FALLIDO, "Usuario bloqueado")
-        BitaBLL->>BD: INSERT EVENT
-        LoginProc-->>SessionMgr: Excepción UsuarioBloqueadoException
-        UI->>Usuario: Mostrar "Cuenta bloqueada"
-        Note over Usuario,UI: Fin del flujo
-    end
-
-    LoginProc->>UsuDAL: ObtenerPorEmail(email)
-    UsuDAL->>BD: SELECT password_hash FROM USUARIO WHERE email = ?
-    BD-->>UsuDAL: password_hash
-    UsuDAL-->>LoginProc: password_hash
-
-    LoginProc->>Encript: VerificarHash(password, password_hash)
-    Encript-->>LoginProc: bool resultado
-
-    alt Hash NO coincide
-        LoginProc->>UsuBLL: ActualizarIntentosBloqueo(usuarioID, intentos + 1)
-        UsuBLL->>UsuDAL: ActualizarIntentos(usuarioID)
-        UsuDAL->>BD: UPDATE USUARIO SET intentos_fallidos = ?
-        alt Intentos ahora >= 5
-            UsuDAL->>BD: UPDATE USUARIO SET activo = 0 (bloquear)
+        BLL->>Evt: Notificar("LOGIN_FALLIDO")
+        BLL-->>UI: null
+        UI->>Usuario: Mostrar error
+    else Usuario bloqueado
+        BLL->>Evt: Notificar("BLOQUEO")
+        BLL-->>UI: throw UsuarioBloqueadoException
+    else Credenciales OK
+        BLL->>Enc: Hash(password)
+        Enc-->>BLL: passHash
+        
+        alt Password coincide
+            BLL->>DAL: ResetearIntentos(email)
+            BLL->>Seg: CargarEstructuraPermisos(usuario)
+            Seg->>DAL: sp_Seguridad_ObtenerComponentes
+            DAL-->>Seg: Componentes tree
+            
+            BLL->>Ses: Login(usuario)
+            BLL->>Evt: Notificar("LOGIN")
+            BLL-->>UI: usuario
+            UI->>Usuario: Acceso concedido
+        else Password incorrecto
+            BLL->>DAL: SumarIntentoFallido(email)
+            BLL->>Evt: Notificar("LOGIN_FALLIDO")
+            BLL-->>UI: null
         end
-        LoginProc->>BitaBLL: RegistrarIntento(email, FALLIDO, "Contraseña incorrecta")
-        BitaBLL->>BD: INSERT EVENT
-        LoginProc-->>SessionMgr: null
-        SessionMgr-->>UI: null
-        UI->>Usuario: Mostrar "Email o contraseña incorrectos"
-        Note over Usuario,UI: Fin del flujo
-    end
-
-    alt Hash SÍ coincide
-        LoginProc->>UsuBLL: ActualizarIntentosBloqueo(usuarioID, 0)
-        UsuBLL->>UsuDAL: ResetearIntentos(usuarioID)
-        UsuDAL->>BD: UPDATE USUARIO SET intentos_fallidos = 0
-
-        LoginProc-->>SessionMgr: Usuario (autenticación exitosa)
-
-        SessionMgr->>SessionMgr: Crear objeto Sesion
-        SessionMgr->>SessionMgr: Agregar a sesionesActivas
-
-        SessionMgr->>BitaBLL: RegistrarLogin(usuario, exitoso)
-        BitaBLL->>BD: INSERT EVENTO_BITACORA (LOGIN_EXITOSO)
-
-        SessionMgr-->>UI: Sesion creada
-
-        UI->>Usuario: Mostrar FormPrincipal con menú según rol
-        Note over Usuario,UI: Sesión iniciada correctamente
     end
 ```
 
@@ -1824,71 +1658,41 @@ config:
 sequenceDiagram
     actor Usuario
     participant UI as FormPrincipal
-    participant SessionMgr as SessionManager
-    participant LogoutProc as LogoutProcessor
-    participant BitaBLL as BitacoraBLL
-    participant BD as Base de Datos
+    participant BLL as UsuarioBLL
+    participant Ses as Session
+    participant Evt as GestorEventos
+    participant BD as SQL Server
 
     Usuario->>UI: Clic en botón "Cerrar Sesión"
-    UI->>UI: Mostrar diálogo: ¿Desea cerrar sesión?
+    UI->>BLL: Logout()
 
-    alt Usuario cancela
-        UI->>Usuario: Continuar en aplicación
-        Note over Usuario,UI: Fin del flujo
-    end
-
-    alt Usuario confirma
-        UI->>SessionMgr: ObtenerInstancia()
-        SessionMgr-->>UI: Instancia
-
-        UI->>SessionMgr: CerrarSesion()
-
-        SessionMgr->>SessionMgr: Obtener sesión activa
-
-        SessionMgr->>SessionMgr: Marcar sesion.Activa = false
-        SessionMgr->>SessionMgr: establecer FechaCierre = DateTime.UtcNow
-
-        SessionMgr->>LogoutProc: CerrarSesion(sesion)
-
-        LogoutProc->>BitaBLL: RegistrarLogout(usuario)
-        BitaBLL->>BD: INSERT EVENTO_BITACORA (LOGOUT)
-
-        LogoutProc->>LogoutProc: CerrarFormulariosAbiertos()
-        LogoutProc->>UI: Cerrar FormPrincipal
-        LogoutProc->>UI: Cerrar UC_Bitacora (si está abierto)
-        LogoutProc->>UI: Cerrar otros formularios
-
-        LogoutProc->>LogoutProc: LiberarConexiones()
-        LogoutProc->>LogoutProc: Cerrar conexión a BD
-
-        LogoutProc->>LogoutProc: LimpiarRecursos()
-        LogoutProc->>LogoutProc: Limpiar variables de sesión
-        LogoutProc->>LogoutProc: Liberar referencias a Usuario/Rol
-
-        LogoutProc-->>SessionMgr: Recursos liberados
-
-        SessionMgr->>SessionMgr: Eliminar sesion de sesionesActivas
-        SessionMgr-->>UI: Sesión cerrada
-
-        UI->>Usuario: Mostrar "Sesión cerrada exitosamente"
-        UI->>UI: Mostrar formulario Login
-        Note over Usuario,UI: Flujo de logout completado
-    end
+    BLL->>Ses: IsLogged()
+    Ses-->>BLL: true
+    
+    BLL->>Ses: Logout()
+    Ses-->>BLL: OK
+    
+    BLL->>Evt: Notificar("LOGOUT")
+    Evt->>BD: sp_Bitacora_Insertar
+    
+    BLL-->>UI: OK
+    UI->>UI: Cerrar FormPrincipal
+    UI->>UI: Mostrar Login Form
 ```
 
 ---
 
 ## T02.6 Diseño de Algoritmos
 
-### 6.1 Algoritmo: Patrón Singleton para SessionManager
+### 6.1 Algoritmo: Patrón Singleton para Session
 
 ```
-ALGORITMO: ObtenerInstancia_SessionManager
+ALGORITMO: ObtenerInstancia_Session
 
 ENTRADA: ninguna
 
 VARIABLES:
-    _instancia: referencia static a SessionManager
+    _instancia: referencia static a Session
     _lockObject: objeto de sincronización para thread-safety
 
 PROCESO:
@@ -1899,7 +1703,7 @@ PROCESO:
 
             3. SI _instancia es NULL ENTONCES
 
-                4. _instancia := NUEVA SessionManager()
+                4. _instancia := NUEVA Session()
                 5. INICIALIZAR:
                    - sesionesActivas := LIST vacia
                    - timerTimeout := NUEVO Timer()
@@ -2103,40 +1907,36 @@ config:
     theme: default
 ---
 erDiagram
-    ROL ||--o{ USUARIO : "asigna"
+    USUARIO ||--o{ USUARIO_COMPONENTE : "posee"
+    COMPONENTE ||--o{ USUARIO_COMPONENTE : "asignado_a"
+    COMPONENTE ||--o{ COMPONENTE_RELACION : "padre"
+    COMPONENTE ||--o{ COMPONENTE_RELACION : "hijo"
     USUARIO ||--o{ EVENTO_BITACORA : "genera"
     USUARIO ||--o{ SESION : "inicia"
 
-    ROL {
-        int id PK
-        string nombre UK
-        string Descripción
-        bool activo
-    }
-
     USUARIO {
         int id PK
-        int dni UK
-        string nombre
-        string apellido
         string email UK
         string password
-        datetime fecha_alta
-        bool activo
-        int rol_id FK
-        int intentos_fallidos
+        string dvh
+    }
+
+    COMPONENTE {
+        int id PK
+        string nombre
+        string permiso_asociado
+    }
+
+    COMPONENTE_RELACION {
+        int id_padre FK
+        int id_hijo FK
     }
 
     SESION {
         int id PK
         int usuario_id FK
-        string email
-        int rol_id FK
         datetime fecha_login
-        datetime fecha_uúltima_actividad
-        datetime fecha_cierre
         bool activa
-        int timeout_minutos
     }
 
     EVENTO_BITACORA {
@@ -2144,7 +1944,6 @@ erDiagram
         datetime fecha_hora
         string usuario_email
         string actividad
-        string informacion_asociada
     }
 ```
 
@@ -2256,13 +2055,13 @@ public class PermisoDenegadoException : ApplicationException
 |:---|:---|:---|
 | **Intentos Fallidos** | Máximo 5 intentos antes de bloqueo | Contador en tabla USUARIO.intentos_fallidos |
 | **Bloqueo Temporal** | Usuario bloqueado requiere Admin para desbloquear | Campo USUARIO.activo = 0 |
-| **Timeout Sesión** | 30 minutos de inactividad = cierre automático | Timer en SessionManager cada 1 min |
+| **Timeout Sesión** | 30 minutos de inactividad = cierre automático | Timer en Session cada 1 min |
 | **Validación Email** | RFC 5322 simplificado antes de buscar en BD | Regex en LoginProcessor |
 | **Encriptación Password** | SHA256 hash no reversible | Encriptador.VerificarHash() |
 | **Auditoría Completa** | Todos eventos registrados en EVENTO_BITACORA | BitacoraBLL notificado de cada acción |
 | **Permisos por Rol** | Usuario solo accede según su ROL.id | PermissionValidator en cada operación |
 | **Cleanup Logout** | Liberación total de recursos tras cierre | LogoutProcessor.LimpiarRecursos() |
-| **Singleton SessionManager** | Instancia única en toda la aplicación | Patrón Singleton con thread-safety |
+| **Singleton Session** | Instancia única en toda la aplicación | Patrón Singleton con thread-safety |
 
 ---
 
@@ -2272,7 +2071,7 @@ La implementación de T02 cumple exitosamente con:
 
 ✅ **Autenticación Segura**: Validación de credenciales con hash SHA256 y manejo de intentos fallidos
 
-✅ **Gestión de Sesiones**: SessionManager Singleton mantiene control centralizado y único
+✅ **Gestión de Sesiones**: Session Singleton mantiene control centralizado y único
 
 ✅ **Control de Acceso**: Validación de permisos por rol en cada operación crítica
 
@@ -2285,7 +2084,7 @@ La implementación de T02 cumple exitosamente con:
 
 ✅ **Seguridad en Startup/Shutdown**: Inicialización y cierre controlados del sistema
 
-✅ **Patrón Singleton**: SessionManager implementado con thread-safety para instancia única
+✅ **Patrón Singleton**: Session implementado con thread-safety para instancia única
 
 ✅ **Diagrama y Secuencia**: Modelado completo del flujo de autenticación
 
@@ -2580,16 +2379,16 @@ classDiagram
 ```mermaid
 sequenceDiagram
     participant Usu as UsuarioBLL
-    participant BitaBLL as BitacoraBLL (IObserver)
-    participant BitaDAL as BitacoraDAL
+    participant Gst as GestorEventos (IObservado)
+    participant Bita as BitacoraBLL (IObserver)
+    participant DAL as BitacoraDAL
     participant BD as SQL Server
 
-    Usu->>BitaBLL: Notificar(evento)
-    BitaBLL->>BitaBLL: Actualizar(evento)
-    BitaBLL->>BitaDAL: Insertar(evento)
-    BitaDAL->>BD: EXEC sp_Bitácora_Insertar
-    BD-->>BitaDAL: OK
-    BitaDAL-->>BitaBLL: OK
+    Usu->>Gst: Notificar(evento)
+    Gst->>Bita: Actualizar(evento)
+    Bita->>DAL: Insertar(evento)
+    DAL->>BD: EXEC sp_Bitácora_Insertar
+    BD-->>DAL: OK
 ```
 ## T06a.5 Diagrama de Secuencia (Consulta con Filtros)
 
@@ -2615,7 +2414,7 @@ sequenceDiagram
 
 ```mermaid
 erDiagram
-    USUARIO ||--o{ EVENTO_BITACORA : \genera\
+    USUARIO ||--o{ EVENTO_BITACORA : "genera"
 
     EVENTO_BITACORA {
         int id PK
@@ -2624,7 +2423,114 @@ erDiagram
         string actividad
         string informacion_asociada
     }
-```\
+```
+
+---
+
+# T04. GESTIÓN DE PERFILES DE USUARIO (COMPOSITE)
+
+## T04.1 Objetivo
+
+Implementar un modelo de seguridad flexible y jerárquico que permita la creación de roles (familias) compuestos por otros roles o permisos individuales (patentes), permitiendo una administración granular y escalable del control de acceso.
+
+## T04.2 Descripción Detallada de Funcionamiento
+
+El sistema aplica el **Patrón de Diseño Composite** para tratar a los permisos individuales y a los grupos de permisos de manera uniforme:
+
+1.  **Componente (Clase Abstracta)**: Define la interfaz común para todos los elementos de la jerarquía de seguridad. Contiene el `Id`, `Nombre` y el `TipoPermiso` asociado.
+2.  **Patente (Hoja/Leaf)**: Representa un permiso atómico (ej: "Usuarios_Ver", "Acceso_Cochera"). No puede tener hijos.
+3.  **Familia (Compuesto/Composite)**: Representa un rol o grupo de permisos. Contiene una lista de `Componente`, lo que permite que una familia contenga tanto patentes como otras familias (recursividad).
+
+**Ventajas del modelo**:
+- **Escalabilidad**: Se pueden crear niveles infinitos de anidación de roles.
+- **Uniformidad**: El motor de seguridad de la aplicación (SeguridadBLL) recorre la estructura de forma recursiva sin preocuparse de si está tratando con un permiso simple o un grupo.
+
+---
+
+# T05. GESTIÓN DE MÚLTIPLES IDIOMAS (OBSERVER)
+
+## T05.1 Objetivo
+
+Proveer una interfaz multi-idioma que permita el cambio dinámico de leyendas, etiquetas y títulos en tiempo de ejecución, sin necesidad de reiniciar la aplicación y manteniendo un desacoplamiento total entre la lógica de traducción y la interfaz de usuario.
+
+## T05.2 Descripción Detallada de Funcionamiento
+
+El sistema utiliza el **Patrón de Diseño Observer** para propagar los cambios de idioma:
+
+1.  **Sujeto (GestorIdioma)**: Mantiene el estado del idioma actual y la lista de observadores suscritos.
+2.  **Observador (IIdiomaObserver)**: Interfaz que deben implementar todos los formularios o controles que deseen reaccionar al cambio de idioma.
+3.  **Notificación**: Cuando el usuario selecciona un nuevo idioma, el `GestorIdioma` invoca el método `ActualizarIdioma()` en todos los suscriptores.
+
+### Diagrama de Secuencia: Cambio de Idioma
+```mermaid
+sequenceDiagram
+    participant UI as UC_Soporte
+    participant Gst as GestorIdioma (Subject)
+    participant Form as FormPrincipal (Observer)
+    participant Ctrl as UC_Usuarios (Observer)
+    participant DAL as TraduccionDAL
+
+    UI->>Gst: SeleccionarIdioma(Español)
+    Gst->>DAL: ObtenerTraducciones(Id)
+    DAL-->>Gst: List~Traduccion~
+    Gst->>Gst: Notificar()
+    par Cada Observador
+        Gst->>Form: ActualizarIdioma(Español)
+        Gst->>Ctrl: ActualizarIdioma(Español)
+    end
+    Form-->>Form: Actualizar Textos
+    Ctrl-->>Ctrl: Actualizar Textos
+```
+
+---
+
+# T06b. CONTROL DE CAMBIOS Y AUDITORÍA
+
+## T06b.1 Objetivo
+
+Garantizar la trazabilidad histórica de los datos del sistema, permitiendo no solo saber quién y cuándo modificó una entidad, sino también conocer el estado exacto previo a dicha modificación y habilitar mecanismos de recuperación (Undo).
+
+## T06b.2 Descripción Detallada de Funcionamiento
+
+El sistema implementa una estrategia de **Snapshot Auditing** utilizando la clase `UsuarioAuditoria`:
+
+1.  **Clase UsuarioAuditoria**: Es una réplica estructural de la clase `Usuario`. Actúa como un objeto de tipo Memento.
+2.  **Captura de Estado**: Antes de realizar un `UPDATE` en la tabla de usuarios, el sistema instancia un `UsuarioAuditoria` con los valores actuales.
+3.  **Persistencia**: El estado capturado se guarda en la tabla de auditoría, vinculada al evento de bitácora correspondiente.
+
+### Posibilidad de Deshacer (Undo)
+Gracias a que `UsuarioAuditoria` preserva la integridad de los datos anteriores (incluyendo el DVH), el sistema puede realizar una operación de **Undo**:
+- El administrador selecciona un estado histórico desde la interfaz de auditoría.
+- El sistema toma los valores de `UsuarioAuditoria` y los "pisa" sobre el `Usuario` actual.
+- Se recalcula la integridad y se persiste, devolviendo al usuario a su estado anterior de forma segura.
+
+---
+
+# T07. GESTIÓN DE DÍGITOS VERIFICADORES (DV)
+
+## T07.1 Objetivo
+
+Asegurar la integridad física y lógica de los datos almacenados en la base de datos, detectando cualquier modificación no autorizada realizada por fuera de la aplicación (ej: edición directa mediante SQL Management Studio).
+
+## T07.2 Descripción Detallada de Funcionamiento
+
+El sistema implementa dos niveles de validación:
+
+1.  **DVH (Dígito Verificador Horizontal)**: 
+    - Se calcula para cada registro (fila) de una tabla crítica (ej: Usuario).
+    - El algoritmo toma los campos sensibles, los concatena y genera un hash único.
+    - Se almacena en la propia fila. Si el contenido de la fila cambia, el hash ya no coincidirá.
+
+2.  **DVV (Dígito Verificador Vertical)**:
+    - Se calcula para toda la columna de DVHs de una tabla.
+    - Es la sumatoria (o hash agregado) de todos los DVHs de la tabla.
+    - Permite detectar la eliminación de registros completos o la inserción de nuevas filas no autorizadas.
+
+**Flujo de Verificación**:
+- **Al Inicio**: El sistema recorre las tablas críticas, recalcula DVH/DVV y compara con los almacenados.
+- **Al Guardar**: La aplicación actualiza el DVH del registro afectado y el DVV global de la tabla.
+- **En Caso de Falla**: Si se detecta una discrepancia, el sistema registra un evento crítico y puede bloquear el acceso para proteger la consistencia de la información.
+
 
 
 

@@ -1,4 +1,4 @@
-﻿namespace UI
+namespace UI
 {
     partial class FormPrincipal
     {
@@ -34,6 +34,7 @@
             this.btnUsuarios = new System.Windows.Forms.Button();
             this.btnRoles = new System.Windows.Forms.Button();
             this.btnSoporteTecnico = new System.Windows.Forms.Button();
+            this.btnTraducciones = new System.Windows.Forms.Button();
             this.cmbIdioma = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
@@ -99,6 +100,17 @@
             this.btnSoporteTecnico.UseVisualStyleBackColor = true;
             this.btnSoporteTecnico.Click += new System.EventHandler(this.btnSoporteTecnico_Click);
             // 
+            // btnTraducciones
+            // 
+            this.btnTraducciones.Location = new System.Drawing.Point(12, 290);
+            this.btnTraducciones.Name = "btnTraducciones";
+            this.btnTraducciones.Size = new System.Drawing.Size(120, 43);
+            this.btnTraducciones.TabIndex = 6;
+            this.btnTraducciones.Tag = "menu_traducciones";
+            this.btnTraducciones.Text = "Traducciones";
+            this.btnTraducciones.UseVisualStyleBackColor = true;
+            this.btnTraducciones.Click += new System.EventHandler(this.btnTraducciones_Click);
+            // 
             // cmbIdioma
             // 
             this.cmbIdioma.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -115,6 +127,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1520, 623);
             this.Controls.Add(this.cmbIdioma);
+            this.Controls.Add(this.btnTraducciones);
             this.Controls.Add(this.btnSoporteTecnico);
             this.Controls.Add(this.btnRoles);
             this.Controls.Add(this.btnUsuarios);
@@ -137,6 +150,7 @@
         private System.Windows.Forms.Button btnUsuarios;
         private System.Windows.Forms.Button btnRoles;
         private System.Windows.Forms.Button btnSoporteTecnico;
+        private System.Windows.Forms.Button btnTraducciones;
         private System.Windows.Forms.ComboBox cmbIdioma;
     }
 }

@@ -46,5 +46,32 @@ namespace DAL
             DataTable dt = Conexion.Instancia.Leer("sp_ObtenerTraduccionesPorIdioma", p);
             return TraduccionMPP.Instancia.MapearLista(dt);
         }
+
+        public void Insertar(Traduccion traduccion)
+        {
+            SqlParameter[] p = {
+                new SqlParameter("@IdIdioma", traduccion.Idioma.Id),
+                new SqlParameter("@NombreEtiqueta", traduccion.NombreEtiqueta),
+                new SqlParameter("@Texto", traduccion.Texto)
+            };
+            Conexion.Instancia.RUD("sp_Traduccion_Insertar", p);
+        }
+
+        public void Modificar(Traduccion traduccion)
+        {
+            SqlParameter[] p = {
+                new SqlParameter("@Id", traduccion.Id),
+                new SqlParameter("@IdIdioma", traduccion.Idioma.Id),
+                new SqlParameter("@NombreEtiqueta", traduccion.NombreEtiqueta),
+                new SqlParameter("@Texto", traduccion.Texto)
+            };
+            Conexion.Instancia.RUD("sp_Traduccion_Modificar", p);
+        }
+
+        public void Eliminar(Traduccion traduccion)
+        {
+            SqlParameter[] p = { new SqlParameter("@Id", traduccion.Id) };
+            Conexion.Instancia.RUD("sp_Traduccion_Eliminar", p);
+        }
     }
 }

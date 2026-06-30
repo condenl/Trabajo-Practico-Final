@@ -43,6 +43,11 @@ namespace Servicios
             Notificar();
         }
 
+        public void NotificarCambio()
+        {
+            Notificar();
+        }
+
         private void Notificar()
         {
             foreach (var obs in observadores)

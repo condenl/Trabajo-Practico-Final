@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using BE;
@@ -20,6 +20,16 @@ namespace BLL
             var usuarios = UsuarioDAL.Instancia.Listar();
             var storedDVV = DVVDAL.Instancia.Obtener("Usuario");
             return Servicios.Integridad.VerificarIntegridad(usuarios, storedDVV);
+        }
+
+        public void RecalcularDV()
+        {
+            UsuarioDAL.Instancia.RecalcularDV();
+        }
+
+        public void RestaurarBaseDeDatos(string backupPath)
+        {
+            Conexion.Instancia.RestaurarBaseDeDatos(backupPath);
         }
 
         public void Guardar(Usuario u)

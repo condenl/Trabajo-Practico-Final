@@ -1,4 +1,4 @@
-﻿namespace BE.Seguridad
+namespace BE.Seguridad
 {
     public enum TipoPermiso
     {
@@ -10,6 +10,7 @@
         Usuarios_Alta,
         Usuarios_Modificar,
         Usuarios_Baja,
-        Roles_Gestion
+        Roles_Gestion,
+        Traduccion_Gestion
     }
 }

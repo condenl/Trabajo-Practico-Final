@@ -53,7 +53,7 @@ namespace Servicios
                 string dvhCalculado = CalcularDVH(u);
                 if (u.DVH != dvhCalculado)
                 {
-                    errores.Add($"Error de integridad (DVH) en Usuario ID: {u.Id} ({u.Email})");
+                    errores.Add($"Error de integridad (DVH) en Usuario ID: {u.Id} - Datos del registro: [Nombre: {u.Nombre}, Apellido: {u.Apellido}, Email: {u.Email}, DNI: {u.Dni}, Activo: {u.Activo}, Intentos Fallidos: {u.IntentosFallidos}, Fecha Alta: {u.FechaAlta:yyyy-MM-dd HH:mm:ss}]");
                 }
             }
 

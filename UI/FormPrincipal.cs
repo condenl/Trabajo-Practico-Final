@@ -40,6 +40,7 @@ namespace UI
             btnUsuarios.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.Usuarios_Ver);
             btnRoles.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.Roles_Gestion);
             btnBitacora.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.VerReportes);
+            btnTraducciones.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.Traduccion_Gestion);
         }
 
         private void ConfigurarIdiomas()
@@ -61,6 +62,23 @@ namespace UI
 
         public void ActualizarIdioma(Idioma idioma)
         {
+            cmbIdioma.SelectedIndexChanged -= cmbIdioma_SelectedIndexChanged;
+
+            cmbIdioma.DataSource = null;
+            cmbIdioma.DataSource = idiomaBLL.Listar();
+            cmbIdioma.DisplayMember = "Nombre";
+
+            if (GestorIdioma.Instancia.IdiomaActual != null)
+            {
+                List<Idioma> idiomas = (List<Idioma>)cmbIdioma.DataSource;
+                if (idiomas != null)
+                {
+                    cmbIdioma.SelectedItem = idiomas.Find(i => i.Id == GestorIdioma.Instancia.IdiomaActual.Id);
+                }
+            }
+
+            cmbIdioma.SelectedIndexChanged += cmbIdioma_SelectedIndexChanged;
+
             ActualizarTextos();
         }
 
@@ -126,6 +144,14 @@ namespace UI
             panel1.Controls.Clear();
             panel1.Controls.Add(soporteadmin);
             soporteadmin.Show();
+        }
+
+        private void btnTraducciones_Click(object sender, EventArgs e)
+        {
+            UC_Traducciones traducciones = new UC_Traducciones();
+            panel1.Controls.Clear();
+            panel1.Controls.Add(traducciones);
+            traducciones.Show();
         }
 
         private void FormPrincipal_Load(object sender, EventArgs e)

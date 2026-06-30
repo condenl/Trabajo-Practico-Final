@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -84,6 +84,28 @@ namespace DAL
                     da.Fill(dt);
                 }
                 return dt;
+            }
+        }
+
+        public void RestaurarBaseDeDatos(string backupPath)
+        {
+            var builder = new SqlConnectionStringBuilder(connectionString);
+            string dbName = builder.InitialCatalog;
+            builder.InitialCatalog = "master";
+
+            using (SqlConnection cn = new SqlConnection(builder.ConnectionString))
+            {
+                cn.Open();
+                string query = $@"
+                    ALTER DATABASE [{dbName}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+                    RESTORE DATABASE [{dbName}] FROM DISK = @BackupPath WITH REPLACE;
+                    ALTER DATABASE [{dbName}] SET MULTI_USER;";
+
+                using (SqlCommand cmd = new SqlCommand(query, cn))
+                {
+                    cmd.Parameters.Add(new SqlParameter("@BackupPath", backupPath));
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
     }

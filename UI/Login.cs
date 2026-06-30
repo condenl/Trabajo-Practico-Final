@@ -113,7 +113,32 @@ namespace UI
 
             if (usuarioLogueado != null)
             {
-                NavegarAlSistema(usuarioLogueado);
+                var errores = new UsuarioBLL().VerificarIntegridad();
+                if (errores.Count > 0)
+                {
+                    if (usuarioLogueado.TienePermiso(BE.Seguridad.TipoPermiso.VerReportes))
+                    {
+                        FormIntegridad formIntegridad = new FormIntegridad(usuarioLogueado, errores);
+                        if (formIntegridad.ShowDialog() == DialogResult.OK)
+                        {
+                            NavegarAlSistema(usuarioLogueado);
+                        }
+                        else
+                        {
+                            visitanteBLL.Logout();
+                        }
+                    }
+                    else
+                    {
+                        // Para el resto de usuarios, cuando hay un error de integridad en la base de datos al momento de login,
+                        // pueden seguir utilizando la aplicacion con normalidad.
+                        NavegarAlSistema(usuarioLogueado);
+                    }
+                }
+                else
+                {
+                    NavegarAlSistema(usuarioLogueado);
+                }
             }
             else
             {
