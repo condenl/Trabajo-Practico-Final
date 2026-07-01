@@ -27,6 +27,7 @@
             this.btnAgregarPermiso = new System.Windows.Forms.Button();
             this.lbRoles = new System.Windows.Forms.ListBox();
             this.lbPermisosAsignados = new System.Windows.Forms.ListBox();
+            this.tvRoles = new System.Windows.Forms.TreeView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.SuspendLayout();
             // 
@@ -146,10 +147,18 @@
             this.lbPermisosAsignados.Size = new System.Drawing.Size(392, 95);
             this.lbPermisosAsignados.TabIndex = 59;
             // 
+            // tvRoles
+            // 
+            this.tvRoles.Location = new System.Drawing.Point(472, 172);
+            this.tvRoles.Name = "tvRoles";
+            this.tvRoles.Size = new System.Drawing.Size(195, 97);
+            this.tvRoles.TabIndex = 61;
+            // 
             // UC_Roles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.tvRoles);
             this.Controls.Add(this.lbPermisosAsignados);
             this.Controls.Add(this.lbRoles);
             this.Controls.Add(this.btnQuitarPermiso);
@@ -185,5 +194,6 @@
         private System.Windows.Forms.Button btnAgregarPermiso;
         private System.Windows.Forms.ListBox lbRoles;
         private System.Windows.Forms.ListBox lbPermisosAsignados;
+        private System.Windows.Forms.TreeView tvRoles;
     }
 }

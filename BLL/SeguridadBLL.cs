@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BE;
 using BE.Seguridad;
 using DAL;
-using Servicios; 
+using Servicios;
 
 namespace BLL
 {
@@ -15,6 +16,13 @@ namespace BLL
         }
 
         public List<Componente> ObtenerRolesDisponibles() => SeguridadDAL.Instancia.ObtenerTodasLasFamilias();
+
+        // --- ACÁ ESTÁ EL MÉTODO QUE FALTABA ---
+        // Este método sirve de puente para que la UI pueda pedir la familia armada a la DAL
+        public Familia ObtenerFamiliaCompleta(int idFamilia)
+        {
+            return SeguridadDAL.Instancia.ObtenerFamiliaCompleta(idFamilia);
+        }
 
         public void AsignarRolAUsuario(Usuario usuario, Componente rol)
         {
@@ -53,11 +61,26 @@ namespace BLL
         public List<Componente> ObtenerPatentesDisponibles() => SeguridadDAL.Instancia.ObtenerPatentes();
         public List<Componente> ObtenerPermisosDeRol(int idRol) => SeguridadDAL.Instancia.ObtenerPermisosDeRol(idRol);
 
-        public void AsignarPermisoARol(Componente rol, Componente permiso)
+        public void AsignarPermisoARol(Componente rolPadre, Componente componenteAAgregar)
         {
-            SeguridadDAL.Instancia.AgregarPermisoARol(rol.Id, permiso.Id);
+            // Regla 1: Un rol no puede asignarse a sí mismo
+            if (rolPadre.Id == componenteAAgregar.Id)
+                throw new Exception("Operación denegada: Un rol no puede contenerse a sí mismo.");
+
+            // Regla 2: Anti-Bucle (Solo evaluamos si lo que intentamos agregar es otro Rol)
+            if (componenteAAgregar is Familia)
+            {
+                if (ExisteReferenciaCircular(rolPadre.Id, componenteAAgregar.Id))
+                    throw new Exception("Operación denegada: Esto generaría una referencia circular infinita (Ej: A contiene a B, y B intenta contener a A).");
+            }
+
+            SeguridadDAL.Instancia.AgregarPermisoARol(rolPadre.Id, componenteAAgregar.Id);
+
             string responsable = Session.Instance.Usuario?.Email ?? "SISTEMA";
-            GestorEventos.Instancia.Notificar(new EventoBitacora(responsable, "MODIFICACION_SEGURIDAD", $"Se agregó el permiso '{permiso.Nombre}' al rol '{rol.Nombre}'"));
+            string tipoAgregado = componenteAAgregar is Familia ? "Rol" : "Permiso";
+
+            GestorEventos.Instancia.Notificar(new EventoBitacora(responsable, "MODIFICACION_SEGURIDAD",
+                $"Se agregó el {tipoAgregado} '{componenteAAgregar.Nombre}' al Rol '{rolPadre.Nombre}'"));
         }
 
         public void QuitarPermisoDeRol(Componente rol, Componente permiso)
@@ -65,6 +88,26 @@ namespace BLL
             SeguridadDAL.Instancia.QuitarPermisoDeRol(rol.Id, permiso.Id);
             string responsable = Session.Instance.Usuario?.Email ?? "SISTEMA";
             GestorEventos.Instancia.Notificar(new EventoBitacora(responsable, "MODIFICACION_SEGURIDAD", $"Se quitó el permiso '{permiso.Nombre}' del rol '{rol.Nombre}'"));
+        }
+
+        // --- MÉTODO PRIVADO RECURSIVO PARA EVITAR BUCLES ---
+        private bool ExisteReferenciaCircular(int idPadreDestino, int idHijoPotencial)
+        {
+            // Traemos todo lo que tiene adentro el Rol que intentamos agregar
+            var hijosDelPotencial = ObtenerPermisosDeRol(idHijoPotencial);
+
+            foreach (var hijo in hijosDelPotencial)
+            {
+                // Si adentro del potencial hijo ya existe el padre, confirmamos el ciclo
+                if (hijo.Id == idPadreDestino) return true;
+
+                // Si el hijo es a su vez otra familia, escarbamos más adentro (Recursividad)
+                if (hijo is Familia)
+                {
+                    if (ExisteReferenciaCircular(idPadreDestino, hijo.Id)) return true;
+                }
+            }
+            return false;
         }
     }
 }
