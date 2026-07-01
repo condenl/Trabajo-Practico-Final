@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuditoriaMPP.cs" />
     <Compile Include="BitacoraMPP.cs" />
     <Compile Include="IdiomaMPP.cs" />
     <Compile Include="SeguridadMPP.cs" />

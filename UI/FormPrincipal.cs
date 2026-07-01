@@ -175,5 +175,13 @@ namespace UI
         {
             GestorIdioma.Instancia.Desuscribir(this);
         }
+
+        private void btnAuditoria_Click(object sender, EventArgs e)
+        {
+            UC_AuditoriaUsuarios auditoria = new UC_AuditoriaUsuarios();
+            panel1.Controls.Clear();
+            panel1.Controls.Add(auditoria);
+            auditoria.Show();
+        }
     }
 }

@@ -51,7 +51,18 @@ namespace Servicios
 
         public static string DesencriptarAES(string textoCifrado)
         {
-            if (string.IsNullOrEmpty(textoCifrado)) return textoCifrado;
+            if (string.IsNullOrWhiteSpace(textoCifrado)) return string.Empty;
+
+            // 1. Limpiamos cualquier salto de línea, tab o espacio fantasma que venga de SQL
+            textoCifrado = textoCifrado.Trim();
+
+            // 2. Control matemático estricto del padding de Base64 (Múltiplos de 4)
+            // Si SQL truncó los "==" del final, se los volvemos a poner para que .NET no explote.
+            int mod4 = textoCifrado.Length % 4;
+            if (mod4 > 0)
+            {
+                textoCifrado += new string('=', 4 - mod4);
+            }
 
             using (Aes aesAlg = Aes.Create())
             {

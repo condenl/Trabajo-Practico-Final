@@ -25,7 +25,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnQuitarPermiso = new System.Windows.Forms.Button();
             this.btnAgregarPermiso = new System.Windows.Forms.Button();
-            this.lbRoles = new System.Windows.Forms.ListBox();
             this.lbPermisosAsignados = new System.Windows.Forms.ListBox();
             this.tvRoles = new System.Windows.Forms.TreeView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
@@ -131,14 +130,6 @@
             this.btnAgregarPermiso.UseVisualStyleBackColor = true;
             this.btnAgregarPermiso.Click += new System.EventHandler(this.btnAgregarPermiso_Click);
             // 
-            // lbRoles
-            // 
-            this.lbRoles.FormattingEnabled = true;
-            this.lbRoles.Location = new System.Drawing.Point(31, 174);
-            this.lbRoles.Name = "lbRoles";
-            this.lbRoles.Size = new System.Drawing.Size(392, 95);
-            this.lbRoles.TabIndex = 58;
-            // 
             // lbPermisosAsignados
             // 
             this.lbPermisosAsignados.FormattingEnabled = true;
@@ -149,9 +140,9 @@
             // 
             // tvRoles
             // 
-            this.tvRoles.Location = new System.Drawing.Point(472, 172);
+            this.tvRoles.Location = new System.Drawing.Point(31, 172);
             this.tvRoles.Name = "tvRoles";
-            this.tvRoles.Size = new System.Drawing.Size(195, 97);
+            this.tvRoles.Size = new System.Drawing.Size(392, 97);
             this.tvRoles.TabIndex = 61;
             // 
             // UC_Roles
@@ -160,7 +151,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tvRoles);
             this.Controls.Add(this.lbPermisosAsignados);
-            this.Controls.Add(this.lbRoles);
             this.Controls.Add(this.btnQuitarPermiso);
             this.Controls.Add(this.btnAgregarPermiso);
             this.Controls.Add(this.label2);
@@ -192,7 +182,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnQuitarPermiso;
         private System.Windows.Forms.Button btnAgregarPermiso;
-        private System.Windows.Forms.ListBox lbRoles;
         private System.Windows.Forms.ListBox lbPermisosAsignados;
         private System.Windows.Forms.TreeView tvRoles;
     }

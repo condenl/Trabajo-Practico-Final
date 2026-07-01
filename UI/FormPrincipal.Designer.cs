@@ -36,6 +36,7 @@ namespace UI
             this.btnSoporteTecnico = new System.Windows.Forms.Button();
             this.btnTraducciones = new System.Windows.Forms.Button();
             this.cmbIdioma = new System.Windows.Forms.ComboBox();
+            this.btnAuditoria = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panel1
@@ -91,7 +92,7 @@ namespace UI
             // 
             // btnSoporteTecnico
             // 
-            this.btnSoporteTecnico.Location = new System.Drawing.Point(12, 220);
+            this.btnSoporteTecnico.Location = new System.Drawing.Point(12, 212);
             this.btnSoporteTecnico.Name = "btnSoporteTecnico";
             this.btnSoporteTecnico.Size = new System.Drawing.Size(120, 43);
             this.btnSoporteTecnico.TabIndex = 4;
@@ -102,7 +103,7 @@ namespace UI
             // 
             // btnTraducciones
             // 
-            this.btnTraducciones.Location = new System.Drawing.Point(12, 290);
+            this.btnTraducciones.Location = new System.Drawing.Point(12, 279);
             this.btnTraducciones.Name = "btnTraducciones";
             this.btnTraducciones.Size = new System.Drawing.Size(120, 43);
             this.btnTraducciones.TabIndex = 6;
@@ -121,11 +122,23 @@ namespace UI
             this.cmbIdioma.TabIndex = 5;
             this.cmbIdioma.SelectedIndexChanged += new System.EventHandler(this.cmbIdioma_SelectedIndexChanged);
             // 
+            // btnAuditoria
+            // 
+            this.btnAuditoria.Location = new System.Drawing.Point(12, 346);
+            this.btnAuditoria.Name = "btnAuditoria";
+            this.btnAuditoria.Size = new System.Drawing.Size(120, 43);
+            this.btnAuditoria.TabIndex = 7;
+            this.btnAuditoria.Tag = "menu_roles";
+            this.btnAuditoria.Text = "Auditoria";
+            this.btnAuditoria.UseVisualStyleBackColor = true;
+            this.btnAuditoria.Click += new System.EventHandler(this.btnAuditoria_Click);
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1520, 623);
+            this.Controls.Add(this.btnAuditoria);
             this.Controls.Add(this.cmbIdioma);
             this.Controls.Add(this.btnTraducciones);
             this.Controls.Add(this.btnSoporteTecnico);
@@ -152,5 +165,6 @@ namespace UI
         private System.Windows.Forms.Button btnSoporteTecnico;
         private System.Windows.Forms.Button btnTraducciones;
         private System.Windows.Forms.ComboBox cmbIdioma;
+        private System.Windows.Forms.Button btnAuditoria;
     }
 }

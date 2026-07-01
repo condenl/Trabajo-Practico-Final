@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuditoriaDAL.cs" />
     <Compile Include="BitacoraDAL.cs" />
     <Compile Include="Conexion.cs" />
     <Compile Include="IdiomaDAL.cs" />
