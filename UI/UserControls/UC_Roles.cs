@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using BE;
 using BE.Interfaces;
@@ -19,8 +20,12 @@ namespace UI.UserControls
         {
             InitializeComponent();
             seguridadBLL = new SeguridadBLL();
+
             this.Load += UC_Roles_Load;
-            lbRoles.SelectedIndexChanged += lbRoles_SelectedIndexChanged;
+
+            // Suscribimos los eventos del nuevo TreeView
+            tvRoles.AfterSelect += tvRoles_AfterSelect;
+            tvRoles.MouseDown += tvRoles_MouseDown; // Permite deseleccionar haciendo clic en lo blanco
         }
 
         protected override void Dispose(bool disposing)
@@ -65,20 +70,39 @@ namespace UI.UserControls
         {
             GestorIdioma.Instancia.Suscribir(this);
             ActualizarTextos();
-            CargarListaRoles();
+            CargarArbolRoles();
             CargarComboPatentes();
         }
 
-        private void CargarListaRoles()
+        // =======================================================
+        // LÓGICA DEL TREEVIEW (EL ÁRBOL DE ROLES)
+        // =======================================================
+        private void CargarArbolRoles()
         {
             try
             {
-                lbRoles.DataSource = null;
-                lbRoles.DataSource = seguridadBLL.ObtenerRolesDisponibles();
-                lbRoles.DisplayMember = "Nombre";
-                lbRoles.ValueMember = "Id";
-                lbRoles.SelectedIndex = -1;
-                LimpiarDetalleRol();
+                tvRoles.Nodes.Clear();
+                var todosLosRoles = seguridadBLL.ObtenerRolesDisponibles();
+
+                // Para armar el árbol perfecto, primero buscamos qué roles están adentro de otros
+                HashSet<int> idsHijos = new HashSet<int>();
+                foreach (var r in todosLosRoles)
+                {
+                    var subRoles = seguridadBLL.ObtenerPermisosDeRol(r.Id).Where(c => c is Familia);
+                    foreach (var sub in subRoles) idsHijos.Add(sub.Id);
+                }
+
+                // Solo agregamos a la raíz los roles que NO son hijos de nadie
+                foreach (var rol in todosLosRoles.Where(r => !idsHijos.Contains(r.Id)))
+                {
+                    TreeNode nodoRaiz = new TreeNode(rol.Nombre);
+                    nodoRaiz.Tag = rol;
+
+                    CargarRolesHijos(nodoRaiz, rol); // Función recursiva
+
+                    tvRoles.Nodes.Add(nodoRaiz);
+                }
+                tvRoles.ExpandAll();
             }
             catch (Exception ex)
             {
@@ -86,28 +110,60 @@ namespace UI.UserControls
             }
         }
 
+        private void CargarRolesHijos(TreeNode nodoPadre, Componente rolPadre)
+        {
+            var hijos = seguridadBLL.ObtenerPermisosDeRol(rolPadre.Id);
+
+            foreach (var hijo in hijos)
+            {
+                // Solo dibujamos Familias (Roles) en el árbol
+                if (hijo is Familia)
+                {
+                    TreeNode nodoHijo = new TreeNode(hijo.Nombre);
+                    nodoHijo.Tag = hijo;
+                    CargarRolesHijos(nodoHijo, hijo);
+                    nodoPadre.Nodes.Add(nodoHijo);
+                }
+            }
+        }
+
+        private void tvRoles_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (tvRoles.SelectedNode != null)
+            {
+                rolSeleccionado = (Componente)tvRoles.SelectedNode.Tag;
+                txtNombreRol.Text = rolSeleccionado.Nombre;
+                CargarPermisosDelRolSeleccionado();
+            }
+        }
+
+        // Si hace clic en el fondo blanco del árbol, deseleccionamos para crear roles en la raíz
+        private void tvRoles_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (tvRoles.HitTest(e.X, e.Y).Node == null)
+            {
+                tvRoles.SelectedNode = null;
+                LimpiarDetalleRol();
+            }
+        }
+
+        // =======================================================
+        // LÓGICA DE PERMISOS (SOLO PATENTES)
+        // =======================================================
         private void CargarComboPatentes()
         {
             try
             {
+                // Ahora SOLO trae patentes, para no causar caos mezclando con roles
                 cmbPermisosDisponibles.DataSource = null;
                 cmbPermisosDisponibles.DataSource = seguridadBLL.ObtenerPatentesDisponibles();
                 cmbPermisosDisponibles.DisplayMember = "Nombre";
                 cmbPermisosDisponibles.ValueMember = "Id";
+                cmbPermisosDisponibles.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{traduccionBLL.Traducir("msg_error_loading_permissions")}: {ex.Message}", traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void lbRoles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lbRoles.SelectedItem != null)
-            {
-                rolSeleccionado = (Componente)lbRoles.SelectedItem;
-                txtNombreRol.Text = rolSeleccionado.Nombre;
-                CargarPermisosDelRolSeleccionado();
+                MessageBox.Show("Error al cargar componentes: " + ex.Message);
             }
         }
 
@@ -117,10 +173,20 @@ namespace UI.UserControls
 
             try
             {
-                lbPermisosAsignados.DataSource = null;
-                lbPermisosAsignados.DataSource = seguridadBLL.ObtenerPermisosDeRol(rolSeleccionado.Id);
-                lbPermisosAsignados.DisplayMember = "Nombre";
-                lbPermisosAsignados.ValueMember = "Id";
+                // 1. Pedimos la Familia armada con todo su árbol interno (DAL -> MPP)
+                Familia rolEnsamblado = seguridadBLL.ObtenerFamiliaCompleta(rolSeleccionado.Id);
+
+                if (rolEnsamblado != null)
+                {
+                    // 2. Usamos el método polimórfico (Acá ocurre la Magia del Patrón Composite)
+                    // Esto nos trae las patentes directas Y las heredadas de los sub-roles
+                    var permisosAplanados = rolEnsamblado.ObtenerPatentes();
+
+                    lbPermisosAsignados.DataSource = null;
+                    lbPermisosAsignados.DataSource = permisosAplanados;
+                    lbPermisosAsignados.DisplayMember = "Nombre";
+                    lbPermisosAsignados.ValueMember = "Id";
+                }
             }
             catch (Exception ex)
             {
@@ -135,17 +201,43 @@ namespace UI.UserControls
             lbPermisosAsignados.DataSource = null;
         }
 
+        // =======================================================
+        // ABM DE ROLES Y ASIGNACIONES
+        // =======================================================
         private void btnCrearRol_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtNombreRol.Text))
+            string nombreNuevoRol = txtNombreRol.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(nombreNuevoRol))
             {
                 MessageBox.Show(traduccionBLL.Traducir("msg_enter_role_name"), traduccionBLL.Traducir("lbl_warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            seguridadBLL.CrearRol(txtNombreRol.Text.Trim());
-            MessageBox.Show(traduccionBLL.Traducir("msg_role_created_success"), traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
-            CargarListaRoles();
+            try
+            {
+                // 1. Creamos el Rol en la Base de Datos
+                seguridadBLL.CrearRol(nombreNuevoRol);
+
+                // 2. Si había un rol seleccionado en el árbol, metemos el nuevo rol ADENTRO
+                if (rolSeleccionado != null)
+                {
+                    // Buscamos el rol recién creado para obtener su ID
+                    var rolRecienCreado = seguridadBLL.ObtenerRolesDisponibles().FirstOrDefault(r => r.Nombre == nombreNuevoRol);
+                    if (rolRecienCreado != null)
+                    {
+                        seguridadBLL.AsignarPermisoARol(rolSeleccionado, rolRecienCreado);
+                    }
+                }
+
+                MessageBox.Show(traduccionBLL.Traducir("msg_role_created_success"), traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarArbolRoles();
+                LimpiarDetalleRol();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
         }
 
         private void btnModificarRol_Click(object sender, EventArgs e)
@@ -160,7 +252,7 @@ namespace UI.UserControls
 
             seguridadBLL.ModificarRol(rolSeleccionado.Id, txtNombreRol.Text.Trim());
             MessageBox.Show(traduccionBLL.Traducir("msg_role_modified_success"), traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
-            CargarListaRoles();
+            CargarArbolRoles();
         }
 
         private void btnEliminarRol_Click(object sender, EventArgs e)
@@ -169,11 +261,24 @@ namespace UI.UserControls
 
             string confirmMsg = string.Format(traduccionBLL.Traducir("msg_confirm_delete_role"), rolSeleccionado.Nombre);
             var confirm = MessageBox.Show(confirmMsg, traduccionBLL.Traducir("msg_confirm_delete_role_title"), MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
             if (confirm == DialogResult.Yes)
             {
-                seguridadBLL.EliminarRol(rolSeleccionado.Id);
+                // Si está adentro de otro nodo, lo desvinculamos en vez de borrarlo entero
+                if (tvRoles.SelectedNode.Parent != null)
+                {
+                    Componente rolPadre = (Componente)tvRoles.SelectedNode.Parent.Tag;
+                    seguridadBLL.QuitarPermisoDeRol(rolPadre, rolSeleccionado);
+                }
+                else
+                {
+                    // Si está en la raíz, lo eliminamos de la base de datos
+                    seguridadBLL.EliminarRol(rolSeleccionado.Id);
+                }
+
                 MessageBox.Show(traduccionBLL.Traducir("msg_role_deleted_success"), traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarListaRoles();
+                LimpiarDetalleRol();
+                CargarArbolRoles();
             }
         }
 
@@ -186,8 +291,16 @@ namespace UI.UserControls
             }
 
             Componente permiso = (Componente)cmbPermisosDisponibles.SelectedItem;
-            seguridadBLL.AsignarPermisoARol(rolSeleccionado, permiso);
-            CargarPermisosDelRolSeleccionado();
+
+            try
+            {
+                seguridadBLL.AsignarPermisoARol(rolSeleccionado, permiso);
+                CargarPermisosDelRolSeleccionado();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
         }
 
         private void btnQuitarPermiso_Click(object sender, EventArgs e)

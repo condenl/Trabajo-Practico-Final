@@ -34,7 +34,18 @@ namespace DAL
             SqlParameter[] param = { new SqlParameter("@IdUsuario", idUsuario) };
             DataTable dtAsignaciones = Conexion.Instancia.Leer("sp_Seguridad_ObtenerComponentesPorUsuario", param);
 
-            return SeguridadMPP.Instancia.ConstruirArbol(dtComponentes, dtRelaciones, dtAsignaciones);
+            // Reutiliza tu Mapper usando el nuevo método limpio y descriptivo
+            return SeguridadMPP.Instancia.ConstruirArbolUsuario(dtComponentes, dtRelaciones, dtAsignaciones);
+        }
+
+        // --- NUEVO MÉTODO REFACTORIZADO ---
+        // Le pasa las tablas al MPP y este se encarga de extraer la Familia armada del diccionario
+        public Familia ObtenerFamiliaCompleta(int idFamilia)
+        {
+            DataTable dtComponentes = Conexion.Instancia.Leer("sp_Seguridad_ObtenerComponentes", null);
+            DataTable dtRelaciones = Conexion.Instancia.Leer("sp_Seguridad_ObtenerFamiliaHijos", null);
+
+            return SeguridadMPP.Instancia.ConstruirFamilia(dtComponentes, dtRelaciones, idFamilia);
         }
 
         public void AsignarComponenteAUsuario(int idUsuario, int idComponente)
@@ -105,12 +116,24 @@ namespace DAL
             List<Componente> lista = new List<Componente>();
             foreach (DataRow row in dt.Rows)
             {
-                Patente p = new Patente
+                Componente c;
+
+                if (row["Tipo"].ToString() == "Familia")
                 {
-                    Id = Convert.ToInt32(row["Id"]),
-                    Nombre = row["Nombre"].ToString()
-                };
-                lista.Add(p);
+                    c = new Familia();
+                }
+                else
+                {
+                    c = new Patente();
+                    if (row["PermisoAsociado"] != DBNull.Value && !string.IsNullOrWhiteSpace(row["PermisoAsociado"].ToString()))
+                    {
+                        ((Patente)c).PermisoAsociado = (TipoPermiso)Enum.Parse(typeof(TipoPermiso), row["PermisoAsociado"].ToString());
+                    }
+                }
+
+                c.Id = Convert.ToInt32(row["Id"]);
+                c.Nombre = row["Nombre"].ToString();
+                lista.Add(c);
             }
             return lista;
         }
