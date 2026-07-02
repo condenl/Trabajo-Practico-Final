@@ -17,8 +17,6 @@ namespace BLL
 
         public List<Componente> ObtenerRolesDisponibles() => SeguridadDAL.Instancia.ObtenerTodasLasFamilias();
 
-        // --- ACÁ ESTÁ EL MÉTODO QUE FALTABA ---
-        // Este método sirve de puente para que la UI pueda pedir la familia armada a la DAL
         public Familia ObtenerFamiliaCompleta(int idFamilia)
         {
             return SeguridadDAL.Instancia.ObtenerFamiliaCompleta(idFamilia);
@@ -63,11 +61,9 @@ namespace BLL
 
         public void AsignarPermisoARol(Componente rolPadre, Componente componenteAAgregar)
         {
-            // Regla 1: Un rol no puede asignarse a sí mismo
             if (rolPadre.Id == componenteAAgregar.Id)
                 throw new Exception("Operación denegada: Un rol no puede contenerse a sí mismo.");
 
-            // Regla 2: Anti-Bucle (Solo evaluamos si lo que intentamos agregar es otro Rol)
             if (componenteAAgregar is Familia)
             {
                 if (ExisteReferenciaCircular(rolPadre.Id, componenteAAgregar.Id))
@@ -90,18 +86,13 @@ namespace BLL
             GestorEventos.Instancia.Notificar(new EventoBitacora(responsable, "MODIFICACION_SEGURIDAD", $"Se quitó el permiso '{permiso.Nombre}' del rol '{rol.Nombre}'"));
         }
 
-        // --- MÉTODO PRIVADO RECURSIVO PARA EVITAR BUCLES ---
         private bool ExisteReferenciaCircular(int idPadreDestino, int idHijoPotencial)
         {
-            // Traemos todo lo que tiene adentro el Rol que intentamos agregar
             var hijosDelPotencial = ObtenerPermisosDeRol(idHijoPotencial);
 
             foreach (var hijo in hijosDelPotencial)
             {
-                // Si adentro del potencial hijo ya existe el padre, confirmamos el ciclo
                 if (hijo.Id == idPadreDestino) return true;
-
-                // Si el hijo es a su vez otra familia, escarbamos más adentro (Recursividad)
                 if (hijo is Familia)
                 {
                     if (ExisteReferenciaCircular(idPadreDestino, hijo.Id)) return true;

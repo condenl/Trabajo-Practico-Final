@@ -128,7 +128,7 @@ namespace UI
             this.btnAuditoria.Name = "btnAuditoria";
             this.btnAuditoria.Size = new System.Drawing.Size(120, 43);
             this.btnAuditoria.TabIndex = 7;
-            this.btnAuditoria.Tag = "menu_roles";
+            this.btnAuditoria.Tag = "btnAuditoria";
             this.btnAuditoria.Text = "Auditoria";
             this.btnAuditoria.UseVisualStyleBackColor = true;
             this.btnAuditoria.Click += new System.EventHandler(this.btnAuditoria_Click);

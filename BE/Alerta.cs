@@ -23,7 +23,6 @@ namespace BE
             FechaHora = DateTime.Now;
         }
 
-        // sobrecarga Completa
         public Alerta(string mensaje, string nivel, string usuario)
         {
             Mensaje = mensaje;

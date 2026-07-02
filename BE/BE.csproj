@@ -63,7 +63,6 @@
     <Compile Include="Soporte.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="UsuarioAuditoria.cs" />
-    <Compile Include="Vehiculo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Excepciones\UsuarioBloqueadoException.cs" />
   </ItemGroup>

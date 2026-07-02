@@ -31,16 +31,12 @@ namespace MPP
             {
                 UsuarioAuditoria audit = new UsuarioAuditoria();
 
-                // Datos propios de la auditoría
                 audit.AuditId = Convert.ToInt32(fila["AuditId"]);
                 audit.AuditDate = Convert.ToDateTime(fila["AuditDate"]);
                 audit.AuditAction = fila["AuditAction"].ToString();
                 audit.UsuarioResponsable = fila["UsuarioResponsable"] != DBNull.Value ? fila["UsuarioResponsable"].ToString() : "SISTEMA";
-
-                // Datos históricos del usuario
                 audit.Id = Convert.ToInt32(fila["Id"]);
 
-                // Desencriptamos el DNI igual que en UsuarioMPP
                 string dniCifrado = fila["Dni"].ToString();
                 audit.Dni = Encriptador.DesencriptarAES(dniCifrado);
 

@@ -28,8 +28,6 @@ namespace DAL
 
         public void GuardarSnapshot(string accion, Usuario u, string responsable)
         {
-            // OJO: El DNI en el objeto C# está desencriptado. Para guardarlo en SQL, 
-            // hay que volver a encriptarlo para mantener la seguridad.
             string dniCifrado = Servicios.Encriptador.EncriptarAES(u.Dni);
 
             SqlParameter[] p = {

@@ -23,9 +23,8 @@ namespace UI.UserControls
 
             this.Load += UC_Roles_Load;
 
-            // Suscribimos los eventos del nuevo TreeView
             tvRoles.AfterSelect += tvRoles_AfterSelect;
-            tvRoles.MouseDown += tvRoles_MouseDown; // Permite deseleccionar haciendo clic en lo blanco
+            tvRoles.MouseDown += tvRoles_MouseDown; 
         }
 
         protected override void Dispose(bool disposing)
@@ -74,9 +73,6 @@ namespace UI.UserControls
             CargarComboPatentes();
         }
 
-        // =======================================================
-        // LÓGICA DEL TREEVIEW (EL ÁRBOL DE ROLES)
-        // =======================================================
         private void CargarArbolRoles()
         {
             try
@@ -84,7 +80,6 @@ namespace UI.UserControls
                 tvRoles.Nodes.Clear();
                 var todosLosRoles = seguridadBLL.ObtenerRolesDisponibles();
 
-                // Para armar el árbol perfecto, primero buscamos qué roles están adentro de otros
                 HashSet<int> idsHijos = new HashSet<int>();
                 foreach (var r in todosLosRoles)
                 {
@@ -92,13 +87,12 @@ namespace UI.UserControls
                     foreach (var sub in subRoles) idsHijos.Add(sub.Id);
                 }
 
-                // Solo agregamos a la raíz los roles que NO son hijos de nadie
                 foreach (var rol in todosLosRoles.Where(r => !idsHijos.Contains(r.Id)))
                 {
                     TreeNode nodoRaiz = new TreeNode(rol.Nombre);
                     nodoRaiz.Tag = rol;
 
-                    CargarRolesHijos(nodoRaiz, rol); // Función recursiva
+                    CargarRolesHijos(nodoRaiz, rol);
 
                     tvRoles.Nodes.Add(nodoRaiz);
                 }
@@ -116,7 +110,6 @@ namespace UI.UserControls
 
             foreach (var hijo in hijos)
             {
-                // Solo dibujamos Familias (Roles) en el árbol
                 if (hijo is Familia)
                 {
                     TreeNode nodoHijo = new TreeNode(hijo.Nombre);
@@ -137,7 +130,6 @@ namespace UI.UserControls
             }
         }
 
-        // Si hace clic en el fondo blanco del árbol, deseleccionamos para crear roles en la raíz
         private void tvRoles_MouseDown(object sender, MouseEventArgs e)
         {
             if (tvRoles.HitTest(e.X, e.Y).Node == null)
@@ -147,14 +139,10 @@ namespace UI.UserControls
             }
         }
 
-        // =======================================================
-        // LÓGICA DE PERMISOS (SOLO PATENTES)
-        // =======================================================
         private void CargarComboPatentes()
         {
             try
             {
-                // Ahora SOLO trae patentes, para no causar caos mezclando con roles
                 cmbPermisosDisponibles.DataSource = null;
                 cmbPermisosDisponibles.DataSource = seguridadBLL.ObtenerPatentesDisponibles();
                 cmbPermisosDisponibles.DisplayMember = "Nombre";
@@ -173,13 +161,10 @@ namespace UI.UserControls
 
             try
             {
-                // 1. Pedimos la Familia armada con todo su árbol interno (DAL -> MPP)
                 Familia rolEnsamblado = seguridadBLL.ObtenerFamiliaCompleta(rolSeleccionado.Id);
 
                 if (rolEnsamblado != null)
                 {
-                    // 2. Usamos el método polimórfico (Acá ocurre la Magia del Patrón Composite)
-                    // Esto nos trae las patentes directas Y las heredadas de los sub-roles
                     var permisosAplanados = rolEnsamblado.ObtenerPatentes();
 
                     lbPermisosAsignados.DataSource = null;
@@ -201,9 +186,6 @@ namespace UI.UserControls
             lbPermisosAsignados.DataSource = null;
         }
 
-        // =======================================================
-        // ABM DE ROLES Y ASIGNACIONES
-        // =======================================================
         private void btnCrearRol_Click(object sender, EventArgs e)
         {
             string nombreNuevoRol = txtNombreRol.Text.Trim();
@@ -216,13 +198,10 @@ namespace UI.UserControls
 
             try
             {
-                // 1. Creamos el Rol en la Base de Datos
                 seguridadBLL.CrearRol(nombreNuevoRol);
 
-                // 2. Si había un rol seleccionado en el árbol, metemos el nuevo rol ADENTRO
                 if (rolSeleccionado != null)
                 {
-                    // Buscamos el rol recién creado para obtener su ID
                     var rolRecienCreado = seguridadBLL.ObtenerRolesDisponibles().FirstOrDefault(r => r.Nombre == nombreNuevoRol);
                     if (rolRecienCreado != null)
                     {
@@ -264,7 +243,6 @@ namespace UI.UserControls
 
             if (confirm == DialogResult.Yes)
             {
-                // Si está adentro de otro nodo, lo desvinculamos en vez de borrarlo entero
                 if (tvRoles.SelectedNode.Parent != null)
                 {
                     Componente rolPadre = (Componente)tvRoles.SelectedNode.Parent.Tag;
@@ -272,7 +250,6 @@ namespace UI.UserControls
                 }
                 else
                 {
-                    // Si está en la raíz, lo eliminamos de la base de datos
                     seguridadBLL.EliminarRol(rolSeleccionado.Id);
                 }
 

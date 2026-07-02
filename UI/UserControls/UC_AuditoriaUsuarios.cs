@@ -23,9 +23,6 @@ namespace UI.UserControls
             this.Load += UC_AuditoriaUsuarios_Load;
         }
 
-        // =======================================================
-        // PATRÓN OBSERVER: IDIOMAS
-        // =======================================================
         public void ActualizarIdioma(Idioma idioma)
         {
             ActualizarTextosRecursivo(this.Controls);
@@ -46,9 +43,6 @@ namespace UI.UserControls
             }
         }
 
-        // =======================================================
-        // CARGA Y EVENTOS
-        // =======================================================
         private void UC_AuditoriaUsuarios_Load(object sender, EventArgs e)
         {
             GestorIdioma.Instancia.Suscribir(this);
@@ -104,9 +98,6 @@ namespace UI.UserControls
             }
         }
 
-        // =======================================================
-        // FILTRO / BÚSQUEDA
-        // =======================================================
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             if (historialCompleto == null) return;
@@ -129,9 +120,6 @@ namespace UI.UserControls
             }
         }
 
-        // =======================================================
-        // LA MAGIA: EL ROLLBACK
-        // =======================================================
         private void btnRollback_Click(object sender, EventArgs e)
         {
             if (dgvHistorial.CurrentRow == null)
