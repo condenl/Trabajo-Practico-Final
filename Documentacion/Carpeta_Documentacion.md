@@ -1,4 +1,4 @@
-﻿---
+---
 title: Sistema de Gestion - Documentación del Sistema
 version: 1.0
 ---
@@ -226,26 +226,30 @@ classDiagram
     }
     class ILogueable {
         <<interface>>
+        +string Email
+        +string Password
+        +bool Activo
+        +int IntentosFallidos
     }
     class IGestor_T_ {
         <<interface>>
-        +List~T~ Listar()
-        +void Guardar(T objeto)
-        +void Eliminar(T objeto)
+        +ListarTodos() List~T~
+        +Guardar(T objeto) void
+        +Eliminar(int id) void
     }
     class IObservado {
         <<interface>>
-        +void Suscribir(IObserver obs)
-        +void Desuscribir(IObserver obs)
-        +void Notificar(EventoBitacora evento)
+        +Suscribir(IObserver observador) void
+        +Desuscribir(IObserver observador) void
+        +Notificar(EventoBitacora alerta) void
     }
     class IObserver {
         <<interface>>
-        +void Actualizar(EventoBitacora evento)
+        +Actualizar(EventoBitacora alerta) void
     }
     class IIdiomaObserver {
         <<interface>>
-        +void ActualizarIdioma(Idioma i)
+        +ActualizarIdioma(Idioma idioma) void
     }
 
     %% Core BE Classes
@@ -257,7 +261,8 @@ classDiagram
         +string Apellido
         +string NombreCompleto
         +string TipoEntidad
-        +CompareTo(Persona) int
+        +ToString() string
+        +CompareTo(Persona other) int
     }
 
     class Usuario {
@@ -268,18 +273,18 @@ classDiagram
         +int IntentosFallidos
         +string DVH
         +List~Componente~ Permisos
-        +bool TienePermiso(TipoPermiso p)
+        +string TipoEntidad
+        +Usuario()
+        +TienePermiso(TipoPermiso permisoBuscado) bool
+        -ExistePermisoRecursivo(Componente componente, TipoPermiso permisoBuscado) bool
         +Clone() object
     }
 
     class UsuarioAuditoria {
-        <<Simulated>>
-        +string Email
-        +string Password
-        +DateTime FechaAlta
-        +bool Activo
-        +int IntentosFallidos
-        +string DVH
+        +int AuditId
+        +DateTime AuditDate
+        +string AuditAction
+        +string UsuarioResponsable
     }
 
     class Rol {
@@ -300,6 +305,8 @@ classDiagram
         +string UsuarioEmail
         +string Actividad
         +string InformacionAsociada
+        +EventoBitacora()
+        +EventoBitacora(string usuario, string actividad, string informacion)
     }
 
     %% Composite Pattern Subgraph
@@ -309,79 +316,144 @@ classDiagram
             +int Id
             +string Nombre
             +TipoPermiso? PermisoAsociado
-            +abstract AgregarHijo(Componente c)
-            +abstract VaciarHijos()
-            +abstract ObtenerHijos() List~Componente~
+            +AgregarHijo(Componente c) void
+            +VaciarHijos() void
+            +ObtenerHijos() IList~Componente~
+            +TienePermiso(TipoPermiso permiso) bool
+            +ObtenerPatentes() List~Patente~
         }
         class Familia {
             -List~Componente~ _hijos
-            +AgregarHijo(Componente c)
-            +VaciarHijos()
-            +ObtenerHijos() List~Componente~
+            +AgregarHijo(Componente c) void
+            +VaciarHijos() void
+            +ObtenerHijos() IList~Componente~
+            +TienePermiso(TipoPermiso permiso) bool
+            +ObtenerPatentes() List~Patente~
         }
         class Patente {
-            +AgregarHijo(Componente c)
-            +VaciarHijos()
-            +ObtenerHijos() List~Componente~
+            +AgregarHijo(Componente c) void
+            +VaciarHijos() void
+            +ObtenerHijos() IList~Componente~
+            +TienePermiso(TipoPermiso permiso) bool
+            +ObtenerPatentes() List~Patente~
         }
     end
 
     %% DAL Layer
     class Conexion {
-        <<Singleton>>
+        -static Conexion instancia
+        -static object bloqueo
         -string connectionString
-        +static Conexion Instancia
-        +RUD(string sp, SqlParameter[] p) int
-        +Leer(string sp, SqlParameter[] p) DataTable
+        -static SqlConnection conexion
+        -Conexion()
+        +static Conexion Instancia$
+        +ObtenerConexion() SqlConnection
+        +RUD(string commandText, SqlParameter[] parametros) int
+        +RUD(string commandText, SqlParameter[] parametros, CommandType commandType) int
+        +Leer(string storedProcedure, SqlParameter[] parametros) DataTable
+        +RestaurarBaseDeDatos(string backupPath) void
     }
 
     class UsuarioDAL {
-        <<Singleton>>
-        +static UsuarioDAL Instancia
-        +List~Usuario~ Listar()
-        +Usuario BuscarPorEmail(string email)
-        +int Insertar(Usuario u)
-        +void ActualizarDVV()
+        -static UsuarioDAL instancia
+        -static object bloqueo
+        -UsuarioDAL()
+        +static UsuarioDAL Instancia$
+        +Listar() List~Usuario~
+        +BuscarPorEmail(string email) Usuario
+        +ExisteDni(string dniCifrado) bool
+        +Insertar(Usuario usuario) int
+        +Registrar(Usuario usuario) int
+        +Modificar(Usuario usuario) int
+        +ModificarDV(string email) void
+        +Eliminar(Usuario usuario) int
+        +SumarIntentoFallido(string email) void
+        +ResetearIntentos(string email) void
+        +ActualizarDVV() void
+        +RecalcularDV() void
+        -CrearParametrosUsuario(Usuario usuario) SqlParameter[]
     }
 
     class DVVDAL {
-        <<Singleton>>
-        +static DVVDAL Instancia
-        +string Obtener(string entidad)
-        +void Guardar(string entidad, string valor)
+        -static DVVDAL instancia
+        -static object bloqueo
+        -DVVDAL()
+        +static DVVDAL Instancia$
+        +Obtener(string nombreEntidad) string
+        +Guardar(string nombreEntidad, string valor) void
     }
 
     class SeguridadDAL {
-        <<Singleton>>
-        +static SeguridadDAL Instancia
-        +List~Componente~ ObtenerPermisosDeUsuario(int id)
-        +List~Componente~ ObtenerTodasLasFamilias()
+        -static SeguridadDAL instancia
+        -static object bloqueo
+        -SeguridadDAL()
+        +static SeguridadDAL Instancia$
+        +ObtenerPermisosDeUsuario(int idUsuario) List~Componente~
+        +ObtenerFamiliaCompleta(int idFamilia) Familia
+        +AsignarComponenteAUsuario(int idUsuario, int idComponente) void
+        +ObtenerTodasLasFamilias() List~Componente~
+        +InsertarFamilia(string nombre) void
+        +ModificarFamilia(int id, string nombre) void
+        +EliminarFamilia(int id) void
+        +ObtenerPatentes() List~Componente~
+        +ObtenerPermisosDeRol(int idRol) List~Componente~
+        +AgregarPermisoARol(int idRol, int idPermiso) void
+        +QuitarPermisoDeRol(int idRol, int idPermiso) void
     }
 
     %% BLL Layer
     class UsuarioBLL {
-        -List~IObserver~ observadores
-        +Usuario Login(string email, string pass)
-        +void Logout()
+        +UsuarioBLL()
+        +ListarTodos() List~Usuario~
+        +VerificarIntegridad() List~string~
+        +RecalcularDV() void
+        +RestaurarBaseDeDatos(string backupPath) void
+        +Guardar(Usuario u) void
+        +Eliminar(int id) void
+        +Listar() List~Usuario~
+        +Eliminar(Usuario u) void
+        +Insertar(Usuario u, string pass) void
+        +Modificar(Usuario u, string newPass) void
+        +Login(string email, string passwordSinHash) Usuario
+        +BuscarPorEmail(string email) Usuario
+        +Registrar(Usuario u, string pass) void
+        +Logout() void
+        -ValidarFormatoEmail(string email) void
+        -ValidarPassword(string pass) void
     }
 
     class SeguridadBLL {
-        +void CargarEstructuraPermisos(Usuario u)
-        +void AsignarRolAUsuario(Usuario u, Componente r)
-        +List~Componente~ ObtenerRolesDisponibles()
+        +CargarEstructuraPermisos(Usuario usuario) void
+        +ObtenerRolesDisponibles() List~Componente~
+        +ObtenerFamiliaCompleta(int idFamilia) Familia
+        +AsignarRolAUsuario(Usuario usuario, Componente rol) void
+        +CrearRol(string nombre) void
+        +ModificarRol(int id, string nombre) void
+        +EliminarRol(int id) void
+        +ObtenerPatentesDisponibles() List~Componente~
+        +ObtenerPermisosDeRol(int idRol) List~Componente~
+        +AsignarPermisoARol(Componente rolPadre, Componente componenteAAgregar) void
+        +QuitarPermisoDeRol(Componente rol, Componente permiso) void
+        -ExisteReferenciaCircular(int idPadreDestino, int idHijoPotencial) bool
     }
 
     %% Observer Pattern Subgraph (Multi-Language)
     subgraph Observer_Pattern_Localization
         class GestorIdioma {
-            <<Singleton>>
+            -static GestorIdioma instancia
+            -static object bloqueo
             -List~IIdiomaObserver~ observadores
+            -string rutaArchivoConfig
             +Idioma IdiomaActual
-            +static GestorIdioma Instancia
-            +void Suscribir(IIdiomaObserver o)
-            +void Desuscribir(IIdiomaObserver o)
-            +void SeleccionarIdioma(Idioma i)
-            -void Notificar()
+            -GestorIdioma()
+            +static GestorIdioma Instancia$
+            +Suscribir(IIdiomaObserver observador) void
+            +Desuscribir(IIdiomaObserver observador) void
+            +SeleccionarIdioma(Idioma idioma) void
+            -PersistirIdioma(Idioma idioma) void
+            +ObtenerIdiomaPersistido() int
+            +NotificarCambio() void
+            -Notificar() void
         }
     end
 
@@ -392,8 +464,9 @@ classDiagram
     Componente <|-- Patente
     Familia "1" *-- "n" Componente : hijos
     
-    UsuarioBLL ..|> IObservado
-    BitacoraBLL ..|> IObserver
+    UsuarioBLL ..|> IVisitante
+    UsuarioBLL ..|> IAdministrador
+    UsuarioBLL ..|> IGestor_T_
     
     UsuarioDAL --> Conexion : usa
     DVVDAL --> Conexion : usa
@@ -1466,20 +1539,17 @@ CONTROL DE INACTIVIDAD:
 ## T02.3 Diagrama de Clases
 
 ```mermaid
----
-title: Diagrama de Clases - T02 GESTIÓN DE LOGIN/Logout y Sesiones
-config:
-    theme: default
----
 classDiagram
     class Session {
         -static Session _instance
-        +static Session Instance
+        -static object _lock
         +Usuario Usuario
         +DateTime FechaInicio
-        +void Login(Usuario u)
-        +void Logout()
-        +bool IsLogged()
+        -Session()
+        +static Session Instance$
+        +Login(Usuario usuario) void
+        +Logout() void
+        +IsLogged() bool
     }
 
     class Usuario {
@@ -1490,7 +1560,11 @@ classDiagram
         +int IntentosFallidos
         +string DVH
         +List~Componente~ Permisos
-        +bool TienePermiso(TipoPermiso p)
+        +string TipoEntidad
+        +Usuario()
+        +TienePermiso(TipoPermiso permisoBuscado) bool
+        -ExistePermisoRecursivo(Componente componente, TipoPermiso permisoBuscado) bool
+        +Clone() object
     }
 
     class Componente {
@@ -1498,23 +1572,93 @@ classDiagram
         +int Id
         +string Nombre
         +TipoPermiso? PermisoAsociado
-        +abstract AgregarHijo(Componente c)
-        +abstract ObtenerHijos() List~Componente~
+        +AgregarHijo(Componente c) void
+        +VaciarHijos() void
+        +ObtenerHijos() IList~Componente~
+        +TienePermiso(TipoPermiso permiso) bool
+        +ObtenerPatentes() List~Patente~
     }
 
     class UsuarioBLL {
-        +Usuario Login(string email, string pass)
-        +void Logout()
+        +UsuarioBLL()
+        +ListarTodos() List~Usuario~
+        +VerificarIntegridad() List~string~
+        +RecalcularDV() void
+        +RestaurarBaseDeDatos(string backupPath) void
+        +Guardar(Usuario u) void
+        +Eliminar(int id) void
+        +Listar() List~Usuario~
+        +Eliminar(Usuario u) void
+        +Insertar(Usuario u, string pass) void
+        +Modificar(Usuario u, string newPass) void
+        +Login(string email, string passwordSinHash) Usuario
+        +BuscarPorEmail(string email) Usuario
+        +Registrar(Usuario u, string pass) void
+        +Logout() void
+        -ValidarFormatoEmail(string email) void
+        -ValidarPassword(string pass) void
     }
 
     class SeguridadBLL {
-        +void CargarEstructuraPermisos(Usuario u)
+        +CargarEstructuraPermisos(Usuario usuario) void
+        +ObtenerRolesDisponibles() List~Componente~
+        +ObtenerFamiliaCompleta(int idFamilia) Familia
+        +AsignarRolAUsuario(Usuario usuario, Componente rol) void
+        +CrearRol(string nombre) void
+        +ModificarRol(int id, string nombre) void
+        +EliminarRol(int id) void
+        +ObtenerPatentesDisponibles() List~Componente~
+        +ObtenerPermisosDeRol(int idRol) List~Componente~
+        +AsignarPermisoARol(Componente rolPadre, Componente componenteAAgregar) void
+        +QuitarPermisoDeRol(Componente rol, Componente permiso) void
+        -ExisteReferenciaCircular(int idPadreDestino, int idHijoPotencial) bool
     }
 
     class Encriptador {
         <<static>>
-        +static string Hash(string t)
-        +static bool VerificarHash(string t, string h)
+        -static string ClaveMaestra
+        -static string IV
+        +static Hash(string texto) string
+        +static EncriptarAES(string textoPlano) string
+        +static DesencriptarAES(string textoCifrado) string
+    }
+
+    class UsuarioDAL {
+        -static UsuarioDAL instancia
+        -static object bloqueo
+        -UsuarioDAL()
+        +static UsuarioDAL Instancia$
+        +Listar() List~Usuario~
+        +BuscarPorEmail(string email) Usuario
+        +ExisteDni(string dniCifrado) bool
+        +Insertar(Usuario usuario) int
+        +Registrar(Usuario usuario) int
+        +Modificar(Usuario usuario) int
+        +ModificarDV(string email) void
+        +Eliminar(Usuario usuario) int
+        +SumarIntentoFallido(string email) void
+        +ResetearIntentos(string email) void
+        +ActualizarDVV() void
+        +RecalcularDV() void
+        -CrearParametrosUsuario(Usuario usuario) SqlParameter[]
+    }
+
+    class SeguridadDAL {
+        -static SeguridadDAL instancia
+        -static object bloqueo
+        -SeguridadDAL()
+        +static SeguridadDAL Instancia$
+        +ObtenerPermisosDeUsuario(int idUsuario) List~Componente~
+        +ObtenerFamiliaCompleta(int idFamilia) Familia
+        +AsignarComponenteAUsuario(int idUsuario, int idComponente) void
+        +ObtenerTodasLasFamilias() List~Componente~
+        +InsertarFamilia(string nombre) void
+        +ModificarFamilia(int id, string nombre) void
+        +EliminarFamilia(int id) void
+        +ObtenerPatentes() List~Componente~
+        +ObtenerPermisosDeRol(int idRol) List~Componente~
+        +AgregarPermisoARol(int idRol, int idPermiso) void
+        +QuitarPermisoDeRol(int idRol, int idPermiso) void
     }
 
     Session "1" --> "1" Usuario : mantiene
@@ -1524,78 +1668,11 @@ classDiagram
     SeguridadBLL --> SeguridadDAL : usa
 ```
 
-### Descripción de Responsabilidades por Clase
-
-#### Clase: Session (Singleton)
-**Responsabilidades - Hacer:**
-- Crear y mantener sesiones activas de usuarios
-- Validar permisos durante operaciones
-- Monitorear timeout de inactividad
-- Cerrar sesiones expiradas
-- gestionar ciclo de vida de sesión
-
-**Responsabilidades - Conocer:**
-- Sesión activa actual del usuario
-- Todas las sesiones activas en el sistema
-- Permisos asociados a cada rol
-- Tiempo de timeout configurado
-- estado de cada sesión (activa/expirada)
-
-#### Clase: Sesion (BE)
-**Responsabilidades - Hacer:**
-- Actualizar marca de úúltima actividad
-- Calcular minutos de inactividad
-
-**Responsabilidades - Conocer:**
-- Datos del usuario en sesión
-- Rol del usuario
-- Tiempos de login y úúltimas actividades
-- estado de actividad
-
-#### Clase: LoginProcessor (BLL)
-**Responsabilidades - Hacer:**
-- Autenticar usuario con email y password
-- Validar formato de email
-- Verificar bloqueos por intentos
-- Incrementar/resetear contadores de intentos fallidos
-
-**Responsabilidades - Conocer:**
-- Reglas de validación de email
-- Política de intentos fallidos
-- Usuarios y sus credenciales encriptadas
-
-#### Clase: LogoutProcessor (BLL)
-**Responsabilidades - Hacer:**
-- Cerrar sesión del usuario
-- Liberar recursos asignados a la sesión
-- Registrar logout en Bitácora
-- Cerrar formularios abiertos
-- Limpiar memoria
-
-**Responsabilidades - Conocer:**
-- estado de la sesión a cerrar
-- Recursos asociados a la sesión
-- Formularios abiertos
-
-#### Clase: PermissionValidator (BLL)
-**Responsabilidades - Hacer:**
-- Validar si usuario tiene permiso para funcionalidad
-- Registrar accesos denegados en Auditoría
-
-**Responsabilidades - Conocer:**
-- Permisos por rol
-- Funcionalidades del sistema y sus permisos asociados
-
 ---
 
 ## T02.4 Diagrama de Secuencia - Flujo de Login
 
 ```mermaid
----
-title: Flujo de Login - Diagrama de Secuencia
-config:
-    theme: default
----
 sequenceDiagram
     actor Usuario
     participant UI as Login Form
@@ -1605,41 +1682,38 @@ sequenceDiagram
     participant Seg as SeguridadBLL
     participant Ses as Session
     participant Evt as GestorEventos
-    participant BD as SQL Server
 
     Usuario->>UI: Ingresa email y password
-    UI->>BLL: Login(email, password)
+    UI->>BLL: Login(email: string, passwordSinHash: string): Usuario
     
-    BLL->>BLL: ValidarFormatoEmail(email)
-    BLL->>DAL: BuscarPorEmail(email)
-    DAL->>BD: SELECT * FROM Usuario
-    BD-->>DAL: DataRow
-    DAL-->>BLL: Usuario objeto
+    BLL->>BLL: ValidarFormatoEmail(email: string): void
+    BLL->>DAL: BuscarPorEmail(email: string): Usuario
+    DAL-->>BLL: usuario: Usuario
 
     alt Usuario no existe
-        BLL->>Evt: Notificar("LOGIN_FALLIDO")
+        BLL->>Evt: Notificar(evento: EventoBitacora): void
         BLL-->>UI: null
         UI->>Usuario: Mostrar error
     else Usuario bloqueado
-        BLL->>Evt: Notificar("BLOQUEO")
+        BLL->>Evt: Notificar(evento: EventoBitacora): void
         BLL-->>UI: throw UsuarioBloqueadoException
     else Credenciales OK
-        BLL->>Enc: Hash(password)
-        Enc-->>BLL: passHash
+        BLL->>Enc: Hash(passwordSinHash: string): string
+        Enc-->>BLL: passHash: string
         
         alt Password coincide
-            BLL->>DAL: ResetearIntentos(email)
-            BLL->>Seg: CargarEstructuraPermisos(usuario)
-            Seg->>DAL: sp_Seguridad_ObtenerComponentes
-            DAL-->>Seg: Componentes tree
+            BLL->>DAL: ResetearIntentos(email: string): void
+            BLL->>Seg: CargarEstructuraPermisos(usuario: Usuario): void
+            Seg->>DAL: ObtenerPermisosDeUsuario(idUsuario: int): List<Componente>
+            DAL-->>Seg: permisos: List<Componente>
             
-            BLL->>Ses: Login(usuario)
-            BLL->>Evt: Notificar("LOGIN")
-            BLL-->>UI: usuario
+            BLL->>Ses: Login(usuario: Usuario): void
+            BLL->>Evt: Notificar(evento: EventoBitacora): void
+            BLL-->>UI: usuario: Usuario
             UI->>Usuario: Acceso concedido
         else Password incorrecto
-            BLL->>DAL: SumarIntentoFallido(email)
-            BLL->>Evt: Notificar("LOGIN_FALLIDO")
+            BLL->>DAL: SumarIntentoFallido(email: string): void
+            BLL->>Evt: Notificar(evento: EventoBitacora): void
             BLL-->>UI: null
         end
     end
@@ -1650,32 +1724,24 @@ sequenceDiagram
 ## T02.5 Diagrama de Secuencia - Flujo de Logout
 
 ```mermaid
----
-title: Flujo de Logout - Diagrama de Secuencia
-config:
-    theme: default
----
 sequenceDiagram
     actor Usuario
     participant UI as FormPrincipal
     participant BLL as UsuarioBLL
     participant Ses as Session
     participant Evt as GestorEventos
-    participant BD as SQL Server
 
     Usuario->>UI: Clic en botón "Cerrar Sesión"
-    UI->>BLL: Logout()
+    UI->>BLL: Logout(): void
 
-    BLL->>Ses: IsLogged()
+    BLL->>Ses: IsLogged(): bool
     Ses-->>BLL: true
     
-    BLL->>Ses: Logout()
-    Ses-->>BLL: OK
+    BLL->>Ses: Logout(): void
     
-    BLL->>Evt: Notificar("LOGOUT")
-    Evt->>BD: sp_Bitacora_Insertar
+    BLL->>Evt: Notificar(evento: EventoBitacora): void
     
-    BLL-->>UI: OK
+    BLL-->>UI: void
     UI->>UI: Cerrar FormPrincipal
     UI->>UI: Mostrar Login Form
 ```
@@ -2175,20 +2241,40 @@ Para los DNIs, se utiliza **AES (Advanced Encryption Standard)** con una clave d
 classDiagram
     class Encriptador {
         <<static>>
-        -string ClaveMaestra
-        -string IV
-        +string Hash(string texto)
-        +string EncriptarAES(string textoPlano)
-        +string DesencriptarAES(string textoCifrado)
+        -static string ClaveMaestra
+        -static string IV
+        +static Hash(string texto) string
+        +static EncriptarAES(string textoPlano) string
+        +static DesencriptarAES(string textoCifrado) string
     }
     
     class UsuarioBLL {
-        +Guardar(u: Usuario)
-        +Login(email: string, pass: string)
+        +UsuarioBLL()
+        +ListarTodos() List~Usuario~
+        +VerificarIntegridad() List~string~
+        +RecalcularDV() void
+        +RestaurarBaseDeDatos(string backupPath) void
+        +Guardar(Usuario u) void
+        +Eliminar(int id) void
+        +Listar() List~Usuario~
+        +Eliminar(Usuario u) void
+        +Insertar(Usuario u, string pass) void
+        +Modificar(Usuario u, string newPass) void
+        +Login(string email, string passwordSinHash) Usuario
+        +BuscarPorEmail(string email) Usuario
+        +Registrar(Usuario u, string pass) void
+        +Logout() void
+        -ValidarFormatoEmail(string email) void
+        -ValidarPassword(string pass) void
     }
     
     class UsuarioMPP {
-        +MapearUsuario(fila: DataRow)
+        -static UsuarioMPP instancia
+        -static object bloqueo
+        -UsuarioMPP()
+        +static UsuarioMPP Instancia$
+        +MapearUsuario(DataRow fila) Usuario
+        +MapearLista(DataTable dt) List~Usuario~
     }
 
     UsuarioBLL --> Encriptador : utiliza
@@ -2217,27 +2303,36 @@ sequenceDiagram
     participant Enc as Encriptador
     participant DAL as UsuarioDAL
 
-    UI->>BLL: Insertar(usuario, pass)
-    BLL->>Enc: EncriptarAES(dni)
-    Enc-->>BLL: dniCifrado (Base64)
-    BLL->>Enc: Hash(pass)
-    Enc-->>BLL: passHash
-    BLL->>DAL: Insertar(usuarioCifrado)
+    UI->>BLL: Insertar(u: Usuario, pass: string): void
+    BLL->>Enc: EncriptarAES(textoPlano: string): string
+    Enc-->>BLL: dniCifrado: string
+    BLL->>Enc: Hash(texto: string): string
+    Enc-->>BLL: passHash: string
+    BLL->>DAL: Insertar(usuario: Usuario): int
 ```
 
 ### Secuencia: Descifrado de DNI en Consulta
 ```mermaid
 sequenceDiagram
+    participant UI as ListaUsuarios
+    participant BLL as UsuarioBLL
     participant DAL as UsuarioDAL
     participant MPP as UsuarioMPP
     participant Enc as Encriptador
-    participant UI as ListaUsuarios
 
-    DAL->>MPP: MapearUsuario(fila)
-    MPP->>Enc: DesencriptarAES(dniCifrado)
-    Enc-->>MPP: dniPlano
-    MPP-->>DAL: usuarioObjeto
-    DAL-->>UI: Mostrar DNI Plano
+    UI->>BLL: ListarTodos(): List<Usuario>
+    BLL->>DAL: Listar(): List<Usuario>
+    DAL->>MPP: MapearLista(dt: DataTable): List<Usuario>
+    
+    loop Para cada fila (DataRow) en DataTable.Rows
+        MPP->>MPP: MapearUsuario(fila: DataRow): Usuario
+        MPP->>Enc: DesencriptarAES(textoCifrado: string): string
+        Enc-->>MPP: dniPlano: string
+    end
+    
+    MPP-->>DAL: usuarios: List<Usuario>
+    DAL-->>BLL: usuarios: List<Usuario>
+    BLL-->>UI: usuarios: List<Usuario>
 ```
 
 ## T03.6 Diseño de los Algoritmos
@@ -2334,29 +2429,35 @@ El procedimiento almacenado en la base de datos está� dise�ado para manejar
 ```mermaid
 classDiagram
     class BitacoraBLL {
-        -BitacoraBLL _instancia
-        +static BitacoraBLL Instancia
-        +void Actualizar(EventoBitacora evento)
-        +List~EventoBitacora~ Consultar(DateTime? desde, DateTime? hasta, string usuario, string actividad)
+        -static BitacoraBLL instancia
+        -static object bloqueo
+        -BitacoraBLL()
+        +static BitacoraBLL Instancia$
+        +Actualizar(EventoBitacora evento) void
+        +Registrar(EventoBitacora evento) int
+        +Consultar(DateTime? desde, DateTime? hasta, string usuario, string actividad) List~EventoBitacora~
     }
 
     class IObserver {
         <<interface>>
-        +void Actualizar(EventoBitacora evento)
+        +Actualizar(EventoBitacora alerta) void
     }
 
     class BitacoraDAL {
-        -BitacoraDAL _instancia
-        +static BitacoraDAL Instancia
-        +void Insertar(EventoBitacora evento)
-        +List~EventoBitacora~ LeerFiltrado(DateTime? desde, DateTime? hasta, string usuario, string actividad)
+        -static BitacoraDAL instancia
+        -static object bloqueo
+        -BitacoraDAL()
+        +static BitacoraDAL Instancia$
+        +Insertar(EventoBitacora evento) int
+        +LeerFiltrado(DateTime? desde, DateTime? hasta, string usuario, string actividad) List~EventoBitacora~
     }
 
     class BitacoraMPP {
-        -BitacoraMPP _instancia
-        +static BitacoraMPP Instancia
-        +EventoBitacora Mapear(DataRow row)
-        +List~EventoBitacora~ MapearLista(DataTable dt)
+        -static BitacoraMPP instancia
+        -static object bloqueo
+        -BitacoraMPP()
+        +static BitacoraMPP Instancia$
+        +MapearLista(DataTable dt) List~EventoBitacora~
     }
 
     class EventoBitacora {
@@ -2365,6 +2466,8 @@ classDiagram
         +string UsuarioEmail
         +string Actividad
         +string InformacionAsociada
+        +EventoBitacora()
+        +EventoBitacora(string usuario, string actividad, string informacion)
     }
 
     BitacoraBLL ..|> IObserver
@@ -2379,16 +2482,13 @@ classDiagram
 ```mermaid
 sequenceDiagram
     participant Usu as UsuarioBLL
-    participant Gst as GestorEventos (IObservado)
-    participant Bita as BitacoraBLL (IObserver)
+    participant Gst as GestorEventos
+    participant Bita as BitacoraBLL
     participant DAL as BitacoraDAL
-    participant BD as SQL Server
 
-    Usu->>Gst: Notificar(evento)
-    Gst->>Bita: Actualizar(evento)
-    Bita->>DAL: Insertar(evento)
-    DAL->>BD: EXEC sp_Bitácora_Insertar
-    BD-->>DAL: OK
+    Usu->>Gst: Notificar(evento: EventoBitacora): void
+    Gst->>Bita: Actualizar(alerta: EventoBitacora): void
+    Bita->>DAL: Insertar(evento: EventoBitacora): int
 ```
 ## T06a.5 Diagrama de Secuencia (Consulta con Filtros)
 
@@ -2398,17 +2498,13 @@ sequenceDiagram
     participant BitaBLL as BitacoraBLL
     participant BitaDAL as BitacoraDAL
     participant MPP as BitacoraMPP
-    participant BD as SQL Server
 
-    UI->>BitaBLL: Consultar(filtros)
-    BitaBLL->>BitaDAL: LeerFiltrado(filtros)
-    BitaDAL->>BD: EXEC sp_Bitacora_Consultar
-    BD-->>BitaDAL: DataTable
-    BitaDAL->>MPP: MapearLista(DataTable)
-    MPP-->>BitaDAL: List~EventoBitacora~
-    BitaDAL-->>BitaBLL: List~EventoBitacora~
-    BitaBLL-->>UI: List~EventoBitacora~
-    UI->>UI: Mostrar en DataGridView
+    UI->>BitaBLL: Consultar(desde: DateTime?, hasta: DateTime?, usuario: string, actividad: string): List<EventoBitacora>
+    BitaBLL->>BitaDAL: LeerFiltrado(desde: DateTime?, hasta: DateTime?, usuario: string, actividad: string): List<EventoBitacora>
+    BitaDAL->>MPP: MapearLista(dt: DataTable): List<EventoBitacora>
+    MPP-->>BitaDAL: eventos: List<EventoBitacora>
+    BitaDAL-->>BitaBLL: eventos: List<EventoBitacora>
+    BitaBLL-->>UI: eventos: List<EventoBitacora>
 ```
 ## T06a.6 Modelo de Datos (DER - Bitácora)
 
@@ -2465,22 +2561,53 @@ El sistema utiliza el **Patrón de Diseño Observer** para propagar los cambios 
 ```mermaid
 sequenceDiagram
     participant UI as UC_Soporte
-    participant Gst as GestorIdioma (Subject)
-    participant Form as FormPrincipal (Observer)
-    participant Ctrl as UC_Usuarios (Observer)
-    participant DAL as TraduccionDAL
+    participant Gst as GestorIdioma
+    participant Form as FormPrincipal
+    participant Ctrl as UC_Usuarios
+    participant BLL as TraduccionBLL
 
-    UI->>Gst: SeleccionarIdioma(Español)
-    Gst->>DAL: ObtenerTraducciones(Id)
-    DAL-->>Gst: List~Traduccion~
-    Gst->>Gst: Notificar()
-    par Cada Observador
-        Gst->>Form: ActualizarIdioma(Español)
-        Gst->>Ctrl: ActualizarIdioma(Español)
+    UI->>Gst: SeleccionarIdioma(idioma: Idioma): void
+    Gst->>Gst: Notificar(): void
+    
+    par Cada Observador (IIdiomaObserver)
+        Gst->>Form: ActualizarIdioma(idioma: Idioma): void
+        Form->>BLL: Traducir(key: string): string
+        BLL-->>Form: textoTraducido: string
+    and
+        Gst->>Ctrl: ActualizarIdioma(idioma: Idioma): void
+        Ctrl->>BLL: Traducir(key: string): string
+        BLL-->>Ctrl: textoTraducido: string
     end
-    Form-->>Form: Actualizar Textos
-    Ctrl-->>Ctrl: Actualizar Textos
 ```
+
+### Diagrama de Secuencia: Alta de Idioma
+```mermaid
+sequenceDiagram
+    participant UI as UC_Traducciones
+    participant BLL as IdiomaBLL
+    participant DAL as IdiomaDAL
+    participant Con as Conexion
+    participant Gst as GestorIdioma
+
+    UI->>BLL: Guardar(idioma: Idioma): void
+    
+    alt Nuevo Idioma (idioma.Id == 0)
+        BLL->>DAL: Insertar(idioma: Idioma): void
+        DAL->>Con: RUD(commandText: string, parametros: SqlParameter[]): int
+        Con-->>DAL: filasAfectadas: int
+        DAL-->>BLL: void
+    else Modificar Idioma Existente (idioma.Id > 0)
+        BLL->>DAL: Modificar(idioma: Idioma): void
+        DAL->>Con: RUD(commandText: string, parametros: SqlParameter[]): int
+        Con-->>DAL: filasAfectadas: int
+        DAL-->>BLL: void
+    end
+    
+    BLL-->>UI: void
+    UI->>Gst: NotificarCambio(): void
+    Gst->>Gst: Notificar(): void
+```
+
 
 ---
 

@@ -43,16 +43,45 @@ namespace UI
             GestorIdioma.Instancia.Suscribir(this);
 
             List<Idioma> idiomas = (List<Idioma>)cmbIdioma.DataSource;
-            Idioma defaultIdioma = idiomas.Find(i => i.EsDefault);
-            if (defaultIdioma != null)
+            
+            Idioma idiomaSeleccionado = null;
+            int persistedId = GestorIdioma.Instancia.ObtenerIdiomaPersistido();
+            if (persistedId > 0 && idiomas != null)
             {
-                cmbIdioma.SelectedItem = defaultIdioma;
-                GestorIdioma.Instancia.SeleccionarIdioma(defaultIdioma);
+                idiomaSeleccionado = idiomas.Find(i => i.Id == persistedId);
+            }
+
+            if (idiomaSeleccionado == null && idiomas != null)
+            {
+                idiomaSeleccionado = idiomas.Find(i => i.EsDefault);
+            }
+
+            if (idiomaSeleccionado != null)
+            {
+                cmbIdioma.SelectedItem = idiomaSeleccionado;
+                GestorIdioma.Instancia.SeleccionarIdioma(idiomaSeleccionado);
             }
         }
 
         public void ActualizarIdioma(Idioma idioma)
         {
+            cmbIdioma.SelectedIndexChanged -= cmbIdioma_SelectedIndexChanged;
+
+            cmbIdioma.DataSource = null;
+            cmbIdioma.DataSource = idiomaBLL.Listar();
+            cmbIdioma.DisplayMember = "Nombre";
+
+            if (GestorIdioma.Instancia.IdiomaActual != null)
+            {
+                List<Idioma> idiomas = (List<Idioma>)cmbIdioma.DataSource;
+                if (idiomas != null)
+                {
+                    cmbIdioma.SelectedItem = idiomas.Find(i => i.Id == GestorIdioma.Instancia.IdiomaActual.Id);
+                }
+            }
+
+            cmbIdioma.SelectedIndexChanged += cmbIdioma_SelectedIndexChanged;
+
             ActualizarTextos();
         }
 
