@@ -15,28 +15,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.cmbPermisosDisponibles = new System.Windows.Forms.ComboBox();
             this.txtNombreRol = new System.Windows.Forms.TextBox();
             this.btnCrearRol = new System.Windows.Forms.Button();
             this.dgvUsuarios = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.btnModificarRol = new System.Windows.Forms.Button();
             this.btnEliminarRol = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.btnQuitarPermiso = new System.Windows.Forms.Button();
-            this.btnAgregarPermiso = new System.Windows.Forms.Button();
             this.lbPermisosAsignados = new System.Windows.Forms.ListBox();
             this.tvRoles = new System.Windows.Forms.TreeView();
+            this.cmbPatentes = new System.Windows.Forms.ComboBox();
+            this.btnAgregarPatente = new System.Windows.Forms.Button();
+            this.cmbRoles = new System.Windows.Forms.ComboBox();
+            this.btnAgregarRol = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.SuspendLayout();
-            // 
-            // cmbPermisosDisponibles
-            // 
-            this.cmbPermisosDisponibles.FormattingEnabled = true;
-            this.cmbPermisosDisponibles.Location = new System.Drawing.Point(1061, 54);
-            this.cmbPermisosDisponibles.Name = "cmbPermisosDisponibles";
-            this.cmbPermisosDisponibles.Size = new System.Drawing.Size(114, 21);
-            this.cmbPermisosDisponibles.TabIndex = 52;
             // 
             // txtNombreRol
             // 
@@ -98,19 +93,9 @@
             this.btnEliminarRol.UseVisualStyleBackColor = true;
             this.btnEliminarRol.Click += new System.EventHandler(this.btnEliminarRol_Click);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(969, 62);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 13);
-            this.label2.TabIndex = 55;
-            this.label2.Tag = "lbl_permisos";
-            this.label2.Text = "PERMISOS:";
-            // 
             // btnQuitarPermiso
             // 
-            this.btnQuitarPermiso.Location = new System.Drawing.Point(1093, 124);
+            this.btnQuitarPermiso.Location = new System.Drawing.Point(1038, 124);
             this.btnQuitarPermiso.Name = "btnQuitarPermiso";
             this.btnQuitarPermiso.Size = new System.Drawing.Size(128, 43);
             this.btnQuitarPermiso.TabIndex = 57;
@@ -118,17 +103,6 @@
             this.btnQuitarPermiso.Text = "Quitar Permiso";
             this.btnQuitarPermiso.UseVisualStyleBackColor = true;
             this.btnQuitarPermiso.Click += new System.EventHandler(this.btnQuitarPermiso_Click);
-            // 
-            // btnAgregarPermiso
-            // 
-            this.btnAgregarPermiso.Location = new System.Drawing.Point(959, 124);
-            this.btnAgregarPermiso.Name = "btnAgregarPermiso";
-            this.btnAgregarPermiso.Size = new System.Drawing.Size(128, 43);
-            this.btnAgregarPermiso.TabIndex = 56;
-            this.btnAgregarPermiso.Tag = "btn_agregar_permiso";
-            this.btnAgregarPermiso.Text = "Agregar Permiso";
-            this.btnAgregarPermiso.UseVisualStyleBackColor = true;
-            this.btnAgregarPermiso.Click += new System.EventHandler(this.btnAgregarPermiso_Click);
             // 
             // lbPermisosAsignados
             // 
@@ -145,18 +119,79 @@
             this.tvRoles.Size = new System.Drawing.Size(392, 97);
             this.tvRoles.TabIndex = 61;
             // 
+            // cmbPatentes
+            // 
+            this.cmbPatentes.FormattingEnabled = true;
+            this.cmbPatentes.Location = new System.Drawing.Point(973, 16);
+            this.cmbPatentes.Name = "cmbPatentes";
+            this.cmbPatentes.Size = new System.Drawing.Size(114, 21);
+            this.cmbPatentes.TabIndex = 62;
+            // 
+            // btnAgregarPatente
+            // 
+            this.btnAgregarPatente.Location = new System.Drawing.Point(904, 124);
+            this.btnAgregarPatente.Name = "btnAgregarPatente";
+            this.btnAgregarPatente.Size = new System.Drawing.Size(128, 43);
+            this.btnAgregarPatente.TabIndex = 63;
+            this.btnAgregarPatente.Tag = "btn_agregar_permiso";
+            this.btnAgregarPatente.Text = "Agregar Permiso";
+            this.btnAgregarPatente.UseVisualStyleBackColor = true;
+            this.btnAgregarPatente.Click += new System.EventHandler(this.btnAgregarPatente_Click);
+            // 
+            // cmbRoles
+            // 
+            this.cmbRoles.FormattingEnabled = true;
+            this.cmbRoles.Location = new System.Drawing.Point(307, 12);
+            this.cmbRoles.Name = "cmbRoles";
+            this.cmbRoles.Size = new System.Drawing.Size(114, 21);
+            this.cmbRoles.TabIndex = 64;
+            // 
+            // btnAgregarRol
+            // 
+            this.btnAgregarRol.Location = new System.Drawing.Point(429, 82);
+            this.btnAgregarRol.Name = "btnAgregarRol";
+            this.btnAgregarRol.Size = new System.Drawing.Size(128, 43);
+            this.btnAgregarRol.TabIndex = 65;
+            this.btnAgregarRol.Tag = "btn_agregar_permiso";
+            this.btnAgregarRol.Text = "Añadir subrol";
+            this.btnAgregarRol.UseVisualStyleBackColor = true;
+            this.btnAgregarRol.Click += new System.EventHandler(this.btnAgregarRol_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(247, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(54, 13);
+            this.label2.TabIndex = 66;
+            this.label2.Tag = "lbl_rol";
+            this.label2.Text = "SUBROL:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(901, 20);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(66, 13);
+            this.label3.TabIndex = 67;
+            this.label3.Tag = "lbl_rol";
+            this.label3.Text = "PERMISOS:";
+            // 
             // UC_Roles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.btnAgregarRol);
+            this.Controls.Add(this.cmbRoles);
+            this.Controls.Add(this.btnAgregarPatente);
+            this.Controls.Add(this.cmbPatentes);
             this.Controls.Add(this.tvRoles);
             this.Controls.Add(this.lbPermisosAsignados);
             this.Controls.Add(this.btnQuitarPermiso);
-            this.Controls.Add(this.btnAgregarPermiso);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnEliminarRol);
             this.Controls.Add(this.btnModificarRol);
-            this.Controls.Add(this.cmbPermisosDisponibles);
             this.Controls.Add(this.txtNombreRol);
             this.Controls.Add(this.btnCrearRol);
             this.Controls.Add(this.dgvUsuarios);
@@ -171,18 +206,20 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox cmbPermisosDisponibles;
         private System.Windows.Forms.TextBox txtNombreRol;
         private System.Windows.Forms.Button btnCrearRol;
         private System.Windows.Forms.DataGridView dgvUsuarios;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnModificarRol;
         private System.Windows.Forms.Button btnEliminarRol;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnQuitarPermiso;
-        private System.Windows.Forms.Button btnAgregarPermiso;
         private System.Windows.Forms.ListBox lbPermisosAsignados;
         private System.Windows.Forms.TreeView tvRoles;
+        private System.Windows.Forms.ComboBox cmbPatentes;
+        private System.Windows.Forms.Button btnAgregarPatente;
+        private System.Windows.Forms.ComboBox cmbRoles;
+        private System.Windows.Forms.Button btnAgregarRol;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }

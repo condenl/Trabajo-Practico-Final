@@ -24,7 +24,7 @@ namespace UI.UserControls
             this.Load += UC_Roles_Load;
 
             tvRoles.AfterSelect += tvRoles_AfterSelect;
-            tvRoles.MouseDown += tvRoles_MouseDown; 
+            tvRoles.MouseDown += tvRoles_MouseDown;
         }
 
         protected override void Dispose(bool disposing)
@@ -70,7 +70,7 @@ namespace UI.UserControls
             GestorIdioma.Instancia.Suscribir(this);
             ActualizarTextos();
             CargarArbolRoles();
-            CargarComboPatentes();
+            CargarCombos(); // Reemplazamos la carga anterior por el nuevo método
         }
 
         private void CargarArbolRoles()
@@ -139,19 +139,28 @@ namespace UI.UserControls
             }
         }
 
-        private void CargarComboPatentes()
+        // --- NUEVO MÉTODO DE CARGA DE COMBOS ---
+        private void CargarCombos()
         {
             try
             {
-                cmbPermisosDisponibles.DataSource = null;
-                cmbPermisosDisponibles.DataSource = seguridadBLL.ObtenerPatentesDisponibles();
-                cmbPermisosDisponibles.DisplayMember = "Nombre";
-                cmbPermisosDisponibles.ValueMember = "Id";
-                cmbPermisosDisponibles.SelectedIndex = -1;
+                // 1. Cargar combo de Patentes
+                cmbPatentes.DataSource = null;
+                cmbPatentes.DataSource = seguridadBLL.ObtenerPatentesDisponibles();
+                cmbPatentes.DisplayMember = "Nombre";
+                cmbPatentes.ValueMember = "Id";
+                cmbPatentes.SelectedIndex = -1;
+
+                // 2. Cargar combo de Roles (Familias)
+                cmbRoles.DataSource = null;
+                cmbRoles.DataSource = seguridadBLL.ObtenerRolesDisponibles();
+                cmbRoles.DisplayMember = "Nombre";
+                cmbRoles.ValueMember = "Id";
+                cmbRoles.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar componentes: " + ex.Message);
+                MessageBox.Show($"{traduccionBLL.Traducir("lbl_error")}: {ex.Message}");
             }
         }
 
@@ -211,6 +220,7 @@ namespace UI.UserControls
 
                 MessageBox.Show(traduccionBLL.Traducir("msg_role_created_success"), traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarArbolRoles();
+                CargarCombos(); // Refrescamos combos por si queremos asignar el nuevo rol en el futuro
                 LimpiarDetalleRol();
             }
             catch (Exception ex)
@@ -232,6 +242,7 @@ namespace UI.UserControls
             seguridadBLL.ModificarRol(rolSeleccionado.Id, txtNombreRol.Text.Trim());
             MessageBox.Show(traduccionBLL.Traducir("msg_role_modified_success"), traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             CargarArbolRoles();
+            CargarCombos(); // Refrescamos combos para actualizar el nombre modificado
         }
 
         private void btnEliminarRol_Click(object sender, EventArgs e)
@@ -256,23 +267,58 @@ namespace UI.UserControls
                 MessageBox.Show(traduccionBLL.Traducir("msg_role_deleted_success"), traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarDetalleRol();
                 CargarArbolRoles();
+                CargarCombos(); // Refrescamos combos para quitar el rol eliminado
             }
         }
 
-        private void btnAgregarPermiso_Click(object sender, EventArgs e)
+        // --- NUEVO EVENTO PARA AGREGAR PATENTE ---
+        private void btnAgregarPatente_Click(object sender, EventArgs e)
         {
-            if (rolSeleccionado == null || cmbPermisosDisponibles.SelectedItem == null)
+            if (rolSeleccionado == null || cmbPatentes.SelectedItem == null)
             {
                 MessageBox.Show(traduccionBLL.Traducir("msg_select_role_permission_warn"), traduccionBLL.Traducir("lbl_warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            Componente permiso = (Componente)cmbPermisosDisponibles.SelectedItem;
+            Componente patenteAAgregar = (Componente)cmbPatentes.SelectedItem;
 
             try
             {
-                seguridadBLL.AsignarPermisoARol(rolSeleccionado, permiso);
+                seguridadBLL.AsignarPermisoARol(rolSeleccionado, patenteAAgregar);
+
+                // Refrescamos solo la lista de permisos del rol seleccionado
                 CargarPermisosDelRolSeleccionado();
+
+                MessageBox.Show("Patente agregada correctamente.", traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, traduccionBLL.Traducir("lbl_error"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+        }
+
+        // --- NUEVO EVENTO PARA AGREGAR ROL ---
+        private void btnAgregarRol_Click(object sender, EventArgs e)
+        {
+            if (rolSeleccionado == null || cmbRoles.SelectedItem == null)
+            {
+                MessageBox.Show("Por favor, seleccione el rol destino en el árbol y el subrol a heredar.", traduccionBLL.Traducir("lbl_warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Componente rolAAgregar = (Componente)cmbRoles.SelectedItem;
+
+            try
+            {
+                seguridadBLL.AsignarPermisoARol(rolSeleccionado, rolAAgregar);
+
+                CargarPermisosDelRolSeleccionado();
+
+                // Refrescamos el árbol porque cambió la jerarquía
+                CargarArbolRoles();
+                tvRoles.ExpandAll();
+
+                MessageBox.Show("Subrol asignado correctamente.", traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
