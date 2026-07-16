@@ -33,13 +33,9 @@ namespace DAL
 
             SqlParameter[] param = { new SqlParameter("@IdUsuario", idUsuario) };
             DataTable dtAsignaciones = Conexion.Instancia.Leer("sp_Seguridad_ObtenerComponentesPorUsuario", param);
-
-            // Reutiliza tu Mapper usando el nuevo método limpio y descriptivo
             return SeguridadMPP.Instancia.ConstruirArbolUsuario(dtComponentes, dtRelaciones, dtAsignaciones);
         }
 
-        // --- NUEVO MÉTODO REFACTORIZADO ---
-        // Le pasa las tablas al MPP y este se encarga de extraer la Familia armada del diccionario
         public Familia ObtenerFamiliaCompleta(int idFamilia)
         {
             DataTable dtComponentes = Conexion.Instancia.Leer("sp_Seguridad_ObtenerComponentes", null);

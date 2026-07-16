@@ -17,7 +17,6 @@
         {
             this.txtNombreRol = new System.Windows.Forms.TextBox();
             this.btnCrearRol = new System.Windows.Forms.Button();
-            this.dgvUsuarios = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.btnModificarRol = new System.Windows.Forms.Button();
             this.btnEliminarRol = new System.Windows.Forms.Button();
@@ -30,7 +29,6 @@
             this.btnAgregarRol = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.SuspendLayout();
             // 
             // txtNombreRol
@@ -50,16 +48,6 @@
             this.btnCrearRol.Text = "Crear Rol";
             this.btnCrearRol.UseVisualStyleBackColor = true;
             this.btnCrearRol.Click += new System.EventHandler(this.btnCrearRol_Click);
-            // 
-            // dgvUsuarios
-            // 
-            this.dgvUsuarios.AllowUserToAddRows = false;
-            this.dgvUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvUsuarios.Location = new System.Drawing.Point(31, 301);
-            this.dgvUsuarios.Name = "dgvUsuarios";
-            this.dgvUsuarios.ReadOnly = true;
-            this.dgvUsuarios.Size = new System.Drawing.Size(1265, 276);
-            this.dgvUsuarios.TabIndex = 39;
             // 
             // label1
             // 
@@ -95,7 +83,7 @@
             // 
             // btnQuitarPermiso
             // 
-            this.btnQuitarPermiso.Location = new System.Drawing.Point(1038, 124);
+            this.btnQuitarPermiso.Location = new System.Drawing.Point(1038, 82);
             this.btnQuitarPermiso.Name = "btnQuitarPermiso";
             this.btnQuitarPermiso.Size = new System.Drawing.Size(128, 43);
             this.btnQuitarPermiso.TabIndex = 57;
@@ -109,14 +97,14 @@
             this.lbPermisosAsignados.FormattingEnabled = true;
             this.lbPermisosAsignados.Location = new System.Drawing.Point(904, 174);
             this.lbPermisosAsignados.Name = "lbPermisosAsignados";
-            this.lbPermisosAsignados.Size = new System.Drawing.Size(392, 95);
+            this.lbPermisosAsignados.Size = new System.Drawing.Size(392, 316);
             this.lbPermisosAsignados.TabIndex = 59;
             // 
             // tvRoles
             // 
             this.tvRoles.Location = new System.Drawing.Point(31, 172);
             this.tvRoles.Name = "tvRoles";
-            this.tvRoles.Size = new System.Drawing.Size(392, 97);
+            this.tvRoles.Size = new System.Drawing.Size(392, 301);
             this.tvRoles.TabIndex = 61;
             // 
             // cmbPatentes
@@ -129,7 +117,7 @@
             // 
             // btnAgregarPatente
             // 
-            this.btnAgregarPatente.Location = new System.Drawing.Point(904, 124);
+            this.btnAgregarPatente.Location = new System.Drawing.Point(904, 82);
             this.btnAgregarPatente.Name = "btnAgregarPatente";
             this.btnAgregarPatente.Size = new System.Drawing.Size(128, 43);
             this.btnAgregarPatente.TabIndex = 63;
@@ -194,12 +182,10 @@
             this.Controls.Add(this.btnModificarRol);
             this.Controls.Add(this.txtNombreRol);
             this.Controls.Add(this.btnCrearRol);
-            this.Controls.Add(this.dgvUsuarios);
             this.Controls.Add(this.label1);
             this.Name = "UC_Roles";
             this.Size = new System.Drawing.Size(1325, 599);
             this.Load += new System.EventHandler(this.UC_Roles_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -208,7 +194,6 @@
         #endregion
         private System.Windows.Forms.TextBox txtNombreRol;
         private System.Windows.Forms.Button btnCrearRol;
-        private System.Windows.Forms.DataGridView dgvUsuarios;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnModificarRol;
         private System.Windows.Forms.Button btnEliminarRol;
