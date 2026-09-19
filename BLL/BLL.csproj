@@ -41,13 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AprovisionamientoBLL.cs" />
     <Compile Include="AuditoriaBLL.cs" />
     <Compile Include="BitacoraBLL.cs" />
     <Compile Include="IdiomaBLL.cs" />
+    <Compile Include="InventarioBLL.cs" />
+    <Compile Include="ProductoBLL.cs" />
+    <Compile Include="ProveedorBLL.cs" />
+    <Compile Include="RegistroActividadBitacora.cs" />
     <Compile Include="SeguridadBLL.cs" />
     <Compile Include="SoporteBLL.cs" />
     <Compile Include="TraduccionBLL.cs" />
     <Compile Include="UsuarioBLL.cs" />
+    <Compile Include="VentaBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -11,6 +11,10 @@ namespace BE.Seguridad
         Usuarios_Modificar,
         Usuarios_Baja,
         Roles_Gestion,
-        Traduccion_Gestion
+        Traduccion_Gestion,
+        Aprovisionamiento_Gestion,
+        Contabilidad_AprobarCompras,
+        Inventario_Recepcionar,
+        Ventas_Registrar
     }
 }

@@ -37,6 +37,8 @@ namespace UI
             this.btnTraducciones = new System.Windows.Forms.Button();
             this.cmbIdioma = new System.Windows.Forms.ComboBox();
             this.btnAuditoria = new System.Windows.Forms.Button();
+            this.btnVentas = new System.Windows.Forms.Button();
+            this.btnAprovisionamiento = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panel1
@@ -138,6 +140,28 @@ namespace UI
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1520, 623);
+            // btnVentas
+            //
+            this.btnVentas.Location = new System.Drawing.Point(12, 413);
+            this.btnVentas.Name = "btnVentas";
+            this.btnVentas.Size = new System.Drawing.Size(120, 43);
+            this.btnVentas.TabIndex = 8;
+            this.btnVentas.Text = "Ventas";
+            this.btnVentas.UseVisualStyleBackColor = true;
+            this.btnVentas.Click += new System.EventHandler(this.btnVentas_Click);
+            //
+            // btnAprovisionamiento
+            //
+            this.btnAprovisionamiento.Location = new System.Drawing.Point(12, 480);
+            this.btnAprovisionamiento.Name = "btnAprovisionamiento";
+            this.btnAprovisionamiento.Size = new System.Drawing.Size(145, 43);
+            this.btnAprovisionamiento.TabIndex = 9;
+            this.btnAprovisionamiento.Text = "Compras e inventario";
+            this.btnAprovisionamiento.UseVisualStyleBackColor = true;
+            this.btnAprovisionamiento.Click += new System.EventHandler(this.btnAprovisionamiento_Click);
+            //
+            this.Controls.Add(this.btnAprovisionamiento);
+            this.Controls.Add(this.btnVentas);
             this.Controls.Add(this.btnAuditoria);
             this.Controls.Add(this.cmbIdioma);
             this.Controls.Add(this.btnTraducciones);
@@ -166,5 +190,7 @@ namespace UI
         private System.Windows.Forms.Button btnTraducciones;
         private System.Windows.Forms.ComboBox cmbIdioma;
         private System.Windows.Forms.Button btnAuditoria;
+        private System.Windows.Forms.Button btnVentas;
+        private System.Windows.Forms.Button btnAprovisionamiento;
     }
 }

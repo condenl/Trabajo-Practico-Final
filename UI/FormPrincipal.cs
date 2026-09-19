@@ -41,6 +41,11 @@ namespace UI
             btnRoles.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.Roles_Gestion);
             btnBitacora.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.VerReportes);
             btnTraducciones.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.Traduccion_Gestion);
+            btnVentas.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.Ventas_Registrar);
+            btnAprovisionamiento.Visible =
+                _usuarioLogueado.TienePermiso(TipoPermiso.Aprovisionamiento_Gestion) ||
+                _usuarioLogueado.TienePermiso(TipoPermiso.Contabilidad_AprobarCompras) ||
+                _usuarioLogueado.TienePermiso(TipoPermiso.Inventario_Recepcionar);
         }
 
         private void ConfigurarIdiomas()
@@ -182,6 +187,22 @@ namespace UI
             panel1.Controls.Clear();
             panel1.Controls.Add(auditoria);
             auditoria.Show();
+        }
+
+        private void btnVentas_Click(object sender, EventArgs e)
+        {
+            UC_Ventas ventas = new UC_Ventas();
+            panel1.Controls.Clear();
+            panel1.Controls.Add(ventas);
+            ventas.Show();
+        }
+
+        private void btnAprovisionamiento_Click(object sender, EventArgs e)
+        {
+            UC_Aprovisionamiento aprovisionamiento = new UC_Aprovisionamiento(_usuarioLogueado);
+            panel1.Controls.Clear();
+            panel1.Controls.Add(aprovisionamiento);
+            aprovisionamiento.Show();
         }
     }
 }

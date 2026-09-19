@@ -113,6 +113,12 @@
     <Compile Include="UserControls\UC_Usuarios.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="UserControls\UC_Ventas.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UC_Aprovisionamiento.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UserControls\UC_Usuarios.Designer.cs">
       <DependentUpon>UC_Usuarios.cs</DependentUpon>
     </Compile>

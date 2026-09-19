@@ -9,7 +9,7 @@ using Servicios;
 
 namespace BLL
 {
-    public class UsuarioBLL : IVisitante, IAdministrador, IGestor<Usuario>
+    public class UsuarioBLL : IVisitante, IAdministrador, IGestor<Usuario>, IObservado
     {
         public UsuarioBLL() { }
 
@@ -177,6 +177,21 @@ namespace BLL
                 Session.Instance.Logout();
                 GestorEventos.Instancia.Notificar(new EventoBitacora(email, "LOGOUT", "Sesión cerrada por el usuario."));
             }
+        }
+
+        public void Suscribir(IObserver observador)
+        {
+            GestorEventos.Instancia.Suscribir(observador);
+        }
+
+        public void Desuscribir(IObserver observador)
+        {
+            GestorEventos.Instancia.Desuscribir(observador);
+        }
+
+        public void Notificar(EventoBitacora evento)
+        {
+            GestorEventos.Instancia.Notificar(evento);
         }
 
         private void ValidarFormatoEmail(string email)

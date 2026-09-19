@@ -41,13 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AprovisionamientoMPP.cs" />
     <Compile Include="AuditoriaMPP.cs" />
     <Compile Include="BitacoraMPP.cs" />
     <Compile Include="IdiomaMPP.cs" />
+    <Compile Include="InventarioMPP.cs" />
+    <Compile Include="ProductoMPP.cs" />
+    <Compile Include="ProveedorMPP.cs" />
     <Compile Include="SeguridadMPP.cs" />
     <Compile Include="SoporteMPP.cs" />
     <Compile Include="TraduccionMPP.cs" />
     <Compile Include="UsuarioMPP.cs" />
+    <Compile Include="VentaMPP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

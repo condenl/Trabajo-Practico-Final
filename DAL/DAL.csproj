@@ -45,14 +45,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AprovisionamientoDAL.cs" />
     <Compile Include="AuditoriaDAL.cs" />
     <Compile Include="BitacoraDAL.cs" />
     <Compile Include="Conexion.cs" />
     <Compile Include="IdiomaDAL.cs" />
+    <Compile Include="InventarioDAL.cs" />
+    <Compile Include="ProductoDAL.cs" />
+    <Compile Include="ProveedorDAL.cs" />
     <Compile Include="SeguridadDAL.cs" />
     <Compile Include="SoporteDAL.cs" />
     <Compile Include="TraduccionDAL.cs" />
     <Compile Include="UsuarioDAL.cs" />
+    <Compile Include="VentaDAL.cs" />
     <Compile Include="DVVDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -42,6 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alerta.cs" />
+    <Compile Include="Cliente.cs" />
+    <Compile Include="CotizacionProveedor.cs" />
+    <Compile Include="DetalleCotizacionProveedor.cs" />
+    <Compile Include="DetalleOrdenCompra.cs" />
+    <Compile Include="DetalleVenta.cs" />
+    <Compile Include="EstadoOrdenCompra.cs" />
     <Compile Include="EventoBitacora.cs" />
     <Compile Include="Excepciones\UsuarioSinRolException.cs" />
     <Compile Include="Interfaces\IAdministrador.cs" />
@@ -51,9 +57,21 @@
     <Compile Include="Interfaces\IIdiomaObserver.cs" />
     <Compile Include="Interfaces\IObservado.cs" />
     <Compile Include="Interfaces\IObserver.cs" />
+    <Compile Include="Interfaces\IAprovisionamientoRepository.cs" />
+    <Compile Include="Interfaces\IInventarioRepository.cs" />
+    <Compile Include="Interfaces\IProductoRepository.cs" />
+    <Compile Include="Interfaces\IProveedorRepository.cs" />
+    <Compile Include="Interfaces\IRegistroActividad.cs" />
     <Compile Include="Interfaces\IVisitante.cs" />
+    <Compile Include="Interfaces\IVentaRepository.cs" />
     <Compile Include="Idioma.cs" />
     <Compile Include="Persona.cs" />
+    <Compile Include="Lote.cs" />
+    <Compile Include="MovimientoStock.cs" />
+    <Compile Include="Membresia.cs" />
+    <Compile Include="OrdenCompra.cs" />
+    <Compile Include="Producto.cs" />
+    <Compile Include="Proveedor.cs" />
     <Compile Include="Traduccion.cs" />
     <Compile Include="DVV.cs" />
     <Compile Include="Seguridad\Componente.cs" />
@@ -61,8 +79,10 @@
     <Compile Include="Seguridad\Patente.cs" />
     <Compile Include="Seguridad\TipoPermiso.cs" />
     <Compile Include="Soporte.cs" />
+    <Compile Include="TipoMovimientoStock.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="UsuarioAuditoria.cs" />
+    <Compile Include="Venta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Excepciones\UsuarioBloqueadoException.cs" />
   </ItemGroup>
