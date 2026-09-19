@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="2415" viewBox="0 0 1800 2415">
+<defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,4 L0,8 z" fill="#315c8a"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="900" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" font-weight="700" fill="#14263d"><tspan x="900" dy="0">Venta y fidelización de clientes</tspan></text>
+<rect x="35" y="105" width="330" height="84" rx="12" fill="#234d75" filter="url(#shadow)"/>
+<text x="200" y="139" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff"><tspan x="200" dy="0">Cliente</tspan></text>
+<line x1="200" y1="189" x2="200" y2="2360" stroke="#91a4b7" stroke-width="2" stroke-dasharray="9 8"/>
+<rect x="501.66666666666674" y="105" width="330" height="84" rx="12" fill="#234d75" filter="url(#shadow)"/>
+<text x="666.6666666666667" y="139" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff"><tspan x="666.6666666666667" dy="0">Personal de Ventas</tspan></text>
+<line x1="666.6666666666667" y1="189" x2="666.6666666666667" y2="2360" stroke="#91a4b7" stroke-width="2" stroke-dasharray="9 8"/>
+<rect x="968.3333333333335" y="105" width="330" height="84" rx="12" fill="#234d75" filter="url(#shadow)"/>
+<text x="1133.3333333333335" y="139" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff"><tspan x="1133.3333333333335" dy="0">Caja</tspan></text>
+<line x1="1133.3333333333335" y1="189" x2="1133.3333333333335" y2="2360" stroke="#91a4b7" stroke-width="2" stroke-dasharray="9 8"/>
+<rect x="1435" y="105" width="330" height="84" rx="12" fill="#234d75" filter="url(#shadow)"/>
+<text x="1600" y="139" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff"><tspan x="1600" dy="0">Dueño / Marketing</tspan></text>
+<line x1="1600" y1="189" x2="1600" y2="2360" stroke="#91a4b7" stroke-width="2" stroke-dasharray="9 8"/>
+<line x1="208" y1="303" x2="654.6666666666667" y2="303" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="433.33333333333337" y="257" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="433.33333333333337" dy="0">Solicitar los perfumes seleccionados</tspan></text>
+<path d="M 666.6666666666667 409 h 95 v 42 h -95" fill="none" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="714.1666666666667" y="373" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="714.1666666666667" dy="0">Verificar disponibilidad física</tspan></text>
+<line x1="658.6666666666667" y1="535" x2="212" y2="535" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="433.33333333333337" y="489" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="433.33333333333337" dy="0">Consultar pertenencia al programa de</tspan><tspan x="433.33333333333337" dy="24">membresía</tspan></text>
+<rect x="48" y="579" width="1704" height="46" rx="8" fill="#e8f0f7" stroke="#8aa4bd" stroke-width="1.5"/>
+<text x="72" y="609" text-anchor="start" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#234d75"><tspan x="72" dy="0">Cliente afiliado</tspan></text>
+<line x1="208" y1="721" x2="654.6666666666667" y2="721" stroke="#315c8a" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#arrow)"/>
+<text x="433.33333333333337" y="675" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="433.33333333333337" dy="0">Presentar identificación de miembro</tspan></text>
+<path d="M 666.6666666666667 827 h 95 v 42 h -95" fill="none" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="714.1666666666667" y="791" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="714.1666666666667" dy="0">Verificar vigencia y calcular</tspan><tspan x="714.1666666666667" dy="24">beneficio</tspan></text>
+<rect x="48" y="881" width="1704" height="46" rx="8" fill="#e8f0f7" stroke="#8aa4bd" stroke-width="1.5"/>
+<text x="72" y="911" text-anchor="start" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#234d75"><tspan x="72" dy="0">Cliente no afiliado</tspan></text>
+<line x1="658.6666666666667" y1="1023" x2="212" y2="1023" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="433.33333333333337" y="977" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="433.33333333333337" dy="0">Explicar beneficios y ofrecer adhesión</tspan></text>
+<line x1="208" y1="1139" x2="654.6666666666667" y2="1139" stroke="#315c8a" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#arrow)"/>
+<text x="433.33333333333337" y="1093" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="433.33333333333337" dy="0">Aceptar y entregar contacto y preferencias</tspan></text>
+<path d="M 666.6666666666667 1245 h 95 v 42 h -95" fill="none" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="714.1666666666667" y="1209" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="714.1666666666667" dy="0">Completar ficha y aplicar</tspan><tspan x="714.1666666666667" dy="24">bienvenida</tspan></text>
+<rect x="48" y="1299" width="1704" height="46" rx="8" fill="#e8f0f7" stroke="#8aa4bd" stroke-width="1.5"/>
+<text x="72" y="1329" text-anchor="start" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#234d75"><tspan x="72" dy="0">Cierre de la venta</tspan></text>
+<line x1="674.6666666666667" y1="1441" x2="1121.3333333333335" y2="1441" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="900.0000000000001" y="1395" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="900.0000000000001" dy="0">Remitir detalle, descuento e importe final</tspan></text>
+<line x1="1125.3333333333335" y1="1557" x2="212" y2="1557" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="666.6666666666667" y="1511" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="666.6666666666667" dy="0">Cobrar y emitir comprobante</tspan></text>
+<line x1="208" y1="1673" x2="1121.3333333333335" y2="1673" stroke="#315c8a" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#arrow)"/>
+<text x="666.6666666666667" y="1627" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="666.6666666666667" dy="0">Efectuar pago</tspan></text>
+<line x1="1125.3333333333335" y1="1789" x2="678.6666666666667" y2="1789" stroke="#315c8a" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#arrow)"/>
+<text x="900.0000000000001" y="1743" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="900.0000000000001" dy="0">Confirmar cobro</tspan></text>
+<line x1="658.6666666666667" y1="1905" x2="212" y2="1905" stroke="#315c8a" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#arrow)"/>
+<text x="433.33333333333337" y="1859" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="433.33333333333337" dy="0">Entregar perfumes y comprobante</tspan></text>
+<line x1="674.6666666666667" y1="2021" x2="1588" y2="2021" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1133.3333333333335" y="1975" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="1133.3333333333335" dy="0">Remitir ficha e historial de compra</tspan></text>
+<path d="M 1600 2127 h 95 v 42 h -95" fill="none" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1647.5" y="2091" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="1647.5" dy="0">Segmentar por historial y</tspan><tspan x="1647.5" dy="24">preferencias</tspan></text>
+<line x1="1592" y1="2253" x2="212" y2="2253" stroke="#315c8a" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#arrow)"/>
+<text x="900" y="2207" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="900" dy="0">Difundir promociones autorizadas</tspan></text>
+</svg>

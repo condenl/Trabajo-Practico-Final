@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1951" viewBox="0 0 1800 1951">
+<defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,4 L0,8 z" fill="#315c8a"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="900" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" font-weight="700" fill="#14263d"><tspan x="900" dy="0">Evaluación estratégica de proveedores</tspan></text>
+<rect x="35" y="105" width="330" height="84" rx="12" fill="#234d75" filter="url(#shadow)"/>
+<text x="200" y="139" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff"><tspan x="200" dy="0">Dueño de la Perfumería</tspan></text>
+<line x1="200" y1="189" x2="200" y2="1896" stroke="#91a4b7" stroke-width="2" stroke-dasharray="9 8"/>
+<rect x="735" y="105" width="330" height="84" rx="12" fill="#234d75" filter="url(#shadow)"/>
+<text x="900" y="139" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff"><tspan x="900" dy="0">Proveedores</tspan></text>
+<line x1="900" y1="189" x2="900" y2="1896" stroke="#91a4b7" stroke-width="2" stroke-dasharray="9 8"/>
+<rect x="1435" y="105" width="330" height="84" rx="12" fill="#234d75" filter="url(#shadow)"/>
+<text x="1600" y="139" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff"><tspan x="1600" dy="0">Equipo de Contabilidad</tspan></text>
+<line x1="1600" y1="189" x2="1600" y2="1896" stroke="#91a4b7" stroke-width="2" stroke-dasharray="9 8"/>
+<path d="M 200 293 h 95 v 42 h -95" fill="none" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="247.5" y="257" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="247.5" dy="0">Identificar productos con riesgo</tspan><tspan x="247.5" dy="24">de pérdida o baja rotación</tspan></text>
+<rect x="48" y="347" width="1704" height="46" rx="8" fill="#e8f0f7" stroke="#8aa4bd" stroke-width="1.5"/>
+<text x="72" y="377" text-anchor="start" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#234d75"><tspan x="72" dy="0">Repetir para cada proveedor candidato</tspan></text>
+<line x1="208" y1="489" x2="888" y2="489" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="550" y="443" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="550" dy="0">Solicitar precios, antecedentes y</tspan><tspan x="550" dy="24">certificaciones</tspan></text>
+<line x1="892" y1="605" x2="212" y2="605" stroke="#315c8a" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#arrow)"/>
+<text x="550" y="559" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="550" dy="0">Remitir propuesta comercial y trayectoria</tspan></text>
+<line x1="208" y1="721" x2="1588" y2="721" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="900" y="675" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="900" dy="0">Remitir propuestas y condiciones de pago</tspan></text>
+<path d="M 1600 827 h 95 v 42 h -95" fill="none" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1647.5" y="791" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="1647.5" dy="0">Analizar costos, márgenes e</tspan><tspan x="1647.5" dy="24">impacto financiero</tspan></text>
+<line x1="1592" y1="953" x2="212" y2="953" stroke="#315c8a" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#arrow)"/>
+<text x="900" y="907" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="900" dy="0">Emitir comparativa y dictamen de</tspan><tspan x="900" dy="24">viabilidad</tspan></text>
+<path d="M 200 1059 h 95 v 42 h -95" fill="none" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="247.5" y="1023" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="247.5" dy="0">Ponderar prestigio, precio y</tspan><tspan x="247.5" dy="24">antigüedad</tspan></text>
+<rect x="48" y="1113" width="1704" height="46" rx="8" fill="#e8f0f7" stroke="#8aa4bd" stroke-width="1.5"/>
+<text x="72" y="1143" text-anchor="start" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#234d75"><tspan x="72" dy="0">Si no supera los umbrales</tspan></text>
+<line x1="208" y1="1255" x2="888" y2="1255" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="550" y="1209" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="550" dy="0">Informar que la propuesta no fue</tspan><tspan x="550" dy="24">seleccionada</tspan></text>
+<path d="M 200 1361 h 95 v 42 h -95" fill="none" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="247.5" y="1325" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="247.5" dy="0">Programar una nueva evaluación</tspan></text>
+<rect x="48" y="1415" width="1704" height="46" rx="8" fill="#e8f0f7" stroke="#8aa4bd" stroke-width="1.5"/>
+<text x="72" y="1445" text-anchor="start" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#234d75"><tspan x="72" dy="0">Si supera los umbrales</tspan></text>
+<line x1="208" y1="1557" x2="888" y2="1557" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="550" y="1511" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="550" dy="0">Proponer acuerdo preferencial por producto</tspan></text>
+<line x1="892" y1="1673" x2="212" y2="1673" stroke="#315c8a" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#arrow)"/>
+<text x="550" y="1627" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="550" dy="0">Aceptar o renegociar condiciones</tspan></text>
+<path d="M 200 1779 h 95 v 42 h -95" fill="none" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="247.5" y="1743" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="247.5" dy="0">Designar proveedor prioritario</tspan></text>
+</svg>

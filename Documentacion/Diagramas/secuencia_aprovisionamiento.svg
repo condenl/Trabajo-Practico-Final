@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="2369" viewBox="0 0 1800 2369">
+<defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,4 L0,8 z" fill="#315c8a"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="900" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" font-weight="700" fill="#14263d"><tspan x="900" dy="0">Aprovisionamiento, aprobación contable y trazabilidad</tspan></text>
+<rect x="45" y="105" width="270" height="84" rx="12" fill="#234d75" filter="url(#shadow)"/>
+<text x="180" y="139" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff"><tspan x="180" dy="0">Dueño / Compras</tspan></text>
+<line x1="180" y1="189" x2="180" y2="2314" stroke="#91a4b7" stroke-width="2" stroke-dasharray="9 8"/>
+<rect x="405" y="105" width="270" height="84" rx="12" fill="#234d75" filter="url(#shadow)"/>
+<text x="540" y="139" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff"><tspan x="540" dy="0">Responsable de</tspan><tspan x="540" dy="25">Inventario</tspan></text>
+<line x1="540" y1="189" x2="540" y2="2314" stroke="#91a4b7" stroke-width="2" stroke-dasharray="9 8"/>
+<rect x="765" y="105" width="270" height="84" rx="12" fill="#234d75" filter="url(#shadow)"/>
+<text x="900" y="139" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff"><tspan x="900" dy="0">Proveedores</tspan></text>
+<line x1="900" y1="189" x2="900" y2="2314" stroke="#91a4b7" stroke-width="2" stroke-dasharray="9 8"/>
+<rect x="1125" y="105" width="270" height="84" rx="12" fill="#234d75" filter="url(#shadow)"/>
+<text x="1260" y="139" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff"><tspan x="1260" dy="0">Equipo de Contabilidad</tspan></text>
+<line x1="1260" y1="189" x2="1260" y2="2314" stroke="#91a4b7" stroke-width="2" stroke-dasharray="9 8"/>
+<rect x="1485" y="105" width="270" height="84" rx="12" fill="#234d75" filter="url(#shadow)"/>
+<text x="1620" y="139" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff"><tspan x="1620" dy="0">Recepción / Depósito</tspan></text>
+<line x1="1620" y1="189" x2="1620" y2="2314" stroke="#91a4b7" stroke-width="2" stroke-dasharray="9 8"/>
+<line x1="188" y1="303" x2="528" y2="303" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="360" y="257" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="360" dy="0">Solicitar relevamiento de</tspan><tspan x="360" dy="24">existencias y faltantes</tspan></text>
+<line x1="532" y1="419" x2="192" y2="419" stroke="#315c8a" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#arrow)"/>
+<text x="360" y="373" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="360" dy="0">Entregar informe de necesidades</tspan><tspan x="360" dy="24">de reposición</tspan></text>
+<rect x="48" y="463" width="1704" height="46" rx="8" fill="#e8f0f7" stroke="#8aa4bd" stroke-width="1.5"/>
+<text x="72" y="493" text-anchor="start" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#234d75"><tspan x="72" dy="0">Repetir para múltiples proveedores</tspan></text>
+<line x1="188" y1="605" x2="888" y2="605" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="540" y="559" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="540" dy="0">Solicitar cotización, origen y</tspan><tspan x="540" dy="24">plazo de entrega</tspan></text>
+<line x1="892" y1="721" x2="192" y2="721" stroke="#315c8a" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#arrow)"/>
+<text x="540" y="675" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="540" dy="0">Remitir cotización y</tspan><tspan x="540" dy="24">documentación comercial</tspan></text>
+<line x1="188" y1="837" x2="1248" y2="837" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="720" y="791" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="720" dy="0">Presentar comparativa y orden</tspan><tspan x="720" dy="24">preliminar</tspan></text>
+<rect x="48" y="881" width="1704" height="46" rx="8" fill="#e8f0f7" stroke="#8aa4bd" stroke-width="1.5"/>
+<text x="72" y="911" text-anchor="start" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#234d75"><tspan x="72" dy="0">Decisión presupuestaria</tspan></text>
+<line x1="1252" y1="1023" x2="192" y2="1023" stroke="#315c8a" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#arrow)"/>
+<text x="720" y="977" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="720" dy="0">Autorizar la compra o informar</tspan><tspan x="720" dy="24">observaciones</tspan></text>
+<line x1="188" y1="1139" x2="888" y2="1139" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="540" y="1093" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="540" dy="0">Emitir la orden aprobada o</tspan><tspan x="540" dy="24">renegociar condiciones</tspan></text>
+<line x1="908" y1="1255" x2="1608" y2="1255" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1260" y="1209" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="1260" dy="0">Despachar mercadería, remito y</tspan><tspan x="1260" dy="24">certificados</tspan></text>
+<line x1="1612" y1="1371" x2="552" y2="1371" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1080" y="1325" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="1080" dy="0">Entregar lotes y documentación</tspan><tspan x="1080" dy="24">para control</tspan></text>
+<path d="M 540 1477 h 95 v 42 h -95" fill="none" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="587.5" y="1441" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="587.5" dy="0">Verificar cantidad, lote, origen</tspan><tspan x="587.5" dy="24">y vencimiento</tspan></text>
+<rect x="48" y="1531" width="1704" height="46" rx="8" fill="#e8f0f7" stroke="#8aa4bd" stroke-width="1.5"/>
+<text x="72" y="1561" text-anchor="start" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#234d75"><tspan x="72" dy="0">Si la mercadería es conforme</tspan></text>
+<line x1="532" y1="1673" x2="192" y2="1673" stroke="#315c8a" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#arrow)"/>
+<text x="360" y="1627" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="360" dy="0">Confirmar ingreso y actualizar</tspan><tspan x="360" dy="24">historial</tspan></text>
+<line x1="1612" y1="1789" x2="1272" y2="1789" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1440" y="1743" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="1440" dy="0">Remitir factura y conformidad de</tspan><tspan x="1440" dy="24">recepción</tspan></text>
+<path d="M 1260 1895 h 95 v 42 h -95" fill="none" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1307.5" y="1859" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="1307.5" dy="0">Registrar pasivo para</tspan><tspan x="1307.5" dy="24">liquidación</tspan></text>
+<rect x="48" y="1949" width="1704" height="46" rx="8" fill="#e8f0f7" stroke="#8aa4bd" stroke-width="1.5"/>
+<text x="72" y="1979" text-anchor="start" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#234d75"><tspan x="72" dy="0">Si el lote no es conforme</tspan></text>
+<line x1="548" y1="2091" x2="888" y2="2091" stroke="#315c8a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="720" y="2045" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="720" dy="0">Emitir reclamo o devolución</tspan></text>
+<line x1="908" y1="2207" x2="1608" y2="2207" stroke="#315c8a" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#arrow)"/>
+<text x="1260" y="2161" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="500" fill="#172033"><tspan x="1260" dy="0">Coordinar reposición o nota de</tspan><tspan x="1260" dy="24">crédito</tspan></text>
+</svg>
