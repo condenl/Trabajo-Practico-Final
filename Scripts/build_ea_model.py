@@ -185,5 +185,6 @@ for code,title,names in [
         for col,target,targetcol in t['fks']:
             if target in names: link(d,n,target,col,sourceCardinality='0..*',targetCardinality='0..1' if next(a for a in t['attrs'] if a['name']==col)['notes']=='NULL' else '1')
 
-(OUT/'model.json').write_text(json.dumps(diagrams,ensure_ascii=False,indent=2),'utf-8')
-print(f'{len(diagrams)} diagrams; {sum(len(d["nodes"]) for d in diagrams)} elements')
+if __name__ == '__main__':
+    (OUT/'model.json').write_text(json.dumps(diagrams,ensure_ascii=False,indent=2),'utf-8')
+    print(f'{len(diagrams)} diagrams; {sum(len(d["nodes"]) for d in diagrams)} elements')

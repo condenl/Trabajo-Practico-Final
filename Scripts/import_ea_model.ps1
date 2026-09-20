@@ -1,14 +1,18 @@
-param([switch]$ExportOnly)
+param(
+    [switch]$ExportOnly,
+    [string]$ModelFile = 'model.json',
+    [string]$PackageName = 'Iteraciones 1 y 2 - Procesos de perfumeria',
+    [string]$ManifestFile = 'manifest.json'
+)
 $ErrorActionPreference = 'Stop'
 $root = Split-Path $PSScriptRoot -Parent
 $output = Join-Path $root 'Documentacion\EnterpriseArchitect'
-$model = Get-Content (Join-Path $output 'model.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+$model = Get-Content (Join-Path $output $ModelFile) -Raw -Encoding UTF8 | ConvertFrom-Json
 $app = [Runtime.InteropServices.Marshal]::GetActiveObject('EA.App')
 $repo = $app.Repository
 if ($repo.ConnectionString -ne (Join-Path $root 'diagramas.EAP')) { throw 'El proyecto abierto no es diagramas.EAP del repositorio.' }
 $project = $repo.GetProjectInterface()
 $modelRoot = $repo.Models.GetAt(0)
-$packageName = 'Iteraciones 1 y 2 - Procesos de perfumeria'
 $package = @($modelRoot.Packages | Where-Object Name -eq $packageName) | Select-Object -First 1
 if (!$ExportOnly) {
     if ($package) { throw 'El paquete ya existe. Use -ExportOnly para no duplicar ni sobrescribir el trabajo.' }
@@ -52,6 +56,7 @@ if (!$ExportOnly) {
         foreach ($l in $spec.links) {
             $c = $elements[$l.source].Connectors.AddNew($l.name, $l.kind)
             $c.SupplierID = $elements[$l.target].ElementID
+            if ($l.stereotype) { $c.Stereotype = $l.stereotype }
             if ($l.kind -eq 'Sequence') {
                 $c.DiagramID = $d.DiagramID
                 $c.SequenceNo = $l.sequence
@@ -85,6 +90,6 @@ foreach ($p in $package.Packages) {
         Write-Output ('EXPORTED ' + $code)
     }
 }
-$manifest | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $output 'manifest.json') -Encoding UTF8
+$manifest | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $output $ManifestFile) -Encoding UTF8
 $repo.OpenDiagram($manifest[0].diagramId)
 Write-Output ('DONE ' + $manifest.Count + ' diagrams')
