@@ -1,0 +1,16 @@
+﻿[
+    {
+        "code":  "N03-01",
+        "title":  "N03 · Casos de uso de evaluación de proveedores",
+        "diagramId":  19,
+        "guid":  "{F43455F1-02BB-4416-83F2-D56D6018EA0F}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N03-01.png"
+    },
+    {
+        "code":  "N03-02",
+        "title":  "N03 · Actividad de evaluación y selección de proveedores",
+        "diagramId":  20,
+        "guid":  "{FEDDF64C-D209-4b47-B13B-A8B678945AD7}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N03-02.png"
+    }
+]

@@ -22,6 +22,10 @@ Las capturas PNG son exportaciones nativas del motor de diagramación de EA; no 
 
 Las 18 capturas se incorporaron al [documento de Google Docs](https://docs.google.com/document/d/1kzEZpgX8bMnYrq-REzqYnlg_LAO2toCLVCEgpALjPnM/edit). Verificación del 20/09/2026: la exportación guardada conserva las 12 tablas existentes y contiene las 18 imágenes de EA con SHA-256 idéntico a los PNG de esta carpeta (47 imágenes totales, incluidas las anteriores).
 
+Se reemplazaron además los seis diagramas antiguos en sus ubicaciones originales: sección **2.3**, `N01-01`, `N02-01` y `N03-01`; sección **2.4**, `N01-02`, `N02-02` y `N03-02`. Las dos vistas de N03 son diseño organizacional de la iteración 3, no una ampliación de la implementación de las entregas 1 y 2. Se conservan editables en el paquete `N03 - Diseno organizacional - Iteracion 3`; `manifest-n03.json` identifica sus diagramas.
+
+Verificación final del 20/09/2026: los seis PNG coinciden por SHA-256 y orden con las imágenes de esas secciones; ningún recorte está aplicado. Se limitó su altura a 18 cm para encajar en la página, conservando las proporciones. Todos los textos de párrafos y tablas permanecen idénticos a la versión anterior al reemplazo; siguen existiendo 47 imágenes y 12 tablas. No se agregaron secciones al documento.
+
 ## Reproducción
 
 Con el proyecto `diagramas.EAP` abierto en EA:
@@ -31,3 +35,5 @@ Con el proyecto `diagramas.EAP` abierto en EA:
 3. Ejecutar `Scripts/refine_ea_layout.ps1` con el mismo PowerShell para aplicar los ajustes de distribución y las firmas de operaciones.
 
 Para exportar un modelo ya existente sin modificar elementos, ejecutar `import_ea_model.ps1 -ExportOnly`. Los scripts usan la API oficial de automatización de EA, no SQL directo sobre el archivo EAP.
+
+Para reproducir las dos vistas de N03, ejecutar `python Scripts/build_ea_n03.py`, luego `Scripts/import_ea_model.ps1 -ModelFile model-n03.json -PackageName 'N03 - Diseno organizacional - Iteracion 3' -ManifestFile manifest-n03.json` y finalmente `Scripts/refine_ea_n03.ps1`, también con PowerShell de 32 bits. En un paquete existente, agregar `-ExportOnly` a la importación.
