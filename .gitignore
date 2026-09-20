@@ -266,6 +266,9 @@ ServiceFabricBackup/
 *.ldf
 *.ndf
 
+# Enterprise Architect / Access runtime lock (the .EAP model is versioned)
+*.ldb
+
 # Business Intelligence projects
 *.rdl.data
 *.bim.layout
