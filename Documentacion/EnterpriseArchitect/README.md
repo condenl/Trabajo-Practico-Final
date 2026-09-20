@@ -20,6 +20,8 @@ Las propiedades de clases provienen de `BE/*.cs`; las operaciones públicas y pa
 
 Las capturas PNG son exportaciones nativas del motor de diagramación de EA; no son imágenes Mermaid importadas. `manifest.json` relaciona cada imagen con el identificador y GUID de su diagrama.
 
+Las 18 capturas se incorporaron al [documento de Google Docs](https://docs.google.com/document/d/1kzEZpgX8bMnYrq-REzqYnlg_LAO2toCLVCEgpALjPnM/edit). Verificación del 20/09/2026: la exportación guardada conserva las 12 tablas existentes y contiene las 18 imágenes de EA con SHA-256 idéntico a los PNG de esta carpeta (47 imágenes totales, incluidas las anteriores).
+
 ## Reproducción
 
 Con el proyecto `diagramas.EAP` abierto en EA:

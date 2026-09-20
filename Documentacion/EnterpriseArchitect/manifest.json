@@ -1,0 +1,128 @@
+﻿[
+    {
+        "code":  "N01-01",
+        "title":  "N01 · Casos de uso principales",
+        "diagramId":  1,
+        "guid":  "{F8A34961-70AC-4c99-B8B5-03A257BAEADC}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N01-01.png"
+    },
+    {
+        "code":  "N01-02",
+        "title":  "N01 · Actividad de aprovisionamiento",
+        "diagramId":  3,
+        "guid":  "{EA556D77-E235-4ca7-9CA3-5D736E8F6358}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N01-02.png"
+    },
+    {
+        "code":  "N01-03",
+        "title":  "N01 · Modelo conceptual",
+        "diagramId":  5,
+        "guid":  "{C5C11542-C6F2-4a8d-AB13-4115625A6890}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N01-03.png"
+    },
+    {
+        "code":  "N01-04a",
+        "title":  "N01 · Clases BE de compras",
+        "diagramId":  7,
+        "guid":  "{C8F564AC-EB3A-4f55-9999-6EBA827A9F87}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N01-04a.png"
+    },
+    {
+        "code":  "N01-04b",
+        "title":  "N01 · Clases BE de inventario",
+        "diagramId":  8,
+        "guid":  "{AE3ED990-217B-48bc-BD3C-392134E7AB14}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N01-04b.png"
+    },
+    {
+        "code":  "N01-05",
+        "title":  "N01 · Clases de lógica de negocio (BLL)",
+        "diagramId":  10,
+        "guid":  "{D56E034A-AA88-4e53-BAC2-E76C512D2E29}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N01-05.png"
+    },
+    {
+        "code":  "N01-06a",
+        "title":  "N01 · Secuencia: preparar y revisar compra",
+        "diagramId":  12,
+        "guid":  "{E2B4825C-A9E5-4d03-A0D7-29353F68CF10}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N01-06a.png"
+    },
+    {
+        "code":  "N01-06b",
+        "title":  "N01 · Secuencia: recepción y trazabilidad",
+        "diagramId":  13,
+        "guid":  "{98B853E8-1353-4a2a-902C-766E2019329F}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N01-06b.png"
+    },
+    {
+        "code":  "N01-07a",
+        "title":  "N01 · Datos: cotizaciones y compras",
+        "diagramId":  16,
+        "guid":  "{B98F10AC-92CD-4af6-9E20-2FE8B18FC32D}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N01-07a.png"
+    },
+    {
+        "code":  "N01-07b",
+        "title":  "N01 · Datos: inventario y trazabilidad",
+        "diagramId":  17,
+        "guid":  "{8DFFA9DA-4C82-460c-A6D8-E5BDABAAEE66}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N01-07b.png"
+    },
+    {
+        "code":  "N02-01",
+        "title":  "N02 · Casos de uso principales",
+        "diagramId":  2,
+        "guid":  "{5D0F00AC-F07B-4f54-B2C6-205FC3055703}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N02-01.png"
+    },
+    {
+        "code":  "N02-02",
+        "title":  "N02 · Proceso de venta y fidelización",
+        "diagramId":  4,
+        "guid":  "{F69D36CD-0432-4c33-B672-3C758B03D61B}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N02-02.png"
+    },
+    {
+        "code":  "N02-03",
+        "title":  "N02 · Modelo conceptual",
+        "diagramId":  6,
+        "guid":  "{3709D598-33A5-4e8b-92DE-5ACFF1089A71}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N02-03.png"
+    },
+    {
+        "code":  "N02-04",
+        "title":  "N02 · Clases BE de ventas",
+        "diagramId":  9,
+        "guid":  "{4C87542E-BC93-4c13-9982-C08110CAAC37}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N02-04.png"
+    },
+    {
+        "code":  "N02-05",
+        "title":  "N02 · Clases de lógica de negocio (BLL)",
+        "diagramId":  11,
+        "guid":  "{C77B3A40-3614-44fb-9E5C-251536036364}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N02-05.png"
+    },
+    {
+        "code":  "N02-06a",
+        "title":  "N02 · Secuencia: adhesión a membresía",
+        "diagramId":  14,
+        "guid":  "{31588C23-5476-42c8-A63F-6E7BD06E4229}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N02-06a.png"
+    },
+    {
+        "code":  "N02-06b",
+        "title":  "N02 · Secuencia: venta con beneficio",
+        "diagramId":  15,
+        "guid":  "{223262EB-5AF6-4636-A0FC-B7E392EF9F5E}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N02-06b.png"
+    },
+    {
+        "code":  "N02-07",
+        "title":  "N02 · Datos: ventas y membresías",
+        "diagramId":  18,
+        "guid":  "{2569CCAD-460E-412a-B4D5-8F06EADCF9F1}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N02-07.png"
+    }
+]
