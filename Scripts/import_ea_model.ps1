@@ -34,6 +34,7 @@ if (!$ExportOnly) {
             if ($n.stereotype) { $e.Stereotype = $n.stereotype }
             if ($n.notes) { $e.Notes = $n.notes }
             if ($n.subtype) { $e.Subtype = $n.subtype }
+            if ($n.abstract) { $e.Abstract = '1' }
             [void]$e.Update()
             foreach ($a in $n.attributes) {
                 $attribute = $e.Attributes.AddNew($a.name, $a.type)
@@ -50,6 +51,7 @@ if (!$ExportOnly) {
             $elements[$n.key] = $e
             $obj = $d.DiagramObjects.AddNew(('l={0};r={1};t={2};b={3};' -f $n.x,($n.x+$n.w),$n.y,($n.y+$n.h)), '')
             $obj.ElementID = $e.ElementID
+            if ($n.fontSize) { $obj.Style = ('font=Arial;fontsz={0};bold=0;italic=0;ul=0;charset=0;pitch=34;' -f ($n.fontSize * 10)) }
             if ($n.kind -eq 'ActivityPartition') { $obj.Sequence = 100 }
             [void]$obj.Update()
         }
@@ -69,6 +71,7 @@ if (!$ExportOnly) {
             $dl = $d.DiagramLinks.AddNew('', '')
             $dl.ConnectorID = $c.ConnectorID
             if ($l.kind -eq 'ControlFlow') { $dl.Style = 'Mode=3;EOID=;SOID=;Color=-1;LWidth=0;' }
+            if ($spec.kind -eq 'Logical') { $dl.Style = 'Mode=2;Color=-1;LWidth=0;' }
             [void]$dl.Update()
         }
         [void]$d.Update()
