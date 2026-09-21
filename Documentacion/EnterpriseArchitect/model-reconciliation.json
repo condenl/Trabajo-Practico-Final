@@ -1,0 +1,1679 @@
+[
+  {
+    "code": "N02-06c",
+    "title": "N02 · Secuencia: coordinación de marketing",
+    "kind": "Sequence",
+    "notes": "Diseño organizacional ya previsto por fidelización. La iteración 2 registra consentimiento y preferencias; no se afirma que exista un motor automático de campañas. Autoriza/No autoriza son excluyentes.",
+    "nodes": [
+      {
+        "key": "0",
+        "name": "Cliente",
+        "x": 40,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      },
+      {
+        "key": "1",
+        "name": "Responsable de Clientes",
+        "x": 330,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      },
+      {
+        "key": "2",
+        "name": "Marketing",
+        "x": 620,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      }
+    ],
+    "links": [
+      {
+        "source": "1",
+        "target": "0",
+        "name": "Consultar preferencias y autorización de contacto",
+        "kind": "Sequence",
+        "sequence": 1
+      },
+      {
+        "source": "0",
+        "target": "1",
+        "name": "Aceptar o rechazar contacto comercial",
+        "kind": "Sequence",
+        "sequence": 2
+      },
+      {
+        "source": "1",
+        "target": "1",
+        "name": "Conservar decisión de consentimiento",
+        "kind": "Sequence",
+        "sequence": 3
+      },
+      {
+        "source": "1",
+        "target": "2",
+        "name": "[Autoriza] Aportar segmento y preferencias autorizadas",
+        "kind": "Sequence",
+        "sequence": 4
+      },
+      {
+        "source": "2",
+        "target": "2",
+        "name": "[Autoriza] Preparar campaña acorde al segmento",
+        "kind": "Sequence",
+        "sequence": 5
+      },
+      {
+        "source": "2",
+        "target": "0",
+        "name": "[Autoriza] Comunicar propuesta comercial",
+        "kind": "Sequence",
+        "sequence": 6
+      },
+      {
+        "source": "1",
+        "target": "1",
+        "name": "[No autoriza] Excluir de comunicaciones comerciales",
+        "kind": "Sequence",
+        "sequence": 7
+      }
+    ]
+  },
+  {
+    "code": "N03-06",
+    "title": "N03 · Secuencia: evaluación y selección de proveedores",
+    "kind": "Sequence",
+    "notes": "Diseño de N03, iteración 3. No implementado. El historial de compras y entregas aporta evidencia a los tres criterios, no agrega un cuarto peso implícito. Información incompleta difiere; rechazo vuelve a evaluar; acuerdo formaliza la selección.",
+    "nodes": [
+      {
+        "key": "0",
+        "name": "Dueño / Compras",
+        "x": 40,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      },
+      {
+        "key": "1",
+        "name": "Proveedores",
+        "x": 330,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      },
+      {
+        "key": "2",
+        "name": "Contabilidad",
+        "x": 620,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      },
+      {
+        "key": "3",
+        "name": "Depósito",
+        "x": 910,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      }
+    ],
+    "links": [
+      {
+        "source": "0",
+        "target": "1",
+        "name": "Solicitar condiciones para productos equivalentes",
+        "kind": "Sequence",
+        "sequence": 1
+      },
+      {
+        "source": "1",
+        "target": "0",
+        "name": "Presentar precio, trayectoria, prestigio y certificados",
+        "kind": "Sequence",
+        "sequence": 2
+      },
+      {
+        "source": "0",
+        "target": "2",
+        "name": "Solicitar antecedentes económicos y compras",
+        "kind": "Sequence",
+        "sequence": 3
+      },
+      {
+        "source": "2",
+        "target": "0",
+        "name": "Informar costos, márgenes y cumplimiento económico",
+        "kind": "Sequence",
+        "sequence": 4
+      },
+      {
+        "source": "0",
+        "target": "3",
+        "name": "Solicitar antecedentes de entregas y trazabilidad",
+        "kind": "Sequence",
+        "sequence": 5
+      },
+      {
+        "source": "3",
+        "target": "0",
+        "name": "Informar calidad, diferencias, origen y rotación",
+        "kind": "Sequence",
+        "sequence": 6
+      },
+      {
+        "source": "0",
+        "target": "0",
+        "name": "Validar comparabilidad y evidencia de las propuestas",
+        "kind": "Sequence",
+        "sequence": 7
+      },
+      {
+        "source": "0",
+        "target": "1",
+        "name": "[Información incompleta] Pedir aclaraciones; diferir decisión",
+        "kind": "Sequence",
+        "sequence": 8
+      },
+      {
+        "source": "0",
+        "target": "0",
+        "name": "[Completa] Ponderar precio, prestigio y antigüedad",
+        "kind": "Sequence",
+        "sequence": 9
+      },
+      {
+        "source": "0",
+        "target": "2",
+        "name": "[Completa] Presentar recomendación y fundamentos",
+        "kind": "Sequence",
+        "sequence": 10
+      },
+      {
+        "source": "2",
+        "target": "0",
+        "name": "Validar o rechazar conveniencia económica",
+        "kind": "Sequence",
+        "sequence": 11
+      },
+      {
+        "source": "0",
+        "target": "0",
+        "name": "[No conveniente] Descartar propuesta y reevaluar alternativas",
+        "kind": "Sequence",
+        "sequence": 12
+      },
+      {
+        "source": "0",
+        "target": "1",
+        "name": "[Conveniente] Priorizar proveedor y proponer acuerdo",
+        "kind": "Sequence",
+        "sequence": 13
+      },
+      {
+        "source": "1",
+        "target": "0",
+        "name": "[Conveniente] Confirmar condiciones de suministro",
+        "kind": "Sequence",
+        "sequence": 14
+      },
+      {
+        "source": "0",
+        "target": "0",
+        "name": "[Acuerdo] Conservar evaluación, prioridad y fundamentos",
+        "kind": "Sequence",
+        "sequence": 15
+      }
+    ]
+  },
+  {
+    "code": "G07-01",
+    "title": "G07 · Clases globales de perfumería",
+    "kind": "Logical",
+    "notes": "Vista global de relaciones. Las vistas BE/BLL por proceso contienen atributos y operaciones. EvaluacionProveedor es diseño de N03. Seguridad y bitácora conservan las clases reales; no se inventa una FK desde EventoBitacora a Usuario.",
+    "nodes": [
+      {
+        "key": "Proveedor",
+        "name": "Proveedor",
+        "x": 30,
+        "y": 30,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "CotizacionProveedor",
+        "name": "CotizacionProveedor",
+        "x": 360,
+        "y": 30,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "DetalleCotizacionProveedor",
+        "name": "DetalleCotizacionProveedor",
+        "x": 690,
+        "y": 30,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "OrdenCompra",
+        "name": "OrdenCompra",
+        "x": 30,
+        "y": 190,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "DetalleOrdenCompra",
+        "name": "DetalleOrdenCompra",
+        "x": 360,
+        "y": 190,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "Producto",
+        "name": "Producto",
+        "x": 690,
+        "y": 190,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "Usuario",
+        "name": "Usuario",
+        "x": 30,
+        "y": 350,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "Lote",
+        "name": "Lote",
+        "x": 360,
+        "y": 350,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "EvaluacionProveedor",
+        "name": "EvaluacionProveedor",
+        "x": 690,
+        "y": 350,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "diseño N03",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "Componente",
+        "name": "Componente",
+        "x": 30,
+        "y": 510,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": true
+      },
+      {
+        "key": "MovimientoStock",
+        "name": "MovimientoStock",
+        "x": 360,
+        "y": 510,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "DetalleVenta",
+        "name": "DetalleVenta",
+        "x": 690,
+        "y": 510,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "Familia",
+        "name": "Familia",
+        "x": 30,
+        "y": 670,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "Patente",
+        "name": "Patente",
+        "x": 30,
+        "y": 800,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "Venta",
+        "name": "Venta",
+        "x": 360,
+        "y": 670,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "Cliente",
+        "name": "Cliente",
+        "x": 690,
+        "y": 670,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "Persona",
+        "name": "Persona",
+        "x": 30,
+        "y": 950,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": true
+      },
+      {
+        "key": "EventoBitacora",
+        "name": "EventoBitacora",
+        "x": 360,
+        "y": 950,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "Membresia",
+        "name": "Membresia",
+        "x": 690,
+        "y": 850,
+        "w": 275,
+        "h": 72,
+        "kind": "Class",
+        "stereotype": "",
+        "fontSize": 13,
+        "abstract": false
+      },
+      {
+        "key": "note",
+        "name": "",
+        "x": 340,
+        "y": 1100,
+        "w": 625,
+        "h": 110,
+        "kind": "Note",
+        "notes": "Membresías: historial 0..*, máximo una activa por cliente.\nEventoBitacora registra UsuarioEmail; no una referencia por Id.\nLas asociaciones BE por Id no implican propiedades de navegación.\nEvaluacionProveedor: diseño de la iteración 3.",
+        "fontSize": 12
+      }
+    ],
+    "links": [
+      {
+        "source": "Proveedor",
+        "target": "CotizacionProveedor",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "CotizacionProveedor",
+        "target": "DetalleCotizacionProveedor",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "1..*"
+      },
+      {
+        "source": "DetalleCotizacionProveedor",
+        "target": "Producto",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Proveedor",
+        "target": "OrdenCompra",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "OrdenCompra",
+        "target": "DetalleOrdenCompra",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "1..*"
+      },
+      {
+        "source": "DetalleOrdenCompra",
+        "target": "Producto",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Producto",
+        "target": "Lote",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "OrdenCompra",
+        "target": "Lote",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "0..1",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "Proveedor",
+        "target": "Lote",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "Lote",
+        "target": "MovimientoStock",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "Producto",
+        "target": "EvaluacionProveedor",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "Proveedor",
+        "target": "EvaluacionProveedor",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "Venta",
+        "target": "DetalleVenta",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "1..*"
+      },
+      {
+        "source": "DetalleVenta",
+        "target": "Producto",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "DetalleVenta",
+        "target": "Lote",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Cliente",
+        "target": "Venta",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "0..1",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "Cliente",
+        "target": "Membresia",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "Usuario",
+        "target": "Componente",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "Familia",
+        "target": "Componente",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "Usuario",
+        "target": "Persona",
+        "name": "",
+        "kind": "Generalization"
+      },
+      {
+        "source": "Familia",
+        "target": "Componente",
+        "name": "",
+        "kind": "Generalization"
+      },
+      {
+        "source": "Patente",
+        "target": "Componente",
+        "name": "",
+        "kind": "Generalization"
+      },
+      {
+        "source": "Usuario",
+        "target": "OrdenCompra",
+        "name": "aprueba",
+        "kind": "Association",
+        "sourceCardinality": "0..1",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "Usuario",
+        "target": "Venta",
+        "name": "vende",
+        "kind": "Association",
+        "sourceCardinality": "0..1",
+        "targetCardinality": "0..*"
+      }
+    ]
+  },
+  {
+    "code": "N03-04",
+    "title": "N03 · Clases de evaluación de proveedores",
+    "kind": "Logical",
+    "notes": "Diseño de iteración 3. Conserva la evaluación del documento y explicita fecha, pesos y fundamentos para reproducir la decisión. No generado desde clases implementadas.",
+    "nodes": [
+      {
+        "key": "Proveedor",
+        "name": "Proveedor",
+        "x": 30,
+        "y": 50,
+        "w": 260,
+        "h": 150,
+        "kind": "Class",
+        "attributes": [
+          {
+            "name": "IdProveedor",
+            "type": "int"
+          },
+          {
+            "name": "RazonSocial",
+            "type": "string"
+          },
+          {
+            "name": "AntiguedadMercado",
+            "type": "int"
+          },
+          {
+            "name": "IndicePrestigio",
+            "type": "decimal"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Producto",
+        "name": "Producto",
+        "x": 720,
+        "y": 50,
+        "w": 240,
+        "h": 150,
+        "kind": "Class",
+        "attributes": [
+          {
+            "name": "IdProducto",
+            "type": "int"
+          },
+          {
+            "name": "Codigo",
+            "type": "string"
+          },
+          {
+            "name": "Nombre",
+            "type": "string"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "EvaluacionProveedor",
+        "name": "EvaluacionProveedor",
+        "x": 330,
+        "y": 290,
+        "w": 360,
+        "h": 410,
+        "kind": "Class",
+        "stereotype": "diseño N03",
+        "attributes": [
+          {
+            "name": "IdEvaluacion",
+            "type": "int"
+          },
+          {
+            "name": "IdProveedor",
+            "type": "int"
+          },
+          {
+            "name": "IdProducto",
+            "type": "int"
+          },
+          {
+            "name": "FechaEvaluacion",
+            "type": "DateTime"
+          },
+          {
+            "name": "PuntajePrestigio",
+            "type": "decimal"
+          },
+          {
+            "name": "PuntajePrecio",
+            "type": "decimal"
+          },
+          {
+            "name": "PuntajeAntiguedad",
+            "type": "decimal"
+          },
+          {
+            "name": "PesoPrestigio",
+            "type": "decimal"
+          },
+          {
+            "name": "PesoPrecio",
+            "type": "decimal"
+          },
+          {
+            "name": "PesoAntiguedad",
+            "type": "decimal"
+          },
+          {
+            "name": "PuntajePonderadoFinal",
+            "type": "decimal"
+          },
+          {
+            "name": "Fundamentos",
+            "type": "string"
+          },
+          {
+            "name": "EsPrioritario",
+            "type": "bool"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "note",
+        "name": "",
+        "x": 30,
+        "y": 760,
+        "w": 930,
+        "h": 135,
+        "kind": "Note",
+        "notes": "Pesos no negativos y suma igual a 1; puntajes normalizados con igual escala.\nPuntaje final = prestigio × peso + precio × peso + antigüedad × peso.\nUna sola evaluación prioritaria vigente por producto; se preserva el historial.\nLa evidencia de compras y entregas fundamenta los puntajes y la validación contable.",
+        "fontSize": 12
+      }
+    ],
+    "links": [
+      {
+        "source": "Proveedor",
+        "target": "EvaluacionProveedor",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "Producto",
+        "target": "EvaluacionProveedor",
+        "name": "",
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
+      }
+    ]
+  },
+  {
+    "code": "G08-01",
+    "title": "G08 · DER global de perfumería",
+    "kind": "Logical",
+    "notes": "Vista global de claves y relaciones. Los atributos completos de negocio se encuentran en los DER por proceso. Las tablas de seguridad se contrastaron con metadatos de la base local. EvaluacionProveedor es diseño futuro, no tabla implementada.",
+    "nodes": [
+      {
+        "key": "Proveedor",
+        "name": "Proveedor",
+        "x": 20,
+        "y": 20,
+        "w": 340,
+        "h": 114,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdProveedor",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "CotizacionProveedor",
+        "name": "CotizacionProveedor",
+        "x": 430,
+        "y": 20,
+        "w": 340,
+        "h": 138,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdCotizacion",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProveedor",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "DetalleCotizacionProveedor",
+        "name": "DetalleCotizacionProveedor",
+        "x": 840,
+        "y": 20,
+        "w": 340,
+        "h": 162,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdDetalleCotizacion",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdCotizacion",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "OrdenCompra",
+        "name": "OrdenCompra",
+        "x": 20,
+        "y": 230,
+        "w": 340,
+        "h": 162,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdOrdenCompra",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProveedor",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdUsuarioAprobadorContable",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "DetalleOrdenCompra",
+        "name": "DetalleOrdenCompra",
+        "x": 430,
+        "y": 230,
+        "w": 340,
+        "h": 162,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdDetalle",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdOrdenCompra",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Producto",
+        "name": "Producto",
+        "x": 840,
+        "y": 230,
+        "w": 340,
+        "h": 114,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Usuarios",
+        "name": "Usuarios",
+        "x": 20,
+        "y": 470,
+        "w": 340,
+        "h": 114,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "Id",
+            "type": "INT",
+            "stereotype": "PK"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Lote",
+        "name": "Lote",
+        "x": 430,
+        "y": 470,
+        "w": 340,
+        "h": 186,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdLote",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProveedor",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdOrdenCompra",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "EvaluacionProveedor",
+        "name": "EvaluacionProveedor",
+        "x": 840,
+        "y": 470,
+        "w": 340,
+        "h": 162,
+        "kind": "Class",
+        "stereotype": "diseño N03",
+        "attributes": [
+          {
+            "name": "IdEvaluacion",
+            "type": "INT",
+            "stereotype": "PK"
+          },
+          {
+            "name": "IdProveedor",
+            "type": "INT",
+            "stereotype": "FK"
+          },
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "FK"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Venta",
+        "name": "Venta",
+        "x": 20,
+        "y": 730,
+        "w": 340,
+        "h": 162,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdVenta",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdCliente",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NULL"
+          },
+          {
+            "name": "IdUsuarioVendedor",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "DetalleVenta",
+        "name": "DetalleVenta",
+        "x": 430,
+        "y": 730,
+        "w": 340,
+        "h": 186,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdDetalleVenta",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdVenta",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdLote",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "MovimientoStock",
+        "name": "MovimientoStock",
+        "x": 840,
+        "y": 730,
+        "w": 340,
+        "h": 138,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdMovimiento",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdLote",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Cliente",
+        "name": "Cliente",
+        "x": 20,
+        "y": 970,
+        "w": 340,
+        "h": 114,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdCliente",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Membresia",
+        "name": "Membresia",
+        "x": 430,
+        "y": 970,
+        "w": 340,
+        "h": 138,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdMembresia",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdCliente",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Bitacora",
+        "name": "Bitacora",
+        "x": 840,
+        "y": 970,
+        "w": 340,
+        "h": 138,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "Id",
+            "type": "INT",
+            "stereotype": "PK"
+          },
+          {
+            "name": "Usuario",
+            "type": "VARCHAR(150)"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Seguridad_Usuario_Componente",
+        "name": "Seguridad_Usuario_Componente",
+        "x": 20,
+        "y": 1190,
+        "w": 340,
+        "h": 138,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdUsuario",
+            "type": "INT",
+            "stereotype": "PK,FK"
+          },
+          {
+            "name": "IdComponente",
+            "type": "INT",
+            "stereotype": "PK,FK"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Seguridad_Componente",
+        "name": "Seguridad_Componente",
+        "x": 430,
+        "y": 1190,
+        "w": 340,
+        "h": 114,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "Id",
+            "type": "INT",
+            "stereotype": "PK"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Seguridad_Familia_Hijo",
+        "name": "Seguridad_Familia_Hijo",
+        "x": 840,
+        "y": 1190,
+        "w": 340,
+        "h": 138,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdPadre",
+            "type": "INT",
+            "stereotype": "PK,FK"
+          },
+          {
+            "name": "IdHijo",
+            "type": "INT",
+            "stereotype": "PK,FK"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "note",
+        "name": "",
+        "x": 20,
+        "y": 1460,
+        "w": 1160,
+        "h": 120,
+        "kind": "Note",
+        "notes": "Vista de integración: atributos no clave en las vistas por proceso.\nMembresia: historial, con índice único filtrado para una activa por cliente.\nBitacora conserva el usuario como texto, sin FK a Usuarios.\nEvaluacionProveedor representa el diseño de N03, no una tabla instalada.",
+        "fontSize": 13
+      }
+    ],
+    "links": [
+      {
+        "source": "CotizacionProveedor",
+        "target": "Proveedor",
+        "name": "IdProveedor",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "DetalleCotizacionProveedor",
+        "target": "CotizacionProveedor",
+        "name": "IdCotizacion",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "DetalleCotizacionProveedor",
+        "target": "Producto",
+        "name": "IdProducto",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "OrdenCompra",
+        "target": "Proveedor",
+        "name": "IdProveedor",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "OrdenCompra",
+        "target": "Usuarios",
+        "name": "IdUsuarioAprobadorContable",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..1"
+      },
+      {
+        "source": "DetalleOrdenCompra",
+        "target": "OrdenCompra",
+        "name": "IdOrdenCompra",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "DetalleOrdenCompra",
+        "target": "Producto",
+        "name": "IdProducto",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Lote",
+        "target": "Producto",
+        "name": "IdProducto",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Lote",
+        "target": "Proveedor",
+        "name": "IdProveedor",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Lote",
+        "target": "OrdenCompra",
+        "name": "IdOrdenCompra",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..1"
+      },
+      {
+        "source": "EvaluacionProveedor",
+        "target": "Proveedor",
+        "name": "IdProveedor",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "EvaluacionProveedor",
+        "target": "Producto",
+        "name": "IdProducto",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Venta",
+        "target": "Cliente",
+        "name": "IdCliente",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..1"
+      },
+      {
+        "source": "Venta",
+        "target": "Usuarios",
+        "name": "IdUsuarioVendedor",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..1"
+      },
+      {
+        "source": "DetalleVenta",
+        "target": "Venta",
+        "name": "IdVenta",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "DetalleVenta",
+        "target": "Producto",
+        "name": "IdProducto",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "DetalleVenta",
+        "target": "Lote",
+        "name": "IdLote",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "MovimientoStock",
+        "target": "Lote",
+        "name": "IdLote",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Membresia",
+        "target": "Cliente",
+        "name": "IdCliente",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Seguridad_Usuario_Componente",
+        "target": "Usuarios",
+        "name": "IdUsuario",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Seguridad_Usuario_Componente",
+        "target": "Seguridad_Componente",
+        "name": "IdComponente",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Seguridad_Familia_Hijo",
+        "target": "Seguridad_Componente",
+        "name": "IdPadre",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Seguridad_Familia_Hijo",
+        "target": "Seguridad_Componente",
+        "name": "IdHijo",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      }
+    ]
+  },
+  {
+    "code": "N03-07",
+    "title": "N03 · DER de evaluación de proveedores",
+    "kind": "Logical",
+    "notes": "Diseño de iteración 3. Relaciona propuestas evaluadas con producto y proveedor. No es DDL ejecutado.",
+    "nodes": [
+      {
+        "key": "Proveedor",
+        "name": "Proveedor",
+        "x": 20,
+        "y": 30,
+        "w": 280,
+        "h": 125,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdProveedor",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "RazonSocial",
+            "type": "NVARCHAR(150)",
+            "stereotype": "",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "Cuit",
+            "type": "VARCHAR(11)",
+            "stereotype": "",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Producto",
+        "name": "Producto",
+        "x": 710,
+        "y": 30,
+        "w": 280,
+        "h": 125,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "Codigo",
+            "type": "NVARCHAR(50)",
+            "stereotype": "",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "Nombre",
+            "type": "NVARCHAR(150)",
+            "stereotype": "",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "EvaluacionProveedor",
+        "name": "EvaluacionProveedor",
+        "x": 315,
+        "y": 270,
+        "w": 380,
+        "h": 440,
+        "kind": "Class",
+        "stereotype": "diseño N03",
+        "attributes": [
+          {
+            "name": "IdEvaluacion",
+            "type": "INT",
+            "stereotype": "PK"
+          },
+          {
+            "name": "IdProveedor",
+            "type": "INT",
+            "stereotype": "FK"
+          },
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "FK"
+          },
+          {
+            "name": "FechaEvaluacion",
+            "type": "DATETIME",
+            "stereotype": ""
+          },
+          {
+            "name": "PuntajePrestigio",
+            "type": "DECIMAL(18,4)",
+            "stereotype": ""
+          },
+          {
+            "name": "PuntajePrecio",
+            "type": "DECIMAL(18,4)",
+            "stereotype": ""
+          },
+          {
+            "name": "PuntajeAntiguedad",
+            "type": "DECIMAL(18,4)",
+            "stereotype": ""
+          },
+          {
+            "name": "PesoPrestigio",
+            "type": "DECIMAL(18,4)",
+            "stereotype": ""
+          },
+          {
+            "name": "PesoPrecio",
+            "type": "DECIMAL(18,4)",
+            "stereotype": ""
+          },
+          {
+            "name": "PesoAntiguedad",
+            "type": "DECIMAL(18,4)",
+            "stereotype": ""
+          },
+          {
+            "name": "PuntajePonderadoFinal",
+            "type": "DECIMAL(18,4)",
+            "stereotype": ""
+          },
+          {
+            "name": "Fundamentos",
+            "type": "NVARCHAR(MAX)",
+            "stereotype": ""
+          },
+          {
+            "name": "EsPrioritario",
+            "type": "BIT",
+            "stereotype": ""
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "note",
+        "name": "",
+        "x": 20,
+        "y": 780,
+        "w": 975,
+        "h": 110,
+        "kind": "Note",
+        "notes": "Restricciones de diseño: pesos >= 0 y suma = 1; puntajes entre 0 y 100.\nPrioridad única por producto cuando EsPrioritario = 1.\nConservar evaluaciones anteriores y los fundamentos de cada decisión.",
+        "fontSize": 12
+      }
+    ],
+    "links": [
+      {
+        "source": "EvaluacionProveedor",
+        "target": "Proveedor",
+        "name": "IdProveedor",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "EvaluacionProveedor",
+        "target": "Producto",
+        "name": "IdProducto",
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      }
+    ]
+  }
+]

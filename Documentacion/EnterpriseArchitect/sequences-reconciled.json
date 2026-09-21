@@ -1,0 +1,504 @@
+[
+  {
+    "code": "N01-06a",
+    "title": "N01 · Secuencia: preparar y revisar compra",
+    "kind": "Sequence",
+    "notes": "Diseño organizacional. Ofertas insuficientes interrumpe la preparación; Aprobada/Rechazada son excluyentes. Solicitud y respuesta se repiten por proveedor. N01 implementa la aprobación antes de emitir.",
+    "nodes": [
+      {
+        "key": "0",
+        "name": "Dueño / Compras",
+        "x": 40,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      },
+      {
+        "key": "1",
+        "name": "Proveedores",
+        "x": 330,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      },
+      {
+        "key": "2",
+        "name": "Contabilidad",
+        "x": 620,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      }
+    ],
+    "links": [
+      {
+        "source": "0",
+        "target": "1",
+        "name": "Solicitar cotizaciones comparables",
+        "kind": "Sequence",
+        "sequence": 1
+      },
+      {
+        "source": "1",
+        "target": "0",
+        "name": "Informar precio, plazo, condiciones y vigencia",
+        "kind": "Sequence",
+        "sequence": 2
+      },
+      {
+        "source": "0",
+        "target": "0",
+        "name": "Reunir dos proveedores vigentes por producto",
+        "kind": "Sequence",
+        "sequence": 3
+      },
+      {
+        "source": "0",
+        "target": "1",
+        "name": "[Ofertas insuficientes] Solicitar nuevas ofertas; diferir orden",
+        "kind": "Sequence",
+        "sequence": 4
+      },
+      {
+        "source": "0",
+        "target": "0",
+        "name": "[Ofertas suficientes] Comparar y preparar orden preliminar",
+        "kind": "Sequence",
+        "sequence": 5
+      },
+      {
+        "source": "0",
+        "target": "2",
+        "name": "[Ofertas suficientes] Remitir orden y comparativa",
+        "kind": "Sequence",
+        "sequence": 6
+      },
+      {
+        "source": "2",
+        "target": "2",
+        "name": "Revisar condiciones y presupuesto",
+        "kind": "Sequence",
+        "sequence": 7
+      },
+      {
+        "source": "2",
+        "target": "0",
+        "name": "[Rechazada] Informar motivo; no emitir compra",
+        "kind": "Sequence",
+        "sequence": 8
+      },
+      {
+        "source": "2",
+        "target": "0",
+        "name": "[Aprobada] Autorizar compra",
+        "kind": "Sequence",
+        "sequence": 9
+      },
+      {
+        "source": "0",
+        "target": "1",
+        "name": "[Aprobada] Emitir orden formal autorizada",
+        "kind": "Sequence",
+        "sequence": 10
+      }
+    ]
+  },
+  {
+    "code": "N01-06b",
+    "title": "N01 · Secuencia: recepción y trazabilidad",
+    "kind": "Sequence",
+    "notes": "Diseño de recepción. Conforme/No conforme son alternativas; Faltantes/Completa solo aplican a recepción conforme. El intercambio con Contabilidad es una responsabilidad organizacional y no presupone una notificación automática.",
+    "nodes": [
+      {
+        "key": "0",
+        "name": "Proveedor",
+        "x": 40,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      },
+      {
+        "key": "1",
+        "name": "Recepción / Depósito",
+        "x": 330,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      },
+      {
+        "key": "2",
+        "name": "Dueño / Compras",
+        "x": 620,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      },
+      {
+        "key": "3",
+        "name": "Contabilidad",
+        "x": 910,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      }
+    ],
+    "links": [
+      {
+        "source": "0",
+        "target": "1",
+        "name": "Entregar perfumes, remito y certificados",
+        "kind": "Sequence",
+        "sequence": 1
+      },
+      {
+        "source": "1",
+        "target": "2",
+        "name": "Solicitar orden emitida y cantidades pendientes",
+        "kind": "Sequence",
+        "sequence": 2
+      },
+      {
+        "source": "2",
+        "target": "1",
+        "name": "Informar detalle autorizado y saldo pendiente",
+        "kind": "Sequence",
+        "sequence": 3
+      },
+      {
+        "source": "1",
+        "target": "1",
+        "name": "Cotejar producto, cantidad, origen, lote y vencimiento",
+        "kind": "Sequence",
+        "sequence": 4
+      },
+      {
+        "source": "1",
+        "target": "0",
+        "name": "[No conforme] Reclamar diferencias; no ingresar lote inválido",
+        "kind": "Sequence",
+        "sequence": 5
+      },
+      {
+        "source": "1",
+        "target": "3",
+        "name": "[No conforme] Remitir constancia de diferencias",
+        "kind": "Sequence",
+        "sequence": 6
+      },
+      {
+        "source": "1",
+        "target": "1",
+        "name": "[Conforme] Identificar lotes y registrar ingreso",
+        "kind": "Sequence",
+        "sequence": 7
+      },
+      {
+        "source": "1",
+        "target": "2",
+        "name": "[Conforme] Informar cantidades y trazabilidad recibidas",
+        "kind": "Sequence",
+        "sequence": 8
+      },
+      {
+        "source": "1",
+        "target": "3",
+        "name": "[Conforme] Remitir constancia de recepción y diferencias",
+        "kind": "Sequence",
+        "sequence": 9
+      },
+      {
+        "source": "2",
+        "target": "2",
+        "name": "[Faltantes] Conservar recepción parcial y saldo pendiente",
+        "kind": "Sequence",
+        "sequence": 10
+      },
+      {
+        "source": "2",
+        "target": "2",
+        "name": "[Completa] Cerrar recepción y archivar compra",
+        "kind": "Sequence",
+        "sequence": 11
+      }
+    ]
+  },
+  {
+    "code": "N02-06a",
+    "title": "N02 · Secuencia: adhesión a membresía",
+    "kind": "Sequence",
+    "notes": "Responsable de Clientes es una responsabilidad organizacional que puede cumplir Ventas. No aceptar membresía no impide comprar. Marketing es opcional e independiente de la membresía. Datos inválidos vuelve a la validación; solo datos válidos generan alta.",
+    "nodes": [
+      {
+        "key": "0",
+        "name": "Cliente",
+        "x": 40,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      },
+      {
+        "key": "1",
+        "name": "Personal de Ventas",
+        "x": 330,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      },
+      {
+        "key": "2",
+        "name": "Responsable de Clientes",
+        "x": 620,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      }
+    ],
+    "links": [
+      {
+        "source": "1",
+        "target": "0",
+        "name": "Ofrecer membresía y explicar beneficios",
+        "kind": "Sequence",
+        "sequence": 1
+      },
+      {
+        "source": "0",
+        "target": "1",
+        "name": "[No acepta] Continuar como cliente ocasional",
+        "kind": "Sequence",
+        "sequence": 2
+      },
+      {
+        "source": "0",
+        "target": "1",
+        "name": "[Acepta] Brindar identificación y datos de contacto",
+        "kind": "Sequence",
+        "sequence": 3
+      },
+      {
+        "source": "1",
+        "target": "0",
+        "name": "[Acepta] Consultar preferencias y permiso de marketing",
+        "kind": "Sequence",
+        "sequence": 4
+      },
+      {
+        "source": "0",
+        "target": "1",
+        "name": "[Acepta] Informar preferencias y consentimiento elegido",
+        "kind": "Sequence",
+        "sequence": 5
+      },
+      {
+        "source": "1",
+        "target": "2",
+        "name": "[Acepta] Remitir solicitud de adhesión y datos",
+        "kind": "Sequence",
+        "sequence": 6
+      },
+      {
+        "source": "2",
+        "target": "2",
+        "name": "Validar datos y ausencia de membresía activa duplicada",
+        "kind": "Sequence",
+        "sequence": 7
+      },
+      {
+        "source": "2",
+        "target": "1",
+        "name": "[Datos inválidos] Solicitar corrección; no dar de alta",
+        "kind": "Sequence",
+        "sequence": 8
+      },
+      {
+        "source": "1",
+        "target": "0",
+        "name": "[Datos inválidos] Pedir datos corregidos",
+        "kind": "Sequence",
+        "sequence": 9
+      },
+      {
+        "source": "2",
+        "target": "2",
+        "name": "[Datos válidos] Asignar número de socio y beneficio",
+        "kind": "Sequence",
+        "sequence": 10
+      },
+      {
+        "source": "2",
+        "target": "1",
+        "name": "[Datos válidos] Confirmar condición de miembro y descuento",
+        "kind": "Sequence",
+        "sequence": 11
+      },
+      {
+        "source": "1",
+        "target": "0",
+        "name": "[Datos válidos] Comunicar adhesión y beneficio vigente",
+        "kind": "Sequence",
+        "sequence": 12
+      }
+    ]
+  },
+  {
+    "code": "N02-06b",
+    "title": "N02 · Secuencia: venta con beneficio",
+    "kind": "Sequence",
+    "notes": "Sin stock interrumpe. Cliente ocasional o sin membresía activa no obtiene descuento. Adhesión se detalla en N02-06a. Pago y entrega son actividades del negocio, no integración bancaria.",
+    "nodes": [
+      {
+        "key": "0",
+        "name": "Cliente",
+        "x": 40,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      },
+      {
+        "key": "1",
+        "name": "Personal de Ventas",
+        "x": 330,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      },
+      {
+        "key": "2",
+        "name": "Responsable de Clientes",
+        "x": 620,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      },
+      {
+        "key": "3",
+        "name": "Caja / Entrega",
+        "x": 910,
+        "y": 50,
+        "w": 175,
+        "h": 90,
+        "kind": "Object",
+        "stereotype": "rol de negocio"
+      }
+    ],
+    "links": [
+      {
+        "source": "0",
+        "target": "1",
+        "name": "Solicitar perfumes y asesoramiento",
+        "kind": "Sequence",
+        "sequence": 1
+      },
+      {
+        "source": "1",
+        "target": "0",
+        "name": "Informar alternativas, precio y condiciones",
+        "kind": "Sequence",
+        "sequence": 2
+      },
+      {
+        "source": "1",
+        "target": "1",
+        "name": "Verificar existencias y vigencia de lotes",
+        "kind": "Sequence",
+        "sequence": 3
+      },
+      {
+        "source": "1",
+        "target": "0",
+        "name": "[Sin stock] Informar faltante; no concretar venta",
+        "kind": "Sequence",
+        "sequence": 4
+      },
+      {
+        "source": "1",
+        "target": "0",
+        "name": "[Con stock] Consultar identificación o adhesión",
+        "kind": "Sequence",
+        "sequence": 5
+      },
+      {
+        "source": "0",
+        "target": "1",
+        "name": "[Con stock] Identificarse o continuar como ocasional",
+        "kind": "Sequence",
+        "sequence": 6
+      },
+      {
+        "source": "1",
+        "target": "2",
+        "name": "[Cliente identificado] Consultar membresía y beneficio",
+        "kind": "Sequence",
+        "sequence": 7
+      },
+      {
+        "source": "2",
+        "target": "1",
+        "name": "[Cliente identificado] Confirmar beneficio activo o tarifa general",
+        "kind": "Sequence",
+        "sequence": 8
+      },
+      {
+        "source": "1",
+        "target": "3",
+        "name": "[Con stock] Remitir detalle e importe final",
+        "kind": "Sequence",
+        "sequence": 9
+      },
+      {
+        "source": "3",
+        "target": "0",
+        "name": "Informar total y solicitar pago",
+        "kind": "Sequence",
+        "sequence": 10
+      },
+      {
+        "source": "0",
+        "target": "3",
+        "name": "Confirmar compra y efectuar pago",
+        "kind": "Sequence",
+        "sequence": 11
+      },
+      {
+        "source": "3",
+        "target": "0",
+        "name": "Entregar perfumes por FEFO y comprobante",
+        "kind": "Sequence",
+        "sequence": 12
+      },
+      {
+        "source": "1",
+        "target": "1",
+        "name": "Conservar venta, salida por lote e historial",
+        "kind": "Sequence",
+        "sequence": 13
+      }
+    ]
+  }
+]

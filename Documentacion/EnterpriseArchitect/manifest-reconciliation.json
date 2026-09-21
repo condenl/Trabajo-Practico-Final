@@ -1,0 +1,44 @@
+﻿[
+    {
+        "code":  "G07-01",
+        "title":  "G07 · Clases globales de perfumería",
+        "diagramId":  23,
+        "guid":  "{33653786-6881-4df1-94F3-562DD7B28630}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\G07-01.png"
+    },
+    {
+        "code":  "G08-01",
+        "title":  "G08 · DER global de perfumería",
+        "diagramId":  25,
+        "guid":  "{113DEC5F-5304-4573-822B-79B8D242D72F}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\G08-01.png"
+    },
+    {
+        "code":  "N02-06c",
+        "title":  "N02 · Secuencia: coordinación de marketing",
+        "diagramId":  21,
+        "guid":  "{E4AD4A12-1F54-42a2-B48B-0D271B9318BE}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N02-06c.png"
+    },
+    {
+        "code":  "N03-04",
+        "title":  "N03 · Clases de evaluación de proveedores",
+        "diagramId":  24,
+        "guid":  "{CDEE8171-C21D-4039-88A4-4C74CECB944F}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N03-04.png"
+    },
+    {
+        "code":  "N03-06",
+        "title":  "N03 · Secuencia: evaluación y selección de proveedores",
+        "diagramId":  22,
+        "guid":  "{A9FE9D1F-E879-4e55-874C-F27143AD0C7A}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N03-06.png"
+    },
+    {
+        "code":  "N03-07",
+        "title":  "N03 · DER de evaluación de proveedores",
+        "diagramId":  26,
+        "guid":  "{621DB96D-7566-48ba-AF01-F396895C8E3F}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N03-07.png"
+    }
+]
