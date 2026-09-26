@@ -1,0 +1,177 @@
+{
+  "unchanged_prefix_paragraphs": 344,
+  "unchanged_tables": 12,
+  "total_images": 47,
+  "unique_ea_diagrams": 26,
+  "pixel_exact": false,
+  "google_docs_downsampled": [
+    {
+      "code": "N01-06b",
+      "width": 2048,
+      "mean_pixel_error": 1.726
+    },
+    {
+      "code": "N02-06b",
+      "width": 2048,
+      "mean_pixel_error": 1.8804
+    },
+    {
+      "code": "G07-01",
+      "width": 2048,
+      "mean_pixel_error": 2.2421
+    },
+    {
+      "code": "N01-04a",
+      "width": 2048,
+      "mean_pixel_error": 0.287
+    },
+    {
+      "code": "N01-05",
+      "width": 2048,
+      "mean_pixel_error": 1.0767
+    },
+    {
+      "code": "N02-04",
+      "width": 2048,
+      "mean_pixel_error": 0.449
+    },
+    {
+      "code": "N03-04",
+      "width": 2048,
+      "mean_pixel_error": 0.4885
+    }
+  ],
+  "duplicates": [],
+  "placements": [
+    {
+      "code": "N01-01",
+      "section": "2.3 Diagrama de Casos de Uso del Negocio",
+      "heading": "2.3 Diagrama de Casos de Uso del Negocio"
+    },
+    {
+      "code": "N02-01",
+      "section": "2.3 Diagrama de Casos de Uso del Negocio",
+      "heading": "2.3 Diagrama de Casos de Uso del Negocio"
+    },
+    {
+      "code": "N03-01",
+      "section": "2.3 Diagrama de Casos de Uso del Negocio",
+      "heading": "2.3 Diagrama de Casos de Uso del Negocio"
+    },
+    {
+      "code": "N01-02",
+      "section": "2.4 Diagramas de Actividad de Negocio",
+      "heading": "Proceso 1: Aprovisionamiento de Perfumes, Trazabilidad y Aprobaci\u00f3n Contable"
+    },
+    {
+      "code": "N02-02",
+      "section": "2.4 Diagramas de Actividad de Negocio",
+      "heading": "Proceso 2: Venta y Fidelizaci\u00f3n de Clientes (Membres\u00eda, Descuentos y Campa\u00f1as)"
+    },
+    {
+      "code": "N03-02",
+      "section": "2.4 Diagramas de Actividad de Negocio",
+      "heading": "Proceso 3: Evaluaci\u00f3n y Selecci\u00f3n Estrat\u00e9gica de Proveedores por Producto"
+    },
+    {
+      "code": "N01-06a",
+      "section": "2.5 Diagramas de Secuencia de Negocio",
+      "heading": "N01 \u00b7 Secuencia: preparar y revisar compra"
+    },
+    {
+      "code": "N01-06b",
+      "section": "2.5 Diagramas de Secuencia de Negocio",
+      "heading": "N01 \u00b7 Secuencia: recepci\u00f3n y trazabilidad"
+    },
+    {
+      "code": "N02-06a",
+      "section": "2.5 Diagramas de Secuencia de Negocio",
+      "heading": "N02 \u00b7 Secuencia: adhesi\u00f3n a membres\u00eda"
+    },
+    {
+      "code": "N02-06b",
+      "section": "2.5 Diagramas de Secuencia de Negocio",
+      "heading": "N02 \u00b7 Secuencia: venta con beneficio"
+    },
+    {
+      "code": "N02-06c",
+      "section": "2.5 Diagramas de Secuencia de Negocio",
+      "heading": "N02 \u00b7 Secuencia: coordinaci\u00f3n de marketing"
+    },
+    {
+      "code": "N03-06",
+      "section": "2.5 Diagramas de Secuencia de Negocio",
+      "heading": "N03 \u00b7 Secuencia: evaluaci\u00f3n y selecci\u00f3n de proveedores"
+    },
+    {
+      "code": "G07-01",
+      "section": "G07. Diagrama de Clases",
+      "heading": "La vista global y las vistas por proceso comparten los mismos atributos y operaciones principales, con sus tipos y visibilidad. Las propiedades y constructores de BE se mantienen conforme al c\u00f3digo; las reglas de negocio se muestran en BLL y sus contratos. La captura global permite revisar relaciones y ampliar el detalle; las vistas por proceso facilitan la lectura. EvaluacionProveedor, EvaluacionProveedorBLL y MarketingBLL son dise\u00f1o propuesto, no clases implementadas."
+    },
+    {
+      "code": "N01-03",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N01 \u00b7 Modelo conceptual"
+    },
+    {
+      "code": "N01-04a",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N01 \u00b7 Clases BE de compras"
+    },
+    {
+      "code": "N01-04b",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N01 \u00b7 Clases BE de inventario"
+    },
+    {
+      "code": "N01-05",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N01 \u00b7 Clases de l\u00f3gica de negocio (BLL)"
+    },
+    {
+      "code": "N02-03",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N02 \u00b7 Modelo conceptual"
+    },
+    {
+      "code": "N02-04",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N02 \u00b7 Clases BE de ventas"
+    },
+    {
+      "code": "N02-05",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N02 \u00b7 Clases de l\u00f3gica de negocio (BLL)"
+    },
+    {
+      "code": "N03-04",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N03 \u00b7 Clases de evaluaci\u00f3n de proveedores"
+    },
+    {
+      "code": "G08-01",
+      "section": "G08. Modelo de Datos",
+      "heading": "La vista global presenta claves y relaciones de compras, inventario, ventas y seguridad. Las vistas por proceso ampl\u00edan el detalle. EvaluacionesProveedor representa una extensi\u00f3n de dise\u00f1o para N03, no una tabla desplegada en la base de las iteraciones 1 y 2."
+    },
+    {
+      "code": "N01-07a",
+      "section": "G08. Modelo de Datos",
+      "heading": "N01 \u00b7 Modelo de datos: cotizaciones y compras"
+    },
+    {
+      "code": "N01-07b",
+      "section": "G08. Modelo de Datos",
+      "heading": "N01 \u00b7 Modelo de datos: inventario y trazabilidad"
+    },
+    {
+      "code": "N02-07",
+      "section": "G08. Modelo de Datos",
+      "heading": "N02 \u00b7 Modelo de datos: ventas y membres\u00edas"
+    },
+    {
+      "code": "N03-07",
+      "section": "G08. Modelo de Datos",
+      "heading": "N03 \u00b7 Modelo de datos: evaluaci\u00f3n de proveedores"
+    }
+  ]
+}

@@ -1,0 +1,3374 @@
+{
+  "Proveedor": {
+    "key": "Proveedor",
+    "name": "Proveedor",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdProveedor",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "RazonSocial",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Cuit",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Contacto",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "AntiguedadMercado",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IndicePrestigio",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "Activo",
+        "type": "bool",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "Proveedor",
+        "type": "",
+        "parameters": [],
+        "visibility": "Public",
+        "stereotype": "create"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/Proveedor.cs",
+    "source": "BE/Proveedor.cs",
+    "proposed": false
+  },
+  "Producto": {
+    "key": "Producto",
+    "name": "Producto",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdProducto",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Codigo",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Nombre",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Marca",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "FamiliaOlfativa",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "PrecioVenta",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "StockMinimo",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Activo",
+        "type": "bool",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "Producto",
+        "type": "",
+        "parameters": [],
+        "visibility": "Public",
+        "stereotype": "create"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/Producto.cs",
+    "source": "BE/Producto.cs",
+    "proposed": false
+  },
+  "CotizacionProveedor": {
+    "key": "CotizacionProveedor",
+    "name": "CotizacionProveedor",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdCotizacion",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdProveedor",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "FechaEmision",
+        "type": "DateTime",
+        "visibility": "Public"
+      },
+      {
+        "name": "FechaVigencia",
+        "type": "DateTime",
+        "visibility": "Public"
+      },
+      {
+        "name": "Condiciones",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Detalles",
+        "type": "List<DetalleCotizacionProveedor>",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "CotizacionProveedor",
+        "type": "",
+        "parameters": [],
+        "visibility": "Public",
+        "stereotype": "create"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/CotizacionProveedor.cs",
+    "source": "BE/CotizacionProveedor.cs",
+    "proposed": false
+  },
+  "DetalleCotizacionProveedor": {
+    "key": "DetalleCotizacionProveedor",
+    "name": "DetalleCotizacionProveedor",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdDetalleCotizacion",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdCotizacion",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdProducto",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "PrecioUnitario",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "PlazoEntregaDias",
+        "type": "int",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [],
+    "abstract": false,
+    "notes": "BE/DetalleCotizacionProveedor.cs",
+    "source": "BE/DetalleCotizacionProveedor.cs",
+    "proposed": false
+  },
+  "OrdenCompra": {
+    "key": "OrdenCompra",
+    "name": "OrdenCompra",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdOrdenCompra",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdProveedor",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "FechaEmision",
+        "type": "DateTime",
+        "visibility": "Public"
+      },
+      {
+        "name": "Total",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "Estado",
+        "type": "EstadoOrdenCompra",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdUsuarioAprobadorContable",
+        "type": "int?",
+        "visibility": "Public"
+      },
+      {
+        "name": "FechaAprobacion",
+        "type": "DateTime?",
+        "visibility": "Public"
+      },
+      {
+        "name": "MotivoRechazo",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "CreadaPor",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Detalles",
+        "type": "List<DetalleOrdenCompra>",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "OrdenCompra",
+        "type": "",
+        "parameters": [],
+        "visibility": "Public",
+        "stereotype": "create"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/OrdenCompra.cs",
+    "source": "BE/OrdenCompra.cs",
+    "proposed": false
+  },
+  "DetalleOrdenCompra": {
+    "key": "DetalleOrdenCompra",
+    "name": "DetalleOrdenCompra",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdDetalle",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdOrdenCompra",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdProducto",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Cantidad",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "CantidadRecibida",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "PrecioUnitario",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "Subtotal",
+        "type": "decimal",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [],
+    "abstract": false,
+    "notes": "BE/DetalleOrdenCompra.cs",
+    "source": "BE/DetalleOrdenCompra.cs",
+    "proposed": false
+  },
+  "Lote": {
+    "key": "Lote",
+    "name": "Lote",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdLote",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdProducto",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdProveedor",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdOrdenCompra",
+        "type": "int?",
+        "visibility": "Public"
+      },
+      {
+        "name": "CodigoLote",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Origen",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "CertificadoOrigen",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "FechaVencimiento",
+        "type": "DateTime?",
+        "visibility": "Public"
+      },
+      {
+        "name": "FechaRecepcion",
+        "type": "DateTime",
+        "visibility": "Public"
+      },
+      {
+        "name": "CantidadIngresada",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "CantidadDisponible",
+        "type": "int",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "Lote",
+        "type": "",
+        "parameters": [],
+        "visibility": "Public",
+        "stereotype": "create"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/Lote.cs",
+    "source": "BE/Lote.cs",
+    "proposed": false
+  },
+  "MovimientoStock": {
+    "key": "MovimientoStock",
+    "name": "MovimientoStock",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdMovimiento",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdLote",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Tipo",
+        "type": "TipoMovimientoStock",
+        "visibility": "Public"
+      },
+      {
+        "name": "Cantidad",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Fecha",
+        "type": "DateTime",
+        "visibility": "Public"
+      },
+      {
+        "name": "Referencia",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Responsable",
+        "type": "string",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "MovimientoStock",
+        "type": "",
+        "parameters": [],
+        "visibility": "Public",
+        "stereotype": "create"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/MovimientoStock.cs",
+    "source": "BE/MovimientoStock.cs",
+    "proposed": false
+  },
+  "Cliente": {
+    "key": "Cliente",
+    "name": "Cliente",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdCliente",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Nombre",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Apellido",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Email",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Telefono",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "PreferenciasOlfativas",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "AutorizaMarketing",
+        "type": "bool",
+        "visibility": "Public"
+      },
+      {
+        "name": "FechaAlta",
+        "type": "DateTime",
+        "visibility": "Public"
+      },
+      {
+        "name": "Activo",
+        "type": "bool",
+        "visibility": "Public"
+      },
+      {
+        "name": "NombreCompleto",
+        "type": "string",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "Cliente",
+        "type": "",
+        "parameters": [],
+        "visibility": "Public",
+        "stereotype": "create"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/Cliente.cs",
+    "source": "BE/Cliente.cs",
+    "proposed": false
+  },
+  "Membresia": {
+    "key": "Membresia",
+    "name": "Membresia",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdMembresia",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdCliente",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Numero",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "FechaAlta",
+        "type": "DateTime",
+        "visibility": "Public"
+      },
+      {
+        "name": "PorcentajeDescuento",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "Activa",
+        "type": "bool",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "Membresia",
+        "type": "",
+        "parameters": [],
+        "visibility": "Public",
+        "stereotype": "create"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/Membresia.cs",
+    "source": "BE/Membresia.cs",
+    "proposed": false
+  },
+  "Venta": {
+    "key": "Venta",
+    "name": "Venta",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdVenta",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdCliente",
+        "type": "int?",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdUsuarioVendedor",
+        "type": "int?",
+        "visibility": "Public"
+      },
+      {
+        "name": "Fecha",
+        "type": "DateTime",
+        "visibility": "Public"
+      },
+      {
+        "name": "Subtotal",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "Descuento",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "Total",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "Detalles",
+        "type": "List<DetalleVenta>",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "Venta",
+        "type": "",
+        "parameters": [],
+        "visibility": "Public",
+        "stereotype": "create"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/Venta.cs",
+    "source": "BE/Venta.cs",
+    "proposed": false
+  },
+  "DetalleVenta": {
+    "key": "DetalleVenta",
+    "name": "DetalleVenta",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdDetalleVenta",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdVenta",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdProducto",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdLote",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Cantidad",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "PrecioUnitario",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "DescuentoUnitario",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "Subtotal",
+        "type": "decimal",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [],
+    "abstract": false,
+    "notes": "BE/DetalleVenta.cs",
+    "source": "BE/DetalleVenta.cs",
+    "proposed": false
+  },
+  "Persona": {
+    "key": "Persona",
+    "name": "Persona",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "Id",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Dni",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Nombre",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Apellido",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "NombreCompleto",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "TipoEntidad",
+        "type": "string",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "ToString",
+        "type": "string",
+        "parameters": [],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "CompareTo",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "other",
+            "type": "Persona",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      }
+    ],
+    "abstract": true,
+    "notes": "BE/Persona.cs",
+    "source": "BE/Persona.cs",
+    "proposed": false
+  },
+  "Usuario": {
+    "key": "Usuario",
+    "name": "Usuario",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "Email",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Password",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "FechaAlta",
+        "type": "DateTime",
+        "visibility": "Public"
+      },
+      {
+        "name": "Activo",
+        "type": "bool",
+        "visibility": "Public"
+      },
+      {
+        "name": "IntentosFallidos",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "DVH",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Permisos",
+        "type": "List<Componente>",
+        "visibility": "Public"
+      },
+      {
+        "name": "TipoEntidad",
+        "type": "string",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "TienePermiso",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "permisoBuscado",
+            "type": "TipoPermiso",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "Clone",
+        "type": "object",
+        "parameters": [],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "Usuario",
+        "type": "",
+        "parameters": [],
+        "visibility": "Public",
+        "stereotype": "create"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/Usuario.cs",
+    "source": "BE/Usuario.cs",
+    "proposed": false
+  },
+  "EventoBitacora": {
+    "key": "EventoBitacora",
+    "name": "EventoBitacora",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "Id",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "FechaHora",
+        "type": "DateTime",
+        "visibility": "Public"
+      },
+      {
+        "name": "UsuarioEmail",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Actividad",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "InformacionAsociada",
+        "type": "string",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "EventoBitacora",
+        "type": "",
+        "parameters": [],
+        "visibility": "Public",
+        "stereotype": "create"
+      },
+      {
+        "name": "EventoBitacora",
+        "type": "",
+        "parameters": [
+          {
+            "name": "usuario",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "actividad",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "informacion",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "stereotype": "create"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/EventoBitacora.cs",
+    "source": "BE/EventoBitacora.cs",
+    "proposed": false
+  },
+  "Componente": {
+    "key": "Componente",
+    "name": "Componente",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "Id",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Nombre",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "PermisoAsociado",
+        "type": "TipoPermiso?",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "AgregarHijo",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "c",
+            "type": "Componente",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": true
+      },
+      {
+        "name": "VaciarHijos",
+        "type": "void",
+        "parameters": [],
+        "visibility": "Public",
+        "static": false,
+        "abstract": true
+      },
+      {
+        "name": "ObtenerHijos",
+        "type": "IList<Componente>",
+        "parameters": [],
+        "visibility": "Public",
+        "static": false,
+        "abstract": true
+      },
+      {
+        "name": "TienePermiso",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "permiso",
+            "type": "TipoPermiso",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": true
+      },
+      {
+        "name": "ObtenerPatentes",
+        "type": "List<Patente>",
+        "parameters": [],
+        "visibility": "Public",
+        "static": false,
+        "abstract": true
+      }
+    ],
+    "abstract": true,
+    "notes": "BE/Seguridad/Componente.cs",
+    "source": "BE/Seguridad/Componente.cs",
+    "proposed": false
+  },
+  "Familia": {
+    "key": "Familia",
+    "name": "Familia",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "_hijos",
+        "type": "List<Componente>",
+        "visibility": "Private"
+      }
+    ],
+    "methods": [
+      {
+        "name": "AgregarHijo",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "c",
+            "type": "Componente",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "VaciarHijos",
+        "type": "void",
+        "parameters": [],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ObtenerHijos",
+        "type": "IList<Componente>",
+        "parameters": [],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "TienePermiso",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "permiso",
+            "type": "TipoPermiso",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ObtenerPatentes",
+        "type": "List<Patente>",
+        "parameters": [],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/Seguridad/Familia.cs",
+    "source": "BE/Seguridad/Familia.cs",
+    "proposed": false
+  },
+  "Patente": {
+    "key": "Patente",
+    "name": "Patente",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [],
+    "methods": [
+      {
+        "name": "AgregarHijo",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "c",
+            "type": "Componente",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "VaciarHijos",
+        "type": "void",
+        "parameters": [],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ObtenerHijos",
+        "type": "IList<Componente>",
+        "parameters": [],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "TienePermiso",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "permiso",
+            "type": "TipoPermiso",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ObtenerPatentes",
+        "type": "List<Patente>",
+        "parameters": [],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/Seguridad/Patente.cs",
+    "source": "BE/Seguridad/Patente.cs",
+    "proposed": false
+  },
+  "AprovisionamientoBLL": {
+    "key": "AprovisionamientoBLL",
+    "name": "AprovisionamientoBLL",
+    "kind": "Class",
+    "stereotype": "BLL",
+    "attributes": [
+      {
+        "name": "CantidadMinimaCotizacionesComparables",
+        "type": "int",
+        "visibility": "Private"
+      },
+      {
+        "name": "repositorio",
+        "type": "IAprovisionamientoRepository",
+        "visibility": "Private"
+      },
+      {
+        "name": "proveedores",
+        "type": "IProveedorRepository",
+        "visibility": "Private"
+      },
+      {
+        "name": "productos",
+        "type": "IProductoRepository",
+        "visibility": "Private"
+      },
+      {
+        "name": "registroActividad",
+        "type": "IRegistroActividad",
+        "visibility": "Private"
+      }
+    ],
+    "methods": [
+      {
+        "name": "RegistrarCotizacion",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "cotizacion",
+            "type": "CotizacionProveedor",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "CrearOrdenPreliminar",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "orden",
+            "type": "OrdenCompra",
+            "default": ""
+          },
+          {
+            "name": "detalles",
+            "type": "List<DetalleOrdenCompra>",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "EnviarOrdenARevisionContable",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "idOrdenCompra",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "AprobarOrdenCompra",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "idOrdenCompra",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "idUsuarioContable",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "RechazarOrdenCompra",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "idOrdenCompra",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "motivo",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "EmitirOrdenAprobada",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "idOrdenCompra",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "RecepcionarMercaderia",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "idOrdenCompra",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "lotesRecibidos",
+            "type": "List<Lote>",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ConsultarHistorialCompras",
+        "type": "List<OrdenCompra>",
+        "parameters": [
+          {
+            "name": "idProveedor",
+            "type": "int?",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "CambiarEstado",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "orden",
+            "type": "OrdenCompra",
+            "default": ""
+          },
+          {
+            "name": "nuevoEstado",
+            "type": "EstadoOrdenCompra",
+            "default": ""
+          },
+          {
+            "name": "idUsuarioContable",
+            "type": "int?",
+            "default": ""
+          },
+          {
+            "name": "motivo",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ValidarCotizacion",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "cotizacion",
+            "type": "CotizacionProveedor",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": true,
+        "abstract": false
+      },
+      {
+        "name": "ValidarOrdenPreliminar",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "orden",
+            "type": "OrdenCompra",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": true,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "BLL/AprovisionamientoBLL.cs",
+    "source": "BLL/AprovisionamientoBLL.cs",
+    "proposed": false
+  },
+  "InventarioBLL": {
+    "key": "InventarioBLL",
+    "name": "InventarioBLL",
+    "kind": "Class",
+    "stereotype": "BLL",
+    "attributes": [
+      {
+        "name": "repositorio",
+        "type": "IInventarioRepository",
+        "visibility": "Private"
+      },
+      {
+        "name": "registroActividad",
+        "type": "IRegistroActividad",
+        "visibility": "Private"
+      }
+    ],
+    "methods": [
+      {
+        "name": "VerificarStock",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "RegistrarIngresoLote",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "lote",
+            "type": "Lote",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "DescontarStockLote",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "idLote",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "cantidad",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ObtenerLotesDisponibles",
+        "type": "List<Lote>",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ObtenerTrazabilidad",
+        "type": "List<Lote>",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ValidarLote",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "lote",
+            "type": "Lote",
+            "default": ""
+          }
+        ],
+        "visibility": "Package",
+        "static": true,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "BLL/InventarioBLL.cs",
+    "source": "BLL/InventarioBLL.cs",
+    "proposed": false
+  },
+  "VentaBLL": {
+    "key": "VentaBLL",
+    "name": "VentaBLL",
+    "kind": "Class",
+    "stereotype": "BLL",
+    "attributes": [
+      {
+        "name": "ventaRepository",
+        "type": "IVentaRepository",
+        "visibility": "Private"
+      },
+      {
+        "name": "productoRepository",
+        "type": "IProductoRepository",
+        "visibility": "Private"
+      },
+      {
+        "name": "inventarioRepository",
+        "type": "IInventarioRepository",
+        "visibility": "Private"
+      },
+      {
+        "name": "registroActividad",
+        "type": "IRegistroActividad",
+        "visibility": "Private"
+      }
+    ],
+    "methods": [
+      {
+        "name": "RegistrarCliente",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "cliente",
+            "type": "Cliente",
+            "default": ""
+          },
+          {
+            "name": "crearMembresia",
+            "type": "bool",
+            "default": ""
+          },
+          {
+            "name": "porcentajeDescuento",
+            "type": "decimal",
+            "default": "10m"
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "BuscarClientePorEmail",
+        "type": "Cliente",
+        "parameters": [
+          {
+            "name": "email",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "RegistrarVenta",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "venta",
+            "type": "Venta",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ConsultarHistorialCliente",
+        "type": "List<Venta>",
+        "parameters": [
+          {
+            "name": "idCliente",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ValidarCliente",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "cliente",
+            "type": "Cliente",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": true,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "BLL/VentaBLL.cs",
+    "source": "BLL/VentaBLL.cs",
+    "proposed": false
+  },
+  "ProveedorBLL": {
+    "key": "ProveedorBLL",
+    "name": "ProveedorBLL",
+    "kind": "Class",
+    "stereotype": "BLL",
+    "attributes": [
+      {
+        "name": "repositorio",
+        "type": "IProveedorRepository",
+        "visibility": "Private"
+      },
+      {
+        "name": "registroActividad",
+        "type": "IRegistroActividad",
+        "visibility": "Private"
+      }
+    ],
+    "methods": [
+      {
+        "name": "Guardar",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "proveedor",
+            "type": "Proveedor",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "Obtener",
+        "type": "Proveedor",
+        "parameters": [
+          {
+            "name": "idProveedor",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "Listar",
+        "type": "List<Proveedor>",
+        "parameters": [
+          {
+            "name": "soloActivos",
+            "type": "bool",
+            "default": "true"
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "BLL/ProveedorBLL.cs",
+    "source": "BLL/ProveedorBLL.cs",
+    "proposed": false
+  },
+  "ProductoBLL": {
+    "key": "ProductoBLL",
+    "name": "ProductoBLL",
+    "kind": "Class",
+    "stereotype": "BLL",
+    "attributes": [
+      {
+        "name": "repositorio",
+        "type": "IProductoRepository",
+        "visibility": "Private"
+      },
+      {
+        "name": "registroActividad",
+        "type": "IRegistroActividad",
+        "visibility": "Private"
+      }
+    ],
+    "methods": [
+      {
+        "name": "Guardar",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "producto",
+            "type": "Producto",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "Obtener",
+        "type": "Producto",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "Listar",
+        "type": "List<Producto>",
+        "parameters": [
+          {
+            "name": "soloActivos",
+            "type": "bool",
+            "default": "true"
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "BLL/ProductoBLL.cs",
+    "source": "BLL/ProductoBLL.cs",
+    "proposed": false
+  },
+  "RegistroActividadBitacora": {
+    "key": "RegistroActividadBitacora",
+    "name": "RegistroActividadBitacora",
+    "kind": "Class",
+    "stereotype": "BLL",
+    "attributes": [],
+    "methods": [
+      {
+        "name": "Registrar",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "actividad",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "detalle",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "BLL/RegistroActividadBitacora.cs",
+    "source": "BLL/RegistroActividadBitacora.cs",
+    "proposed": false
+  },
+  "IAprovisionamientoRepository": {
+    "key": "IAprovisionamientoRepository",
+    "name": "IAprovisionamientoRepository",
+    "kind": "Interface",
+    "stereotype": "BE",
+    "attributes": [],
+    "methods": [
+      {
+        "name": "InsertarCotizacion",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "cotizacion",
+            "type": "CotizacionProveedor",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "InsertarOrden",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "orden",
+            "type": "OrdenCompra",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "ObtenerOrden",
+        "type": "OrdenCompra",
+        "parameters": [
+          {
+            "name": "idOrdenCompra",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "ActualizarEstado",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "idOrdenCompra",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "estadoEsperado",
+            "type": "EstadoOrdenCompra",
+            "default": ""
+          },
+          {
+            "name": "nuevoEstado",
+            "type": "EstadoOrdenCompra",
+            "default": ""
+          },
+          {
+            "name": "idUsuarioContable",
+            "type": "int?",
+            "default": ""
+          },
+          {
+            "name": "motivoRechazo",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "ContarProveedoresCotizadosPorProducto",
+        "type": "IDictionary<int, int>",
+        "parameters": [
+          {
+            "name": "idsProducto",
+            "type": "IList<int>",
+            "default": ""
+          },
+          {
+            "name": "fechaReferencia",
+            "type": "DateTime",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "ListarOrdenes",
+        "type": "IList<OrdenCompra>",
+        "parameters": [
+          {
+            "name": "idProveedor",
+            "type": "int?",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "RegistrarRecepcion",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "idOrdenCompra",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "lotes",
+            "type": "IList<Lote>",
+            "default": ""
+          },
+          {
+            "name": "estadoFinal",
+            "type": "EstadoOrdenCompra",
+            "default": ""
+          },
+          {
+            "name": "responsable",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/Interfaces/IAprovisionamientoRepository.cs",
+    "source": "BE/Interfaces/IAprovisionamientoRepository.cs",
+    "proposed": false
+  },
+  "IInventarioRepository": {
+    "key": "IInventarioRepository",
+    "name": "IInventarioRepository",
+    "kind": "Interface",
+    "stereotype": "BE",
+    "attributes": [],
+    "methods": [
+      {
+        "name": "VerificarStock",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "RegistrarIngresoLote",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "lote",
+            "type": "Lote",
+            "default": ""
+          },
+          {
+            "name": "responsable",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "referencia",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "DescontarStockLote",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "idLote",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "cantidad",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "responsable",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "referencia",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "ObtenerLotesDisponibles",
+        "type": "IList<Lote>",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "ObtenerTrazabilidad",
+        "type": "IList<Lote>",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/Interfaces/IInventarioRepository.cs",
+    "source": "BE/Interfaces/IInventarioRepository.cs",
+    "proposed": false
+  },
+  "IProductoRepository": {
+    "key": "IProductoRepository",
+    "name": "IProductoRepository",
+    "kind": "Interface",
+    "stereotype": "BE",
+    "attributes": [],
+    "methods": [
+      {
+        "name": "Guardar",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "producto",
+            "type": "Producto",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "Obtener",
+        "type": "Producto",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "Listar",
+        "type": "IList<Producto>",
+        "parameters": [
+          {
+            "name": "soloActivos",
+            "type": "bool",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/Interfaces/IProductoRepository.cs",
+    "source": "BE/Interfaces/IProductoRepository.cs",
+    "proposed": false
+  },
+  "IProveedorRepository": {
+    "key": "IProveedorRepository",
+    "name": "IProveedorRepository",
+    "kind": "Interface",
+    "stereotype": "BE",
+    "attributes": [],
+    "methods": [
+      {
+        "name": "Guardar",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "proveedor",
+            "type": "Proveedor",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "Obtener",
+        "type": "Proveedor",
+        "parameters": [
+          {
+            "name": "idProveedor",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "Listar",
+        "type": "IList<Proveedor>",
+        "parameters": [
+          {
+            "name": "soloActivos",
+            "type": "bool",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/Interfaces/IProveedorRepository.cs",
+    "source": "BE/Interfaces/IProveedorRepository.cs",
+    "proposed": false
+  },
+  "IVentaRepository": {
+    "key": "IVentaRepository",
+    "name": "IVentaRepository",
+    "kind": "Interface",
+    "stereotype": "BE",
+    "attributes": [],
+    "methods": [
+      {
+        "name": "BuscarClientePorEmail",
+        "type": "Cliente",
+        "parameters": [
+          {
+            "name": "email",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "GuardarCliente",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "cliente",
+            "type": "Cliente",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "ObtenerMembresiaActiva",
+        "type": "Membresia",
+        "parameters": [
+          {
+            "name": "idCliente",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "CrearMembresia",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "membresia",
+            "type": "Membresia",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "RegistrarVenta",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "venta",
+            "type": "Venta",
+            "default": ""
+          },
+          {
+            "name": "responsable",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "ListarVentasCliente",
+        "type": "IList<Venta>",
+        "parameters": [
+          {
+            "name": "idCliente",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/Interfaces/IVentaRepository.cs",
+    "source": "BE/Interfaces/IVentaRepository.cs",
+    "proposed": false
+  },
+  "IRegistroActividad": {
+    "key": "IRegistroActividad",
+    "name": "IRegistroActividad",
+    "kind": "Interface",
+    "stereotype": "BE",
+    "attributes": [],
+    "methods": [
+      {
+        "name": "Registrar",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "actividad",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "detalle",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      }
+    ],
+    "abstract": false,
+    "notes": "BE/Interfaces/IRegistroActividad.cs",
+    "source": "BE/Interfaces/IRegistroActividad.cs",
+    "proposed": false
+  },
+  "AprovisionamientoDAL": {
+    "key": "AprovisionamientoDAL",
+    "name": "AprovisionamientoDAL",
+    "kind": "Class",
+    "stereotype": "DAL",
+    "attributes": [
+      {
+        "name": "Instancia",
+        "type": "AprovisionamientoDAL",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "InsertarCotizacion",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "cotizacion",
+            "type": "CotizacionProveedor",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "InsertarOrden",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "orden",
+            "type": "OrdenCompra",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ObtenerOrden",
+        "type": "OrdenCompra",
+        "parameters": [
+          {
+            "name": "idOrdenCompra",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ActualizarEstado",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "idOrdenCompra",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "estadoEsperado",
+            "type": "EstadoOrdenCompra",
+            "default": ""
+          },
+          {
+            "name": "nuevoEstado",
+            "type": "EstadoOrdenCompra",
+            "default": ""
+          },
+          {
+            "name": "idUsuarioContable",
+            "type": "int?",
+            "default": ""
+          },
+          {
+            "name": "motivoRechazo",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ContarProveedoresCotizadosPorProducto",
+        "type": "IDictionary<int, int>",
+        "parameters": [
+          {
+            "name": "idsProducto",
+            "type": "IList<int>",
+            "default": ""
+          },
+          {
+            "name": "fechaReferencia",
+            "type": "DateTime",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ListarOrdenes",
+        "type": "IList<OrdenCompra>",
+        "parameters": [
+          {
+            "name": "idProveedor",
+            "type": "int?",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "RegistrarRecepcion",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "idOrdenCompra",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "lotes",
+            "type": "IList<Lote>",
+            "default": ""
+          },
+          {
+            "name": "estadoFinal",
+            "type": "EstadoOrdenCompra",
+            "default": ""
+          },
+          {
+            "name": "responsable",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "DAL/AprovisionamientoDAL.cs",
+    "source": "DAL/AprovisionamientoDAL.cs",
+    "proposed": false
+  },
+  "InventarioDAL": {
+    "key": "InventarioDAL",
+    "name": "InventarioDAL",
+    "kind": "Class",
+    "stereotype": "DAL",
+    "attributes": [
+      {
+        "name": "Instancia",
+        "type": "InventarioDAL",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "VerificarStock",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "RegistrarIngresoLote",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "lote",
+            "type": "Lote",
+            "default": ""
+          },
+          {
+            "name": "responsable",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "referencia",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "DescontarStockLote",
+        "type": "bool",
+        "parameters": [
+          {
+            "name": "idLote",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "cantidad",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "responsable",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "referencia",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ObtenerLotesDisponibles",
+        "type": "IList<Lote>",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ObtenerTrazabilidad",
+        "type": "IList<Lote>",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "InsertarLote",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "conexion",
+            "type": "SqlConnection",
+            "default": ""
+          },
+          {
+            "name": "transaccion",
+            "type": "SqlTransaction",
+            "default": ""
+          },
+          {
+            "name": "lote",
+            "type": "Lote",
+            "default": ""
+          }
+        ],
+        "visibility": "Package",
+        "static": true,
+        "abstract": false
+      },
+      {
+        "name": "InsertarMovimiento",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "conexion",
+            "type": "SqlConnection",
+            "default": ""
+          },
+          {
+            "name": "transaccion",
+            "type": "SqlTransaction",
+            "default": ""
+          },
+          {
+            "name": "idLote",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "tipo",
+            "type": "TipoMovimientoStock",
+            "default": ""
+          },
+          {
+            "name": "cantidad",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "responsable",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "referencia",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Package",
+        "static": true,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "DAL/InventarioDAL.cs",
+    "source": "DAL/InventarioDAL.cs",
+    "proposed": false
+  },
+  "VentaDAL": {
+    "key": "VentaDAL",
+    "name": "VentaDAL",
+    "kind": "Class",
+    "stereotype": "DAL",
+    "attributes": [
+      {
+        "name": "Instancia",
+        "type": "VentaDAL",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "BuscarClientePorEmail",
+        "type": "Cliente",
+        "parameters": [
+          {
+            "name": "email",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "GuardarCliente",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "cliente",
+            "type": "Cliente",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ObtenerMembresiaActiva",
+        "type": "Membresia",
+        "parameters": [
+          {
+            "name": "idCliente",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "CrearMembresia",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "membresia",
+            "type": "Membresia",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "RegistrarVenta",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "venta",
+            "type": "Venta",
+            "default": ""
+          },
+          {
+            "name": "responsable",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ListarVentasCliente",
+        "type": "IList<Venta>",
+        "parameters": [
+          {
+            "name": "idCliente",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "InsertarVenta",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "conexion",
+            "type": "SqlConnection",
+            "default": ""
+          },
+          {
+            "name": "transaccion",
+            "type": "SqlTransaction",
+            "default": ""
+          },
+          {
+            "name": "venta",
+            "type": "Venta",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": true,
+        "abstract": false
+      },
+      {
+        "name": "InsertarDetalle",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "conexion",
+            "type": "SqlConnection",
+            "default": ""
+          },
+          {
+            "name": "transaccion",
+            "type": "SqlTransaction",
+            "default": ""
+          },
+          {
+            "name": "idVenta",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "detalle",
+            "type": "DetalleVenta",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": true,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "DAL/VentaDAL.cs",
+    "source": "DAL/VentaDAL.cs",
+    "proposed": false
+  },
+  "ProductoDAL": {
+    "key": "ProductoDAL",
+    "name": "ProductoDAL",
+    "kind": "Class",
+    "stereotype": "DAL",
+    "attributes": [
+      {
+        "name": "Instancia",
+        "type": "ProductoDAL",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "Guardar",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "producto",
+            "type": "Producto",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "Obtener",
+        "type": "Producto",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "Listar",
+        "type": "IList<Producto>",
+        "parameters": [
+          {
+            "name": "soloActivos",
+            "type": "bool",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "DAL/ProductoDAL.cs",
+    "source": "DAL/ProductoDAL.cs",
+    "proposed": false
+  },
+  "ProveedorDAL": {
+    "key": "ProveedorDAL",
+    "name": "ProveedorDAL",
+    "kind": "Class",
+    "stereotype": "DAL",
+    "attributes": [
+      {
+        "name": "Instancia",
+        "type": "ProveedorDAL",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "Guardar",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "proveedor",
+            "type": "Proveedor",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "Obtener",
+        "type": "Proveedor",
+        "parameters": [
+          {
+            "name": "idProveedor",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "Listar",
+        "type": "IList<Proveedor>",
+        "parameters": [
+          {
+            "name": "soloActivos",
+            "type": "bool",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "DAL/ProveedorDAL.cs",
+    "source": "DAL/ProveedorDAL.cs",
+    "proposed": false
+  },
+  "UC_Aprovisionamiento": {
+    "key": "UC_Aprovisionamiento",
+    "name": "UC_Aprovisionamiento",
+    "kind": "Class",
+    "stereotype": "UI",
+    "attributes": [
+      {
+        "name": "ModoPrueba",
+        "type": "bool",
+        "visibility": "Public"
+      },
+      {
+        "name": "UltimoMensaje",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "UltimoError",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdOrdenCompra",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdProveedor",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Fecha",
+        "type": "DateTime",
+        "visibility": "Public"
+      },
+      {
+        "name": "Total",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "Estado",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "CreadaPor",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Unidades",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Orden",
+        "type": "OrdenCompra",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdOrdenCompra",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Descripcion",
+        "type": "string",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "RegistrarCotizacion",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "sender",
+            "type": "object",
+            "default": ""
+          },
+          {
+            "name": "e",
+            "type": "EventArgs",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "CrearOrden",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "sender",
+            "type": "object",
+            "default": ""
+          },
+          {
+            "name": "e",
+            "type": "EventArgs",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "EnviarRevision",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "sender",
+            "type": "object",
+            "default": ""
+          },
+          {
+            "name": "e",
+            "type": "EventArgs",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "EmitirOrden",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "sender",
+            "type": "object",
+            "default": ""
+          },
+          {
+            "name": "e",
+            "type": "EventArgs",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "AprobarOrden",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "sender",
+            "type": "object",
+            "default": ""
+          },
+          {
+            "name": "e",
+            "type": "EventArgs",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "RechazarOrden",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "sender",
+            "type": "object",
+            "default": ""
+          },
+          {
+            "name": "e",
+            "type": "EventArgs",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "RegistrarRecepcion",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "sender",
+            "type": "object",
+            "default": ""
+          },
+          {
+            "name": "e",
+            "type": "EventArgs",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ConsultarInventario",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "sender",
+            "type": "object",
+            "default": ""
+          },
+          {
+            "name": "e",
+            "type": "EventArgs",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "MostrarError",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "error",
+            "type": "Exception",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "Crear",
+        "type": "OrdenCompraVista",
+        "parameters": [
+          {
+            "name": "orden",
+            "type": "OrdenCompra",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": true,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "UI/UserControls/UC_Aprovisionamiento.cs",
+    "source": "UI/UserControls/UC_Aprovisionamiento.cs",
+    "proposed": false
+  },
+  "UC_Ventas": {
+    "key": "UC_Ventas",
+    "name": "UC_Ventas",
+    "kind": "Class",
+    "stereotype": "UI",
+    "attributes": [
+      {
+        "name": "ModoPrueba",
+        "type": "bool",
+        "visibility": "Public"
+      },
+      {
+        "name": "UltimoMensaje",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "UltimoError",
+        "type": "string",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "BuscarCliente",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "sender",
+            "type": "object",
+            "default": ""
+          },
+          {
+            "name": "e",
+            "type": "EventArgs",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "RegistrarCliente",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "sender",
+            "type": "object",
+            "default": ""
+          },
+          {
+            "name": "e",
+            "type": "EventArgs",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ConfirmarVenta",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "sender",
+            "type": "object",
+            "default": ""
+          },
+          {
+            "name": "e",
+            "type": "EventArgs",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "Notificar",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "mensaje",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "error",
+            "type": "bool",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "UI/UserControls/UC_Ventas.cs",
+    "source": "UI/UserControls/UC_Ventas.cs",
+    "proposed": false
+  },
+  "EvaluacionProveedor": {
+    "key": "EvaluacionProveedor",
+    "name": "EvaluacionProveedor",
+    "x": 330,
+    "y": 290,
+    "w": 360,
+    "h": 410,
+    "kind": "Class",
+    "stereotype": "diseño N03",
+    "attributes": [
+      {
+        "name": "IdEvaluacion",
+        "type": "int"
+      },
+      {
+        "name": "IdProveedor",
+        "type": "int"
+      },
+      {
+        "name": "IdProducto",
+        "type": "int"
+      },
+      {
+        "name": "FechaEvaluacion",
+        "type": "DateTime"
+      },
+      {
+        "name": "PuntajePrestigio",
+        "type": "decimal"
+      },
+      {
+        "name": "PuntajePrecio",
+        "type": "decimal"
+      },
+      {
+        "name": "PuntajeAntiguedad",
+        "type": "decimal"
+      },
+      {
+        "name": "PesoPrestigio",
+        "type": "decimal"
+      },
+      {
+        "name": "PesoPrecio",
+        "type": "decimal"
+      },
+      {
+        "name": "PesoAntiguedad",
+        "type": "decimal"
+      },
+      {
+        "name": "PuntajePonderadoFinal",
+        "type": "decimal"
+      },
+      {
+        "name": "Fundamentos",
+        "type": "string"
+      },
+      {
+        "name": "EsPrioritario",
+        "type": "bool"
+      }
+    ],
+    "fontSize": 12,
+    "proposed": true,
+    "notes": "Diseño N03: clase y operación propuestas, todavía sin implementación C#.",
+    "methods": [
+      {
+        "name": "CalcularPuntajePonderado",
+        "type": "decimal",
+        "parameters": [],
+        "visibility": "Public"
+      }
+    ]
+  },
+  "EvaluacionProveedorBLL": {
+    "key": "EvaluacionProveedorBLL",
+    "name": "EvaluacionProveedorBLL",
+    "kind": "Class",
+    "stereotype": "propuesto N03",
+    "proposed": true,
+    "attributes": [],
+    "notes": "Diseño N03; no existe todavía en BLL.",
+    "methods": [
+      {
+        "name": "Evaluar",
+        "type": "EvaluacionProveedor",
+        "parameters": [
+          {
+            "name": "evaluacion",
+            "type": "EvaluacionProveedor",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "ValidarEvaluacion",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "evaluacion",
+            "type": "EvaluacionProveedor",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "SeleccionarPrioritario",
+        "type": "EvaluacionProveedor",
+        "parameters": [
+          {
+            "name": "evaluaciones",
+            "type": "List<EvaluacionProveedor>",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "GuardarEvaluacion",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "evaluacion",
+            "type": "EvaluacionProveedor",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      }
+    ]
+  },
+  "MarketingBLL": {
+    "key": "MarketingBLL",
+    "name": "MarketingBLL",
+    "kind": "Class",
+    "stereotype": "propuesto N02",
+    "proposed": true,
+    "attributes": [],
+    "notes": "Diseño de campañas; no existe motor de envío implementado.",
+    "methods": [
+      {
+        "name": "SeleccionarDestinatarios",
+        "type": "List<Cliente>",
+        "parameters": [
+          {
+            "name": "clientes",
+            "type": "List<Cliente>",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "PrepararCampania",
+        "type": "string",
+        "parameters": [
+          {
+            "name": "destinatarios",
+            "type": "List<Cliente>",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "EnviarCampania",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "destinatarios",
+            "type": "List<Cliente>",
+            "default": ""
+          },
+          {
+            "name": "mensaje",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      }
+    ]
+  }
+}
