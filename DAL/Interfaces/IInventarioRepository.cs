@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 
-namespace BE.Interfaces
+using BE;
+
+namespace DAL.Interfaces
 {
     public interface IInventarioRepository
     {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using BE;
 using BE.Interfaces;
+using DAL.Interfaces;
 using DAL;
 
 namespace BLL

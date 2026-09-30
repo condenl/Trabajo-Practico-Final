@@ -57,13 +57,8 @@
     <Compile Include="Interfaces\IIdiomaObserver.cs" />
     <Compile Include="Interfaces\IObservado.cs" />
     <Compile Include="Interfaces\IObserver.cs" />
-    <Compile Include="Interfaces\IAprovisionamientoRepository.cs" />
-    <Compile Include="Interfaces\IInventarioRepository.cs" />
-    <Compile Include="Interfaces\IProductoRepository.cs" />
-    <Compile Include="Interfaces\IProveedorRepository.cs" />
     <Compile Include="Interfaces\IRegistroActividad.cs" />
     <Compile Include="Interfaces\IVisitante.cs" />
-    <Compile Include="Interfaces\IVentaRepository.cs" />
     <Compile Include="Idioma.cs" />
     <Compile Include="Persona.cs" />
     <Compile Include="Lote.cs" />

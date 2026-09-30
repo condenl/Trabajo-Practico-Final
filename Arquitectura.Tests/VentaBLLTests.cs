@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BE;
 using BE.Interfaces;
+using DAL.Interfaces;
 using BLL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

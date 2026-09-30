@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using BE;
 using BE.Interfaces;
+using DAL.Interfaces;
 using BLL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using BE;
-using BE.Interfaces;
+using DAL.Interfaces;
 using MPP;
 
 namespace DAL

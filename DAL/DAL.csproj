@@ -51,6 +51,11 @@
     <Compile Include="Conexion.cs" />
     <Compile Include="IdiomaDAL.cs" />
     <Compile Include="InventarioDAL.cs" />
+    <Compile Include="Interfaces\IAprovisionamientoRepository.cs" />
+    <Compile Include="Interfaces\IInventarioRepository.cs" />
+    <Compile Include="Interfaces\IProductoRepository.cs" />
+    <Compile Include="Interfaces\IProveedorRepository.cs" />
+    <Compile Include="Interfaces\IVentaRepository.cs" />
     <Compile Include="ProductoDAL.cs" />
     <Compile Include="ProveedorDAL.cs" />
     <Compile Include="SeguridadDAL.cs" />
