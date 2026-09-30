@@ -1,0 +1,12 @@
+[
+  {
+    "code": "G07-01",
+    "native_sha256": "0cc937f01ddb849f8e4b24e96200bfba2c7411c0e20c77445a2e9f5ef7d5f68c",
+    "exported_sha256": "0924b3eca4ab545c6c58c98a62b49747e1f0443baba9c99e1441e9cd9a947afd",
+    "reviewed_on": "2026-09-30",
+    "native_size": [4404, 2717],
+    "exported_size": [2048, 1263],
+    "mean_pixel_error": 3.4732,
+    "reason": "Google Docs downsampled the image. The automatic threshold of 3/255 was not met and was not relaxed. Native and exported diagrams were visually compared: same 38 classifiers, layout and relationships, no missing border content. The saved PDF page 44 was also reviewed. This is visual correspondence, not pixel identity; the linked native PNG and EAP retain legible member detail. Approval applies only to these exact file hashes."
+  }
+]

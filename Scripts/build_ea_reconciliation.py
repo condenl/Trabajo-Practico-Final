@@ -159,7 +159,7 @@ for name,(x,y) in positions.items():
     node(d,name,name,x,y,340,90+len(attrs)*24,stereotype='diseño N03' if name=='EvaluacionProveedor' else 'table',attributes=attrs,fontSize=12)
     for col,target,_ in t['fks']:
         a=next(a for a in t['attrs'] if a['name']==col)
-        link(d,name,target,col,sourceCardinality='0..*',targetCardinality='0..1' if a.get('notes')=='NULL' else '1')
+        link(d,name,target,col,stereotype='FK',sourceCardinality='0..*',targetCardinality='0..1' if a.get('notes')=='NULL' else '1')
 node(d,'note','',20,1460,1160,120,'Note',notes='Vista de integración: atributos no clave en las vistas por proceso.\nMembresia: historial, con índice único filtrado para una activa por cliente.\nBitacora conserva el usuario como texto, sin FK a Usuarios.\nEvaluacionProveedor representa el diseño de N03, no una tabla instalada.',fontSize=13)
 
 d=diagram('N03-07','N03 · DER de evaluación de proveedores',notes='Diseño de iteración 3. Relaciona propuestas evaluadas con producto y proveedor. No es DDL ejecutado.')
@@ -170,7 +170,7 @@ for n,t in evalattrs:
     sqltype={'int':'INT','DateTime':'DATETIME','decimal':'DECIMAL(18,4)','string':'NVARCHAR(MAX)','bool':'BIT'}[t]
     attrs.append(dict(name=n,type=sqltype,stereotype='PK' if n=='IdEvaluacion' else ('FK' if n in ('IdProveedor','IdProducto') else '')))
 node(d,'EvaluacionProveedor','EvaluacionProveedor',315,270,380,440,stereotype='diseño N03',attributes=attrs,fontSize=12)
-for n in ('Proveedor','Producto'): link(d,'EvaluacionProveedor',n,'Id'+n,sourceCardinality='0..*',targetCardinality='1')
+for n in ('Proveedor','Producto'): link(d,'EvaluacionProveedor',n,'Id'+n,stereotype='FK',sourceCardinality='0..*',targetCardinality='1')
 node(d,'note','',20,780,975,110,'Note',notes='Restricciones de diseño: pesos >= 0 y suma = 1; puntajes entre 0 y 100.\nPrioridad única por producto cuando EsPrioritario = 1.\nConservar evaluaciones anteriores y los fundamentos de cada decisión.',fontSize=12)
 
 new=[d for d in diagrams[start:] if d['code'] not in {'N01-06a','N01-06b','N02-06a','N02-06b'}]

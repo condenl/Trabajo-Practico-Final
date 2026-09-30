@@ -183,7 +183,7 @@ for code,title,names in [
         t=tables[n]
         node(d,n,n,40+(i%3)*425,40+(i//3)*430,315,65+len(t['attrs'])*21,attributes=t['attrs'],stereotype='table',notes=t['notes'])
         for col,target,targetcol in t['fks']:
-            if target in names: link(d,n,target,col,sourceCardinality='0..*',targetCardinality='0..1' if next(a for a in t['attrs'] if a['name']==col)['notes']=='NULL' else '1')
+            if target in names: link(d,n,target,col,stereotype='FK',sourceCardinality='0..*',targetCardinality='0..1' if next(a for a in t['attrs'] if a['name']==col)['notes']=='NULL' else '1')
 
 if __name__ == '__main__':
     (OUT/'model.json').write_text(json.dumps(diagrams,ensure_ascii=False,indent=2),'utf-8')

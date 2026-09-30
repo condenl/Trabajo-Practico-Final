@@ -21,7 +21,7 @@ def tables(document):
             for table in document.tables]
 
 
-def verify(baseline, current, images):
+def verify(baseline, current, images, reviewed_images=None):
     before, after = Document(baseline), Document(current)
     marker = "2.5 Diagramas de Secuencia de Negocio"
     cut = next(i for i, p in enumerate(before.paragraphs) if p.text == marker)
@@ -30,6 +30,8 @@ def verify(baseline, current, images):
     expected = {pixels(path): path.stem for path in Path(images).glob("*.png")}
     native = {path.stem: path for path in Path(images).glob("*.png")}
     downsampled = []
+    visual_matches = []
+    reviews = json.loads(Path(reviewed_images).read_text(encoding='utf-8')) if reviewed_images else []
     ns = {"a": "http://schemas.openxmlformats.org/drawingml/2006/main"}
     embed = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}embed"
     hits, placements = [], []
@@ -63,6 +65,16 @@ def verify(baseline, current, images):
                     if len(candidates) == 1:
                         code, error = candidates[0]
                         downsampled.append({'code': code, 'width': uploaded.width, 'mean_pixel_error': round(error, 4)})
+            if code is None:
+                # A visual review is bound to both exact file hashes. Never widen the
+                # pixel threshold or let an approval apply to a later changed image.
+                for review in reviews:
+                    source = native.get(review['code'])
+                    if (source and hashlib.sha256(source.read_bytes()).hexdigest() == review['native_sha256']
+                            and hashlib.sha256(part.blob).hexdigest() == review['exported_sha256']):
+                        code = review['code']
+                        visual_matches.append(review)
+                        break
             if code:
                 hits.append(code)
                 placements.append({"code": code, "section": section, "heading": heading})
@@ -77,7 +89,8 @@ def verify(baseline, current, images):
     assert all(count == 1 for count in Counter(hits).values()), "Duplicate EA diagram"
     return {"unchanged_prefix_paragraphs": cut, "unchanged_tables": len(after.tables),
             "total_images": len(after.inline_shapes), "unique_ea_diagrams": len(hits),
-            "pixel_exact": not downsampled, "google_docs_downsampled": downsampled,
+            "pixel_exact": not downsampled and not visual_matches, "google_docs_downsampled": downsampled,
+            "visually_reviewed_images": visual_matches,
             "duplicates": [], "placements": placements}
 
 
@@ -87,8 +100,9 @@ if __name__ == "__main__":
     parser.add_argument("current", type=Path)
     parser.add_argument("--images", type=Path, default=Path(__file__).resolve().parents[1] / "Documentacion/EnterpriseArchitect")
     parser.add_argument("--report", type=Path, help="Optional JSON verification report; source documents are never modified")
+    parser.add_argument("--reviewed-images", type=Path, help="Explicit visual reviews bound to native and exported file SHA256 hashes")
     args = parser.parse_args()
-    report = json.dumps(verify(args.baseline, args.current, args.images), ensure_ascii=True, indent=2)
+    report = json.dumps(verify(args.baseline, args.current, args.images, args.reviewed_images), ensure_ascii=True, indent=2)
     if args.report:
         args.report.write_text(report + '\n', encoding='utf-8')
     print(report)

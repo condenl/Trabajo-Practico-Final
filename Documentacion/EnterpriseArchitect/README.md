@@ -43,7 +43,25 @@ Las líneas de vida son objetos UML tipados por clases (`ClassifierID`); sus men
 
 `EvaluacionProveedor`, `EvaluacionProveedorBLL` y `MarketingBLL` son propuestas de diseño. Sus operaciones no se presentan como código existente. La secuencia de membresía aclara que el código actual guarda al cliente antes de validar el descuento; esta revisión no modifica la implementación. Las actualizaciones preservan los elementos anteriores en subpaquetes `Version anterior` y respaldan el EAP localmente.
 
-## Reproducción
+## Revisión de notación UML y capas (30/09/2026)
+
+Se trasladaron `IAprovisionamientoRepository`, `IInventarioRepository`, `IProductoRepository`, `IProveedorRepository` e `IVentaRepository` a `DAL.Interfaces`. BE no depende de DAL. `IRegistroActividad` permanece en `BE.Interfaces`: es un contrato de auditoría, no un repositorio. La solución Release compila y las 20 pruebas pasan, incluidas tres comprobaciones nuevas de arquitectura.
+
+Se conservaron las asociaciones UML sin flechas de herencia y se completaron sus multiplicidades en las vistas por proceso. Se eliminaron las dos asociaciones inversas duplicadas de `DetalleVenta` con `Producto` y `Lote` en la vista global. Las dependencias BLL hacia los contratos indican uso; las implementaciones DAL y `RegistroActividadBitacora` realizan sus interfaces mediante conectores nativos de realización (línea discontinua y triángulo hueco hacia la interfaz). La generalización sigue apuntando de la subclase a la superclase con línea continua y triángulo hueco.
+
+`Persona` y `Componente` tienen la propiedad UML `Abstract` y nombres en cursiva. No se inventó un estereotipo `abstract`, ni se pusieron en cursiva métodos concretos. Las interfaces son elementos UML `Interface`, con la palabra clave «interface»; sus notas y etiquetas registran la capa y el namespace. Las vistas global y por proceso comparten la misma definición de atributos y operaciones.
+
+Los cinco modelos de datos usan asociaciones «FK» y multiplicidades para representar las referencias por clave foránea. Esta revisión no modifica SQL ni crea restricciones de base de datos mediante EA. El DER no usa flechas de generalización para representar claves foráneas. N03 permanece identificado como diseño propuesto.
+
+Referencias de notación: [UML 2.5.1, OMG](https://www.omg.org/spec/UML/2.5.1/PDF), [clases, interfaces y relaciones, Sparx Systems](https://www.sparxsystems.eu/languages/uml/diagrams/classdiagram/) y [representación de claves foráneas en EA](https://sparxsystems.com/enterprise_architect_user_guide/17.1/modeling_domains/foreignkeys.html).
+
+La API COM de EA 12.1 rechazó `Realization.Update()` incluso con dos elementos mínimos de prueba. El actualizador utiliza la importación XMI nativa para convertir únicamente los GUID de las realizaciones previstas y verifica después el tipo `Realisation` guardado. No simula triángulos mediante estilos ni escribe SQL sobre el EAP. La importación conserva los GUID, pero puede reasignar IDs locales; por eso se actualizan los manifiestos.
+
+La verificación del modelo pasó con **119 representaciones de clases, 64 mensajes y 13 diagramas**. Google Docs conserva **47 imágenes, 26 diagramas EA únicos, las 12 tablas y los 344 párrafos anteriores a 2.5**. Las capturas corregidas permanecen en G07/G08; no se añadieron secciones. La exportación PDF tiene 56 páginas. G07-01 fue revisado visualmente porque su reducción a 2048 píxeles supera el umbral automático de comparación: `visual-review-uml.json` vincula la revisión a los hashes exactos del PNG nativo y de la imagen exportada. No se considera una coincidencia de píxeles. El enlace existente «La captura global» permite abrir el PNG nativo.
+
+Para verificar esta revisión del documento, agregar `--reviewed-images Documentacion/EnterpriseArchitect/visual-review-uml.json` a `verify_ea_document.py`. Una captura diferente no puede aprovechar esa revisión porque se comprueban ambos SHA256. `audit_ea_uml.ps1` permite inspeccionar tipos, direcciones, multiplicidades y propiedades abstractas sin modificar el modelo; `refine_ea_fk_notation.ps1` aplica la notación de las asociaciones de datos.
+
+## Reproducción del modelo
 
 Con el proyecto `diagramas.EAP` abierto en EA:
 

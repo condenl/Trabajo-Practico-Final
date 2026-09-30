@@ -59,6 +59,7 @@
         "notes": "BE/Proveedor.cs",
         "source": "BE/Proveedor.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 40,
         "y": 40,
         "w": 732,
@@ -115,6 +116,7 @@
         "notes": "BE/CotizacionProveedor.cs",
         "source": "BE/CotizacionProveedor.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 942,
         "y": 40,
         "w": 732,
@@ -158,6 +160,7 @@
         "notes": "BE/DetalleCotizacionProveedor.cs",
         "source": "BE/DetalleCotizacionProveedor.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 1844,
         "y": 40,
         "w": 732,
@@ -234,6 +237,7 @@
         "notes": "BE/OrdenCompra.cs",
         "source": "BE/OrdenCompra.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 40,
         "y": 476,
         "w": 732,
@@ -287,6 +291,7 @@
         "notes": "BE/DetalleOrdenCompra.cs",
         "source": "BE/DetalleOrdenCompra.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 942,
         "y": 476,
         "w": 732,
@@ -353,6 +358,7 @@
         "notes": "BE/Producto.cs",
         "source": "BE/Producto.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 1844,
         "y": 476,
         "w": 732,
@@ -424,6 +430,7 @@
         "notes": "BLL/ProveedorBLL.cs",
         "source": "BLL/ProveedorBLL.cs",
         "proposed": false,
+        "namespace": "BLL",
         "x": 40,
         "y": 978,
         "w": 732,
@@ -657,6 +664,7 @@
         "notes": "BLL/AprovisionamientoBLL.cs",
         "source": "BLL/AprovisionamientoBLL.cs",
         "proposed": false,
+        "namespace": "BLL",
         "x": 942,
         "y": 978,
         "w": 732,
@@ -728,6 +736,7 @@
         "notes": "BLL/ProductoBLL.cs",
         "source": "BLL/ProductoBLL.cs",
         "proposed": false,
+        "namespace": "BLL",
         "x": 1844,
         "y": 978,
         "w": 732,
@@ -740,37 +749,49 @@
         "source": "Proveedor",
         "target": "CotizacionProveedor",
         "name": "",
-        "kind": "Association"
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
       },
       {
         "source": "CotizacionProveedor",
         "target": "DetalleCotizacionProveedor",
         "name": "",
-        "kind": "Association"
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "1..*"
       },
       {
         "source": "DetalleCotizacionProveedor",
         "target": "Producto",
         "name": "",
-        "kind": "Association"
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
       },
       {
         "source": "Proveedor",
         "target": "OrdenCompra",
         "name": "",
-        "kind": "Association"
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
       },
       {
         "source": "OrdenCompra",
         "target": "DetalleOrdenCompra",
         "name": "",
-        "kind": "Association"
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "1..*"
       },
       {
         "source": "DetalleOrdenCompra",
         "target": "Producto",
         "name": "",
-        "kind": "Association"
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
       },
       {
         "source": "ProveedorBLL",
@@ -864,6 +885,7 @@
         "notes": "BE/Producto.cs",
         "source": "BE/Producto.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 40,
         "y": 40,
         "w": 372,
@@ -945,6 +967,7 @@
         "notes": "BE/Lote.cs",
         "source": "BE/Lote.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 582,
         "y": 40,
         "w": 372,
@@ -1006,6 +1029,7 @@
         "notes": "BE/MovimientoStock.cs",
         "source": "BE/MovimientoStock.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 1124,
         "y": 40,
         "w": 372,
@@ -1082,6 +1106,7 @@
         "notes": "BE/OrdenCompra.cs",
         "source": "BE/OrdenCompra.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 40,
         "y": 564,
         "w": 372,
@@ -1143,6 +1168,7 @@
         "notes": "BE/Proveedor.cs",
         "source": "BE/Proveedor.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 582,
         "y": 564,
         "w": 372,
@@ -1261,6 +1287,7 @@
         "notes": "BLL/InventarioBLL.cs",
         "source": "BLL/InventarioBLL.cs",
         "proposed": false,
+        "namespace": "BLL",
         "x": 1124,
         "y": 564,
         "w": 372,
@@ -1273,25 +1300,33 @@
         "source": "Producto",
         "target": "Lote",
         "name": "",
-        "kind": "Association"
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
       },
       {
         "source": "Proveedor",
         "target": "Lote",
         "name": "",
-        "kind": "Association"
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
       },
       {
         "source": "OrdenCompra",
         "target": "Lote",
         "name": "",
-        "kind": "Association"
+        "kind": "Association",
+        "sourceCardinality": "0..1",
+        "targetCardinality": "0..*"
       },
       {
         "source": "Lote",
         "target": "MovimientoStock",
         "name": "",
-        "kind": "Association"
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
       },
       {
         "source": "InventarioBLL",
@@ -1383,6 +1418,7 @@
         "notes": "BE/Cliente.cs",
         "source": "BE/Cliente.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 40,
         "y": 40,
         "w": 606,
@@ -1439,6 +1475,7 @@
         "notes": "BE/Membresia.cs",
         "source": "BE/Membresia.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 816,
         "y": 40,
         "w": 606,
@@ -1505,6 +1542,7 @@
         "notes": "BE/Venta.cs",
         "source": "BE/Venta.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 1592,
         "y": 40,
         "w": 606,
@@ -1563,6 +1601,7 @@
         "notes": "BE/DetalleVenta.cs",
         "source": "BE/DetalleVenta.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 40,
         "y": 542,
         "w": 606,
@@ -1629,6 +1668,7 @@
         "notes": "BE/Producto.cs",
         "source": "BE/Producto.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 816,
         "y": 542,
         "w": 606,
@@ -1710,6 +1750,7 @@
         "notes": "BE/Lote.cs",
         "source": "BE/Lote.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 1592,
         "y": 542,
         "w": 606,
@@ -1829,6 +1870,7 @@
         "notes": "BLL/VentaBLL.cs",
         "source": "BLL/VentaBLL.cs",
         "proposed": false,
+        "namespace": "BLL",
         "x": 40,
         "y": 1066,
         "w": 606,
@@ -1898,31 +1940,41 @@
         "source": "Cliente",
         "target": "Membresia",
         "name": "",
-        "kind": "Association"
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "0..*"
       },
       {
         "source": "Cliente",
         "target": "Venta",
         "name": "",
-        "kind": "Association"
+        "kind": "Association",
+        "sourceCardinality": "0..1",
+        "targetCardinality": "0..*"
       },
       {
         "source": "Venta",
         "target": "DetalleVenta",
         "name": "",
-        "kind": "Association"
+        "kind": "Association",
+        "sourceCardinality": "1",
+        "targetCardinality": "1..*"
       },
       {
-        "source": "Producto",
-        "target": "DetalleVenta",
+        "source": "DetalleVenta",
+        "target": "Producto",
         "name": "",
-        "kind": "Association"
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
       },
       {
-        "source": "Lote",
-        "target": "DetalleVenta",
+        "source": "DetalleVenta",
+        "target": "Lote",
         "name": "",
-        "kind": "Association"
+        "kind": "Association",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
       },
       {
         "source": "VentaBLL",
@@ -2183,9 +2235,10 @@
         "notes": "BLL/AprovisionamientoBLL.cs",
         "source": "BLL/AprovisionamientoBLL.cs",
         "proposed": false,
+        "namespace": "BLL",
         "x": 40,
         "y": 40,
-        "w": 1002,
+        "w": 1104,
         "h": 462,
         "fontSize": 11
       },
@@ -2193,7 +2246,7 @@
         "key": "IAprovisionamientoRepository",
         "name": "IAprovisionamientoRepository",
         "kind": "Interface",
-        "stereotype": "BE",
+        "stereotype": "interface",
         "attributes": [],
         "methods": [
           {
@@ -2322,12 +2375,176 @@
           }
         ],
         "abstract": false,
-        "notes": "BE/Interfaces/IAprovisionamientoRepository.cs",
-        "source": "BE/Interfaces/IAprovisionamientoRepository.cs",
+        "notes": "DAL/Interfaces/IAprovisionamientoRepository.cs",
+        "source": "DAL/Interfaces/IAprovisionamientoRepository.cs",
         "proposed": false,
-        "x": 1212,
+        "namespace": "DAL.Interfaces",
+        "x": 1314,
         "y": 40,
-        "w": 1002,
+        "w": 1104,
+        "h": 462,
+        "fontSize": 11
+      },
+      {
+        "key": "AprovisionamientoDAL",
+        "name": "AprovisionamientoDAL",
+        "kind": "Class",
+        "stereotype": "DAL",
+        "attributes": [
+          {
+            "name": "Instancia",
+            "type": "AprovisionamientoDAL",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [
+          {
+            "name": "InsertarCotizacion",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "cotizacion",
+                "type": "CotizacionProveedor",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "InsertarOrden",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "orden",
+                "type": "OrdenCompra",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ObtenerOrden",
+            "type": "OrdenCompra",
+            "parameters": [
+              {
+                "name": "idOrdenCompra",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ActualizarEstado",
+            "type": "bool",
+            "parameters": [
+              {
+                "name": "idOrdenCompra",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "estadoEsperado",
+                "type": "EstadoOrdenCompra",
+                "default": ""
+              },
+              {
+                "name": "nuevoEstado",
+                "type": "EstadoOrdenCompra",
+                "default": ""
+              },
+              {
+                "name": "idUsuarioContable",
+                "type": "int?",
+                "default": ""
+              },
+              {
+                "name": "motivoRechazo",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ContarProveedoresCotizadosPorProducto",
+            "type": "IDictionary<int, int>",
+            "parameters": [
+              {
+                "name": "idsProducto",
+                "type": "IList<int>",
+                "default": ""
+              },
+              {
+                "name": "fechaReferencia",
+                "type": "DateTime",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ListarOrdenes",
+            "type": "IList<OrdenCompra>",
+            "parameters": [
+              {
+                "name": "idProveedor",
+                "type": "int?",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "RegistrarRecepcion",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "idOrdenCompra",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "lotes",
+                "type": "IList<Lote>",
+                "default": ""
+              },
+              {
+                "name": "estadoFinal",
+                "type": "EstadoOrdenCompra",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "DAL/AprovisionamientoDAL.cs",
+        "source": "DAL/AprovisionamientoDAL.cs",
+        "proposed": false,
+        "namespace": "DAL",
+        "x": 2588,
+        "y": 40,
+        "w": 1104,
         "h": 462,
         "fontSize": 11
       },
@@ -2443,9 +2660,10 @@
         "notes": "BLL/InventarioBLL.cs",
         "source": "BLL/InventarioBLL.cs",
         "proposed": false,
+        "namespace": "BLL",
         "x": 40,
         "y": 652,
-        "w": 1002,
+        "w": 1104,
         "h": 286,
         "fontSize": 11
       },
@@ -2453,7 +2671,7 @@
         "key": "IInventarioRepository",
         "name": "IInventarioRepository",
         "kind": "Interface",
-        "stereotype": "BE",
+        "stereotype": "interface",
         "attributes": [],
         "methods": [
           {
@@ -2543,12 +2761,201 @@
           }
         ],
         "abstract": false,
-        "notes": "BE/Interfaces/IInventarioRepository.cs",
-        "source": "BE/Interfaces/IInventarioRepository.cs",
+        "notes": "DAL/Interfaces/IInventarioRepository.cs",
+        "source": "DAL/Interfaces/IInventarioRepository.cs",
         "proposed": false,
-        "x": 1212,
+        "namespace": "DAL.Interfaces",
+        "x": 1314,
         "y": 652,
-        "w": 1002,
+        "w": 1104,
+        "h": 286,
+        "fontSize": 11
+      },
+      {
+        "key": "InventarioDAL",
+        "name": "InventarioDAL",
+        "kind": "Class",
+        "stereotype": "DAL",
+        "attributes": [
+          {
+            "name": "Instancia",
+            "type": "InventarioDAL",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [
+          {
+            "name": "VerificarStock",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "RegistrarIngresoLote",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "lote",
+                "type": "Lote",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "name": "referencia",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "DescontarStockLote",
+            "type": "bool",
+            "parameters": [
+              {
+                "name": "idLote",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "cantidad",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "name": "referencia",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ObtenerLotesDisponibles",
+            "type": "IList<Lote>",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ObtenerTrazabilidad",
+            "type": "IList<Lote>",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "InsertarLote",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "conexion",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "transaccion",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "lote",
+                "type": "Lote",
+                "default": ""
+              }
+            ],
+            "visibility": "Package",
+            "static": true,
+            "abstract": false
+          },
+          {
+            "name": "InsertarMovimiento",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "conexion",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "transaccion",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "idLote",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "tipo",
+                "type": "TipoMovimientoStock",
+                "default": ""
+              },
+              {
+                "name": "cantidad",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "name": "referencia",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Package",
+            "static": true,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "DAL/InventarioDAL.cs",
+        "source": "DAL/InventarioDAL.cs",
+        "proposed": false,
+        "namespace": "DAL",
+        "x": 2588,
+        "y": 652,
+        "w": 1104,
         "h": 286,
         "fontSize": 11
       },
@@ -2556,7 +2963,7 @@
         "key": "IProveedorRepository",
         "name": "IProveedorRepository",
         "kind": "Interface",
-        "stereotype": "BE",
+        "stereotype": "interface",
         "attributes": [],
         "methods": [
           {
@@ -2597,20 +3004,88 @@
           }
         ],
         "abstract": false,
-        "notes": "BE/Interfaces/IProveedorRepository.cs",
-        "source": "BE/Interfaces/IProveedorRepository.cs",
+        "notes": "DAL/Interfaces/IProveedorRepository.cs",
+        "source": "DAL/Interfaces/IProveedorRepository.cs",
         "proposed": false,
+        "namespace": "DAL.Interfaces",
         "x": 40,
         "y": 1088,
-        "w": 1002,
-        "h": 176,
+        "w": 1104,
+        "h": 198,
+        "fontSize": 11
+      },
+      {
+        "key": "ProveedorDAL",
+        "name": "ProveedorDAL",
+        "kind": "Class",
+        "stereotype": "DAL",
+        "attributes": [
+          {
+            "name": "Instancia",
+            "type": "ProveedorDAL",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [
+          {
+            "name": "Guardar",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "proveedor",
+                "type": "Proveedor",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "Obtener",
+            "type": "Proveedor",
+            "parameters": [
+              {
+                "name": "idProveedor",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "Listar",
+            "type": "IList<Proveedor>",
+            "parameters": [
+              {
+                "name": "soloActivos",
+                "type": "bool",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "DAL/ProveedorDAL.cs",
+        "source": "DAL/ProveedorDAL.cs",
+        "proposed": false,
+        "namespace": "DAL",
+        "x": 1314,
+        "y": 1088,
+        "w": 1104,
+        "h": 198,
         "fontSize": 11
       },
       {
         "key": "IProductoRepository",
         "name": "IProductoRepository",
         "kind": "Interface",
-        "stereotype": "BE",
+        "stereotype": "interface",
         "attributes": [],
         "methods": [
           {
@@ -2651,20 +3126,88 @@
           }
         ],
         "abstract": false,
-        "notes": "BE/Interfaces/IProductoRepository.cs",
-        "source": "BE/Interfaces/IProductoRepository.cs",
+        "notes": "DAL/Interfaces/IProductoRepository.cs",
+        "source": "DAL/Interfaces/IProductoRepository.cs",
         "proposed": false,
-        "x": 1212,
+        "namespace": "DAL.Interfaces",
+        "x": 2588,
         "y": 1088,
-        "w": 1002,
-        "h": 176,
+        "w": 1104,
+        "h": 198,
+        "fontSize": 11
+      },
+      {
+        "key": "ProductoDAL",
+        "name": "ProductoDAL",
+        "kind": "Class",
+        "stereotype": "DAL",
+        "attributes": [
+          {
+            "name": "Instancia",
+            "type": "ProductoDAL",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [
+          {
+            "name": "Guardar",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "producto",
+                "type": "Producto",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "Obtener",
+            "type": "Producto",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "Listar",
+            "type": "IList<Producto>",
+            "parameters": [
+              {
+                "name": "soloActivos",
+                "type": "bool",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "DAL/ProductoDAL.cs",
+        "source": "DAL/ProductoDAL.cs",
+        "proposed": false,
+        "namespace": "DAL",
+        "x": 40,
+        "y": 1436,
+        "w": 1104,
+        "h": 198,
         "fontSize": 11
       },
       {
         "key": "IRegistroActividad",
         "name": "IRegistroActividad",
         "kind": "Interface",
-        "stereotype": "BE",
+        "stereotype": "interface",
         "attributes": [],
         "methods": [
           {
@@ -2689,10 +3232,49 @@
         "notes": "BE/Interfaces/IRegistroActividad.cs",
         "source": "BE/Interfaces/IRegistroActividad.cs",
         "proposed": false,
-        "x": 40,
-        "y": 1414,
-        "w": 1002,
-        "h": 132,
+        "namespace": "BE.Interfaces",
+        "x": 1314,
+        "y": 1436,
+        "w": 1104,
+        "h": 198,
+        "fontSize": 11
+      },
+      {
+        "key": "RegistroActividadBitacora",
+        "name": "RegistroActividadBitacora",
+        "kind": "Class",
+        "stereotype": "BLL",
+        "attributes": [],
+        "methods": [
+          {
+            "name": "Registrar",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "actividad",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "name": "detalle",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "BLL/RegistroActividadBitacora.cs",
+        "source": "BLL/RegistroActividadBitacora.cs",
+        "proposed": false,
+        "namespace": "BLL",
+        "x": 2588,
+        "y": 1436,
+        "w": 1104,
+        "h": 198,
         "fontSize": 11
       }
     ],
@@ -2732,6 +3314,36 @@
         "target": "IRegistroActividad",
         "name": "usa",
         "kind": "Dependency"
+      },
+      {
+        "source": "AprovisionamientoDAL",
+        "target": "IAprovisionamientoRepository",
+        "name": "",
+        "kind": "Realization"
+      },
+      {
+        "source": "InventarioDAL",
+        "target": "IInventarioRepository",
+        "name": "",
+        "kind": "Realization"
+      },
+      {
+        "source": "ProductoDAL",
+        "target": "IProductoRepository",
+        "name": "",
+        "kind": "Realization"
+      },
+      {
+        "source": "ProveedorDAL",
+        "target": "IProveedorRepository",
+        "name": "",
+        "kind": "Realization"
+      },
+      {
+        "source": "RegistroActividadBitacora",
+        "target": "IRegistroActividad",
+        "name": "",
+        "kind": "Realization"
       }
     ],
     "notes": "Atributos y operaciones compartidos con G07-01. Firmas verificadas en el código. Las clases propuestas están identificadas explícitamente. Las BE conservan sus constructores y propiedades; la lógica reside en BLL."
@@ -2854,9 +3466,10 @@
         "notes": "BLL/VentaBLL.cs",
         "source": "BLL/VentaBLL.cs",
         "proposed": false,
+        "namespace": "BLL",
         "x": 40,
         "y": 40,
-        "w": 618,
+        "w": 1104,
         "h": 308,
         "fontSize": 11
       },
@@ -2864,7 +3477,7 @@
         "key": "IVentaRepository",
         "name": "IVentaRepository",
         "kind": "Interface",
-        "stereotype": "BE",
+        "stereotype": "interface",
         "attributes": [],
         "methods": [
           {
@@ -2946,12 +3559,180 @@
           }
         ],
         "abstract": false,
-        "notes": "BE/Interfaces/IVentaRepository.cs",
-        "source": "BE/Interfaces/IVentaRepository.cs",
+        "notes": "DAL/Interfaces/IVentaRepository.cs",
+        "source": "DAL/Interfaces/IVentaRepository.cs",
         "proposed": false,
-        "x": 828,
+        "namespace": "DAL.Interfaces",
+        "x": 1314,
         "y": 40,
-        "w": 618,
+        "w": 1104,
+        "h": 308,
+        "fontSize": 11
+      },
+      {
+        "key": "VentaDAL",
+        "name": "VentaDAL",
+        "kind": "Class",
+        "stereotype": "DAL",
+        "attributes": [
+          {
+            "name": "Instancia",
+            "type": "VentaDAL",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [
+          {
+            "name": "BuscarClientePorEmail",
+            "type": "Cliente",
+            "parameters": [
+              {
+                "name": "email",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "GuardarCliente",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "cliente",
+                "type": "Cliente",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ObtenerMembresiaActiva",
+            "type": "Membresia",
+            "parameters": [
+              {
+                "name": "idCliente",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "CrearMembresia",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "membresia",
+                "type": "Membresia",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "RegistrarVenta",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "venta",
+                "type": "Venta",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ListarVentasCliente",
+            "type": "IList<Venta>",
+            "parameters": [
+              {
+                "name": "idCliente",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "InsertarVenta",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "conexion",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "transaccion",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "venta",
+                "type": "Venta",
+                "default": ""
+              }
+            ],
+            "visibility": "Private",
+            "static": true,
+            "abstract": false
+          },
+          {
+            "name": "InsertarDetalle",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "conexion",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "transaccion",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "idVenta",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "detalle",
+                "type": "DetalleVenta",
+                "default": ""
+              }
+            ],
+            "visibility": "Private",
+            "static": true,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "DAL/VentaDAL.cs",
+        "source": "DAL/VentaDAL.cs",
+        "proposed": false,
+        "namespace": "DAL",
+        "x": 2588,
+        "y": 40,
+        "w": 1104,
         "h": 308,
         "fontSize": 11
       },
@@ -2959,7 +3740,7 @@
         "key": "IProductoRepository",
         "name": "IProductoRepository",
         "kind": "Interface",
-        "stereotype": "BE",
+        "stereotype": "interface",
         "attributes": [],
         "methods": [
           {
@@ -3000,12 +3781,80 @@
           }
         ],
         "abstract": false,
-        "notes": "BE/Interfaces/IProductoRepository.cs",
-        "source": "BE/Interfaces/IProductoRepository.cs",
+        "notes": "DAL/Interfaces/IProductoRepository.cs",
+        "source": "DAL/Interfaces/IProductoRepository.cs",
         "proposed": false,
+        "namespace": "DAL.Interfaces",
         "x": 40,
         "y": 498,
-        "w": 618,
+        "w": 1104,
+        "h": 220,
+        "fontSize": 11
+      },
+      {
+        "key": "ProductoDAL",
+        "name": "ProductoDAL",
+        "kind": "Class",
+        "stereotype": "DAL",
+        "attributes": [
+          {
+            "name": "Instancia",
+            "type": "ProductoDAL",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [
+          {
+            "name": "Guardar",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "producto",
+                "type": "Producto",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "Obtener",
+            "type": "Producto",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "Listar",
+            "type": "IList<Producto>",
+            "parameters": [
+              {
+                "name": "soloActivos",
+                "type": "bool",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "DAL/ProductoDAL.cs",
+        "source": "DAL/ProductoDAL.cs",
+        "proposed": false,
+        "namespace": "DAL",
+        "x": 1314,
+        "y": 498,
+        "w": 1104,
         "h": 220,
         "fontSize": 11
       },
@@ -3013,7 +3862,7 @@
         "key": "IInventarioRepository",
         "name": "IInventarioRepository",
         "kind": "Interface",
-        "stereotype": "BE",
+        "stereotype": "interface",
         "attributes": [],
         "methods": [
           {
@@ -3103,20 +3952,209 @@
           }
         ],
         "abstract": false,
-        "notes": "BE/Interfaces/IInventarioRepository.cs",
-        "source": "BE/Interfaces/IInventarioRepository.cs",
+        "notes": "DAL/Interfaces/IInventarioRepository.cs",
+        "source": "DAL/Interfaces/IInventarioRepository.cs",
         "proposed": false,
-        "x": 828,
+        "namespace": "DAL.Interfaces",
+        "x": 2588,
         "y": 498,
-        "w": 618,
+        "w": 1104,
         "h": 220,
+        "fontSize": 11
+      },
+      {
+        "key": "InventarioDAL",
+        "name": "InventarioDAL",
+        "kind": "Class",
+        "stereotype": "DAL",
+        "attributes": [
+          {
+            "name": "Instancia",
+            "type": "InventarioDAL",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [
+          {
+            "name": "VerificarStock",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "RegistrarIngresoLote",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "lote",
+                "type": "Lote",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "name": "referencia",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "DescontarStockLote",
+            "type": "bool",
+            "parameters": [
+              {
+                "name": "idLote",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "cantidad",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "name": "referencia",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ObtenerLotesDisponibles",
+            "type": "IList<Lote>",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ObtenerTrazabilidad",
+            "type": "IList<Lote>",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "InsertarLote",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "conexion",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "transaccion",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "lote",
+                "type": "Lote",
+                "default": ""
+              }
+            ],
+            "visibility": "Package",
+            "static": true,
+            "abstract": false
+          },
+          {
+            "name": "InsertarMovimiento",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "conexion",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "transaccion",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "idLote",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "tipo",
+                "type": "TipoMovimientoStock",
+                "default": ""
+              },
+              {
+                "name": "cantidad",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "name": "referencia",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Package",
+            "static": true,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "DAL/InventarioDAL.cs",
+        "source": "DAL/InventarioDAL.cs",
+        "proposed": false,
+        "namespace": "DAL",
+        "x": 40,
+        "y": 868,
+        "w": 1104,
+        "h": 286,
         "fontSize": 11
       },
       {
         "key": "IRegistroActividad",
         "name": "IRegistroActividad",
         "kind": "Interface",
-        "stereotype": "BE",
+        "stereotype": "interface",
         "attributes": [],
         "methods": [
           {
@@ -3141,10 +4179,49 @@
         "notes": "BE/Interfaces/IRegistroActividad.cs",
         "source": "BE/Interfaces/IRegistroActividad.cs",
         "proposed": false,
-        "x": 40,
+        "namespace": "BE.Interfaces",
+        "x": 1314,
         "y": 868,
-        "w": 618,
-        "h": 176,
+        "w": 1104,
+        "h": 286,
+        "fontSize": 11
+      },
+      {
+        "key": "RegistroActividadBitacora",
+        "name": "RegistroActividadBitacora",
+        "kind": "Class",
+        "stereotype": "BLL",
+        "attributes": [],
+        "methods": [
+          {
+            "name": "Registrar",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "actividad",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "name": "detalle",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "BLL/RegistroActividadBitacora.cs",
+        "source": "BLL/RegistroActividadBitacora.cs",
+        "proposed": false,
+        "namespace": "BLL",
+        "x": 2588,
+        "y": 868,
+        "w": 1104,
+        "h": 286,
         "fontSize": 11
       },
       {
@@ -3198,9 +4275,9 @@
             "visibility": "Public"
           }
         ],
-        "x": 828,
-        "y": 868,
-        "w": 618,
+        "x": 40,
+        "y": 1304,
+        "w": 1104,
         "h": 176,
         "fontSize": 11
       }
@@ -3235,6 +4312,30 @@
         "target": "VentaBLL",
         "name": "",
         "kind": "Dependency"
+      },
+      {
+        "source": "InventarioDAL",
+        "target": "IInventarioRepository",
+        "name": "",
+        "kind": "Realization"
+      },
+      {
+        "source": "ProductoDAL",
+        "target": "IProductoRepository",
+        "name": "",
+        "kind": "Realization"
+      },
+      {
+        "source": "VentaDAL",
+        "target": "IVentaRepository",
+        "name": "",
+        "kind": "Realization"
+      },
+      {
+        "source": "RegistroActividadBitacora",
+        "target": "IRegistroActividad",
+        "name": "",
+        "kind": "Realization"
       }
     ],
     "notes": "Atributos y operaciones compartidos con G07-01. Firmas verificadas en el código. Las clases propuestas están identificadas explícitamente. Las BE conservan sus constructores y propiedades; la lógica reside en BLL."
@@ -3299,6 +4400,7 @@
         "notes": "BE/Proveedor.cs",
         "source": "BE/Proveedor.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 40,
         "y": 40,
         "w": 732,
@@ -3365,6 +4467,7 @@
         "notes": "BE/Producto.cs",
         "source": "BE/Producto.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 942,
         "y": 40,
         "w": 732,
@@ -3737,6 +4840,7 @@
         "notes": "BLL/AprovisionamientoBLL.cs",
         "source": "BLL/AprovisionamientoBLL.cs",
         "proposed": false,
+        "namespace": "BLL",
         "x": 942,
         "y": 608,
         "w": 732,
@@ -3855,6 +4959,7 @@
         "notes": "BLL/InventarioBLL.cs",
         "source": "BLL/InventarioBLL.cs",
         "proposed": false,
+        "namespace": "BLL",
         "x": 1844,
         "y": 608,
         "w": 732,
@@ -3960,9 +5065,10 @@
         "notes": "BE/Proveedor.cs",
         "source": "BE/Proveedor.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 40,
         "y": 40,
-        "w": 1002,
+        "w": 1104,
         "h": 352,
         "fontSize": 11
       },
@@ -4016,9 +5122,10 @@
         "notes": "BE/CotizacionProveedor.cs",
         "source": "BE/CotizacionProveedor.cs",
         "proposed": false,
-        "x": 1212,
+        "namespace": "BE",
+        "x": 1314,
         "y": 40,
-        "w": 1002,
+        "w": 1104,
         "h": 352,
         "fontSize": 11
       },
@@ -4059,9 +5166,10 @@
         "notes": "BE/DetalleCotizacionProveedor.cs",
         "source": "BE/DetalleCotizacionProveedor.cs",
         "proposed": false,
-        "x": 2384,
+        "namespace": "BE",
+        "x": 2588,
         "y": 40,
-        "w": 1002,
+        "w": 1104,
         "h": 352,
         "fontSize": 11
       },
@@ -4135,9 +5243,10 @@
         "notes": "BE/OrdenCompra.cs",
         "source": "BE/OrdenCompra.cs",
         "proposed": false,
-        "x": 3556,
+        "namespace": "BE",
+        "x": 3862,
         "y": 40,
-        "w": 1002,
+        "w": 1104,
         "h": 352,
         "fontSize": 11
       },
@@ -4188,9 +5297,10 @@
         "notes": "BE/DetalleOrdenCompra.cs",
         "source": "BE/DetalleOrdenCompra.cs",
         "proposed": false,
-        "x": 4728,
+        "namespace": "BE",
+        "x": 5136,
         "y": 40,
-        "w": 1002,
+        "w": 1104,
         "h": 352,
         "fontSize": 11
       },
@@ -4254,9 +5364,10 @@
         "notes": "BE/Producto.cs",
         "source": "BE/Producto.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 40,
         "y": 542,
-        "w": 1002,
+        "w": 1104,
         "h": 462,
         "fontSize": 11
       },
@@ -4325,9 +5436,10 @@
         "notes": "BLL/ProveedorBLL.cs",
         "source": "BLL/ProveedorBLL.cs",
         "proposed": false,
-        "x": 1212,
+        "namespace": "BLL",
+        "x": 1314,
         "y": 542,
-        "w": 1002,
+        "w": 1104,
         "h": 462,
         "fontSize": 11
       },
@@ -4558,9 +5670,10 @@
         "notes": "BLL/AprovisionamientoBLL.cs",
         "source": "BLL/AprovisionamientoBLL.cs",
         "proposed": false,
-        "x": 2384,
+        "namespace": "BLL",
+        "x": 2588,
         "y": 542,
-        "w": 1002,
+        "w": 1104,
         "h": 462,
         "fontSize": 11
       },
@@ -4629,9 +5742,10 @@
         "notes": "BLL/ProductoBLL.cs",
         "source": "BLL/ProductoBLL.cs",
         "proposed": false,
-        "x": 3556,
+        "namespace": "BLL",
+        "x": 3862,
         "y": 542,
-        "w": 1002,
+        "w": 1104,
         "h": 462,
         "fontSize": 11
       },
@@ -4710,9 +5824,10 @@
         "notes": "BE/Lote.cs",
         "source": "BE/Lote.cs",
         "proposed": false,
-        "x": 4728,
+        "namespace": "BE",
+        "x": 5136,
         "y": 542,
-        "w": 1002,
+        "w": 1104,
         "h": 462,
         "fontSize": 11
       },
@@ -4771,9 +5886,10 @@
         "notes": "BE/MovimientoStock.cs",
         "source": "BE/MovimientoStock.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 40,
         "y": 1154,
-        "w": 1002,
+        "w": 1104,
         "h": 352,
         "fontSize": 11
       },
@@ -4889,9 +6005,10 @@
         "notes": "BLL/InventarioBLL.cs",
         "source": "BLL/InventarioBLL.cs",
         "proposed": false,
-        "x": 1212,
+        "namespace": "BLL",
+        "x": 1314,
         "y": 1154,
-        "w": 1002,
+        "w": 1104,
         "h": 352,
         "fontSize": 11
       },
@@ -4965,9 +6082,10 @@
         "notes": "BE/Cliente.cs",
         "source": "BE/Cliente.cs",
         "proposed": false,
-        "x": 2384,
+        "namespace": "BE",
+        "x": 2588,
         "y": 1154,
-        "w": 1002,
+        "w": 1104,
         "h": 352,
         "fontSize": 11
       },
@@ -5021,9 +6139,10 @@
         "notes": "BE/Membresia.cs",
         "source": "BE/Membresia.cs",
         "proposed": false,
-        "x": 3556,
+        "namespace": "BE",
+        "x": 3862,
         "y": 1154,
-        "w": 1002,
+        "w": 1104,
         "h": 352,
         "fontSize": 11
       },
@@ -5087,9 +6206,10 @@
         "notes": "BE/Venta.cs",
         "source": "BE/Venta.cs",
         "proposed": false,
-        "x": 4728,
+        "namespace": "BE",
+        "x": 5136,
         "y": 1154,
-        "w": 1002,
+        "w": 1104,
         "h": 352,
         "fontSize": 11
       },
@@ -5145,9 +6265,10 @@
         "notes": "BE/DetalleVenta.cs",
         "source": "BE/DetalleVenta.cs",
         "proposed": false,
+        "namespace": "BE",
         "x": 40,
         "y": 1656,
-        "w": 1002,
+        "w": 1104,
         "h": 308,
         "fontSize": 11
       },
@@ -5264,9 +6385,10 @@
         "notes": "BLL/VentaBLL.cs",
         "source": "BLL/VentaBLL.cs",
         "proposed": false,
-        "x": 1212,
+        "namespace": "BLL",
+        "x": 1314,
         "y": 1656,
-        "w": 1002,
+        "w": 1104,
         "h": 308,
         "fontSize": 11
       },
@@ -5321,9 +6443,9 @@
             "visibility": "Public"
           }
         ],
-        "x": 2384,
+        "x": 2588,
         "y": 1656,
-        "w": 1002,
+        "w": 1104,
         "h": 308,
         "fontSize": 11
       },
@@ -5331,7 +6453,7 @@
         "key": "IAprovisionamientoRepository",
         "name": "IAprovisionamientoRepository",
         "kind": "Interface",
-        "stereotype": "BE",
+        "stereotype": "interface",
         "attributes": [],
         "methods": [
           {
@@ -5460,12 +6582,176 @@
           }
         ],
         "abstract": false,
-        "notes": "BE/Interfaces/IAprovisionamientoRepository.cs",
-        "source": "BE/Interfaces/IAprovisionamientoRepository.cs",
+        "notes": "DAL/Interfaces/IAprovisionamientoRepository.cs",
+        "source": "DAL/Interfaces/IAprovisionamientoRepository.cs",
         "proposed": false,
-        "x": 3556,
+        "namespace": "DAL.Interfaces",
+        "x": 3862,
         "y": 1656,
-        "w": 1002,
+        "w": 1104,
+        "h": 308,
+        "fontSize": 11
+      },
+      {
+        "key": "AprovisionamientoDAL",
+        "name": "AprovisionamientoDAL",
+        "kind": "Class",
+        "stereotype": "DAL",
+        "attributes": [
+          {
+            "name": "Instancia",
+            "type": "AprovisionamientoDAL",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [
+          {
+            "name": "InsertarCotizacion",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "cotizacion",
+                "type": "CotizacionProveedor",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "InsertarOrden",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "orden",
+                "type": "OrdenCompra",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ObtenerOrden",
+            "type": "OrdenCompra",
+            "parameters": [
+              {
+                "name": "idOrdenCompra",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ActualizarEstado",
+            "type": "bool",
+            "parameters": [
+              {
+                "name": "idOrdenCompra",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "estadoEsperado",
+                "type": "EstadoOrdenCompra",
+                "default": ""
+              },
+              {
+                "name": "nuevoEstado",
+                "type": "EstadoOrdenCompra",
+                "default": ""
+              },
+              {
+                "name": "idUsuarioContable",
+                "type": "int?",
+                "default": ""
+              },
+              {
+                "name": "motivoRechazo",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ContarProveedoresCotizadosPorProducto",
+            "type": "IDictionary<int, int>",
+            "parameters": [
+              {
+                "name": "idsProducto",
+                "type": "IList<int>",
+                "default": ""
+              },
+              {
+                "name": "fechaReferencia",
+                "type": "DateTime",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ListarOrdenes",
+            "type": "IList<OrdenCompra>",
+            "parameters": [
+              {
+                "name": "idProveedor",
+                "type": "int?",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "RegistrarRecepcion",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "idOrdenCompra",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "lotes",
+                "type": "IList<Lote>",
+                "default": ""
+              },
+              {
+                "name": "estadoFinal",
+                "type": "EstadoOrdenCompra",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "DAL/AprovisionamientoDAL.cs",
+        "source": "DAL/AprovisionamientoDAL.cs",
+        "proposed": false,
+        "namespace": "DAL",
+        "x": 5136,
+        "y": 1656,
+        "w": 1104,
         "h": 308,
         "fontSize": 11
       },
@@ -5473,7 +6759,7 @@
         "key": "IInventarioRepository",
         "name": "IInventarioRepository",
         "kind": "Interface",
-        "stereotype": "BE",
+        "stereotype": "interface",
         "attributes": [],
         "methods": [
           {
@@ -5563,20 +6849,209 @@
           }
         ],
         "abstract": false,
-        "notes": "BE/Interfaces/IInventarioRepository.cs",
-        "source": "BE/Interfaces/IInventarioRepository.cs",
+        "notes": "DAL/Interfaces/IInventarioRepository.cs",
+        "source": "DAL/Interfaces/IInventarioRepository.cs",
         "proposed": false,
-        "x": 4728,
-        "y": 1656,
-        "w": 1002,
-        "h": 308,
+        "namespace": "DAL.Interfaces",
+        "x": 40,
+        "y": 2114,
+        "w": 1104,
+        "h": 286,
+        "fontSize": 11
+      },
+      {
+        "key": "InventarioDAL",
+        "name": "InventarioDAL",
+        "kind": "Class",
+        "stereotype": "DAL",
+        "attributes": [
+          {
+            "name": "Instancia",
+            "type": "InventarioDAL",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [
+          {
+            "name": "VerificarStock",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "RegistrarIngresoLote",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "lote",
+                "type": "Lote",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "name": "referencia",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "DescontarStockLote",
+            "type": "bool",
+            "parameters": [
+              {
+                "name": "idLote",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "cantidad",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "name": "referencia",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ObtenerLotesDisponibles",
+            "type": "IList<Lote>",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ObtenerTrazabilidad",
+            "type": "IList<Lote>",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "InsertarLote",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "conexion",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "transaccion",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "lote",
+                "type": "Lote",
+                "default": ""
+              }
+            ],
+            "visibility": "Package",
+            "static": true,
+            "abstract": false
+          },
+          {
+            "name": "InsertarMovimiento",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "conexion",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "transaccion",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "idLote",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "tipo",
+                "type": "TipoMovimientoStock",
+                "default": ""
+              },
+              {
+                "name": "cantidad",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "name": "referencia",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Package",
+            "static": true,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "DAL/InventarioDAL.cs",
+        "source": "DAL/InventarioDAL.cs",
+        "proposed": false,
+        "namespace": "DAL",
+        "x": 1314,
+        "y": 2114,
+        "w": 1104,
+        "h": 286,
         "fontSize": 11
       },
       {
         "key": "IProveedorRepository",
         "name": "IProveedorRepository",
         "kind": "Interface",
-        "stereotype": "BE",
+        "stereotype": "interface",
         "attributes": [],
         "methods": [
           {
@@ -5617,20 +7092,88 @@
           }
         ],
         "abstract": false,
-        "notes": "BE/Interfaces/IProveedorRepository.cs",
-        "source": "BE/Interfaces/IProveedorRepository.cs",
+        "notes": "DAL/Interfaces/IProveedorRepository.cs",
+        "source": "DAL/Interfaces/IProveedorRepository.cs",
         "proposed": false,
-        "x": 40,
+        "namespace": "DAL.Interfaces",
+        "x": 2588,
         "y": 2114,
-        "w": 1002,
-        "h": 418,
+        "w": 1104,
+        "h": 286,
+        "fontSize": 11
+      },
+      {
+        "key": "ProveedorDAL",
+        "name": "ProveedorDAL",
+        "kind": "Class",
+        "stereotype": "DAL",
+        "attributes": [
+          {
+            "name": "Instancia",
+            "type": "ProveedorDAL",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [
+          {
+            "name": "Guardar",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "proveedor",
+                "type": "Proveedor",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "Obtener",
+            "type": "Proveedor",
+            "parameters": [
+              {
+                "name": "idProveedor",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "Listar",
+            "type": "IList<Proveedor>",
+            "parameters": [
+              {
+                "name": "soloActivos",
+                "type": "bool",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "DAL/ProveedorDAL.cs",
+        "source": "DAL/ProveedorDAL.cs",
+        "proposed": false,
+        "namespace": "DAL",
+        "x": 3862,
+        "y": 2114,
+        "w": 1104,
+        "h": 286,
         "fontSize": 11
       },
       {
         "key": "IProductoRepository",
         "name": "IProductoRepository",
         "kind": "Interface",
-        "stereotype": "BE",
+        "stereotype": "interface",
         "attributes": [],
         "methods": [
           {
@@ -5671,20 +7214,88 @@
           }
         ],
         "abstract": false,
-        "notes": "BE/Interfaces/IProductoRepository.cs",
-        "source": "BE/Interfaces/IProductoRepository.cs",
+        "notes": "DAL/Interfaces/IProductoRepository.cs",
+        "source": "DAL/Interfaces/IProductoRepository.cs",
         "proposed": false,
-        "x": 1212,
+        "namespace": "DAL.Interfaces",
+        "x": 5136,
         "y": 2114,
-        "w": 1002,
-        "h": 418,
+        "w": 1104,
+        "h": 286,
+        "fontSize": 11
+      },
+      {
+        "key": "ProductoDAL",
+        "name": "ProductoDAL",
+        "kind": "Class",
+        "stereotype": "DAL",
+        "attributes": [
+          {
+            "name": "Instancia",
+            "type": "ProductoDAL",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [
+          {
+            "name": "Guardar",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "producto",
+                "type": "Producto",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "Obtener",
+            "type": "Producto",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "Listar",
+            "type": "IList<Producto>",
+            "parameters": [
+              {
+                "name": "soloActivos",
+                "type": "bool",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "DAL/ProductoDAL.cs",
+        "source": "DAL/ProductoDAL.cs",
+        "proposed": false,
+        "namespace": "DAL",
+        "x": 40,
+        "y": 2550,
+        "w": 1104,
+        "h": 308,
         "fontSize": 11
       },
       {
         "key": "IRegistroActividad",
         "name": "IRegistroActividad",
         "kind": "Interface",
-        "stereotype": "BE",
+        "stereotype": "interface",
         "attributes": [],
         "methods": [
           {
@@ -5709,17 +7320,56 @@
         "notes": "BE/Interfaces/IRegistroActividad.cs",
         "source": "BE/Interfaces/IRegistroActividad.cs",
         "proposed": false,
-        "x": 2384,
-        "y": 2114,
-        "w": 1002,
-        "h": 418,
+        "namespace": "BE.Interfaces",
+        "x": 1314,
+        "y": 2550,
+        "w": 1104,
+        "h": 308,
+        "fontSize": 11
+      },
+      {
+        "key": "RegistroActividadBitacora",
+        "name": "RegistroActividadBitacora",
+        "kind": "Class",
+        "stereotype": "BLL",
+        "attributes": [],
+        "methods": [
+          {
+            "name": "Registrar",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "actividad",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "name": "detalle",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "BLL/RegistroActividadBitacora.cs",
+        "source": "BLL/RegistroActividadBitacora.cs",
+        "proposed": false,
+        "namespace": "BLL",
+        "x": 2588,
+        "y": 2550,
+        "w": 1104,
+        "h": 308,
         "fontSize": 11
       },
       {
         "key": "IVentaRepository",
         "name": "IVentaRepository",
         "kind": "Interface",
-        "stereotype": "BE",
+        "stereotype": "interface",
         "attributes": [],
         "methods": [
           {
@@ -5801,21 +7451,189 @@
           }
         ],
         "abstract": false,
-        "notes": "BE/Interfaces/IVentaRepository.cs",
-        "source": "BE/Interfaces/IVentaRepository.cs",
+        "notes": "DAL/Interfaces/IVentaRepository.cs",
+        "source": "DAL/Interfaces/IVentaRepository.cs",
         "proposed": false,
-        "x": 3556,
-        "y": 2114,
-        "w": 1002,
-        "h": 418,
+        "namespace": "DAL.Interfaces",
+        "x": 3862,
+        "y": 2550,
+        "w": 1104,
+        "h": 308,
+        "fontSize": 11
+      },
+      {
+        "key": "VentaDAL",
+        "name": "VentaDAL",
+        "kind": "Class",
+        "stereotype": "DAL",
+        "attributes": [
+          {
+            "name": "Instancia",
+            "type": "VentaDAL",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [
+          {
+            "name": "BuscarClientePorEmail",
+            "type": "Cliente",
+            "parameters": [
+              {
+                "name": "email",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "GuardarCliente",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "cliente",
+                "type": "Cliente",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ObtenerMembresiaActiva",
+            "type": "Membresia",
+            "parameters": [
+              {
+                "name": "idCliente",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "CrearMembresia",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "membresia",
+                "type": "Membresia",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "RegistrarVenta",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "venta",
+                "type": "Venta",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ListarVentasCliente",
+            "type": "IList<Venta>",
+            "parameters": [
+              {
+                "name": "idCliente",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "InsertarVenta",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "conexion",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "transaccion",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "venta",
+                "type": "Venta",
+                "default": ""
+              }
+            ],
+            "visibility": "Private",
+            "static": true,
+            "abstract": false
+          },
+          {
+            "name": "InsertarDetalle",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "conexion",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "transaccion",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "idVenta",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "detalle",
+                "type": "DetalleVenta",
+                "default": ""
+              }
+            ],
+            "visibility": "Private",
+            "static": true,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "DAL/VentaDAL.cs",
+        "source": "DAL/VentaDAL.cs",
+        "proposed": false,
+        "namespace": "DAL",
+        "x": 5136,
+        "y": 2550,
+        "w": 1104,
+        "h": 308,
         "fontSize": 11
       },
       {
         "key": "EvaluacionProveedor",
         "name": "EvaluacionProveedor",
-        "x": 4728,
-        "y": 2114,
-        "w": 1002,
+        "x": 40,
+        "y": 3008,
+        "w": 1104,
         "h": 418,
         "kind": "Class",
         "stereotype": "diseño N03",
@@ -5943,10 +7761,10 @@
             "visibility": "Public"
           }
         ],
-        "x": 40,
-        "y": 2682,
-        "w": 1002,
-        "h": 352,
+        "x": 1314,
+        "y": 3008,
+        "w": 1104,
+        "h": 418,
         "fontSize": 11
       },
       {
@@ -6014,10 +7832,11 @@
         "notes": "BE/Persona.cs",
         "source": "BE/Persona.cs",
         "proposed": false,
-        "x": 1212,
-        "y": 2682,
-        "w": 1002,
-        "h": 352,
+        "namespace": "BE",
+        "x": 2588,
+        "y": 3008,
+        "w": 1104,
+        "h": 418,
         "fontSize": 11
       },
       {
@@ -6102,10 +7921,11 @@
         "notes": "BE/Usuario.cs",
         "source": "BE/Usuario.cs",
         "proposed": false,
-        "x": 2384,
-        "y": 2682,
-        "w": 1002,
-        "h": 352,
+        "namespace": "BE",
+        "x": 3862,
+        "y": 3008,
+        "w": 1104,
+        "h": 418,
         "fontSize": 11
       },
       {
@@ -6188,10 +8008,11 @@
         "notes": "BE/Seguridad/Componente.cs",
         "source": "BE/Seguridad/Componente.cs",
         "proposed": false,
-        "x": 3556,
-        "y": 2682,
-        "w": 1002,
-        "h": 352,
+        "namespace": "BE.Seguridad",
+        "x": 5136,
+        "y": 3008,
+        "w": 1104,
+        "h": 418,
         "fontSize": 11
       },
       {
@@ -6264,10 +8085,11 @@
         "notes": "BE/Seguridad/Familia.cs",
         "source": "BE/Seguridad/Familia.cs",
         "proposed": false,
-        "x": 4728,
-        "y": 2682,
-        "w": 1002,
-        "h": 352,
+        "namespace": "BE.Seguridad",
+        "x": 40,
+        "y": 3576,
+        "w": 1104,
+        "h": 264,
         "fontSize": 11
       },
       {
@@ -6334,9 +8156,10 @@
         "notes": "BE/Seguridad/Patente.cs",
         "source": "BE/Seguridad/Patente.cs",
         "proposed": false,
-        "x": 40,
-        "y": 3184,
-        "w": 1002,
+        "namespace": "BE.Seguridad",
+        "x": 1314,
+        "y": 3576,
+        "w": 1104,
         "h": 264,
         "fontSize": 11
       },
@@ -6408,46 +8231,10 @@
         "notes": "BE/EventoBitacora.cs",
         "source": "BE/EventoBitacora.cs",
         "proposed": false,
-        "x": 1212,
-        "y": 3184,
-        "w": 1002,
-        "h": 264,
-        "fontSize": 11
-      },
-      {
-        "key": "RegistroActividadBitacora",
-        "name": "RegistroActividadBitacora",
-        "kind": "Class",
-        "stereotype": "BLL",
-        "attributes": [],
-        "methods": [
-          {
-            "name": "Registrar",
-            "type": "void",
-            "parameters": [
-              {
-                "name": "actividad",
-                "type": "string",
-                "default": ""
-              },
-              {
-                "name": "detalle",
-                "type": "string",
-                "default": ""
-              }
-            ],
-            "visibility": "Public",
-            "static": false,
-            "abstract": false
-          }
-        ],
-        "abstract": false,
-        "notes": "BLL/RegistroActividadBitacora.cs",
-        "source": "BLL/RegistroActividadBitacora.cs",
-        "proposed": false,
-        "x": 2384,
-        "y": 3184,
-        "w": 1002,
+        "namespace": "BE",
+        "x": 2588,
+        "y": 3576,
+        "w": 1104,
         "h": 264,
         "fontSize": 11
       }
@@ -6676,18 +8463,6 @@
         "kind": "Dependency"
       },
       {
-        "source": "Producto",
-        "target": "DetalleVenta",
-        "name": "",
-        "kind": "Association"
-      },
-      {
-        "source": "Lote",
-        "target": "DetalleVenta",
-        "name": "",
-        "kind": "Association"
-      },
-      {
         "source": "VentaBLL",
         "target": "Cliente",
         "name": "",
@@ -6748,6 +8523,36 @@
         "kind": "Dependency"
       },
       {
+        "source": "AprovisionamientoDAL",
+        "target": "IAprovisionamientoRepository",
+        "name": "",
+        "kind": "Realization"
+      },
+      {
+        "source": "InventarioDAL",
+        "target": "IInventarioRepository",
+        "name": "",
+        "kind": "Realization"
+      },
+      {
+        "source": "ProductoDAL",
+        "target": "IProductoRepository",
+        "name": "",
+        "kind": "Realization"
+      },
+      {
+        "source": "ProveedorDAL",
+        "target": "IProveedorRepository",
+        "name": "",
+        "kind": "Realization"
+      },
+      {
+        "source": "RegistroActividadBitacora",
+        "target": "IRegistroActividad",
+        "name": "",
+        "kind": "Realization"
+      },
+      {
         "source": "VentaBLL",
         "target": "IVentaRepository",
         "name": "usa",
@@ -6776,6 +8581,12 @@
         "target": "VentaBLL",
         "name": "",
         "kind": "Dependency"
+      },
+      {
+        "source": "VentaDAL",
+        "target": "IVentaRepository",
+        "name": "",
+        "kind": "Realization"
       },
       {
         "source": "EvaluacionProveedorBLL",

@@ -2960,6 +2960,7 @@
         "target": "Proveedor",
         "name": "IdProveedor",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "1"
       },
@@ -2968,6 +2969,7 @@
         "target": "CotizacionProveedor",
         "name": "IdCotizacion",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "1"
       },
@@ -2976,6 +2978,7 @@
         "target": "Producto",
         "name": "IdProducto",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "1"
       },
@@ -2984,6 +2987,7 @@
         "target": "Proveedor",
         "name": "IdProveedor",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "1"
       },
@@ -2992,6 +2996,7 @@
         "target": "Usuarios",
         "name": "IdUsuarioAprobadorContable",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "0..1"
       },
@@ -3000,6 +3005,7 @@
         "target": "OrdenCompra",
         "name": "IdOrdenCompra",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "1"
       },
@@ -3008,6 +3014,7 @@
         "target": "Producto",
         "name": "IdProducto",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "1"
       }
@@ -3343,6 +3350,7 @@
         "target": "Producto",
         "name": "IdProducto",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "1"
       },
@@ -3351,6 +3359,7 @@
         "target": "Proveedor",
         "name": "IdProveedor",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "1"
       },
@@ -3359,6 +3368,7 @@
         "target": "OrdenCompra",
         "name": "IdOrdenCompra",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "0..1"
       },
@@ -3367,6 +3377,7 @@
         "target": "Lote",
         "name": "IdLote",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "1"
       },
@@ -3375,6 +3386,7 @@
         "target": "Proveedor",
         "name": "IdProveedor",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "1"
       }
@@ -3777,6 +3789,7 @@
         "target": "Cliente",
         "name": "IdCliente",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "1"
       },
@@ -3785,6 +3798,7 @@
         "target": "Cliente",
         "name": "IdCliente",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "0..1"
       },
@@ -3793,6 +3807,7 @@
         "target": "Usuarios",
         "name": "IdUsuarioVendedor",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "0..1"
       },
@@ -3801,6 +3816,7 @@
         "target": "Venta",
         "name": "IdVenta",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "1"
       },
@@ -3809,6 +3825,7 @@
         "target": "Producto",
         "name": "IdProducto",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "1"
       },
@@ -3817,6 +3834,7 @@
         "target": "Lote",
         "name": "IdLote",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "1"
       },
@@ -3825,6 +3843,7 @@
         "target": "Producto",
         "name": "IdProducto",
         "kind": "Association",
+        "stereotype": "FK",
         "sourceCardinality": "0..*",
         "targetCardinality": "1"
       }

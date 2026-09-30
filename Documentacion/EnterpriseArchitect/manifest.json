@@ -37,7 +37,7 @@
     {
         "code":  "N01-05",
         "title":  "N01 · Clases de lógica de negocio (BLL)",
-        "diagramId":  10,
+        "diagramId":  27,
         "guid":  "{D56E034A-AA88-4e53-BAC2-E76C512D2E29}",
         "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N01-05.png"
     },
@@ -100,7 +100,7 @@
     {
         "code":  "N02-05",
         "title":  "N02 · Clases de lógica de negocio (BLL)",
-        "diagramId":  11,
+        "diagramId":  28,
         "guid":  "{C77B3A40-3614-44fb-9E5C-251536036364}",
         "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N02-05.png"
     },

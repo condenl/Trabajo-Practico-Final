@@ -65,6 +65,7 @@ if (!$ExportOnly) {
                 $c.TransitionAction = 'Call'
                 $c.TransitionEvent = 'Synchronous'
             }
+            if ($l.stereotype) { $c.Stereotype = $l.stereotype }
             if ($l.sourceCardinality) { $c.ClientEnd.Cardinality = $l.sourceCardinality }
             if ($l.targetCardinality) { $c.SupplierEnd.Cardinality = $l.targetCardinality }
             [void]$c.Update()

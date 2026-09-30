@@ -56,13 +56,14 @@ def load_class(name, path, extra_methods=(), include_fields=False):
     if path.startswith("BE/"):
         for args in re.findall(r"public\s+" + re.escape(name) + r"\s*\(([^)]*)\)", source):
             methods.append(method(name, "", args, stereotype="create"))
-    if path.startswith("BE/Interfaces/"):
+    if "/Interfaces/" in path:
         methods = [method(operation, result.strip(), args) for result, operation, args in
                    re.findall(r"^\s*([\w<>?,.\[\] ]+?)\s+(\w+)\(([^)]*)\);", source, re.M)]
-    registry[name] = dict(key=name, name=name, kind="Interface" if path.startswith("BE/Interfaces/") else "Class",
-                          stereotype=path.split("/")[0], attributes=attrs, methods=methods,
+    registry[name] = dict(key=name, name=name, kind="Interface" if "/Interfaces/" in path else "Class",
+                          stereotype="interface" if "/Interfaces/" in path else path.split("/")[0], attributes=attrs, methods=methods,
                           abstract=bool(re.search(r"abstract class " + re.escape(name), source)),
-                          notes=path, source=path, proposed=False)
+                          notes=path, source=path, proposed=False,
+                          namespace=path.rsplit("/", 1)[0].replace("/", "."))
 
 
 entities = ["Proveedor", "Producto", "CotizacionProveedor", "DetalleCotizacionProveedor", "OrdenCompra",
@@ -77,7 +78,8 @@ for name in ["AprovisionamientoBLL", "InventarioBLL", "VentaBLL", "ProveedorBLL"
               "InventarioBLL": ["ValidarLote"], "VentaBLL": ["ValidarCliente"]}.get(name, [])
     load_class(name, f"BLL/{name}.cs", extras, include_fields=True)
 for name in ["IAprovisionamientoRepository", "IInventarioRepository", "IProductoRepository", "IProveedorRepository", "IVentaRepository", "IRegistroActividad"]:
-    load_class(name, f"BE/Interfaces/{name}.cs")
+    folder = "BE" if name == "IRegistroActividad" else "DAL"
+    load_class(name, f"{folder}/Interfaces/{name}.cs")
 for name in ["AprovisionamientoDAL", "InventarioDAL", "VentaDAL", "ProductoDAL", "ProveedorDAL"]:
     load_class(name, f"DAL/{name}.cs", ["InsertarLote", "InsertarMovimiento", "InsertarVenta", "InsertarDetalle"])
 for name in ["UC_Aprovisionamiento", "UC_Ventas"]:
@@ -136,11 +138,11 @@ details = {
     "N01-04a": ["Proveedor", "CotizacionProveedor", "DetalleCotizacionProveedor", "OrdenCompra", "DetalleOrdenCompra", "Producto", "ProveedorBLL", "AprovisionamientoBLL", "ProductoBLL"],
     "N01-04b": ["Producto", "Lote", "MovimientoStock", "OrdenCompra", "Proveedor", "InventarioBLL"],
     "N02-04": ["Cliente", "Membresia", "Venta", "DetalleVenta", "Producto", "Lote", "VentaBLL", "MarketingBLL"],
-    "N01-05": ["AprovisionamientoBLL", "IAprovisionamientoRepository", "InventarioBLL", "IInventarioRepository", "IProveedorRepository", "IProductoRepository", "IRegistroActividad"],
-    "N02-05": ["VentaBLL", "IVentaRepository", "IProductoRepository", "IInventarioRepository", "IRegistroActividad", "MarketingBLL"],
+    "N01-05": ["AprovisionamientoBLL", "IAprovisionamientoRepository", "AprovisionamientoDAL", "InventarioBLL", "IInventarioRepository", "InventarioDAL", "IProveedorRepository", "ProveedorDAL", "IProductoRepository", "ProductoDAL", "IRegistroActividad", "RegistroActividadBitacora"],
+    "N02-05": ["VentaBLL", "IVentaRepository", "VentaDAL", "IProductoRepository", "ProductoDAL", "IInventarioRepository", "InventarioDAL", "IRegistroActividad", "RegistroActividadBitacora", "MarketingBLL"],
     "N03-04": ["Proveedor", "Producto", "EvaluacionProveedor", "EvaluacionProveedorBLL", "AprovisionamientoBLL", "InventarioBLL"]}
 for code, names in details.items():
-    d = class_view(code, names, columns=2 if code.endswith("-05") else 3)
+    d = class_view(code, names, columns=3)
     deps = {"N01-04a": [("ProveedorBLL", "Proveedor"), ("AprovisionamientoBLL", "OrdenCompra"), ("AprovisionamientoBLL", "CotizacionProveedor"), ("ProductoBLL", "Producto")],
             "N01-04b": [("InventarioBLL", "Lote"), ("InventarioBLL", "MovimientoStock")],
             "N02-04": [("VentaBLL", "Cliente"), ("VentaBLL", "Venta"), ("VentaBLL", "Membresia"), ("MarketingBLL", "Cliente")],
@@ -148,6 +150,37 @@ for code, names in details.items():
             "N02-05": [("MarketingBLL", "VentaBLL")]}.get(code, [])
     for a, b in deps:
         uses(d, a, b)
+    for implementation, contract in [("AprovisionamientoDAL", "IAprovisionamientoRepository"),
+            ("InventarioDAL", "IInventarioRepository"), ("ProductoDAL", "IProductoRepository"),
+            ("ProveedorDAL", "IProveedorRepository"), ("VentaDAL", "IVentaRepository"),
+            ("RegistroActividadBitacora", "IRegistroActividad")]:
+        if implementation in names and contract in names:
+            d["links"].append(dict(source=implementation, target=contract, name="", kind="Realization"))
+
+# Associations are undirected unless navigation is explicitly modeled. Reuse the
+# global multiplicities in both orientations and avoid reversed duplicates.
+association_definitions = {frozenset((l["source"], l["target"])): l
+    for l in old["G07-01"]["links"] if l["kind"] == "Association"}
+
+
+def normalize_links(links):
+    result, seen = [], set()
+    for edge in links:
+        if edge["kind"] == "Association":
+            key = (edge["kind"], frozenset((edge["source"], edge["target"])))
+            canonical = association_definitions.get(key[1])
+            if canonical:
+                edge = deepcopy(canonical)
+        else:
+            key = (edge["kind"], edge["source"], edge["target"])
+        if key not in seen:
+            result.append(edge)
+            seen.add(key)
+    return result
+
+
+for d in diagrams:
+    d["links"] = normalize_links(d["links"])
 
 # The global view contains the same canonical members, not just class names.
 global_names = list(dict.fromkeys([n for names in details.values() for n in names] + ["Persona", "Usuario", "Componente", "Familia", "Patente", "EventoBitacora", "RegistroActividadBitacora"]))
@@ -156,7 +189,7 @@ for d in diagrams:
     for edge in d["links"]:
         if not any(e["source"] == edge["source"] and e["target"] == edge["target"] and e["kind"] == edge["kind"] for e in global_links):
             global_links.append(deepcopy(edge))
-class_view("G07-01", global_names, columns=5, links=global_links)
+class_view("G07-01", global_names, columns=5, links=normalize_links(global_links))
 
 
 def sequence(code, participants, calls, frames=(), notes=""):

@@ -53,7 +53,8 @@
     "abstract": false,
     "notes": "BE/Proveedor.cs",
     "source": "BE/Proveedor.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE"
   },
   "Producto": {
     "key": "Producto",
@@ -114,7 +115,8 @@
     "abstract": false,
     "notes": "BE/Producto.cs",
     "source": "BE/Producto.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE"
   },
   "CotizacionProveedor": {
     "key": "CotizacionProveedor",
@@ -165,7 +167,8 @@
     "abstract": false,
     "notes": "BE/CotizacionProveedor.cs",
     "source": "BE/CotizacionProveedor.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE"
   },
   "DetalleCotizacionProveedor": {
     "key": "DetalleCotizacionProveedor",
@@ -203,7 +206,8 @@
     "abstract": false,
     "notes": "BE/DetalleCotizacionProveedor.cs",
     "source": "BE/DetalleCotizacionProveedor.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE"
   },
   "OrdenCompra": {
     "key": "OrdenCompra",
@@ -274,7 +278,8 @@
     "abstract": false,
     "notes": "BE/OrdenCompra.cs",
     "source": "BE/OrdenCompra.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE"
   },
   "DetalleOrdenCompra": {
     "key": "DetalleOrdenCompra",
@@ -322,7 +327,8 @@
     "abstract": false,
     "notes": "BE/DetalleOrdenCompra.cs",
     "source": "BE/DetalleOrdenCompra.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE"
   },
   "Lote": {
     "key": "Lote",
@@ -398,7 +404,8 @@
     "abstract": false,
     "notes": "BE/Lote.cs",
     "source": "BE/Lote.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE"
   },
   "MovimientoStock": {
     "key": "MovimientoStock",
@@ -454,7 +461,8 @@
     "abstract": false,
     "notes": "BE/MovimientoStock.cs",
     "source": "BE/MovimientoStock.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE"
   },
   "Cliente": {
     "key": "Cliente",
@@ -525,7 +533,8 @@
     "abstract": false,
     "notes": "BE/Cliente.cs",
     "source": "BE/Cliente.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE"
   },
   "Membresia": {
     "key": "Membresia",
@@ -576,7 +585,8 @@
     "abstract": false,
     "notes": "BE/Membresia.cs",
     "source": "BE/Membresia.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE"
   },
   "Venta": {
     "key": "Venta",
@@ -637,7 +647,8 @@
     "abstract": false,
     "notes": "BE/Venta.cs",
     "source": "BE/Venta.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE"
   },
   "DetalleVenta": {
     "key": "DetalleVenta",
@@ -690,7 +701,8 @@
     "abstract": false,
     "notes": "BE/DetalleVenta.cs",
     "source": "BE/DetalleVenta.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE"
   },
   "Persona": {
     "key": "Persona",
@@ -756,7 +768,8 @@
     "abstract": true,
     "notes": "BE/Persona.cs",
     "source": "BE/Persona.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE"
   },
   "Usuario": {
     "key": "Usuario",
@@ -839,7 +852,8 @@
     "abstract": false,
     "notes": "BE/Usuario.cs",
     "source": "BE/Usuario.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE"
   },
   "EventoBitacora": {
     "key": "EventoBitacora",
@@ -908,7 +922,8 @@
     "abstract": false,
     "notes": "BE/EventoBitacora.cs",
     "source": "BE/EventoBitacora.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE"
   },
   "Componente": {
     "key": "Componente",
@@ -989,7 +1004,8 @@
     "abstract": true,
     "notes": "BE/Seguridad/Componente.cs",
     "source": "BE/Seguridad/Componente.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE.Seguridad"
   },
   "Familia": {
     "key": "Familia",
@@ -1060,7 +1076,8 @@
     "abstract": false,
     "notes": "BE/Seguridad/Familia.cs",
     "source": "BE/Seguridad/Familia.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE.Seguridad"
   },
   "Patente": {
     "key": "Patente",
@@ -1125,7 +1142,8 @@
     "abstract": false,
     "notes": "BE/Seguridad/Patente.cs",
     "source": "BE/Seguridad/Patente.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE.Seguridad"
   },
   "AprovisionamientoBLL": {
     "key": "AprovisionamientoBLL",
@@ -1353,7 +1371,8 @@
     "abstract": false,
     "notes": "BLL/AprovisionamientoBLL.cs",
     "source": "BLL/AprovisionamientoBLL.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BLL"
   },
   "InventarioBLL": {
     "key": "InventarioBLL",
@@ -1466,7 +1485,8 @@
     "abstract": false,
     "notes": "BLL/InventarioBLL.cs",
     "source": "BLL/InventarioBLL.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BLL"
   },
   "VentaBLL": {
     "key": "VentaBLL",
@@ -1580,7 +1600,8 @@
     "abstract": false,
     "notes": "BLL/VentaBLL.cs",
     "source": "BLL/VentaBLL.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BLL"
   },
   "ProveedorBLL": {
     "key": "ProveedorBLL",
@@ -1646,7 +1667,8 @@
     "abstract": false,
     "notes": "BLL/ProveedorBLL.cs",
     "source": "BLL/ProveedorBLL.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BLL"
   },
   "ProductoBLL": {
     "key": "ProductoBLL",
@@ -1712,7 +1734,8 @@
     "abstract": false,
     "notes": "BLL/ProductoBLL.cs",
     "source": "BLL/ProductoBLL.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BLL"
   },
   "RegistroActividadBitacora": {
     "key": "RegistroActividadBitacora",
@@ -1744,13 +1767,14 @@
     "abstract": false,
     "notes": "BLL/RegistroActividadBitacora.cs",
     "source": "BLL/RegistroActividadBitacora.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BLL"
   },
   "IAprovisionamientoRepository": {
     "key": "IAprovisionamientoRepository",
     "name": "IAprovisionamientoRepository",
     "kind": "Interface",
-    "stereotype": "BE",
+    "stereotype": "interface",
     "attributes": [],
     "methods": [
       {
@@ -1879,15 +1903,16 @@
       }
     ],
     "abstract": false,
-    "notes": "BE/Interfaces/IAprovisionamientoRepository.cs",
-    "source": "BE/Interfaces/IAprovisionamientoRepository.cs",
-    "proposed": false
+    "notes": "DAL/Interfaces/IAprovisionamientoRepository.cs",
+    "source": "DAL/Interfaces/IAprovisionamientoRepository.cs",
+    "proposed": false,
+    "namespace": "DAL.Interfaces"
   },
   "IInventarioRepository": {
     "key": "IInventarioRepository",
     "name": "IInventarioRepository",
     "kind": "Interface",
-    "stereotype": "BE",
+    "stereotype": "interface",
     "attributes": [],
     "methods": [
       {
@@ -1977,15 +2002,16 @@
       }
     ],
     "abstract": false,
-    "notes": "BE/Interfaces/IInventarioRepository.cs",
-    "source": "BE/Interfaces/IInventarioRepository.cs",
-    "proposed": false
+    "notes": "DAL/Interfaces/IInventarioRepository.cs",
+    "source": "DAL/Interfaces/IInventarioRepository.cs",
+    "proposed": false,
+    "namespace": "DAL.Interfaces"
   },
   "IProductoRepository": {
     "key": "IProductoRepository",
     "name": "IProductoRepository",
     "kind": "Interface",
-    "stereotype": "BE",
+    "stereotype": "interface",
     "attributes": [],
     "methods": [
       {
@@ -2026,15 +2052,16 @@
       }
     ],
     "abstract": false,
-    "notes": "BE/Interfaces/IProductoRepository.cs",
-    "source": "BE/Interfaces/IProductoRepository.cs",
-    "proposed": false
+    "notes": "DAL/Interfaces/IProductoRepository.cs",
+    "source": "DAL/Interfaces/IProductoRepository.cs",
+    "proposed": false,
+    "namespace": "DAL.Interfaces"
   },
   "IProveedorRepository": {
     "key": "IProveedorRepository",
     "name": "IProveedorRepository",
     "kind": "Interface",
-    "stereotype": "BE",
+    "stereotype": "interface",
     "attributes": [],
     "methods": [
       {
@@ -2075,15 +2102,16 @@
       }
     ],
     "abstract": false,
-    "notes": "BE/Interfaces/IProveedorRepository.cs",
-    "source": "BE/Interfaces/IProveedorRepository.cs",
-    "proposed": false
+    "notes": "DAL/Interfaces/IProveedorRepository.cs",
+    "source": "DAL/Interfaces/IProveedorRepository.cs",
+    "proposed": false,
+    "namespace": "DAL.Interfaces"
   },
   "IVentaRepository": {
     "key": "IVentaRepository",
     "name": "IVentaRepository",
     "kind": "Interface",
-    "stereotype": "BE",
+    "stereotype": "interface",
     "attributes": [],
     "methods": [
       {
@@ -2165,15 +2193,16 @@
       }
     ],
     "abstract": false,
-    "notes": "BE/Interfaces/IVentaRepository.cs",
-    "source": "BE/Interfaces/IVentaRepository.cs",
-    "proposed": false
+    "notes": "DAL/Interfaces/IVentaRepository.cs",
+    "source": "DAL/Interfaces/IVentaRepository.cs",
+    "proposed": false,
+    "namespace": "DAL.Interfaces"
   },
   "IRegistroActividad": {
     "key": "IRegistroActividad",
     "name": "IRegistroActividad",
     "kind": "Interface",
-    "stereotype": "BE",
+    "stereotype": "interface",
     "attributes": [],
     "methods": [
       {
@@ -2197,7 +2226,8 @@
     "abstract": false,
     "notes": "BE/Interfaces/IRegistroActividad.cs",
     "source": "BE/Interfaces/IRegistroActividad.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "BE.Interfaces"
   },
   "AprovisionamientoDAL": {
     "key": "AprovisionamientoDAL",
@@ -2354,7 +2384,8 @@
     "abstract": false,
     "notes": "DAL/AprovisionamientoDAL.cs",
     "source": "DAL/AprovisionamientoDAL.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "DAL"
   },
   "InventarioDAL": {
     "key": "InventarioDAL",
@@ -2536,7 +2567,8 @@
     "abstract": false,
     "notes": "DAL/InventarioDAL.cs",
     "source": "DAL/InventarioDAL.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "DAL"
   },
   "VentaDAL": {
     "key": "VentaDAL",
@@ -2697,7 +2729,8 @@
     "abstract": false,
     "notes": "DAL/VentaDAL.cs",
     "source": "DAL/VentaDAL.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "DAL"
   },
   "ProductoDAL": {
     "key": "ProductoDAL",
@@ -2758,7 +2791,8 @@
     "abstract": false,
     "notes": "DAL/ProductoDAL.cs",
     "source": "DAL/ProductoDAL.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "DAL"
   },
   "ProveedorDAL": {
     "key": "ProveedorDAL",
@@ -2819,7 +2853,8 @@
     "abstract": false,
     "notes": "DAL/ProveedorDAL.cs",
     "source": "DAL/ProveedorDAL.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "DAL"
   },
   "UC_Aprovisionamiento": {
     "key": "UC_Aprovisionamiento",
@@ -3078,7 +3113,8 @@
     "abstract": false,
     "notes": "UI/UserControls/UC_Aprovisionamiento.cs",
     "source": "UI/UserControls/UC_Aprovisionamiento.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "UI.UserControls"
   },
   "UC_Ventas": {
     "key": "UC_Ventas",
@@ -3183,7 +3219,8 @@
     "abstract": false,
     "notes": "UI/UserControls/UC_Ventas.cs",
     "source": "UI/UserControls/UC_Ventas.cs",
-    "proposed": false
+    "proposed": false,
+    "namespace": "UI.UserControls"
   },
   "EvaluacionProveedor": {
     "key": "EvaluacionProveedor",

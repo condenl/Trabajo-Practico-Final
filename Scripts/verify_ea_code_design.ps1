@@ -24,6 +24,9 @@ foreach($s in $specs){
             if($e.Count -ne 1){throw ('Clase no unica '+$s.code+' '+$n.name)}
             $actual=$e[0];$expected=$catalog.($n.name)
         }
+        if($expected.abstract -and $actual.Abstract -ne '1'){throw ('Clase no abstracta '+$actual.Name)}
+        # Native Interface already renders the UML keyword; XMI may remove the redundant stereotype.
+        if($expected.kind -eq 'Interface' -and ($actual.Type -ne 'Interface' -or $actual.Stereotype -notin @('','interface'))){throw ('Interfaz mal identificada '+$actual.Name)}
         $a=@($actual.Attributes | ForEach-Object { $_.Name+':'+$_.Type } | Sort-Object)
         $b=@($expected.attributes | ForEach-Object { $_.name+':'+$_.type } | Sort-Object)
         if(($a -join '|') -cne ($b -join '|')){throw ('Atributos diferentes '+$actual.Name)}
@@ -37,6 +40,25 @@ foreach($s in $specs){
         } | Sort-Object)
         if(($a -join '|') -cne ($b -join '|')){throw ('Operaciones diferentes '+$actual.Name)}
         $verifiedClasses++
+    }
+    if($s.kind -eq 'Logical'){
+        $connections=@($d.DiagramLinks | ForEach-Object {$repo.GetConnectorByID($_.ConnectorID)})
+        if($connections.Count -ne $s.links.Count){throw ('Cantidad de relaciones incorrecta '+$s.code)}
+        $seen=@{}
+        foreach($l in $s.links){
+            $match=@($connections | Where-Object {
+                ($_.Type -replace 'Realisation','Realization') -eq $l.kind -and $repo.GetElementByID($_.ClientID).Name -eq $l.source -and $repo.GetElementByID($_.SupplierID).Name -eq $l.target
+            })
+            if($match.Count -ne 1){throw ('Relacion ausente o duplicada '+$s.code+' '+$l.source+' '+$l.target)}
+            $c=$match[0]
+            if($l.kind -eq 'Association'){
+                $key=@($l.source,$l.target | Sort-Object) -join '|'
+                if($seen.ContainsKey($key)){throw ('Asociacion inversa duplicada '+$s.code)}
+                $seen[$key]=$true
+                if($c.ClientEnd.Cardinality -ne $l.sourceCardinality -or $c.SupplierEnd.Cardinality -ne $l.targetCardinality){throw 'Multiplicidad incorrecta'}
+            }
+            if($l.kind -eq 'Realization' -and $repo.GetElementByID($c.SupplierID).Type -ne 'Interface'){throw 'Realizacion sin interfaz receptora'}
+        }
     }
     if($s.kind -eq 'Sequence'){
         $calls=@($d.DiagramLinks | ForEach-Object {$repo.GetConnectorByID($_.ConnectorID)} | Where-Object Type -eq 'Sequence' | Sort-Object SequenceNo)
