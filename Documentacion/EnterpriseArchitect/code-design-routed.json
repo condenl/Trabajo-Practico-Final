@@ -8770,6 +8770,9 @@
         "name": "RegistrarCotizacion",
         "kind": "Sequence",
         "sequence": 1,
+        "callId": 1,
+        "isReturn": false,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -8778,6 +8781,20 @@
         "name": "ValidarCotizacion",
         "kind": "Sequence",
         "sequence": 2,
+        "callId": 2,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoBLL",
+        "target": "AprovisionamientoBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 3,
+        "replyTo": 2,
+        "isReturn": true,
+        "returnType": "void",
         "proposed": false
       },
       {
@@ -8785,7 +8802,32 @@
         "target": "AprovisionamientoDAL",
         "name": "InsertarCotizacion",
         "kind": "Sequence",
-        "sequence": 3,
+        "sequence": 4,
+        "callId": 3,
+        "isReturn": false,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoDAL",
+        "target": "AprovisionamientoBLL",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 5,
+        "replyTo": 3,
+        "isReturn": true,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoBLL",
+        "target": "UC_Aprovisionamiento",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 6,
+        "replyTo": 1,
+        "isReturn": true,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -8793,7 +8835,10 @@
         "target": "AprovisionamientoBLL",
         "name": "CrearOrdenPreliminar",
         "kind": "Sequence",
-        "sequence": 4,
+        "sequence": 7,
+        "callId": 4,
+        "isReturn": false,
+        "returnType": "bool",
         "proposed": false
       },
       {
@@ -8801,7 +8846,21 @@
         "target": "AprovisionamientoBLL",
         "name": "ValidarOrdenPreliminar",
         "kind": "Sequence",
-        "sequence": 5,
+        "sequence": 8,
+        "callId": 5,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoBLL",
+        "target": "AprovisionamientoBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 9,
+        "replyTo": 5,
+        "isReturn": true,
+        "returnType": "void",
         "proposed": false
       },
       {
@@ -8809,7 +8868,32 @@
         "target": "AprovisionamientoDAL",
         "name": "InsertarOrden",
         "kind": "Sequence",
-        "sequence": 6,
+        "sequence": 10,
+        "callId": 6,
+        "isReturn": false,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoDAL",
+        "target": "AprovisionamientoBLL",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 11,
+        "replyTo": 6,
+        "isReturn": true,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoBLL",
+        "target": "UC_Aprovisionamiento",
+        "name": "bool",
+        "kind": "Sequence",
+        "sequence": 12,
+        "replyTo": 4,
+        "isReturn": true,
+        "returnType": "bool",
         "proposed": false
       },
       {
@@ -8817,7 +8901,10 @@
         "target": "AprovisionamientoBLL",
         "name": "EnviarOrdenARevisionContable",
         "kind": "Sequence",
-        "sequence": 7,
+        "sequence": 13,
+        "callId": 7,
+        "isReturn": false,
+        "returnType": "bool",
         "proposed": false
       },
       {
@@ -8825,7 +8912,21 @@
         "target": "AprovisionamientoDAL",
         "name": "ObtenerOrden",
         "kind": "Sequence",
-        "sequence": 8,
+        "sequence": 14,
+        "callId": 8,
+        "isReturn": false,
+        "returnType": "OrdenCompra",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoDAL",
+        "target": "AprovisionamientoBLL",
+        "name": "OrdenCompra",
+        "kind": "Sequence",
+        "sequence": 15,
+        "replyTo": 8,
+        "isReturn": true,
+        "returnType": "OrdenCompra",
         "proposed": false
       },
       {
@@ -8833,7 +8934,21 @@
         "target": "AprovisionamientoDAL",
         "name": "ContarProveedoresCotizadosPorProducto",
         "kind": "Sequence",
-        "sequence": 9,
+        "sequence": 16,
+        "callId": 9,
+        "isReturn": false,
+        "returnType": "IDictionary<int, int>",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoDAL",
+        "target": "AprovisionamientoBLL",
+        "name": "IDictionary<int, int>",
+        "kind": "Sequence",
+        "sequence": 17,
+        "replyTo": 9,
+        "isReturn": true,
+        "returnType": "IDictionary<int, int>",
         "proposed": false
       },
       {
@@ -8841,7 +8956,10 @@
         "target": "AprovisionamientoBLL",
         "name": "CambiarEstado",
         "kind": "Sequence",
-        "sequence": 10,
+        "sequence": 18,
+        "callId": 10,
+        "isReturn": false,
+        "returnType": "void",
         "proposed": false
       },
       {
@@ -8849,7 +8967,43 @@
         "target": "AprovisionamientoDAL",
         "name": "ActualizarEstado",
         "kind": "Sequence",
-        "sequence": 11,
+        "sequence": 19,
+        "callId": 11,
+        "isReturn": false,
+        "returnType": "bool",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoDAL",
+        "target": "AprovisionamientoBLL",
+        "name": "bool",
+        "kind": "Sequence",
+        "sequence": 20,
+        "replyTo": 11,
+        "isReturn": true,
+        "returnType": "bool",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoBLL",
+        "target": "AprovisionamientoBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 21,
+        "replyTo": 10,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoBLL",
+        "target": "UC_Aprovisionamiento",
+        "name": "bool",
+        "kind": "Sequence",
+        "sequence": 22,
+        "replyTo": 7,
+        "isReturn": true,
+        "returnType": "bool",
         "proposed": false
       },
       {
@@ -8857,7 +9011,10 @@
         "target": "AprovisionamientoBLL",
         "name": "RechazarOrdenCompra",
         "kind": "Sequence",
-        "sequence": 12,
+        "sequence": 23,
+        "callId": 12,
+        "isReturn": false,
+        "returnType": "bool",
         "proposed": false
       },
       {
@@ -8865,7 +9022,10 @@
         "target": "AprovisionamientoBLL",
         "name": "CambiarEstado",
         "kind": "Sequence",
-        "sequence": 13,
+        "sequence": 24,
+        "callId": 13,
+        "isReturn": false,
+        "returnType": "void",
         "proposed": false
       },
       {
@@ -8873,7 +9033,43 @@
         "target": "AprovisionamientoDAL",
         "name": "ActualizarEstado",
         "kind": "Sequence",
-        "sequence": 14,
+        "sequence": 25,
+        "callId": 14,
+        "isReturn": false,
+        "returnType": "bool",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoDAL",
+        "target": "AprovisionamientoBLL",
+        "name": "bool",
+        "kind": "Sequence",
+        "sequence": 26,
+        "replyTo": 14,
+        "isReturn": true,
+        "returnType": "bool",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoBLL",
+        "target": "AprovisionamientoBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 27,
+        "replyTo": 13,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoBLL",
+        "target": "UC_Aprovisionamiento",
+        "name": "bool",
+        "kind": "Sequence",
+        "sequence": 28,
+        "replyTo": 12,
+        "isReturn": true,
+        "returnType": "bool",
         "proposed": false
       },
       {
@@ -8881,7 +9077,10 @@
         "target": "AprovisionamientoBLL",
         "name": "AprobarOrdenCompra",
         "kind": "Sequence",
-        "sequence": 15,
+        "sequence": 29,
+        "callId": 15,
+        "isReturn": false,
+        "returnType": "bool",
         "proposed": false
       },
       {
@@ -8889,7 +9088,10 @@
         "target": "AprovisionamientoBLL",
         "name": "CambiarEstado",
         "kind": "Sequence",
-        "sequence": 16,
+        "sequence": 30,
+        "callId": 16,
+        "isReturn": false,
+        "returnType": "void",
         "proposed": false
       },
       {
@@ -8897,7 +9099,43 @@
         "target": "AprovisionamientoDAL",
         "name": "ActualizarEstado",
         "kind": "Sequence",
-        "sequence": 17,
+        "sequence": 31,
+        "callId": 17,
+        "isReturn": false,
+        "returnType": "bool",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoDAL",
+        "target": "AprovisionamientoBLL",
+        "name": "bool",
+        "kind": "Sequence",
+        "sequence": 32,
+        "replyTo": 17,
+        "isReturn": true,
+        "returnType": "bool",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoBLL",
+        "target": "AprovisionamientoBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 33,
+        "replyTo": 16,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoBLL",
+        "target": "UC_Aprovisionamiento",
+        "name": "bool",
+        "kind": "Sequence",
+        "sequence": 34,
+        "replyTo": 15,
+        "isReturn": true,
+        "returnType": "bool",
         "proposed": false
       },
       {
@@ -8905,7 +9143,10 @@
         "target": "AprovisionamientoBLL",
         "name": "EmitirOrdenAprobada",
         "kind": "Sequence",
-        "sequence": 18,
+        "sequence": 35,
+        "callId": 18,
+        "isReturn": false,
+        "returnType": "bool",
         "proposed": false
       },
       {
@@ -8913,7 +9154,10 @@
         "target": "AprovisionamientoBLL",
         "name": "CambiarEstado",
         "kind": "Sequence",
-        "sequence": 19,
+        "sequence": 36,
+        "callId": 19,
+        "isReturn": false,
+        "returnType": "void",
         "proposed": false
       },
       {
@@ -8921,7 +9165,32 @@
         "target": "AprovisionamientoDAL",
         "name": "ActualizarEstado",
         "kind": "Sequence",
-        "sequence": 20,
+        "sequence": 37,
+        "callId": 20,
+        "isReturn": false,
+        "returnType": "bool",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoDAL",
+        "target": "AprovisionamientoBLL",
+        "name": "bool",
+        "kind": "Sequence",
+        "sequence": 38,
+        "replyTo": 20,
+        "isReturn": true,
+        "returnType": "bool",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoBLL",
+        "target": "AprovisionamientoBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 39,
+        "replyTo": 19,
+        "isReturn": true,
+        "returnType": "void",
         "proposed": false
       },
       {
@@ -8929,23 +9198,48 @@
         "target": "RegistroActividadBitacora",
         "name": "Registrar",
         "kind": "Sequence",
-        "sequence": 21,
+        "sequence": 40,
+        "callId": 21,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "RegistroActividadBitacora",
+        "target": "AprovisionamientoBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 41,
+        "replyTo": 21,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoBLL",
+        "target": "UC_Aprovisionamiento",
+        "name": "bool",
+        "kind": "Sequence",
+        "sequence": 42,
+        "replyTo": 18,
+        "isReturn": true,
+        "returnType": "bool",
         "proposed": false
       }
     ],
     "frames": [
       {
         "kind": 0,
-        "first": 12,
-        "last": 21,
+        "first": 23,
+        "last": 42,
         "guards": [
           "Rechazar",
           "Aprobar y emitir"
         ],
-        "size": 110
+        "size": 210
       }
     ],
-    "notes": "Realización en clases. Los mensajes son nombres exactos de operaciones; las firmas completas están en los diagramas de clases. Se omiten consultas repetidas y registros de bitácora intermedios. Antes de cambiar a PendienteAprobacion se exigen dos proveedores cotizados por producto; insuficiencia lanza InvalidOperationException. La UI ejecuta cada operación según el actor autorizado; Aprobar/Rechazar son excluyentes."
+    "notes": "Realización en clases. Las llamadas usan nombres exactos de operaciones. Cada respuesta discontinua vuelve al emisor de la llamada e indica su tipo de retorno; void representa fin de ejecución sin valor. Los retornos corresponden al flujo normal; las excepciones se describen en las notas. Se omiten consultas repetidas y registros de bitácora intermedios. Antes de cambiar a PendienteAprobacion se exigen dos proveedores cotizados por producto; insuficiencia lanza InvalidOperationException. La UI ejecuta cada operación según el actor autorizado; Aprobar/Rechazar son excluyentes."
   },
   {
     "code": "N01-06b",
@@ -9026,6 +9320,9 @@
         "name": "RecepcionarMercaderia",
         "kind": "Sequence",
         "sequence": 1,
+        "callId": 1,
+        "isReturn": false,
+        "returnType": "bool",
         "proposed": false
       },
       {
@@ -9034,6 +9331,20 @@
         "name": "ObtenerOrden",
         "kind": "Sequence",
         "sequence": 2,
+        "callId": 2,
+        "isReturn": false,
+        "returnType": "OrdenCompra",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoDAL",
+        "target": "AprovisionamientoBLL",
+        "name": "OrdenCompra",
+        "kind": "Sequence",
+        "sequence": 3,
+        "replyTo": 2,
+        "isReturn": true,
+        "returnType": "OrdenCompra",
         "proposed": false
       },
       {
@@ -9041,7 +9352,21 @@
         "target": "InventarioBLL",
         "name": "ValidarLote",
         "kind": "Sequence",
-        "sequence": 3,
+        "sequence": 4,
+        "callId": 3,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "InventarioBLL",
+        "target": "AprovisionamientoBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 5,
+        "replyTo": 3,
+        "isReturn": true,
+        "returnType": "void",
         "proposed": false
       },
       {
@@ -9049,7 +9374,10 @@
         "target": "AprovisionamientoDAL",
         "name": "RegistrarRecepcion",
         "kind": "Sequence",
-        "sequence": 4,
+        "sequence": 6,
+        "callId": 4,
+        "isReturn": false,
+        "returnType": "void",
         "proposed": false
       },
       {
@@ -9057,7 +9385,21 @@
         "target": "InventarioDAL",
         "name": "InsertarLote",
         "kind": "Sequence",
-        "sequence": 5,
+        "sequence": 7,
+        "callId": 5,
+        "isReturn": false,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "InventarioDAL",
+        "target": "AprovisionamientoDAL",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 8,
+        "replyTo": 5,
+        "isReturn": true,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -9065,7 +9407,32 @@
         "target": "InventarioDAL",
         "name": "InsertarMovimiento",
         "kind": "Sequence",
-        "sequence": 6,
+        "sequence": 9,
+        "callId": 6,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "InventarioDAL",
+        "target": "AprovisionamientoDAL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 10,
+        "replyTo": 6,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoDAL",
+        "target": "AprovisionamientoBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 11,
+        "replyTo": 4,
+        "isReturn": true,
+        "returnType": "void",
         "proposed": false
       },
       {
@@ -9073,7 +9440,32 @@
         "target": "RegistroActividadBitacora",
         "name": "Registrar",
         "kind": "Sequence",
-        "sequence": 7,
+        "sequence": 12,
+        "callId": 7,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "RegistroActividadBitacora",
+        "target": "AprovisionamientoBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 13,
+        "replyTo": 7,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoBLL",
+        "target": "UC_Aprovisionamiento",
+        "name": "bool",
+        "kind": "Sequence",
+        "sequence": 14,
+        "replyTo": 1,
+        "isReturn": true,
+        "returnType": "bool",
         "proposed": false
       },
       {
@@ -9081,7 +9473,10 @@
         "target": "InventarioBLL",
         "name": "VerificarStock",
         "kind": "Sequence",
-        "sequence": 8,
+        "sequence": 15,
+        "callId": 8,
+        "isReturn": false,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -9089,7 +9484,32 @@
         "target": "InventarioDAL",
         "name": "VerificarStock",
         "kind": "Sequence",
-        "sequence": 9,
+        "sequence": 16,
+        "callId": 9,
+        "isReturn": false,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "InventarioDAL",
+        "target": "InventarioBLL",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 17,
+        "replyTo": 9,
+        "isReturn": true,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "InventarioBLL",
+        "target": "UC_Aprovisionamiento",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 18,
+        "replyTo": 8,
+        "isReturn": true,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -9097,7 +9517,10 @@
         "target": "InventarioBLL",
         "name": "ObtenerTrazabilidad",
         "kind": "Sequence",
-        "sequence": 10,
+        "sequence": 19,
+        "callId": 10,
+        "isReturn": false,
+        "returnType": "List<Lote>",
         "proposed": false
       },
       {
@@ -9105,22 +9528,47 @@
         "target": "InventarioDAL",
         "name": "ObtenerTrazabilidad",
         "kind": "Sequence",
-        "sequence": 11,
+        "sequence": 20,
+        "callId": 11,
+        "isReturn": false,
+        "returnType": "IList<Lote>",
+        "proposed": false
+      },
+      {
+        "source": "InventarioDAL",
+        "target": "InventarioBLL",
+        "name": "IList<Lote>",
+        "kind": "Sequence",
+        "sequence": 21,
+        "replyTo": 11,
+        "isReturn": true,
+        "returnType": "IList<Lote>",
+        "proposed": false
+      },
+      {
+        "source": "InventarioBLL",
+        "target": "UC_Aprovisionamiento",
+        "name": "List<Lote>",
+        "kind": "Sequence",
+        "sequence": 22,
+        "replyTo": 10,
+        "isReturn": true,
+        "returnType": "List<Lote>",
         "proposed": false
       }
     ],
     "frames": [
       {
         "kind": 4,
-        "first": 5,
-        "last": 6,
+        "first": 7,
+        "last": 10,
         "guards": [
           "Por lote recibido"
         ],
         "size": 70
       }
     ],
-    "notes": "Realización en clases. Los mensajes son nombres exactos de operaciones; las firmas completas están en los diagramas de clases. Los controles de pertenencia y cantidad se realizan dentro de RecepcionarMercaderia. RegistrarRecepcion usa una transacción y actualiza el estado parcial/completo; no llama a RegistrarIngresoLote. ConsultarInventario permite verificar stock y trazabilidad después de la recepción."
+    "notes": "Realización en clases. Las llamadas usan nombres exactos de operaciones. Cada respuesta discontinua vuelve al emisor de la llamada e indica su tipo de retorno; void representa fin de ejecución sin valor. Los retornos corresponden al flujo normal; las excepciones se describen en las notas. Los controles de pertenencia y cantidad se realizan dentro de RecepcionarMercaderia. RegistrarRecepcion usa una transacción y actualiza el estado parcial/completo; no llama a RegistrarIngresoLote. ConsultarInventario permite verificar stock y trazabilidad después de la recepción."
   },
   {
     "code": "N02-06a",
@@ -9179,6 +9627,9 @@
         "name": "RegistrarCliente",
         "kind": "Sequence",
         "sequence": 1,
+        "callId": 1,
+        "isReturn": false,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -9187,6 +9638,20 @@
         "name": "ValidarCliente",
         "kind": "Sequence",
         "sequence": 2,
+        "callId": 2,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "VentaBLL",
+        "target": "VentaBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 3,
+        "replyTo": 2,
+        "isReturn": true,
+        "returnType": "void",
         "proposed": false
       },
       {
@@ -9194,7 +9659,21 @@
         "target": "VentaDAL",
         "name": "BuscarClientePorEmail",
         "kind": "Sequence",
-        "sequence": 3,
+        "sequence": 4,
+        "callId": 3,
+        "isReturn": false,
+        "returnType": "Cliente",
+        "proposed": false
+      },
+      {
+        "source": "VentaDAL",
+        "target": "VentaBLL",
+        "name": "Cliente",
+        "kind": "Sequence",
+        "sequence": 5,
+        "replyTo": 3,
+        "isReturn": true,
+        "returnType": "Cliente",
         "proposed": false
       },
       {
@@ -9202,7 +9681,21 @@
         "target": "VentaDAL",
         "name": "GuardarCliente",
         "kind": "Sequence",
-        "sequence": 4,
+        "sequence": 6,
+        "callId": 4,
+        "isReturn": false,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "VentaDAL",
+        "target": "VentaBLL",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 7,
+        "replyTo": 4,
+        "isReturn": true,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -9210,7 +9703,21 @@
         "target": "VentaDAL",
         "name": "CrearMembresia",
         "kind": "Sequence",
-        "sequence": 5,
+        "sequence": 8,
+        "callId": 5,
+        "isReturn": false,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "VentaDAL",
+        "target": "VentaBLL",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 9,
+        "replyTo": 5,
+        "isReturn": true,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -9218,7 +9725,32 @@
         "target": "RegistroActividadBitacora",
         "name": "Registrar",
         "kind": "Sequence",
-        "sequence": 6,
+        "sequence": 10,
+        "callId": 6,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "RegistroActividadBitacora",
+        "target": "VentaBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 11,
+        "replyTo": 6,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "VentaBLL",
+        "target": "UC_Ventas",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 12,
+        "replyTo": 1,
+        "isReturn": true,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -9226,22 +9758,36 @@
         "target": "UC_Ventas",
         "name": "Notificar",
         "kind": "Sequence",
-        "sequence": 7,
+        "sequence": 13,
+        "callId": 7,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "UC_Ventas",
+        "target": "UC_Ventas",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 14,
+        "replyTo": 7,
+        "isReturn": true,
+        "returnType": "void",
         "proposed": false
       }
     ],
     "frames": [
       {
         "kind": 1,
-        "first": 5,
-        "last": 5,
+        "first": 8,
+        "last": 9,
         "guards": [
           "crearMembresia"
         ],
         "size": 50
       }
     ],
-    "notes": "Realización en clases. Los mensajes son nombres exactos de operaciones; las firmas completas están en los diagramas de clases. El consentimiento de marketing se conserva en Cliente.AutorizaMarketing. NombreCompleto es propiedad calculada, no método. Datos inválidos o correo duplicado producen excepción y la UI llama a Notificar(error.Message, true). El orden de llamadas refleja el código, no una transacción de alta inexistente."
+    "notes": "Realización en clases. Las llamadas usan nombres exactos de operaciones. Cada respuesta discontinua vuelve al emisor de la llamada e indica su tipo de retorno; void representa fin de ejecución sin valor. Los retornos corresponden al flujo normal; las excepciones se describen en las notas. El consentimiento de marketing se conserva en Cliente.AutorizaMarketing. NombreCompleto es propiedad calculada, no método. Datos inválidos o correo duplicado producen excepción y la UI llama a Notificar(error.Message, true). El orden de llamadas refleja el código, no una transacción de alta inexistente."
   },
   {
     "code": "N02-06b",
@@ -9322,6 +9868,9 @@
         "name": "ConfirmarVenta",
         "kind": "Sequence",
         "sequence": 1,
+        "callId": 1,
+        "isReturn": false,
+        "returnType": "void",
         "proposed": false
       },
       {
@@ -9330,6 +9879,9 @@
         "name": "RegistrarVenta",
         "kind": "Sequence",
         "sequence": 2,
+        "callId": 2,
+        "isReturn": false,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -9338,6 +9890,20 @@
         "name": "ObtenerMembresiaActiva",
         "kind": "Sequence",
         "sequence": 3,
+        "callId": 3,
+        "isReturn": false,
+        "returnType": "Membresia",
+        "proposed": false
+      },
+      {
+        "source": "VentaDAL",
+        "target": "VentaBLL",
+        "name": "Membresia",
+        "kind": "Sequence",
+        "sequence": 4,
+        "replyTo": 3,
+        "isReturn": true,
+        "returnType": "Membresia",
         "proposed": false
       },
       {
@@ -9345,7 +9911,21 @@
         "target": "ProductoDAL",
         "name": "Obtener",
         "kind": "Sequence",
-        "sequence": 4,
+        "sequence": 5,
+        "callId": 4,
+        "isReturn": false,
+        "returnType": "Producto",
+        "proposed": false
+      },
+      {
+        "source": "ProductoDAL",
+        "target": "VentaBLL",
+        "name": "Producto",
+        "kind": "Sequence",
+        "sequence": 6,
+        "replyTo": 4,
+        "isReturn": true,
+        "returnType": "Producto",
         "proposed": false
       },
       {
@@ -9353,7 +9933,21 @@
         "target": "InventarioDAL",
         "name": "ObtenerLotesDisponibles",
         "kind": "Sequence",
-        "sequence": 5,
+        "sequence": 7,
+        "callId": 5,
+        "isReturn": false,
+        "returnType": "IList<Lote>",
+        "proposed": false
+      },
+      {
+        "source": "InventarioDAL",
+        "target": "VentaBLL",
+        "name": "IList<Lote>",
+        "kind": "Sequence",
+        "sequence": 8,
+        "replyTo": 5,
+        "isReturn": true,
+        "returnType": "IList<Lote>",
         "proposed": false
       },
       {
@@ -9361,7 +9955,10 @@
         "target": "VentaDAL",
         "name": "RegistrarVenta",
         "kind": "Sequence",
-        "sequence": 6,
+        "sequence": 9,
+        "callId": 6,
+        "isReturn": false,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -9369,7 +9966,21 @@
         "target": "VentaDAL",
         "name": "InsertarVenta",
         "kind": "Sequence",
-        "sequence": 7,
+        "sequence": 10,
+        "callId": 7,
+        "isReturn": false,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "VentaDAL",
+        "target": "VentaDAL",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 11,
+        "replyTo": 7,
+        "isReturn": true,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -9377,7 +9988,21 @@
         "target": "VentaDAL",
         "name": "InsertarDetalle",
         "kind": "Sequence",
-        "sequence": 8,
+        "sequence": 12,
+        "callId": 8,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "VentaDAL",
+        "target": "VentaDAL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 13,
+        "replyTo": 8,
+        "isReturn": true,
+        "returnType": "void",
         "proposed": false
       },
       {
@@ -9385,7 +10010,32 @@
         "target": "InventarioDAL",
         "name": "InsertarMovimiento",
         "kind": "Sequence",
-        "sequence": 9,
+        "sequence": 14,
+        "callId": 9,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "InventarioDAL",
+        "target": "VentaDAL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 15,
+        "replyTo": 9,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "VentaDAL",
+        "target": "VentaBLL",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 16,
+        "replyTo": 6,
+        "isReturn": true,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -9393,7 +10043,32 @@
         "target": "RegistroActividadBitacora",
         "name": "Registrar",
         "kind": "Sequence",
-        "sequence": 10,
+        "sequence": 17,
+        "callId": 10,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "RegistroActividadBitacora",
+        "target": "VentaBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 18,
+        "replyTo": 10,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "VentaBLL",
+        "target": "UC_Ventas",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 19,
+        "replyTo": 2,
+        "isReturn": true,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -9401,7 +10076,32 @@
         "target": "UC_Ventas",
         "name": "Notificar",
         "kind": "Sequence",
-        "sequence": 11,
+        "sequence": 20,
+        "callId": 11,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "UC_Ventas",
+        "target": "UC_Ventas",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 21,
+        "replyTo": 11,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "UC_Ventas",
+        "target": "UC_Ventas",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 22,
+        "replyTo": 1,
+        "isReturn": true,
+        "returnType": "void",
         "proposed": false
       }
     ],
@@ -9409,7 +10109,7 @@
       {
         "kind": 1,
         "first": 3,
-        "last": 3,
+        "last": 4,
         "guards": [
           "IdCliente.HasValue"
         ],
@@ -9417,8 +10117,8 @@
       },
       {
         "kind": 4,
-        "first": 4,
-        "last": 5,
+        "first": 5,
+        "last": 8,
         "guards": [
           "Por producto"
         ],
@@ -9426,15 +10126,15 @@
       },
       {
         "kind": 4,
-        "first": 8,
-        "last": 9,
+        "first": 12,
+        "last": 15,
         "guards": [
           "Por detalle FEFO"
         ],
         "size": 70
       }
     ],
-    "notes": "Realización en clases. Los mensajes son nombres exactos de operaciones; las firmas completas están en los diagramas de clases. RegistrarVenta de BLL calcula FEFO, descuento y totales dentro del método. VentaDAL descuenta stock mediante SQL en su transacción, no invoca DescontarStockLote. Fallos de stock cancelan la persistencia; los métodos de UI notifican el error."
+    "notes": "Realización en clases. Las llamadas usan nombres exactos de operaciones. Cada respuesta discontinua vuelve al emisor de la llamada e indica su tipo de retorno; void representa fin de ejecución sin valor. Los retornos corresponden al flujo normal; las excepciones se describen en las notas. RegistrarVenta de BLL calcula FEFO, descuento y totales dentro del método. VentaDAL descuenta stock mediante SQL en su transacción, no invoca DescontarStockLote. Fallos de stock cancelan la persistencia; los métodos de UI notifican el error."
   },
   {
     "code": "N02-06c",
@@ -9493,6 +10193,9 @@
         "name": "RegistrarCliente",
         "kind": "Sequence",
         "sequence": 1,
+        "callId": 1,
+        "isReturn": false,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -9501,6 +10204,31 @@
         "name": "GuardarCliente",
         "kind": "Sequence",
         "sequence": 2,
+        "callId": 2,
+        "isReturn": false,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "VentaDAL",
+        "target": "VentaBLL",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 3,
+        "replyTo": 2,
+        "isReturn": true,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "VentaBLL",
+        "target": "UC_Ventas",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 4,
+        "replyTo": 1,
+        "isReturn": true,
+        "returnType": "int",
         "proposed": false
       },
       {
@@ -9508,7 +10236,21 @@
         "target": "MarketingBLL",
         "name": "SeleccionarDestinatarios",
         "kind": "Sequence",
-        "sequence": 3,
+        "sequence": 5,
+        "callId": 3,
+        "isReturn": false,
+        "returnType": "List<Cliente>",
+        "proposed": true
+      },
+      {
+        "source": "MarketingBLL",
+        "target": "MarketingBLL",
+        "name": "List<Cliente>",
+        "kind": "Sequence",
+        "sequence": 6,
+        "replyTo": 3,
+        "isReturn": true,
+        "returnType": "List<Cliente>",
         "proposed": true
       },
       {
@@ -9516,7 +10258,21 @@
         "target": "MarketingBLL",
         "name": "PrepararCampania",
         "kind": "Sequence",
-        "sequence": 4,
+        "sequence": 7,
+        "callId": 4,
+        "isReturn": false,
+        "returnType": "string",
+        "proposed": true
+      },
+      {
+        "source": "MarketingBLL",
+        "target": "MarketingBLL",
+        "name": "string",
+        "kind": "Sequence",
+        "sequence": 8,
+        "replyTo": 4,
+        "isReturn": true,
+        "returnType": "string",
         "proposed": true
       },
       {
@@ -9524,22 +10280,36 @@
         "target": "MarketingBLL",
         "name": "EnviarCampania",
         "kind": "Sequence",
-        "sequence": 5,
+        "sequence": 9,
+        "callId": 5,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": true
+      },
+      {
+        "source": "MarketingBLL",
+        "target": "MarketingBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 10,
+        "replyTo": 5,
+        "isReturn": true,
+        "returnType": "void",
         "proposed": true
       }
     ],
     "frames": [
       {
         "kind": 1,
-        "first": 3,
-        "last": 5,
+        "first": 5,
+        "last": 10,
         "guards": [
           "Solo autorizados"
         ],
         "size": 105
       }
     ],
-    "notes": "Realización en clases. Los mensajes son nombres exactos de operaciones; las firmas completas están en los diagramas de clases. RegistrarCliente/GuardarCliente existen y conservan el consentimiento. MarketingBLL y sus tres operaciones son una propuesta no implementada. La adquisición de la lista de clientes y el canal de envío quedan pendientes de implementación; no se dibuja una llamada inexistente a VentaDAL para obtener segmentos."
+    "notes": "Realización en clases. Las llamadas usan nombres exactos de operaciones. Cada respuesta discontinua vuelve al emisor de la llamada e indica su tipo de retorno; void representa fin de ejecución sin valor. Los retornos corresponden al flujo normal; las excepciones se describen en las notas. RegistrarCliente/GuardarCliente existen y conservan el consentimiento. MarketingBLL y sus tres operaciones son una propuesta no implementada. La adquisición de la lista de clientes y el canal de envío quedan pendientes de implementación; no se dibuja una llamada inexistente a VentaDAL para obtener segmentos."
   },
   {
     "code": "N03-06",
@@ -9620,6 +10390,9 @@
         "name": "Evaluar",
         "kind": "Sequence",
         "sequence": 1,
+        "callId": 1,
+        "isReturn": false,
+        "returnType": "EvaluacionProveedor",
         "proposed": true
       },
       {
@@ -9628,6 +10401,20 @@
         "name": "Obtener",
         "kind": "Sequence",
         "sequence": 2,
+        "callId": 2,
+        "isReturn": false,
+        "returnType": "Proveedor",
+        "proposed": false
+      },
+      {
+        "source": "ProveedorBLL",
+        "target": "EvaluacionProveedorBLL",
+        "name": "Proveedor",
+        "kind": "Sequence",
+        "sequence": 3,
+        "replyTo": 2,
+        "isReturn": true,
+        "returnType": "Proveedor",
         "proposed": false
       },
       {
@@ -9635,7 +10422,21 @@
         "target": "ProductoBLL",
         "name": "Obtener",
         "kind": "Sequence",
-        "sequence": 3,
+        "sequence": 4,
+        "callId": 3,
+        "isReturn": false,
+        "returnType": "Producto",
+        "proposed": false
+      },
+      {
+        "source": "ProductoBLL",
+        "target": "EvaluacionProveedorBLL",
+        "name": "Producto",
+        "kind": "Sequence",
+        "sequence": 5,
+        "replyTo": 3,
+        "isReturn": true,
+        "returnType": "Producto",
         "proposed": false
       },
       {
@@ -9643,7 +10444,21 @@
         "target": "AprovisionamientoBLL",
         "name": "ConsultarHistorialCompras",
         "kind": "Sequence",
-        "sequence": 4,
+        "sequence": 6,
+        "callId": 4,
+        "isReturn": false,
+        "returnType": "List<OrdenCompra>",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoBLL",
+        "target": "EvaluacionProveedorBLL",
+        "name": "List<OrdenCompra>",
+        "kind": "Sequence",
+        "sequence": 7,
+        "replyTo": 4,
+        "isReturn": true,
+        "returnType": "List<OrdenCompra>",
         "proposed": false
       },
       {
@@ -9651,7 +10466,21 @@
         "target": "InventarioBLL",
         "name": "ObtenerTrazabilidad",
         "kind": "Sequence",
-        "sequence": 5,
+        "sequence": 8,
+        "callId": 5,
+        "isReturn": false,
+        "returnType": "List<Lote>",
+        "proposed": false
+      },
+      {
+        "source": "InventarioBLL",
+        "target": "EvaluacionProveedorBLL",
+        "name": "List<Lote>",
+        "kind": "Sequence",
+        "sequence": 9,
+        "replyTo": 5,
+        "isReturn": true,
+        "returnType": "List<Lote>",
         "proposed": false
       },
       {
@@ -9659,7 +10488,21 @@
         "target": "EvaluacionProveedorBLL",
         "name": "ValidarEvaluacion",
         "kind": "Sequence",
-        "sequence": 6,
+        "sequence": 10,
+        "callId": 6,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": true
+      },
+      {
+        "source": "EvaluacionProveedorBLL",
+        "target": "EvaluacionProveedorBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 11,
+        "replyTo": 6,
+        "isReturn": true,
+        "returnType": "void",
         "proposed": true
       },
       {
@@ -9667,7 +10510,32 @@
         "target": "EvaluacionProveedor",
         "name": "CalcularPuntajePonderado",
         "kind": "Sequence",
-        "sequence": 7,
+        "sequence": 12,
+        "callId": 7,
+        "isReturn": false,
+        "returnType": "decimal",
+        "proposed": true
+      },
+      {
+        "source": "EvaluacionProveedor",
+        "target": "EvaluacionProveedorBLL",
+        "name": "decimal",
+        "kind": "Sequence",
+        "sequence": 13,
+        "replyTo": 7,
+        "isReturn": true,
+        "returnType": "decimal",
+        "proposed": true
+      },
+      {
+        "source": "EvaluacionProveedorBLL",
+        "target": "EvaluacionProveedorBLL",
+        "name": "EvaluacionProveedor",
+        "kind": "Sequence",
+        "sequence": 14,
+        "replyTo": 1,
+        "isReturn": true,
+        "returnType": "EvaluacionProveedor",
         "proposed": true
       },
       {
@@ -9675,7 +10543,21 @@
         "target": "EvaluacionProveedorBLL",
         "name": "SeleccionarPrioritario",
         "kind": "Sequence",
-        "sequence": 8,
+        "sequence": 15,
+        "callId": 8,
+        "isReturn": false,
+        "returnType": "EvaluacionProveedor",
+        "proposed": true
+      },
+      {
+        "source": "EvaluacionProveedorBLL",
+        "target": "EvaluacionProveedorBLL",
+        "name": "EvaluacionProveedor",
+        "kind": "Sequence",
+        "sequence": 16,
+        "replyTo": 8,
+        "isReturn": true,
+        "returnType": "EvaluacionProveedor",
         "proposed": true
       },
       {
@@ -9683,11 +10565,25 @@
         "target": "EvaluacionProveedorBLL",
         "name": "GuardarEvaluacion",
         "kind": "Sequence",
-        "sequence": 9,
+        "sequence": 17,
+        "callId": 9,
+        "isReturn": false,
+        "returnType": "int",
+        "proposed": true
+      },
+      {
+        "source": "EvaluacionProveedorBLL",
+        "target": "EvaluacionProveedorBLL",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 18,
+        "replyTo": 9,
+        "isReturn": true,
+        "returnType": "int",
         "proposed": true
       }
     ],
     "frames": [],
-    "notes": "Realización en clases. Los mensajes son nombres exactos de operaciones; las firmas completas están en los diagramas de clases. Propuesta N03: EvaluacionProveedorBLL y EvaluacionProveedor no existen aún en C#. Obtener, ConsultarHistorialCompras y ObtenerTrazabilidad sí existen en las BLL consultadas. La conveniencia y los fundamentos se validan antes de priorizar; GuardarEvaluacion requiere persistencia futura."
+    "notes": "Realización en clases. Las llamadas usan nombres exactos de operaciones. Cada respuesta discontinua vuelve al emisor de la llamada e indica su tipo de retorno; void representa fin de ejecución sin valor. Los retornos corresponden al flujo normal; las excepciones se describen en las notas. Propuesta N03: EvaluacionProveedorBLL y EvaluacionProveedor no existen aún en C#. Obtener, ConsultarHistorialCompras y ObtenerTrazabilidad sí existen en las BLL consultadas. La conveniencia y los fundamentos se validan antes de priorizar; GuardarEvaluacion requiere persistencia futura."
   }
 ]

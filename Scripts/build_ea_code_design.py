@@ -192,16 +192,54 @@ for d in diagrams:
 class_view("G07-01", global_names, columns=5, links=normalize_links(global_links))
 
 
+# Last represented nested call before returning from each non-leaf invocation.
+# Indices refer to the original call list, not to the expanded UML message list.
+SEQUENCE_ENDS = {
+    "N01-06a": {1:3, 4:6, 7:11, 10:11, 12:14, 13:14, 15:17, 16:17, 18:21, 19:20},
+    "N01-06b": {1:7, 4:6, 8:9, 10:11},
+    "N02-06a": {1:6},
+    "N02-06b": {1:11, 2:10, 6:9},
+    "N02-06c": {1:2},
+    "N03-06": {1:7},
+}
+
+
 def sequence(code, participants, calls, frames=(), notes=""):
     d = dict(code=code, title=old[code]["title"], kind="Sequence", nodes=[], links=[], frames=list(frames),
-             notes="Realización en clases. Los mensajes son nombres exactos de operaciones; las firmas completas están en los diagramas de clases. " + notes)
+             notes="Realización en clases. Las llamadas usan nombres exactos de operaciones. Cada respuesta discontinua vuelve al emisor de la llamada e indica su tipo de retorno; void representa fin de ejecución sin valor. Los retornos corresponden al flujo normal; las excepciones se describen en las notas. " + notes)
     for i, name in enumerate(participants):
         d["nodes"].append(dict(key=name, name=name, kind="Object", classifier=name, x=220 + i * 310, y=50, w=255, h=90,
                                stereotype="propuesto" if registry[name].get("proposed") else ""))
-    for i, (a, b, name) in enumerate(calls):
-        assert any(m["name"] == name for m in registry[b]["methods"]), (code, b, name)
-        d["links"].append(dict(source=a, target=b, name=name, kind="Sequence", sequence=i + 1,
-                               proposed=bool(registry[b].get("proposed"))))
+    stack, starts, returns = [], {}, {}
+    for i, (a, b, name) in enumerate(calls, 1):
+        methods = [m for m in registry[b]["methods"] if m["name"] == name]
+        types = {m["type"] for m in methods}
+        assert len(types) == 1, (code, b, name, types)
+        end = SEQUENCE_ENDS[code].get(i, i)
+        assert i <= end <= len(calls)
+        if stack:
+            assert a == stack[-1]["target"] and end <= stack[-1]["end"], (code, i, stack)
+        call = dict(source=a, target=b, name=name, kind="Sequence", sequence=len(d["links"])+1,
+                    callId=i, isReturn=False, returnType=types.pop(),
+                    proposed=bool(registry[b].get("proposed")))
+        starts[i] = call["sequence"]
+        d["links"].append(call)
+        stack.append(dict(call, end=end))
+        while stack and stack[-1]["end"] == i:
+            completed = stack.pop()
+            reply = dict(source=completed["target"], target=completed["source"],
+                         name=completed["returnType"], kind="Sequence", sequence=len(d["links"])+1,
+                         replyTo=completed["callId"], isReturn=True,
+                         returnType=completed["returnType"], proposed=completed["proposed"])
+            returns[completed["callId"]] = reply["sequence"]
+            d["links"].append(reply)
+    assert not stack and len(d["links"]) == 2 * len(calls)
+    for f in d["frames"]:
+        first, last = f["first"], f["last"]
+        f["first"], f["last"] = starts[first], max(returns[i] for i in range(first, last+1))
+        if len(f["guards"]) > 1:
+            # N01 rejection ends before approval/emission starts.
+            f["size"] = 35 * (starts[15] - starts[first])
     diagrams.append(d)
 
 

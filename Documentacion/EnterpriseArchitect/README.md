@@ -94,6 +94,14 @@ Para aplicar la capa final de correspondencia con el código, después de la rec
 
 ## Verificación del documento guardado
 
+### Retornos explícitos de secuencia 04/10/2026
+
+Las seis secuencias contienen 64 llamadas y 64 respuestas nativas de EA (`IsReturn`), con línea discontinua y extremos inversos a la llamada. Cada respuesta muestra el tipo declarado en C# o, para MarketingBLL y las clases de evaluación de N03, en el catálogo de diseño propuesto. `void` indica finalización sin valor. Las respuestas se ordenan por anidamiento: las operaciones internas terminan antes de la respuesta de su operación contenedora. Los fragmentos `alt`, `opt` y `loop` incluyen los retornos que les corresponden. Se suprimen los paréntesis vacíos para que los tipos no parezcan llamadas a métodos.
+
+`update_ea_sequence_returns.ps1` actualiza únicamente las secuencias existentes, conserva sus GUID, objetos y clasificadores, y crea un respaldo completo del EAP. Su prevalidación rechaza llamadas o respuestas no reconocidas; repetirlo no duplica retornos. Se ejecuta después de generar `code-design.json` y `code-design-routed.json`, mediante PowerShell de 32 bits. El actualizador general también admite respuestas nativas. `verify_ea_code_design.ps1` comprueba tipos, direcciones, orden, emparejamiento y pila de llamadas: **119 representaciones de clases y 128 mensajes verificados en 13 diagramas**.
+
+Se reemplazaron las seis capturas de la sección 2.5 en Google Docs y se ajustó su introducción, sin agregar secciones. `verification-sequence-returns.json` confirma la conservación de 344 párrafos anteriores a 2.5, las 12 tablas, 47 imágenes y 26 diagramas EA únicos, sin duplicados ni recortes. Los demás diagramas y los cambios previos del usuario en el EAP se preservaron.
+
 `python Scripts/verify_ea_document.py anterior.docx final.docx` compara las exportaciones de Google Docs: exige conservar el texto anterior a 2.5 y todas las tablas, verifica cada PNG (exacto o reducido por Google Docs a 2048 píxeles, con error medio menor a 3/255), la ausencia de duplicados/recortes y la ubicación de cada diagrama en su sección. Distingue explícitamente las imágenes reducidas en el informe. Requiere `python-docx` y Pillow. `inspect_ea_doc_export.py` muestra tamaños y opciones de paginación para diagnóstico.
 
 Se revisa además la exportación PDF para comprobar títulos junto a sus diagramas, notas completas y comienzos de casos de uso en página propia. La captura global de clases ocupa 16 cm de ancho, sin recorte; para leer todos sus miembros se recomienda el PNG nativo o el proyecto EA.

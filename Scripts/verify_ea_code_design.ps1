@@ -63,12 +63,26 @@ foreach($s in $specs){
     if($s.kind -eq 'Sequence'){
         $calls=@($d.DiagramLinks | ForEach-Object {$repo.GetConnectorByID($_.ConnectorID)} | Where-Object Type -eq 'Sequence' | Sort-Object SequenceNo)
         if($calls.Count -ne $s.links.Count){throw ('Cantidad de mensajes incorrecta '+$s.code)}
+        $stack=New-Object System.Collections.Stack
         for($i=0;$i -lt $calls.Count;$i++){
             $c=$calls[$i];$l=$s.links[$i]
             $target=$repo.GetElementByID($repo.GetElementByID($c.SupplierID).ClassifierID).Name
-            if($c.Name -cne $l.name -or $target -cne $l.target){throw ('Mensaje incorrecto '+$s.code)}
+            $source=$repo.GetElementByID($repo.GetElementByID($c.ClientID).ClassifierID).Name
+            if($c.Name -cne $l.name -or $target -cne $l.target -or $source -cne $l.source -or $c.SequenceNo -ne $l.sequence){throw ('Mensaje incorrecto '+$s.code)}
+            if([bool]$c.Properties.Item('IsReturn').Value -ne [bool]$l.isReturn){throw ('Tipo de mensaje incorrecto '+$s.code)}
+            if($l.isReturn){
+                if(-not $stack.Count){throw 'Retorno sin llamada'}
+                $call=$stack.Pop()
+                if($l.replyTo -ne $call.callId -or $l.source -cne $call.target -or $l.target -cne $call.source -or $l.name -cne $call.returnType){throw ('Retorno no emparejado '+$s.code)}
+            }else{
+                $method=@($catalog.($l.target).methods|Where-Object name -eq $l.name)
+                if($l.returnType -cnotin @($method|ForEach-Object type)){throw ('Tipo de retorno distinto al codigo '+$s.code)}
+                if($stack.Count -and $l.source -cne $stack.Peek().target){throw ('Llamada fuera de activacion '+$s.code)}
+                $stack.Push($l)
+            }
             $verifiedMessages++
         }
+        if($stack.Count){throw 'Llamadas sin retorno'}
     }
     Write-Output ('VERIFIED '+$s.code)
 }

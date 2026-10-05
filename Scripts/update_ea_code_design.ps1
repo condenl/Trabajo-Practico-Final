@@ -52,7 +52,9 @@ foreach($s in $specs) {
     for($i=$d.DiagramObjects.Count-1;$i -ge 0;$i--){$d.DiagramObjects.DeleteAt($i,$false)}
     for($i=$d.DiagramLinks.Count-1;$i -ge 0;$i--){$d.DiagramLinks.DeleteAt($i,$false)}
     $d.DiagramObjects.Refresh();$d.DiagramLinks.Refresh()
-    $d.Notes=$s.notes;$d.ShowDetails=0;[void]$d.Update()
+    $d.Notes=$s.notes;$d.ShowDetails=0
+    if($s.kind -eq 'Sequence'){$d.StyleEx=($d.StyleEx -replace 'SuppressBrackets=[^;]*;','')+'SuppressBrackets=1;'}
+    [void]$d.Update()
     $elements=@{}
     foreach($n in $s.nodes) {
         $e=$p.Elements.AddNew($n.name,$n.kind)
@@ -86,6 +88,10 @@ foreach($s in $specs) {
         if($l.sourceCardinality){$c.ClientEnd.Cardinality=$l.sourceCardinality}
         if($l.targetCardinality){$c.SupplierEnd.Cardinality=$l.targetCardinality}
         [void]$c.Update()
+        if($l.kind -eq 'Sequence'){
+            $c.Properties.Item('IsReturn').Value=[bool]$l.isReturn
+            [void]$c.Update()
+        }
         if($l.kind -eq 'Realization'){$realizationGuids+=$c.ConnectorGUID}
         $dl=$d.DiagramLinks.AddNew('','');$dl.ConnectorID=$c.ConnectorID
         if($l.path){$dl.Style='Mode=3;Color=-1;LWidth=0;';$dl.Path=$l.path}
@@ -97,7 +103,9 @@ foreach($s in $specs) {
         [void]$e.Update()
         $lastCall=@($s.links | Where-Object sequence -eq $f.last)[0]
         $tail=if($lastCall.source -eq $lastCall.target){26}else{8}
-        $top=135+35*($f.first-1)-25;$bottom=135+35*($f.last-1)+$tail
+        $previous=@($s.links | Where-Object sequence -eq ($f.first-1))
+        $head=if($previous.Count -and $previous[0].source -eq $previous[0].target){15}else{25}
+        $top=135+35*($f.first-1)-$head;$bottom=135+35*($f.last-1)+$tail
         $right=($s.nodes | Measure-Object x -Maximum).Maximum+300
         $o=$d.DiagramObjects.AddNew(('l=10;r={0};t={1};b={2};' -f $right,$top,$bottom),'');$o.ElementID=$e.ElementID;$o.Sequence=100;[void]$o.Update()
     }

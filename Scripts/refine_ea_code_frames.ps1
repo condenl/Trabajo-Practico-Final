@@ -16,7 +16,9 @@ foreach($s in $specs | Where-Object frames){
         $f=$s.frames[$i];$o=$fragments[$i]
         $lastCall=@($s.links | Where-Object sequence -eq $f.last)[0]
         $tail=if($lastCall.source -eq $lastCall.target){26}else{8}
-        $o.top=-(135+35*($f.first-1)-25)
+        $previous=@($s.links | Where-Object sequence -eq ($f.first-1))
+        $head=if($previous.Count -and $previous[0].source -eq $previous[0].target){15}else{25}
+        $o.top=-(135+35*($f.first-1)-$head)
         $o.bottom=-(135+35*($f.last-1)+$tail)
         [void]$o.Update()
     }
