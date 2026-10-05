@@ -20,6 +20,18 @@ Los prerrequisitos descargados se guardan en `%APPDATA%\Perfumeria\Prerrequisito
 
 ## Generacion del `.exe`
 
+Para incluir los actores demo y el README con las credenciales, usar ahora:
+
+```powershell
+powershell -NoProfile -File Installer/build-installer.ps1
+```
+
+El script compila UI y `SeedDemoActors.exe` antes de llamar a Inno Setup. La opción **Cargar actores de demostración** está desmarcada inicialmente. Al marcarla, las cuatro cuentas documentadas en el [README principal](../README.md) se crean en la misma base que utiliza el EXE instalado; no dependen de Visual Studio ni del equipo de desarrollo. Requiere una instancia local SQL Server 16.x. Las claves son públicas y solo deben usarse en pruebas.
+
+La precarga es transaccional e idempotente y verifica el login y los permisos. No modifica credenciales o roles existentes. Inicializa los dígitos verificadores del respaldo de distribución únicamente si la base acaba de ser restaurada por esa ejecución; ante errores de integridad en una base preexistente se detiene. El instalador comprueba el código de salida de la configuración y no ofrece iniciar la aplicación si falla.
+
+Las instrucciones manuales siguientes requieren haber generado previamente `Installer/bin/SeedDemoActors.exe` con el script anterior.
+
 1. Compilar la solucion en modo Release:
 
    ```powershell

@@ -26,9 +26,12 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "Crear un acceso directo en el escritorio"; GroupDescription: "Accesos directos:"; Flags: unchecked
+Name: "demodata"; Description: "Cargar actores de demostracion (claves publicas del README; solo pruebas)"; GroupDescription: "Datos de prueba:"; Flags: unchecked
 
 [Files]
 Source: "..\UI\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "bin\SeedDemoActors.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "InicializarBaseDatos.ps1"; DestDir: "{app}\Installer"; Flags: ignoreversion
 Source: "VerificarPrerrequisitos.ps1"; DestDir: "{app}\Installer"; Flags: ignoreversion
 Source: "VerificarPrerrequisitos.ps1"; Flags: dontcopy
@@ -41,7 +44,6 @@ Name: "{group}\Perfumeria"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\Perfumeria"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\Installer\InicializarBaseDatos.ps1"" -ServerInstance ""{code:GetSqlServerInstance}"" -DatabaseName ""Trabajo Practico Final"" -BackupPath ""{app}\Installer\TrabajoPracticoFinal.bak"" -MigrationDirectory ""{app}\Installer\Migraciones"" -ConfigPath ""{app}\UI.exe.config"" -LogPath ""{app}\Installer\instalacion-base-datos.log"""; StatusMsg: "Creando y actualizando la base de datos..."; Flags: runhidden waituntilterminated
 Filename: "{app}\{#MyAppExeName}"; Description: "Ejecutar Perfumeria"; Flags: nowait postinstall skipifsilent
 
 [Code]
@@ -63,6 +65,27 @@ end;
 function GetSqlServerInstance(Param: String): String;
 begin
   Result := SqlServerPage.Values[0];
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+var
+  ResultCode: Integer;
+  Parameters: String;
+begin
+  if CurStep <> ssPostInstall then
+    exit;
+  Parameters := '-NoProfile -ExecutionPolicy Bypass -File "' + ExpandConstant('{app}\Installer\InicializarBaseDatos.ps1') +
+    '" -ServerInstance "' + GetSqlServerInstance('') + '" -DatabaseName "Trabajo Practico Final" -BackupPath "' +
+    ExpandConstant('{app}\Installer\TrabajoPracticoFinal.bak') + '" -MigrationDirectory "' +
+    ExpandConstant('{app}\Installer\Migraciones') + '" -ConfigPath "' + ExpandConstant('{app}\UI.exe.config') +
+    '" -LogPath "' + ExpandConstant('{app}\Installer\instalacion-base-datos.log') + '"';
+  if WizardIsTaskSelected('demodata') then
+    Parameters := Parameters + ' -SeedDemoActors';
+  WizardForm.StatusLabel.Caption := 'Preparando la base y verificando las cuentas seleccionadas...';
+  if not Exec(ExpandConstant('{sys}\WindowsPowerShell\v1.0\powershell.exe'), Parameters, '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
+    RaiseException('No se pudo iniciar la configuracion de la base de datos.');
+  if ResultCode <> 0 then
+    RaiseException('Fallo la configuracion de la base de datos. No se iniciara la aplicacion. Revise Installer\instalacion-base-datos.log y vuelva a ejecutar el instalador.');
 end;
 
 function PrepareToInstall(var NeedsRestart: Boolean): String;

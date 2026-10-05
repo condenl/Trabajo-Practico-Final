@@ -8,7 +8,8 @@ param(
     [string]$MigrationDirectory,
     [Parameter(Mandatory = $true)]
     [string]$ConfigPath,
-    [string]$LogPath = "$PSScriptRoot\instalacion-base-datos.log"
+    [string]$LogPath = "$PSScriptRoot\instalacion-base-datos.log",
+    [switch]$SeedDemoActors
 )
 
 $ErrorActionPreference = 'Stop'
@@ -81,7 +82,7 @@ function Invoke-SqlScript {
     param([string]$Path)
 
     Write-InstallLog "Aplicando migracion: $([IO.Path]::GetFileName($Path))"
-    $script = Get-Content -LiteralPath $Path -Raw
+    $script = Get-Content -LiteralPath $Path -Raw -Encoding UTF8
     $batches = [regex]::Split($script, '(?im)^\s*GO\s*(?:--.*)?$')
     foreach ($batch in $batches) {
         if (-not [string]::IsNullOrWhiteSpace($batch)) {
@@ -173,6 +174,7 @@ function Update-ApplicationConnection {
 }
 
 try {
+    $restoredNow = $false
     New-Item -ItemType File -Path $LogPath -Force | Out-Null
     Write-InstallLog "Inicio. Instancia SQL: $ServerInstance; base: $DatabaseName"
 
@@ -187,6 +189,7 @@ try {
     if ($null -eq $exists -or $exists -is [DBNull]) {
         Write-InstallLog 'La base no existe. Restaurando respaldo inicial.'
         Restore-InitialDatabase
+        $restoredNow = $true
     }
     else {
         Write-InstallLog 'La base ya existe. Se conserva y se aplican las migraciones idempotentes.'
@@ -205,6 +208,19 @@ try {
     }
 
     Update-ApplicationConnection
+    if ($SeedDemoActors) {
+        $seedExe = Join-Path (Split-Path $ConfigPath -Parent) 'SeedDemoActors.exe'
+        if (-not (Test-Path -LiteralPath $seedExe -PathType Leaf)) { throw 'Falta SeedDemoActors.exe en la instalacion.' }
+        Copy-Item -LiteralPath $ConfigPath -Destination ($seedExe + '.config')
+        $seedMode = if ($restoredNow) { '--initialize-new' } else { '--apply' }
+        if ($restoredNow) { Write-InstallLog 'Inicializando DVH/DVV solo para la base nueva recien restaurada del respaldo de distribucion.' }
+        foreach ($mode in @($seedMode, '--verify')) {
+            $output = & $seedExe $mode $DatabaseName 2>&1
+            $seedExit = $LASTEXITCODE
+            foreach ($line in $output) { Write-InstallLog ([string]$line) }
+            if ($seedExit -ne 0) { throw 'No se pudo precargar/verificar los actores demo. Revisar el registro; no se sobrescriben usuarios existentes.' }
+        }
+    }
     Write-InstallLog 'Instalacion de base de datos finalizada correctamente.'
     exit 0
 }
