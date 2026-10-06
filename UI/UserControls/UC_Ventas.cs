@@ -23,8 +23,8 @@ namespace UI.UserControls
         private readonly TextBox txtApellido = new TextBox { Name = "txtApellido" };
         private readonly TextBox txtTelefono = new TextBox { Name = "txtTelefono" };
         private readonly TextBox txtPreferencias = new TextBox { Name = "txtPreferencias" };
-        private readonly CheckBox chkMarketing = new CheckBox { Name = "chkMarketing", Text = "Autoriza campañas de marketing" };
-        private readonly CheckBox chkMembresia = new CheckBox { Name = "chkMembresia", Text = "Crear membresía", Checked = true };
+        private readonly CheckBox chkMarketing = new CheckBox { Name = "chkMarketing", Text = "Autoriza campañas de marketing", AutoSize = true };
+        private readonly CheckBox chkMembresia = new CheckBox { Name = "chkMembresia", Text = "Crear membresía", AutoSize = true, Checked = true };
         private readonly NumericUpDown nudDescuento = new NumericUpDown { Name = "nudDescuento", Minimum = 0, Maximum = 30, Value = 10 };
         private readonly ComboBox cmbProducto = new ComboBox { Name = "cmbProducto", DropDownStyle = ComboBoxStyle.DropDownList };
         private readonly NumericUpDown nudCantidad = new NumericUpDown { Name = "nudCantidad", Minimum = 1, Maximum = 999, Value = 1 };
@@ -73,9 +73,22 @@ namespace UI.UserControls
 
             AgregarFila(layout, 2, "Nombre", txtNombre, "Apellido", txtApellido);
             AgregarFila(layout, 3, "Teléfono", txtTelefono, "Preferencias olfativas", txtPreferencias);
-            layout.Controls.Add(chkMarketing, 1, 4);
-            layout.Controls.Add(chkMembresia, 2, 4);
-            layout.Controls.Add(nudDescuento, 3, 4);
+            FlowLayoutPanel opcionesCliente = new FlowLayoutPanel
+            {
+                Name = "opcionesCliente",
+                Dock = DockStyle.Fill,
+                AutoSize = true,
+                AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                WrapContents = true
+            };
+            chkMarketing.Margin = new Padding(3, 6, 18, 3);
+            chkMembresia.Margin = new Padding(3, 6, 18, 3);
+            opcionesCliente.Controls.Add(chkMarketing);
+            opcionesCliente.Controls.Add(chkMembresia);
+            opcionesCliente.Controls.Add(new Label { Text = "Descuento (%)", AutoSize = true, Margin = new Padding(3, 6, 3, 3) });
+            opcionesCliente.Controls.Add(nudDescuento);
+            layout.Controls.Add(opcionesCliente, 0, 4);
+            layout.SetColumnSpan(opcionesCliente, 4);
 
             Button registrar = new Button { Text = "Registrar cliente", AutoSize = true };
             registrar.Click += RegistrarCliente;
