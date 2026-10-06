@@ -19,6 +19,7 @@ $references+=@('BE','BLL','DAL','MPP','Servicios')|ForEach-Object {Join-Path $bu
 $arguments=@('/nologo','/target:exe',('/out:'+$exe))
 $arguments+=$references|ForEach-Object {'/reference:'+$_}
 $arguments+=Join-Path $PSScriptRoot 'SeedDemoActors.cs'
+$arguments+=Join-Path $PSScriptRoot 'SeedDemoTargetPolicy.cs'
 & $compiler @arguments
 if($LASTEXITCODE -ne 0){throw 'No se pudo compilar la herramienta de precarga.'}
 & $exe ('--'+$Mode) $Database

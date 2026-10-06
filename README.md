@@ -36,6 +36,29 @@ Estas son cuentas de la aplicación, no logins de SQL Server ni de Windows. La c
 
 Si la base ya existe, se conserva. Si hay conflictos con las cuentas demo o errores previos de integridad, la precarga falla sin sobrescribirlos y el instalador informa el error. Solo cuando acaba de restaurar una base nueva del respaldo distribuido, inicializa DVH/DVV antes de cargar los actores. Revisar `Installer/instalacion-base-datos.log`. No es una función de reparación de bases existentes.
 
+### LocalDB y recuperación de la instalación fallida
+
+Se admite `(localdb)\MSSQLLocalDB` cuando su motor es 16 o superior. La comprobación usa tanto el endpoint local como `SERVERPROPERTY('IsLocalDB')`; no depende de que el nombre de equipo informado por SQL coincida con Windows. La precarga sigue rechazando servidores remotos y ahora valida el destino antes de restaurar. LocalDB pertenece al usuario de Windows: instalar y ejecutar la aplicación con la misma cuenta, sin cambiar a otro usuario administrador.
+
+Si una versión anterior restauró la base y luego falló con **«Solo se permite una instancia local de desarrollo»**, la base ya existe pero sus dígitos verificadores iniciales podrían no haberse preparado. No hay que borrarla ni restaurar encima. **Solo si esa base acaba de salir de esa instalación fallida y todavía no se utilizó**, seguir estos pasos:
+
+1. Ejecutar el instalador actualizado sin marcar **Cargar actores de demostración** ni **Ejecutar Perfumería**, para actualizar los binarios y conservar la base.
+2. En PowerShell elevado como administrador **con la misma cuenta de Windows**, desde la carpeta instalada (por defecto `C:\Program Files\Perfumeria`), ejecutar lo siguiente. Confirmar antes que `UI.exe.config` apunte a la instancia y base de esa instalación fallida:
+
+   ```powershell
+   Copy-Item .\UI.exe.config .\SeedDemoActors.exe.config
+   .\SeedDemoActors.exe --check-target "Trabajo Practico Final"
+   if ($LASTEXITCODE -ne 0) { throw 'Destino incorrecto; detener la recuperacion.' }
+   .\SeedDemoActors.exe --initialize-new "Trabajo Practico Final"
+   if ($LASTEXITCODE -ne 0) { throw 'La inicializacion fallo; revisar el mensaje y no continuar.' }
+   .\SeedDemoActors.exe --verify "Trabajo Practico Final"
+   if ($LASTEXITCODE -ne 0) { throw 'La verificacion fallo; revisar el mensaje.' }
+   ```
+
+3. Abrir Perfumería cuando se informen los cuatro accesos correctos. Un reintento normal del instalador con datos demo también debe terminar sin duplicarlos.
+
+La inicialización explícita recalcula DVH/DVV de los usuarios restaurados y crea los actores demo en una transacción. **No usarla en una base que ya tenga uso real o cambios que se deban auditar**: podría ocultar una alteración de integridad. En ese caso conservar un respaldo y diagnosticar la discrepancia antes de continuar. El instalador nunca selecciona este modo automáticamente para una base preexistente.
+
 ## Precarga sobre la base de desarrollo
 
 La base local utilizada en esta sesión es `Trabajo Practico Final 3` en `DESKTOP-TFHVP49`; no es el nombre fijo del instalador. El script toma la conexión de `UI/App.config` y exige que coincida con el nombre indicado. Compilar primero `UI/UI.csproj` en Release.

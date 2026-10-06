@@ -1,4 +1,4 @@
-// Explicit, local-only demo data. Never invoked by the application or installer.
+// Explicit, local-only demo data. Invoked by the installer only when demo data is selected.
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -166,16 +166,21 @@ internal static class SeedDemoActors
     {
         try
         {
-            Require(args.Length==2 && new[]{"--check","--apply","--verify","--initialize-new"}.Contains(args[0]),"Uso: SeedDemoActors --check|--apply|--verify NombreBase");
+            Require(args.Length==2 && new[]{"--check-target","--check","--apply","--verify","--initialize-new"}.Contains(args[0]),"Uso: SeedDemoActors --check-target|--check|--apply|--verify NombreBase");
             var builder=new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["MiConexionDB"].ConnectionString);
             Require(builder.IntegratedSecurity && builder.InitialCatalog==args[1],"La base no coincide con la indicada o no usa autenticacion integrada.");
-            using(connection=new SqlConnection(builder.ConnectionString))
+            var targetBuilder=new SqlConnectionStringBuilder(builder.ConnectionString);
+            if(args[0]=="--check-target") targetBuilder.InitialCatalog="master";
+            using(connection=new SqlConnection(targetBuilder.ConnectionString))
             {
                 connection.Open();
-                var server=Query("SELECT CAST(SERVERPROPERTY('MachineName') AS nvarchar(128)),CAST(SERVERPROPERTY('ProductMajorVersion') AS int)").Rows[0];
-                Require(string.Equals((string)server[0],Environment.MachineName,StringComparison.OrdinalIgnoreCase),"Solo se permite una instancia local de desarrollo.");
+                var server=Query("SELECT CAST(SERVERPROPERTY('MachineName') AS nvarchar(128)),CAST(SERVERPROPERTY('ProductMajorVersion') AS int),CAST(COALESCE(SERVERPROPERTY('IsLocalDB'),0) AS int)").Rows[0];
+                bool isLocalDb=Convert.ToInt32(server[2])==1;
+                Require(SeedDemoTargetPolicy.IsLocalTarget(builder.DataSource,Convert.ToString(server[0]),isLocalDb,Environment.MachineName),
+                    "Solo se permite una instancia local para datos demo. Instancia="+builder.DataSource+"; SQL MachineName="+Convert.ToString(server[0])+"; equipo="+Environment.MachineName+"; IsLocalDB="+isLocalDb);
                 Require((int)server[1]>=16,"Se requiere SQL Server 16.x o superior.");
-                Console.WriteLine("DESTINO "+builder.DataSource+" / "+builder.InitialCatalog);
+                Console.WriteLine("DESTINO "+builder.DataSource+" / "+builder.InitialCatalog+"; SQL="+server[1]+"; IsLocalDB="+isLocalDb);
+                if(args[0]=="--check-target") { Console.WriteLine("DESTINO LOCAL OK; sin cambios."); return 0; }
                 if(args[0]=="--verify") { VerifyLogin(); return 0; }
                 using(transaction=connection.BeginTransaction(IsolationLevel.Serializable))
                 {

@@ -53,4 +53,8 @@ Ejecutar el instalador en una maquina virtual con y sin los prerrequisitos. Conf
 
 La version se consulta en la instancia indicada, no en SSMS. Si ya tiene SQL Server 17.x, indicar su nombre correcto (`.` para la predeterminada o `.\NOMBRE` para una instancia con nombre); no necesita instalar 16.x adicionalmente. Una instancia detenida o sin permisos de conexion no se puede verificar.
 
+LocalDB 16+ también está admitido, por ejemplo `(localdb)\MSSQLLocalDB`. La precarga valida el destino antes de restaurar y distingue LocalDB de una instancia normal. Para retomar una restauración que falló con la validación local de una versión anterior, seguir [la recuperación explícita del README](../README.md#localdb-y-recuperación-de-la-instalación-fallida); no se borran bases ni se recalcula la integridad de bases existentes automáticamente.
+
+La prueba `powershell -NoProfile -File Scripts/test-localdb-installer.ps1`, desde la raíz y después de compilar el instalador, verifica restauración, cuatro logins, reintento idempotente y recuperación explícita. Crea dos bases aisladas con sufijos únicos y las conserva para inspección. No ejecuta el asistente gráfico.
+
 Se conserva el respaldo de distribucion generado con SQL Server 16 para las computadoras de la facultad. Microsoft admite [restaurarlo en SQL Server 17](https://learn.microsoft.com/en-us/sql/database-engine/install-windows/supported-version-and-edition-upgrades-2025?view=sql-server-ver17). No reemplazarlo por un respaldo generado en 17 si debe seguir instalando en 16: los respaldos no son compatibles hacia versiones anteriores.

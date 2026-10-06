@@ -16,6 +16,7 @@ $references+=@('BE','BLL','DAL','MPP','Servicios')|ForEach-Object {Join-Path $ro
 $arguments=@('/nologo','/target:exe',('/out:'+(Join-Path $seedBin 'SeedDemoActors.exe')))
 $arguments+=$references|ForEach-Object {'/reference:'+$_}
 $arguments+=Join-Path $root 'Scripts\SeedDemoActors.cs'
+$arguments+=Join-Path $root 'Scripts\SeedDemoTargetPolicy.cs'
 & $compiler @arguments
 if($LASTEXITCODE -ne 0){throw 'Fallo la compilacion del seed.'}
 if(-not (Test-Path $IsccPath)){throw 'No se encontro Inno Setup 6. Indicar -IsccPath.'}

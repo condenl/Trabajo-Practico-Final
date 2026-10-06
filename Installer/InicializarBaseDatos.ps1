@@ -173,6 +173,21 @@ function Update-ApplicationConnection {
     $config.Save($ConfigPath)
 }
 
+function Invoke-DemoSeed {
+    param([string]$Mode)
+    # Windows PowerShell 5 turns native stderr into ErrorRecords. Capture those
+    # without aborting before the exit code and the complete output are logged.
+    $previousPreference = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = 'Continue'
+        $output = & $seedExe $Mode $DatabaseName 2>&1
+        $seedExit = $LASTEXITCODE
+    }
+    finally { $ErrorActionPreference = $previousPreference }
+    foreach ($line in $output) { Write-InstallLog ([string]$line) }
+    if ($seedExit -ne 0) { throw "Fallo de usuarios demo ($Mode, codigo $seedExit). Revisar el registro; no se sobrescriben usuarios existentes." }
+}
+
 try {
     $restoredNow = $false
     New-Item -ItemType File -Path $LogPath -Force | Out-Null
@@ -181,6 +196,15 @@ try {
     $majorVersion = Invoke-SqlScalar -Catalog 'master' -CommandText "SELECT CONVERT(int, SERVERPROPERTY('ProductMajorVersion'));"
     if ([int]$majorVersion -lt 16) {
         throw "La aplicacion requiere SQL Server 16.x (SQL Server 2022) o superior. La instancia seleccionada informa version mayor $majorVersion."
+    }
+
+    if ($SeedDemoActors) {
+        $seedExe = Join-Path (Split-Path $ConfigPath -Parent) 'SeedDemoActors.exe'
+        if (-not (Test-Path -LiteralPath $seedExe -PathType Leaf)) { throw 'Falta SeedDemoActors.exe en la instalacion.' }
+        Update-ApplicationConnection
+        Copy-Item -LiteralPath $ConfigPath -Destination ($seedExe + '.config')
+        # Reject unsupported demo targets before restoring or migrating a database.
+        Invoke-DemoSeed -Mode '--check-target'
     }
 
     $exists = Invoke-SqlScalar -Catalog 'master' -CommandText 'SELECT DB_ID(@DatabaseName);' -Parameters @{
@@ -209,16 +233,10 @@ try {
 
     Update-ApplicationConnection
     if ($SeedDemoActors) {
-        $seedExe = Join-Path (Split-Path $ConfigPath -Parent) 'SeedDemoActors.exe'
-        if (-not (Test-Path -LiteralPath $seedExe -PathType Leaf)) { throw 'Falta SeedDemoActors.exe en la instalacion.' }
-        Copy-Item -LiteralPath $ConfigPath -Destination ($seedExe + '.config')
         $seedMode = if ($restoredNow) { '--initialize-new' } else { '--apply' }
         if ($restoredNow) { Write-InstallLog 'Inicializando DVH/DVV solo para la base nueva recien restaurada del respaldo de distribucion.' }
         foreach ($mode in @($seedMode, '--verify')) {
-            $output = & $seedExe $mode $DatabaseName 2>&1
-            $seedExit = $LASTEXITCODE
-            foreach ($line in $output) { Write-InstallLog ([string]$line) }
-            if ($seedExit -ne 0) { throw 'No se pudo precargar/verificar los actores demo. Revisar el registro; no se sobrescriben usuarios existentes.' }
+            Invoke-DemoSeed -Mode $mode
         }
     }
     Write-InstallLog 'Instalacion de base de datos finalizada correctamente.'
