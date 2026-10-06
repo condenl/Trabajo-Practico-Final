@@ -174,7 +174,7 @@ internal static class SeedDemoActors
                 connection.Open();
                 var server=Query("SELECT CAST(SERVERPROPERTY('MachineName') AS nvarchar(128)),CAST(SERVERPROPERTY('ProductMajorVersion') AS int)").Rows[0];
                 Require(string.Equals((string)server[0],Environment.MachineName,StringComparison.OrdinalIgnoreCase),"Solo se permite una instancia local de desarrollo.");
-                Require((int)server[1]==16,"Se requiere SQL Server 16.x.");
+                Require((int)server[1]>=16,"Se requiere SQL Server 16.x o superior.");
                 Console.WriteLine("DESTINO "+builder.DataSource+" / "+builder.InitialCatalog);
                 if(args[0]=="--verify") { VerifyLogin(); return 0; }
                 using(transaction=connection.BeginTransaction(IsolationLevel.Serializable))

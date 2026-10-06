@@ -1,6 +1,6 @@
 # Perfumería
 
-Aplicación de escritorio C# (.NET Framework 4.7.2) con SQL Server **16.x (SQL Server 2022)**. Las cuentas de acceso pertenecen a la base de datos; funcionan tanto desde Visual Studio como desde `UI.exe` y la aplicación instalada.
+Aplicación de escritorio C# (.NET Framework 4.7.2) con SQL Server **16.x (SQL Server 2022) o superior**, incluida la versión **17.x (SQL Server 2025)**. Las cuentas de acceso pertenecen a la base de datos; funcionan tanto desde Visual Studio como desde `UI.exe` y la aplicación instalada.
 
 ## Usuarios de demostración
 
@@ -27,7 +27,7 @@ No se generan compras, ventas ni stock automáticamente. Para probar el circuito
 
 ## Usarlas con el instalador EXE en otra computadora
 
-1. Ejecutar `Installer/Output/Perfumeria_Setup_Iteracion2.exe` e indicar la instancia local SQL Server 16.x.
+1. Ejecutar `Installer/Output/Perfumeria_Setup_Iteracion2.exe` e indicar la instancia local SQL Server 16.x o superior (por ejemplo, 17.x).
 2. Marcar **Cargar actores de demostración (claves públicas del README; solo pruebas)**. La opción está desmarcada inicialmente.
 3. El instalador prepara la base `Trabajo Practico Final`, carga los actores, verifica sus accesos y configura `UI.exe.config` con esa misma base.
 4. Abrir **Perfumería** desde el acceso directo e ingresar con cualquiera de las cuatro cuentas de la tabla. No hace falta Visual Studio ni ejecutar scripts manualmente.
@@ -49,7 +49,7 @@ powershell -NoProfile -File Scripts/seed-demo-actors.ps1 -Database "Trabajo Prac
 powershell -NoProfile -File Scripts/seed-demo-actors.ps1 -Database "Trabajo Practico Final 3" -Mode verify
 ```
 
-El seed solo admite una instancia SQL local 16.x con autenticación integrada. Puede ejecutarse en otras computadoras: no depende del nombre de este equipo. Usa el cifrado, hash y cálculo de integridad de la aplicación. Repetirlo con datos coincidentes no duplica registros. `verify` inicia/cierra sesiones de prueba y, como el login normal, actualiza los intentos y dígitos verificadores de esas cuentas.
+El seed solo admite una instancia SQL local 16.x o superior con autenticación integrada. Puede ejecutarse en otras computadoras: no depende del nombre de este equipo. Usa el cifrado, hash y cálculo de integridad de la aplicación. Repetirlo con datos coincidentes no duplica registros. `verify` inicia/cierra sesiones de prueba y, como el login normal, actualiza los intentos y dígitos verificadores de esas cuentas.
 
 ## Generar el instalador
 

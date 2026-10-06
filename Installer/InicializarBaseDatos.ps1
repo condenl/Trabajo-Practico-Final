@@ -179,8 +179,8 @@ try {
     Write-InstallLog "Inicio. Instancia SQL: $ServerInstance; base: $DatabaseName"
 
     $majorVersion = Invoke-SqlScalar -Catalog 'master' -CommandText "SELECT CONVERT(int, SERVERPROPERTY('ProductMajorVersion'));"
-    if ([int]$majorVersion -ne 16) {
-        throw "La aplicacion requiere SQL Server 16.x (SQL Server 2022). La instancia seleccionada informa version mayor $majorVersion."
+    if ([int]$majorVersion -lt 16) {
+        throw "La aplicacion requiere SQL Server 16.x (SQL Server 2022) o superior. La instancia seleccionada informa version mayor $majorVersion."
     }
 
     $exists = Invoke-SqlScalar -Catalog 'master' -CommandText 'SELECT DB_ID(@DatabaseName);' -Parameters @{

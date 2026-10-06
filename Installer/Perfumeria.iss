@@ -57,7 +57,7 @@ begin
     wpSelectDir,
     'Servidor de base de datos',
     'Indique la instancia de SQL Server disponible',
-    'El instalador usara autenticacion integrada de Windows y exige SQL Server 16.x (SQL Server 2022). Use . para la instancia predeterminada o .\SQLEXPRESS para Express.');
+    'El instalador usara autenticacion integrada de Windows y requiere SQL Server 16.x (2022) o superior, incluida la version 17.x. Use . para la instancia predeterminada o .\SQLEXPRESS para Express.');
   SqlServerPage.Add('Instancia SQL Server:', False);
   SqlServerPage.Values[0] := '.';
 end;
@@ -105,7 +105,7 @@ begin
     GetSqlServerInstance('') + '" -DownloadDirectory "' + DownloadDirectory +
     '" -InstallDotNet -LogPath "' + ExpandConstant('{tmp}\Perfumeria-Prerrequisitos.log') + '"';
 
-  WizardForm.StatusLabel.Caption := 'Verificando .NET Framework y SQL Server 2022...';
+  WizardForm.StatusLabel.Caption := 'Verificando .NET Framework y SQL Server 16.x o superior...';
   if not Exec(ExpandConstant('{sys}\WindowsPowerShell\v1.0\powershell.exe'), Parameters, '', SW_HIDE,
     ewWaitUntilTerminated, ResultCode) then
   begin
@@ -125,10 +125,10 @@ begin
     21:
       begin
         ShellExec('', 'https://www.microsoft.com/en-us/download/details.aspx?id=104781', '', '', SW_SHOWNORMAL, ewNoWait, ResultCode);
-        Result := 'No se encontro SQL Server 16.x y Microsoft no entrego el instalador automatico. Se abrio la pagina oficial de SQL Server 2022. Instalelo y vuelva a ejecutar este instalador.';
+        Result := 'No se pudo conectar a la instancia indicada y Microsoft no entrego el instalador automatico. Revise el nombre, el servicio y los permisos de SQL Server. Si falta el motor, instale SQL Server 2022 o superior desde la pagina oficial y vuelva a ejecutar este instalador.';
       end;
     22:
-      Result := 'La instancia seleccionada no es SQL Server 16.x (SQL Server 2022). Indique una instancia 16.x disponible.';
+      Result := 'La instancia seleccionada es anterior a SQL Server 16.x (2022). Indique una instancia 16.x o superior (por ejemplo, 17.x).';
     30:
       begin
         NeedsRestart := True;

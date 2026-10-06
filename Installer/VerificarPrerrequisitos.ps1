@@ -111,12 +111,12 @@ try {
         }
     }
 
-    if ($sqlMajor -ne 16) {
-        Write-PrerequisiteLog "La instancia responde, pero su versión mayor es $sqlMajor; se requiere 16."
+    if ($sqlMajor -lt 16) {
+        Write-PrerequisiteLog "La instancia responde, pero su versión mayor es $sqlMajor; se requiere 16 o superior."
         exit 22
     }
 
-    Write-PrerequisiteLog 'Prerrequisitos verificados: .NET Framework 4.7.2+ y SQL Server 16.x.'
+    Write-PrerequisiteLog "Prerrequisitos verificados: .NET Framework 4.7.2+ y SQL Server $sqlMajor.x (minimo 16.x)."
     exit 0
 }
 catch {
