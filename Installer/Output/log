@@ -1,0 +1,6 @@
+2026-10-05 22:17:23 Inicio. Instancia SQL: (localdb)\MSSQLLocalDB; base: Trabajo Practico Final
+2026-10-05 22:17:24 La base no existe. Restaurando respaldo inicial.
+2026-10-05 22:17:25 Aplicando migracion: Iteracion2_Aprovisionamiento.sql
+2026-10-05 22:17:26 Aplicando migracion: Iteracion2_Ventas_Fidelizacion.sql
+2026-10-05 22:17:26 Inicializando DVH/DVV solo para la base nueva recien restaurada del respaldo de distribucion.
+2026-10-05 22:17:27 ERROR: Solo se permite una instancia local de desarrollo.
