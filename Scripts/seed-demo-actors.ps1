@@ -19,8 +19,9 @@ $references+=@('BE','BLL','DAL','MPP','Servicios')|ForEach-Object {Join-Path $bu
 $arguments=@('/nologo','/target:exe',('/out:'+$exe))
 $arguments+=$references|ForEach-Object {'/reference:'+$_}
 $arguments+=Join-Path $PSScriptRoot 'SeedDemoActors.cs'
+$arguments+=Join-Path $PSScriptRoot 'SeedDemoScenarios.cs'
 $arguments+=Join-Path $PSScriptRoot 'SeedDemoTargetPolicy.cs'
 & $compiler @arguments
 if($LASTEXITCODE -ne 0){throw 'No se pudo compilar la herramienta de precarga.'}
 & $exe ('--'+$Mode) $Database
-if($LASTEXITCODE -ne 0){throw 'La precarga/verificacion no finalizo correctamente. No se sobrescriben cuentas existentes.'}
+if($LASTEXITCODE -ne 0){throw 'La precarga/verificacion no finalizo correctamente. No se sobrescriben cuentas ni se reinician escenarios existentes.'}

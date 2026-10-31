@@ -6,7 +6,7 @@ if(-not $MSBuildPath){
     if(Test-Path $vswhere){$MSBuildPath=(& $vswhere -latest -requires Microsoft.Component.MSBuild -find 'MSBuild\**\Bin\MSBuild.exe' | Select-Object -First 1)}
 }
 if(-not $MSBuildPath -or -not (Test-Path $MSBuildPath)){throw 'Indicar -MSBuildPath con la ruta de MSBuild de Visual Studio.'}
-& $MSBuildPath (Join-Path $root 'UI\UI.csproj') /p:Configuration=Release /verbosity:minimal /nologo
+& $MSBuildPath (Join-Path $root 'UI\UI.csproj') /restore /p:Configuration=Release /verbosity:minimal /nologo
 if($LASTEXITCODE -ne 0){throw 'Fallo la compilacion Release.'}
 $seedBin=Join-Path $PSScriptRoot 'bin'
 New-Item -ItemType Directory -Path $seedBin -Force | Out-Null
@@ -16,6 +16,7 @@ $references+=@('BE','BLL','DAL','MPP','Servicios')|ForEach-Object {Join-Path $ro
 $arguments=@('/nologo','/target:exe',('/out:'+(Join-Path $seedBin 'SeedDemoActors.exe')))
 $arguments+=$references|ForEach-Object {'/reference:'+$_}
 $arguments+=Join-Path $root 'Scripts\SeedDemoActors.cs'
+$arguments+=Join-Path $root 'Scripts\SeedDemoScenarios.cs'
 $arguments+=Join-Path $root 'Scripts\SeedDemoTargetPolicy.cs'
 & $compiler @arguments
 if($LASTEXITCODE -ne 0){throw 'Fallo la compilacion del seed.'}

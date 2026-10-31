@@ -48,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="PDFsharp-MigraDoc-GDI" Version="6.2.4" />
+    <!-- Patched override of the PDF library's transitive PKCS dependency. -->
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="8.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Reportes\ReporteOrdenesPdf.cs" />
     <Compile Include="FormPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>

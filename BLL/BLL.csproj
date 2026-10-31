@@ -46,6 +46,7 @@
     <Compile Include="BitacoraBLL.cs" />
     <Compile Include="IdiomaBLL.cs" />
     <Compile Include="InventarioBLL.cs" />
+    <Compile Include="IntercambioOrdenesBLL.cs" />
     <Compile Include="ProductoBLL.cs" />
     <Compile Include="ProveedorBLL.cs" />
     <Compile Include="RegistroActividadBitacora.cs" />

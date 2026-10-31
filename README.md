@@ -23,13 +23,32 @@ Proveedores y clientes son actores externos, **sin usuario/contraseña de acceso
 | Proveedor 2 | `DEMO Proveedor 2`, CUIT ficticio `99000000002` | Contacto `demo.proveedor2@perfumeria.example`, antigüedad 5, prestigio 80. |
 | Cliente | `demo.cliente@perfumeria.example` | Cliente DEMO, membresía `DEMO-2026-001`, descuento 10 %, sin consentimiento de marketing. |
 
-No se generan compras, ventas ni stock automáticamente. Para probar el circuito completo: con Dueño registrar un producto y dos cotizaciones vigentes; crear y enviar la orden; con Contabilidad aprobarla; con Dueño emitirla; con Depósito recibir los lotes; con Ventas buscar al cliente demo y venderle stock recibido con su descuento.
+## Escenarios precargados para demos
+
+La misma opción de precarga incluye **3 productos, 2 cotizaciones y 8 órdenes de compra**, además de lotes y movimientos de ingreso. Buscar los marcadores `DEMO-OC-01` a `DEMO-OC-08` en **CreadaPor** de la grilla de compras; el número de orden real se asigna en cada base y se informa al ejecutar el script.
+
+| Marcador | Estado inicial | Demo sugerida / actor |
+| --- | --- | --- |
+| `DEMO-OC-01` | Borrador | Dueño: enviar a revisión; tiene dos proveedores con cotizaciones comparables. |
+| `DEMO-OC-02` | PendienteAprobacion | Contabilidad: aprobar o rechazar indicando un motivo. |
+| `DEMO-OC-03` | Aprobada | Dueño: emitir la orden aprobada por Contabilidad. |
+| `DEMO-OC-04` | Rechazada | Consultar el motivo; comprobar que no puede emitirse ni recibirse. |
+| `DEMO-OC-05` | Emitida | Depósito: registrar la primera recepción (parcial o completa). |
+| `DEMO-OC-06` | RecibidaParcial | Depósito: completar las **6 unidades Floral y 3 Madera** pendientes. Ya recibió 4 y 2, respectivamente. |
+| `DEMO-OC-07` | Recibida | Consultar trazabilidad, certificados y movimientos de los lotes; vender el stock recibido. |
+| `DEMO-OC-08` | Borrador | Dueño: intentar enviar a revisión. Se rechaza porque Cítrico solo tiene **una** cotización; registrar la segunda para continuar. |
+
+Las órdenes 01 a 07 contienen 10 unidades de `DEMO-FLORAL` y 5 de `DEMO-MADERA`, por un total de $210.000 cada una. La 08 contiene 3 unidades de `DEMO-CITRICO`, total $27.000. Son precios ficticios. Las aprobaciones usan la cuenta de Contabilidad; los ingresos identifican a Depósito y conservan el origen de la compra.
+
+Stock inicial: **14 Floral, 7 Madera y 0 Cítrico**. Con Ventas, buscar `demo.cliente@perfumeria.example`: vender 2 Floral y 1 Madera da un subtotal de $63.000, descuento de membresía de $6.300 y total de $56.700. Los lotes tienen distintos vencimientos para demostrar FEFO; intentar vender Cítrico permite mostrar falta de stock. No se precargan ventas: quedan disponibles para ejecutarlas durante la demo.
+
+Las cotizaciones vencen un año después de la primera carga; los lotes, a los 90 o 180 días. **Repetir el script no duplica ni reinicia órdenes, no repone unidades vendidas y no renueva fechas**. Conserva el progreso de cada demo y valida la coherencia de totales, recepciones y movimientos. Para repetir exactamente los estados iniciales, utilizar una nueva base de pruebas; no restaurar encima de una base con trabajo que se deba conservar. Los marcadores `DEMO-*` están reservados para esta precarga.
 
 ## Usarlas con el instalador EXE en otra computadora
 
 1. Ejecutar `Installer/Output/Perfumeria_Setup_Iteracion2.exe` e indicar la instancia local SQL Server 16.x o superior (por ejemplo, 17.x).
-2. Marcar **Cargar actores de demostración (claves públicas del README; solo pruebas)**. La opción está desmarcada inicialmente.
-3. El instalador prepara la base `Trabajo Practico Final`, carga los actores, verifica sus accesos y configura `UI.exe.config` con esa misma base.
+2. Marcar **Cargar actores y escenarios demo (claves públicas del README; solo pruebas)**. La opción está desmarcada inicialmente.
+3. El instalador prepara la base `Trabajo Practico Final`, carga los actores y escenarios, verifica sus accesos y la coherencia de los datos, y configura `UI.exe.config` con esa misma base.
 4. Abrir **Perfumería** desde el acceso directo e ingresar con cualquiera de las cuatro cuentas de la tabla. No hace falta Visual Studio ni ejecutar scripts manualmente.
 
 Estas son cuentas de la aplicación, no logins de SQL Server ni de Windows. La conexión SQL continúa usando autenticación integrada de Windows; la identidad que ejecuta la aplicación necesita acceso a la base. Copiar solo `UI.exe` no copia las cuentas: hay que instalar/preparar la base y conservar las DLL y `UI.exe.config`. El README también se incluye en la carpeta instalada.
@@ -42,7 +61,7 @@ Se admite `(localdb)\MSSQLLocalDB` cuando su motor es 16 o superior. La comproba
 
 Si una versión anterior restauró la base y luego falló con **«Solo se permite una instancia local de desarrollo»**, la base ya existe pero sus dígitos verificadores iniciales podrían no haberse preparado. No hay que borrarla ni restaurar encima. **Solo si esa base acaba de salir de esa instalación fallida y todavía no se utilizó**, seguir estos pasos:
 
-1. Ejecutar el instalador actualizado sin marcar **Cargar actores de demostración** ni **Ejecutar Perfumería**, para actualizar los binarios y conservar la base.
+1. Ejecutar el instalador actualizado sin marcar **Cargar actores y escenarios demo** ni **Ejecutar Perfumería**, para actualizar los binarios y conservar la base.
 2. En PowerShell elevado como administrador **con la misma cuenta de Windows**, desde la carpeta instalada (por defecto `C:\Program Files\Perfumeria`), ejecutar lo siguiente. Confirmar antes que `UI.exe.config` apunte a la instancia y base de esa instalación fallida:
 
    ```powershell
@@ -66,13 +85,29 @@ La base local utilizada en esta sesión es `Trabajo Practico Final 3` en `DESKTO
 ```powershell
 # Prevalidación de solo lectura (opción predeterminada).
 powershell -NoProfile -File Scripts/seed-demo-actors.ps1 -Database "Trabajo Practico Final 3" -Mode check
-# Crear actores y perfiles faltantes en una transacción.
+# Crear actores, perfiles y escenarios faltantes en una transacción.
 powershell -NoProfile -File Scripts/seed-demo-actors.ps1 -Database "Trabajo Practico Final 3" -Mode apply
-# Probar el Login real, todos los permisos y la integridad DVH/DVV.
+# Probar el Login real, permisos, DVH/DVV y coherencia de los escenarios.
 powershell -NoProfile -File Scripts/seed-demo-actors.ps1 -Database "Trabajo Practico Final 3" -Mode verify
 ```
 
 El seed solo admite una instancia SQL local 16.x o superior con autenticación integrada. Puede ejecutarse en otras computadoras: no depende del nombre de este equipo. Usa el cifrado, hash y cálculo de integridad de la aplicación. Repetirlo con datos coincidentes no duplica registros. `verify` inicia/cierra sesiones de prueba y, como el login normal, actualiza los intentos y dígitos verificadores de esas cuentas.
+
+Sobre una instalación existente, volver a ejecutar el instalador actualizado marcando los datos demo, o desde su carpeta ejecutar `SeedDemoActors.exe --apply "Trabajo Practico Final"` y luego `SeedDemoActors.exe --verify "Trabajo Practico Final"`, con `SeedDemoActors.exe.config` apuntando a la misma base que `UI.exe.config`. No hace falta borrar la base ni las cuentas existentes.
+
+## Reportes e intercambio de órdenes
+
+En **Aprovisionamiento → Órdenes de compra**, los botones de archivos están en una barra independiente encima de la grilla:
+
+- **Reporte PDF:** guarda el listado completo mostrado, con proveedor/CUIT, estado, fechas, responsable, aprobación o rechazo y cada producto, cantidad, cantidad recibida, precio unitario, subtotal y total. Usa PDFsharp/MigraDoc GDI **6.2.4**, licencia MIT, compatible con .NET Framework 4.7.2. Incluye paginación automática y encabezados de tabla repetidos cuando el detalle ocupa varias páginas. No requiere tener instalado un lector de PDF para generarlo.
+- **Exportar XML:** guarda el listado completo y sus detalles usando `System.Xml.Serialization.XmlSerializer`, con formato `ArchivoOrdenesCompra` versión 1. La exportación y deserialización conservan los estados y metadatos originales en el archivo.
+- **Importar XML:** abre un archivo del mismo formato, valida el lote y solicita confirmación antes de guardar. Resuelve proveedores por **CUIT** y productos por **código**, que deben existir y estar activos en la base destino. Se crean **órdenes nuevas en Borrador**, con nuevos IDs, fecha y responsable actuales, total recalculado y cantidades recibidas en cero. No restaura aprobaciones, recepciones ni movimientos de stock y no sobrescribe órdenes existentes. Si se vuelve a importar el mismo archivo, se crean otras copias; el diálogo lo advierte y permite cancelar.
+
+Las operaciones requieren el permiso de gestión de aprovisionamiento. Una orden inválida cancela el lote completo; los insertados comparten una transacción SQL. Los XML malformados, versiones desconocidas, entidades externas/DTD, cantidades o precios inválidos y archivos mayores a 10 MB se rechazan. El límite por archivo es de 1000 órdenes y 10000 detalles. Guardar PDF/XML usa un archivo temporal y reemplazo atómico para conservar el destino anterior si falla la generación.
+
+La biblioteca se restaura por NuGet al compilar en Visual Studio o con `Installer/build-installer.ps1`; las DLL y el aviso de licencia se incluyen en el instalador. Se fija la dependencia de seguridad `System.Security.Cryptography.Pkcs` en **8.0.2**. La capa BE contiene el contrato XML; Servicios serializa/deserializa; BLL valida y prepara los borradores; DAL guarda el lote; UI maneja los diálogos y el reporte PDF.
+
+Verificación: `dotnet test Arquitectura.Tests/Arquitectura.Tests.csproj --configuration Release`. Después de compilar el instalador, `powershell -NoProfile -File Scripts/test-ordenes-archivos.ps1 -ServerInstance "DESKTOP-TFHVP49"` ejecuta pruebas de componentes WinForms y SQL en una base aislada, conserva los XML/PDF generados y no cambia `UI/App.config`. También admite `"(localdb)\MSSQLLocalDB"` 16+.
 
 ## Generar el instalador
 
@@ -83,3 +118,13 @@ powershell -NoProfile -File Installer/build-installer.ps1
 ```
 
 Compila la aplicación, la herramienta de precarga y el instalador. Los detalles de prerrequisitos se encuentran en [Installer/README.md](Installer/README.md). El modelo editable y sus verificaciones se describen en [Documentacion/EnterpriseArchitect/README.md](Documentacion/EnterpriseArchitect/README.md).
+
+Para verificar los escenarios con la lógica real y cada actor (crea una base aislada y la conserva para inspección):
+
+```powershell
+powershell -NoProfile -File Scripts/test-demo-scenarios.ps1 -ServerInstance "DESKTOP-TFHVP49"
+# O en LocalDB 16+:
+powershell -NoProfile -File Scripts/test-demo-scenarios.ps1 -ServerInstance "(localdb)\MSSQLLocalDB"
+```
+
+La prueba cubre aprobación/rechazo, emisión, recepciones parciales/completas, cotización faltante, venta con descuento/FEFO, permisos, reintento sin reiniciar las demos y rollback ante una inconsistencia. No sustituye una prueba gráfica del asistente de instalación.

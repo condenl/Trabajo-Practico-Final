@@ -26,12 +26,13 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "Crear un acceso directo en el escritorio"; GroupDescription: "Accesos directos:"; Flags: unchecked
-Name: "demodata"; Description: "Cargar actores de demostracion (claves publicas del README; solo pruebas)"; GroupDescription: "Datos de prueba:"; Flags: unchecked
+Name: "demodata"; Description: "Cargar actores y escenarios demo (claves publicas del README; solo pruebas)"; GroupDescription: "Datos de prueba:"; Flags: unchecked
 
 [Files]
 Source: "..\UI\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "bin\SeedDemoActors.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Documentacion\Licencias_Reportes.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "InicializarBaseDatos.ps1"; DestDir: "{app}\Installer"; Flags: ignoreversion
 Source: "VerificarPrerrequisitos.ps1"; DestDir: "{app}\Installer"; Flags: ignoreversion
 Source: "VerificarPrerrequisitos.ps1"; Flags: dontcopy
