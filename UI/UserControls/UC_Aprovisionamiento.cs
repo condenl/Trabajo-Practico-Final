@@ -7,6 +7,7 @@ using BE;
 using BE.Seguridad;
 using BLL;
 using Servicios;
+using UI.Reportes;
 
 namespace UI.UserControls
 {
@@ -15,12 +16,17 @@ namespace UI.UserControls
         public bool ModoPrueba { get; set; }
         public string UltimoMensaje { get; private set; }
         public string UltimoError { get; private set; }
+        public string RutaArchivoPrueba { get; set; }
+        public bool ConfirmarImportacionPrueba { get; set; }
 
         private readonly Usuario usuario;
         private readonly ProveedorBLL proveedorBLL = new ProveedorBLL();
         private readonly ProductoBLL productoBLL = new ProductoBLL();
         private readonly AprovisionamientoBLL aprovisionamientoBLL = new AprovisionamientoBLL();
         private readonly InventarioBLL inventarioBLL = new InventarioBLL();
+        private readonly IntercambioOrdenesBLL intercambioOrdenesBLL = new IntercambioOrdenesBLL();
+        private Button btnReporteOrdenesPdf;
+        private Button btnExportarOrdenesXml;
 
         private readonly TabControl tabs = new TabControl { Dock = DockStyle.Fill };
         private readonly TabPage tabCatalogos = new TabPage("Catálogos y cotizaciones");
@@ -166,9 +172,10 @@ namespace UI.UserControls
 
         private void ConstruirOrdenes()
         {
-            TableLayoutPanel layout = new TableLayoutPanel { Dock = DockStyle.Fill, RowCount = 3, ColumnCount = 1, Padding = new Padding(12) };
+            TableLayoutPanel layout = new TableLayoutPanel { Dock = DockStyle.Fill, RowCount = 4, ColumnCount = 1, Padding = new Padding(12) };
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 48));
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 100));
+            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
             layout.Controls.Add(Titulo("Orden de compra y envío a revisión contable"), 0, 0);
             FlowLayoutPanel barra = FlujoHorizontal();
@@ -181,7 +188,19 @@ namespace UI.UserControls
             barra.Controls.Add(Boton("Emitir al proveedor", "btnEmitirOrden", EmitirOrden));
             barra.Controls.Add(Boton("Actualizar", "btnActualizarOrdenes", delegate { CargarOrdenes(); }));
             layout.Controls.Add(barra, 0, 1);
-            layout.Controls.Add(dgvOrdenes, 0, 2);
+            var archivos = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true, WrapContents = true, Padding = new Padding(5) };
+            btnReporteOrdenesPdf = Boton("Reporte PDF", "btnReporteOrdenesPdf", GenerarReportePdf);
+            btnExportarOrdenesXml = Boton("Exportar XML", "btnExportarOrdenesXml", ExportarOrdenesXml);
+            var importar = Boton("Importar XML", "btnImportarOrdenesXml", ImportarOrdenesXml);
+            foreach (Button boton in new[] { btnReporteOrdenesPdf, btnExportarOrdenesXml, importar })
+            {
+                boton.Margin = new Padding(3);
+                archivos.Controls.Add(boton);
+            }
+            archivos.Controls.Add(new Label { AutoSize = true, MaximumSize = new Size(430, 0), Margin = new Padding(10, 9, 3, 3),
+                Text = "PDF/XML: listado completo con detalles. Importar crea borradores nuevos." });
+            layout.Controls.Add(archivos, 0, 2);
+            layout.Controls.Add(dgvOrdenes, 0, 3);
             tabOrdenes.Controls.Add(layout);
         }
 
@@ -285,6 +304,79 @@ namespace UI.UserControls
         {
             if (!TienePermiso(TipoPermiso.Aprovisionamiento_Gestion)) return;
             dgvOrdenes.DataSource = aprovisionamientoBLL.ConsultarHistorialCompras(null).Select(OrdenCompraVista.Crear).ToList();
+            btnReporteOrdenesPdf.Enabled = btnExportarOrdenesXml.Enabled = dgvOrdenes.Rows.Count > 0;
+        }
+
+        private ArchivoOrdenesCompra ObtenerListadoGrilla()
+        {
+            var ids = dgvOrdenes.Rows.Cast<DataGridViewRow>().Where(f => !f.IsNewRow && f.Visible)
+                .Select(f => ((OrdenCompraVista)f.DataBoundItem).IdOrdenCompra).ToList();
+            return intercambioOrdenesBLL.ObtenerListado(ids);
+        }
+
+        private string ElegirArchivo(bool importar, bool pdf = false)
+        {
+            if (ModoPrueba)
+            {
+                if (string.IsNullOrWhiteSpace(RutaArchivoPrueba)) throw new InvalidOperationException("Debe indicar RutaArchivoPrueba.");
+                return RutaArchivoPrueba;
+            }
+            if (importar)
+            {
+                using (var dialogo = new OpenFileDialog { Title = "Importar órdenes desde XML", Filter = "Órdenes XML (*.xml)|*.xml",
+                    CheckFileExists = true, Multiselect = false })
+                    return dialogo.ShowDialog(this) == DialogResult.OK ? dialogo.FileName : null;
+            }
+            using (var dialogo = new SaveFileDialog { Title = pdf ? "Guardar reporte de órdenes" : "Exportar listado de órdenes",
+                Filter = pdf ? "Reporte PDF (*.pdf)|*.pdf" : "Órdenes XML (*.xml)|*.xml", DefaultExt = pdf ? "pdf" : "xml",
+                AddExtension = true, CheckPathExists = true, OverwritePrompt = true,
+                FileName = "ordenes_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + (pdf ? ".pdf" : ".xml") })
+                return dialogo.ShowDialog(this) == DialogResult.OK ? dialogo.FileName : null;
+        }
+
+        private void GenerarReportePdf(object sender, EventArgs e)
+        {
+            Ejecutar(delegate
+            {
+                ArchivoOrdenesCompra archivo = ObtenerListadoGrilla();
+                string ruta = ElegirArchivo(false, true);
+                if (ruta == null) return;
+                ReporteOrdenesPdf.Guardar(ruta, archivo);
+                Informar("Reporte PDF guardado. Órdenes incluidas: " + archivo.Ordenes.Count + ".");
+            }, null);
+        }
+
+        private void ExportarOrdenesXml(object sender, EventArgs e)
+        {
+            Ejecutar(delegate
+            {
+                ArchivoOrdenesCompra archivo = ObtenerListadoGrilla();
+                string ruta = ElegirArchivo(false);
+                if (ruta == null) return;
+                OrdenesXml.Guardar(ruta, archivo);
+                Informar("XML guardado con " + archivo.Ordenes.Count + " órdenes y sus detalles.");
+            }, null);
+        }
+
+        private void ImportarOrdenesXml(object sender, EventArgs e)
+        {
+            Ejecutar(delegate
+            {
+                string ruta = ElegirArchivo(true);
+                if (ruta == null) return;
+                ArchivoOrdenesCompra archivo = OrdenesXml.Leer(ruta);
+                int cantidad = intercambioOrdenesBLL.ValidarImportacion(archivo);
+                bool confirmar = ModoPrueba ? ConfirmarImportacionPrueba : MessageBox.Show(this,
+                    "Se crearán " + cantidad + " órdenes NUEVAS en Borrador, con fecha y responsable actuales.\n" +
+                    "No se copian aprobaciones, recepciones ni stock y no se reemplazan órdenes existentes.\n" +
+                    "Volver a importar el mismo archivo crea otras copias.\n\n¿Desea continuar?",
+                    "Confirmar importación XML", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes;
+                if (!confirmar) return;
+                List<int> ids = intercambioOrdenesBLL.Importar(archivo);
+                CargarOrdenes();
+                Informar("Se importaron " + ids.Count + " órdenes como borradores. Nuevos IDs: " +
+                    string.Join(", ", ids.Take(10)) + (ids.Count > 10 ? "..." : "") + ".");
+            }, null);
         }
 
         private void CargarPendientes()
@@ -468,12 +560,11 @@ namespace UI.UserControls
             try
             {
                 UltimoError = null;
+                UltimoMensaje = null;
                 accion();
                 if (!string.IsNullOrWhiteSpace(mensaje))
                 {
-                    UltimoMensaje = mensaje;
-                    if (!ModoPrueba)
-                        MessageBox.Show(mensaje, "Perfumería", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Informar(mensaje);
                 }
             }
             catch (Exception error)
@@ -487,6 +578,12 @@ namespace UI.UserControls
             UltimoError = error.Message;
             if (!ModoPrueba)
                 MessageBox.Show(error.Message, "No se pudo completar la operación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void Informar(string mensaje)
+        {
+            UltimoMensaje = mensaje;
+            if (!ModoPrueba) MessageBox.Show(mensaje, "Perfumería", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private static FlowLayoutPanel FlujoVertical()

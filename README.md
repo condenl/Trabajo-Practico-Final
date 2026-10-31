@@ -95,6 +95,20 @@ El seed solo admite una instancia SQL local 16.x o superior con autenticación i
 
 Sobre una instalación existente, volver a ejecutar el instalador actualizado marcando los datos demo, o desde su carpeta ejecutar `SeedDemoActors.exe --apply "Trabajo Practico Final"` y luego `SeedDemoActors.exe --verify "Trabajo Practico Final"`, con `SeedDemoActors.exe.config` apuntando a la misma base que `UI.exe.config`. No hace falta borrar la base ni las cuentas existentes.
 
+## Reportes e intercambio de órdenes
+
+En **Aprovisionamiento → Órdenes de compra**, los botones de archivos están en una barra independiente encima de la grilla:
+
+- **Reporte PDF:** guarda el listado completo mostrado, con proveedor/CUIT, estado, fechas, responsable, aprobación o rechazo y cada producto, cantidad, cantidad recibida, precio unitario, subtotal y total. Usa PDFsharp/MigraDoc GDI **6.2.4**, licencia MIT, compatible con .NET Framework 4.7.2. Incluye paginación automática y encabezados de tabla repetidos cuando el detalle ocupa varias páginas. No requiere tener instalado un lector de PDF para generarlo.
+- **Exportar XML:** guarda el listado completo y sus detalles usando `System.Xml.Serialization.XmlSerializer`, con formato `ArchivoOrdenesCompra` versión 1. La exportación y deserialización conservan los estados y metadatos originales en el archivo.
+- **Importar XML:** abre un archivo del mismo formato, valida el lote y solicita confirmación antes de guardar. Resuelve proveedores por **CUIT** y productos por **código**, que deben existir y estar activos en la base destino. Se crean **órdenes nuevas en Borrador**, con nuevos IDs, fecha y responsable actuales, total recalculado y cantidades recibidas en cero. No restaura aprobaciones, recepciones ni movimientos de stock y no sobrescribe órdenes existentes. Si se vuelve a importar el mismo archivo, se crean otras copias; el diálogo lo advierte y permite cancelar.
+
+Las operaciones requieren el permiso de gestión de aprovisionamiento. Una orden inválida cancela el lote completo; los insertados comparten una transacción SQL. Los XML malformados, versiones desconocidas, entidades externas/DTD, cantidades o precios inválidos y archivos mayores a 10 MB se rechazan. El límite por archivo es de 1000 órdenes y 10000 detalles. Guardar PDF/XML usa un archivo temporal y reemplazo atómico para conservar el destino anterior si falla la generación.
+
+La biblioteca se restaura por NuGet al compilar en Visual Studio o con `Installer/build-installer.ps1`; las DLL y el aviso de licencia se incluyen en el instalador. Se fija la dependencia de seguridad `System.Security.Cryptography.Pkcs` en **8.0.2**. La capa BE contiene el contrato XML; Servicios serializa/deserializa; BLL valida y prepara los borradores; DAL guarda el lote; UI maneja los diálogos y el reporte PDF.
+
+Verificación: `dotnet test Arquitectura.Tests/Arquitectura.Tests.csproj --configuration Release`. Después de compilar el instalador, `powershell -NoProfile -File Scripts/test-ordenes-archivos.ps1 -ServerInstance "DESKTOP-TFHVP49"` ejecuta pruebas de componentes WinForms y SQL en una base aislada, conserva los XML/PDF generados y no cambia `UI/App.config`. También admite `"(localdb)\MSSQLLocalDB"` 16+.
+
 ## Generar el instalador
 
 Con Visual Studio/MSBuild, .NET Framework 4.7.2 e Inno Setup 6 instalados:

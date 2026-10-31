@@ -32,6 +32,7 @@ Name: "demodata"; Description: "Cargar actores y escenarios demo (claves publica
 Source: "..\UI\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "bin\SeedDemoActors.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Documentacion\Licencias_Reportes.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "InicializarBaseDatos.ps1"; DestDir: "{app}\Installer"; Flags: ignoreversion
 Source: "VerificarPrerrequisitos.ps1"; DestDir: "{app}\Installer"; Flags: ignoreversion
 Source: "VerificarPrerrequisitos.ps1"; Flags: dontcopy

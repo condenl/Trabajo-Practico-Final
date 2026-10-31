@@ -9,6 +9,7 @@ namespace DAL.Interfaces
     {
         int InsertarCotizacion(CotizacionProveedor cotizacion);
         int InsertarOrden(OrdenCompra orden);
+        IList<int> InsertarOrdenes(IList<OrdenCompra> ordenes);
         OrdenCompra ObtenerOrden(int idOrdenCompra);
         bool ActualizarEstado(int idOrdenCompra, EstadoOrdenCompra estadoEsperado, EstadoOrdenCompra nuevoEstado, int? idUsuarioContable, string motivoRechazo);
         IDictionary<int, int> ContarProveedoresCotizadosPorProducto(IList<int> idsProducto, DateTime fechaReferencia);

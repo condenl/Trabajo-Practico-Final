@@ -166,6 +166,11 @@ namespace Arquitectura.Tests
             return id;
         }
 
+        public IList<int> InsertarOrdenes(IList<OrdenCompra> ordenes)
+        {
+            return ordenes.Select(InsertarOrden).ToList();
+        }
+
         public OrdenCompra ObtenerOrden(int idOrdenCompra)
         {
             return Ordenes.ContainsKey(idOrdenCompra) ? Ordenes[idOrdenCompra] : null!;

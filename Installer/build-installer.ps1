@@ -6,7 +6,7 @@ if(-not $MSBuildPath){
     if(Test-Path $vswhere){$MSBuildPath=(& $vswhere -latest -requires Microsoft.Component.MSBuild -find 'MSBuild\**\Bin\MSBuild.exe' | Select-Object -First 1)}
 }
 if(-not $MSBuildPath -or -not (Test-Path $MSBuildPath)){throw 'Indicar -MSBuildPath con la ruta de MSBuild de Visual Studio.'}
-& $MSBuildPath (Join-Path $root 'UI\UI.csproj') /p:Configuration=Release /verbosity:minimal /nologo
+& $MSBuildPath (Join-Path $root 'UI\UI.csproj') /restore /p:Configuration=Release /verbosity:minimal /nologo
 if($LASTEXITCODE -ne 0){throw 'Fallo la compilacion Release.'}
 $seedBin=Join-Path $PSScriptRoot 'bin'
 New-Item -ItemType Directory -Path $seedBin -Force | Out-Null

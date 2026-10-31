@@ -81,46 +81,29 @@ VALUES (@IdCotizacion, @IdProducto, @PrecioUnitario, @PlazoEntregaDias);";
 
         public int InsertarOrden(OrdenCompra orden)
         {
+            return InsertarOrdenes(new List<OrdenCompra> { orden })[0];
+        }
+
+        public IList<int> InsertarOrdenes(IList<OrdenCompra> ordenes)
+        {
+            if (ordenes == null || ordenes.Count == 0) throw new ArgumentException("Debe indicar las órdenes a crear.");
+            var ids = new List<int>();
             using (SqlConnection conexion = Conexion.Instancia.ObtenerConexion())
             {
                 conexion.Open();
-                using (SqlTransaction transaccion = conexion.BeginTransaction())
+                using (SqlTransaction transaccion = conexion.BeginTransaction(IsolationLevel.Serializable))
                 {
                     try
                     {
-                        int idOrden;
-                        const string sqlOrden = @"
-INSERT INTO OrdenCompra (IdProveedor, FechaEmision, Total, Estado, CreadaPor)
-VALUES (@IdProveedor, @FechaEmision, @Total, @Estado, @CreadaPor);
-SELECT CAST(SCOPE_IDENTITY() AS INT);";
-
-                        using (SqlCommand comando = new SqlCommand(sqlOrden, conexion, transaccion))
+                        foreach (OrdenCompra orden in ordenes)
                         {
-                            comando.Parameters.AddWithValue("@IdProveedor", orden.IdProveedor);
-                            comando.Parameters.AddWithValue("@FechaEmision", orden.FechaEmision);
-                            comando.Parameters.AddWithValue("@Total", orden.Total);
-                            comando.Parameters.AddWithValue("@Estado", (int)orden.Estado);
-                            comando.Parameters.AddWithValue("@CreadaPor", orden.CreadaPor);
-                            idOrden = Convert.ToInt32(comando.ExecuteScalar());
+                            if (orden == null || orden.Estado != EstadoOrdenCompra.Borrador || orden.Detalles == null || orden.Detalles.Count == 0 ||
+                                orden.Detalles.Any(d => d == null || d.CantidadRecibida != 0))
+                                throw new ArgumentException("La importación solo puede crear borradores sin recepciones.");
+                            ids.Add(InsertarOrden(conexion, transaccion, orden));
                         }
-
-                        foreach (DetalleOrdenCompra detalle in orden.Detalles)
-                        {
-                            const string sqlDetalle = @"
-INSERT INTO DetalleOrdenCompra (IdOrdenCompra, IdProducto, Cantidad, CantidadRecibida, PrecioUnitario)
-VALUES (@IdOrdenCompra, @IdProducto, @Cantidad, 0, @PrecioUnitario);";
-                            using (SqlCommand comando = new SqlCommand(sqlDetalle, conexion, transaccion))
-                            {
-                                comando.Parameters.AddWithValue("@IdOrdenCompra", idOrden);
-                                comando.Parameters.AddWithValue("@IdProducto", detalle.IdProducto);
-                                comando.Parameters.AddWithValue("@Cantidad", detalle.Cantidad);
-                                comando.Parameters.AddWithValue("@PrecioUnitario", detalle.PrecioUnitario);
-                                comando.ExecuteNonQuery();
-                            }
-                        }
-
                         transaccion.Commit();
-                        return idOrden;
+                        return ids;
                     }
                     catch
                     {
@@ -129,6 +112,44 @@ VALUES (@IdOrdenCompra, @IdProducto, @Cantidad, 0, @PrecioUnitario);";
                     }
                 }
             }
+        }
+
+        private static int InsertarOrden(SqlConnection conexion, SqlTransaction transaccion, OrdenCompra orden)
+        {
+            // Recheck catalog availability under the same transaction, including concurrent deactivation.
+            const string sqlOrden = @"
+IF NOT EXISTS(SELECT 1 FROM Proveedor WITH (UPDLOCK,HOLDLOCK) WHERE IdProveedor=@IdProveedor AND Activo=1)
+    THROW 50001, N'El proveedor no existe o dejó de estar activo. No se creó ninguna orden.', 1;
+INSERT INTO OrdenCompra (IdProveedor, FechaEmision, Total, Estado, CreadaPor)
+VALUES (@IdProveedor, @FechaEmision, @Total, @Estado, @CreadaPor);
+SELECT CAST(SCOPE_IDENTITY() AS INT);";
+            int idOrden;
+            using (var comando = new SqlCommand(sqlOrden, conexion, transaccion))
+            {
+                comando.Parameters.AddWithValue("@IdProveedor", orden.IdProveedor);
+                comando.Parameters.AddWithValue("@FechaEmision", orden.FechaEmision);
+                comando.Parameters.AddWithValue("@Total", orden.Total);
+                comando.Parameters.AddWithValue("@Estado", (int)orden.Estado);
+                comando.Parameters.AddWithValue("@CreadaPor", orden.CreadaPor);
+                idOrden = Convert.ToInt32(comando.ExecuteScalar());
+            }
+            const string sqlDetalle = @"
+IF NOT EXISTS(SELECT 1 FROM Producto WITH (UPDLOCK,HOLDLOCK) WHERE IdProducto=@IdProducto AND Activo=1)
+    THROW 50002, N'El producto no existe o dejó de estar activo. No se creó ninguna orden.', 1;
+INSERT INTO DetalleOrdenCompra (IdOrdenCompra, IdProducto, Cantidad, CantidadRecibida, PrecioUnitario)
+VALUES (@IdOrdenCompra, @IdProducto, @Cantidad, 0, @PrecioUnitario);";
+            foreach (DetalleOrdenCompra detalle in orden.Detalles)
+            {
+                using (var comando = new SqlCommand(sqlDetalle, conexion, transaccion))
+                {
+                    comando.Parameters.AddWithValue("@IdOrdenCompra", idOrden);
+                    comando.Parameters.AddWithValue("@IdProducto", detalle.IdProducto);
+                    comando.Parameters.AddWithValue("@Cantidad", detalle.Cantidad);
+                    comando.Parameters.AddWithValue("@PrecioUnitario", detalle.PrecioUnitario);
+                    comando.ExecuteNonQuery();
+                }
+            }
+            return idOrden;
         }
 
         public OrdenCompra ObtenerOrden(int idOrdenCompra)

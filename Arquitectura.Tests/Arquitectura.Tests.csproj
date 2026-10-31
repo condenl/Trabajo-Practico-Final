@@ -16,10 +16,13 @@
 
   <ItemGroup>
     <Compile Include="..\Scripts\SeedDemoTargetPolicy.cs" Link="Installer\SeedDemoTargetPolicy.cs" />
+    <Compile Include="..\UI\Reportes\ReporteOrdenesPdf.cs" Link="Reportes\ReporteOrdenesPdf.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MSTest" Version="4.0.2" />
+    <PackageReference Include="PDFsharp-MigraDoc-GDI" Version="6.2.4" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>
