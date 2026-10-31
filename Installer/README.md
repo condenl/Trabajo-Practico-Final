@@ -20,15 +20,15 @@ Los prerrequisitos descargados se guardan en `%APPDATA%\Perfumeria\Prerrequisito
 
 ## Generacion del `.exe`
 
-Para incluir los actores demo y el README con las credenciales, usar ahora:
+Para incluir los actores, los escenarios demo y el README con las credenciales, usar:
 
 ```powershell
 powershell -NoProfile -File Installer/build-installer.ps1
 ```
 
-El script compila UI y `SeedDemoActors.exe` antes de llamar a Inno Setup. La opción **Cargar actores de demostración** está desmarcada inicialmente. Al marcarla, las cuatro cuentas documentadas en el [README principal](../README.md) se crean en la misma base que utiliza el EXE instalado; no dependen de Visual Studio ni del equipo de desarrollo. Requiere una instancia local SQL Server 16.x o superior. Las claves son públicas y solo deben usarse en pruebas.
+El script compila UI y `SeedDemoActors.exe` antes de llamar a Inno Setup. La opción **Cargar actores y escenarios demo** está desmarcada inicialmente. Al marcarla, las cuatro cuentas y los ocho escenarios documentados en el [README principal](../README.md#escenarios-precargados-para-demos) se crean en la misma base que utiliza el EXE instalado; no dependen de Visual Studio ni del equipo de desarrollo. Incluye productos, cotizaciones, órdenes en siete estados, lotes y movimientos de stock. Requiere una instancia local SQL Server 16.x o superior. Las claves son públicas y solo deben usarse en pruebas.
 
-La precarga es transaccional e idempotente y verifica el login y los permisos. No modifica credenciales o roles existentes. Inicializa los dígitos verificadores del respaldo de distribución únicamente si la base acaba de ser restaurada por esa ejecución; ante errores de integridad en una base preexistente se detiene. El instalador comprueba el código de salida de la configuración y no ofrece iniciar la aplicación si falla.
+La precarga es transaccional e idempotente y verifica el login, los permisos y la coherencia de compras/stock. No reinicia escenarios ya utilizados ni modifica credenciales o roles existentes. Inicializa los dígitos verificadores del respaldo de distribución únicamente si la base acaba de ser restaurada por esa ejecución; ante errores de integridad en una base preexistente se detiene. El instalador comprueba el código de salida de la configuración y no ofrece iniciar la aplicación si falla.
 
 Las instrucciones manuales siguientes requieren haber generado previamente `Installer/bin/SeedDemoActors.exe` con el script anterior.
 
@@ -56,5 +56,7 @@ La version se consulta en la instancia indicada, no en SSMS. Si ya tiene SQL Ser
 LocalDB 16+ también está admitido, por ejemplo `(localdb)\MSSQLLocalDB`. La precarga valida el destino antes de restaurar y distingue LocalDB de una instancia normal. Para retomar una restauración que falló con la validación local de una versión anterior, seguir [la recuperación explícita del README](../README.md#localdb-y-recuperación-de-la-instalación-fallida); no se borran bases ni se recalcula la integridad de bases existentes automáticamente.
 
 La prueba `powershell -NoProfile -File Scripts/test-localdb-installer.ps1`, desde la raíz y después de compilar el instalador, verifica restauración, cuatro logins, reintento idempotente y recuperación explícita. Crea dos bases aisladas con sufijos únicos y las conserva para inspección. No ejecuta el asistente gráfico.
+
+`Scripts/test-demo-scenarios.ps1 -ServerInstance "instancia-local"` verifica además los ocho escenarios con los actores reales y la BLL: transiciones de compras, recepciones, venta con membresía/FEFO, restricciones de permisos, preservación del progreso y rollback transaccional. Crea otra base aislada; nunca ejecuta los casos destructivos de prueba sobre la base de desarrollo o instalada.
 
 Se conserva el respaldo de distribucion generado con SQL Server 16 para las computadoras de la facultad. Microsoft admite [restaurarlo en SQL Server 17](https://learn.microsoft.com/en-us/sql/database-engine/install-windows/supported-version-and-edition-upgrades-2025?view=sql-server-ver17). No reemplazarlo por un respaldo generado en 17 si debe seguir instalando en 16: los respaldos no son compatibles hacia versiones anteriores.
