@@ -1,3 +1,4 @@
+param([switch]$SequencesOnly)
 # Read-only verification of the active EA model against canonical C# signatures.
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
@@ -5,6 +6,7 @@ $out=Join-Path $root 'Documentacion\EnterpriseArchitect'
 $repo=([Runtime.InteropServices.Marshal]::GetActiveObject('EA.App')).Repository
 if($repo.ConnectionString -ne (Join-Path $root 'diagramas.EAP')){throw 'Proyecto incorrecto'}
 $specs=Get-Content (Join-Path $out 'code-design-routed.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+if($SequencesOnly){$specs=@($specs|Where-Object kind -eq 'Sequence')}
 $catalog=Get-Content (Join-Path $out 'class-catalog.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $manifest=Get-Content (Join-Path $out 'manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $manifest+=Get-Content (Join-Path $out 'manifest-reconciliation.json') -Raw -Encoding UTF8 | ConvertFrom-Json
@@ -14,6 +16,10 @@ foreach($s in $specs){
     $d=$repo.GetDiagramByID($m.diagramId)
     $elements=@($d.DiagramObjects | ForEach-Object {$repo.GetElementByID($_.ElementID)})
     foreach($n in $s.nodes){
+        if($n.kind -eq 'Actor'){
+            if(@($elements|Where-Object {$_.Type -eq 'Actor' -and $_.Name -ceq $n.name}).Count -ne 1){throw 'Actor ausente o duplicado'}
+            continue
+        }
         if($n.kind -eq 'Object'){
             $e=@($elements | Where-Object {$_.Type -eq 'Object' -and $_.ClassifierID -gt 0 -and $repo.GetElementByID($_.ClassifierID).Name -eq $n.classifier})
             if($e.Count -ne 1){throw ('Clasificador incorrecto '+$s.code+' '+$n.classifier)}
@@ -66,8 +72,9 @@ foreach($s in $specs){
         $stack=New-Object System.Collections.Stack
         for($i=0;$i -lt $calls.Count;$i++){
             $c=$calls[$i];$l=$s.links[$i]
-            $target=$repo.GetElementByID($repo.GetElementByID($c.SupplierID).ClassifierID).Name
-            $source=$repo.GetElementByID($repo.GetElementByID($c.ClientID).ClassifierID).Name
+            $te=$repo.GetElementByID($c.SupplierID);$se=$repo.GetElementByID($c.ClientID)
+            $target=if($te.Type -eq 'Actor'){$te.Name}else{$repo.GetElementByID($te.ClassifierID).Name}
+            $source=if($se.Type -eq 'Actor'){$se.Name}else{$repo.GetElementByID($se.ClassifierID).Name}
             if($c.Name -cne $l.name -or $target -cne $l.target -or $source -cne $l.source -or $c.SequenceNo -ne $l.sequence){throw ('Mensaje incorrecto '+$s.code)}
             if([bool]$c.Properties.Item('IsReturn').Value -ne [bool]$l.isReturn){throw ('Tipo de mensaje incorrecto '+$s.code)}
             if($l.isReturn){
@@ -75,8 +82,10 @@ foreach($s in $specs){
                 $call=$stack.Pop()
                 if($l.replyTo -ne $call.callId -or $l.source -cne $call.target -or $l.target -cne $call.source -or $l.name -cne $call.returnType){throw ('Retorno no emparejado '+$s.code)}
             }else{
-                $method=@($catalog.($l.target).methods|Where-Object name -eq $l.name)
-                if($l.returnType -cnotin @($method|ForEach-Object type)){throw ('Tipo de retorno distinto al codigo '+$s.code)}
+                if(-not $l.actorInteraction){
+                    $method=@($catalog.($l.target).methods|Where-Object name -eq $l.name)
+                    if($l.returnType -cnotin @($method|ForEach-Object type)){throw ('Tipo de retorno distinto al codigo '+$s.code)}
+                }
                 if($stack.Count -and $l.source -cne $stack.Peek().target){throw ('Llamada fuera de activacion '+$s.code)}
                 $stack.Push($l)
             }

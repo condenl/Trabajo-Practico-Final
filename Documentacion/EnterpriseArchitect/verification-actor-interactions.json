@@ -1,0 +1,211 @@
+{
+  "unchanged_prefix_paragraphs": 344,
+  "preserved_tables": 12,
+  "authorized_use_case_paragraph_changes": 58,
+  "total_images": 47,
+  "unique_ea_diagrams": 26,
+  "pixel_exact": false,
+  "google_docs_downsampled": [
+    {
+      "code": "N01-06a",
+      "width": 2048,
+      "mean_pixel_error": 0.6533
+    },
+    {
+      "code": "N01-06b",
+      "width": 2048,
+      "mean_pixel_error": 0.5523
+    },
+    {
+      "code": "N02-06b",
+      "width": 2048,
+      "mean_pixel_error": 1.2286
+    },
+    {
+      "code": "N02-06c",
+      "width": 2048,
+      "mean_pixel_error": 0.5632
+    },
+    {
+      "code": "N03-06",
+      "width": 2048,
+      "mean_pixel_error": 0.8702
+    },
+    {
+      "code": "N01-04a",
+      "width": 2048,
+      "mean_pixel_error": 0.2876
+    },
+    {
+      "code": "N01-05",
+      "width": 2048,
+      "mean_pixel_error": 1.2286
+    },
+    {
+      "code": "N02-04",
+      "width": 2048,
+      "mean_pixel_error": 0.4496
+    },
+    {
+      "code": "N02-05",
+      "width": 2048,
+      "mean_pixel_error": 1.2289
+    },
+    {
+      "code": "N03-04",
+      "width": 2048,
+      "mean_pixel_error": 0.4885
+    }
+  ],
+  "visually_reviewed_images": [
+    {
+      "code": "G07-01",
+      "native_sha256": "0cc937f01ddb849f8e4b24e96200bfba2c7411c0e20c77445a2e9f5ef7d5f68c",
+      "exported_sha256": "0924b3eca4ab545c6c58c98a62b49747e1f0443baba9c99e1441e9cd9a947afd",
+      "reviewed_on": "2026-09-30",
+      "native_size": [
+        4404,
+        2717
+      ],
+      "exported_size": [
+        2048,
+        1263
+      ],
+      "mean_pixel_error": 3.4732,
+      "reason": "Google Docs downsampled the image. The automatic threshold of 3/255 was not met and was not relaxed. Native and exported diagrams were visually compared: same 38 classifiers, layout and relationships, no missing border content. The saved PDF page 44 was also reviewed. This is visual correspondence, not pixel identity; the linked native PNG and EAP retain legible member detail. Approval applies only to these exact file hashes."
+    }
+  ],
+  "duplicates": [],
+  "placements": [
+    {
+      "code": "N01-01",
+      "section": "2.3 Diagrama de Casos de Uso del Negocio",
+      "heading": "2.3 Diagrama de Casos de Uso del Negocio"
+    },
+    {
+      "code": "N02-01",
+      "section": "2.3 Diagrama de Casos de Uso del Negocio",
+      "heading": "2.3 Diagrama de Casos de Uso del Negocio"
+    },
+    {
+      "code": "N03-01",
+      "section": "2.3 Diagrama de Casos de Uso del Negocio",
+      "heading": "2.3 Diagrama de Casos de Uso del Negocio"
+    },
+    {
+      "code": "N01-02",
+      "section": "2.4 Diagramas de Actividad de Negocio",
+      "heading": "Proceso 1: Aprovisionamiento de Perfumes, Trazabilidad y Aprobaci\u00f3n Contable"
+    },
+    {
+      "code": "N02-02",
+      "section": "2.4 Diagramas de Actividad de Negocio",
+      "heading": "Proceso 2: Venta y Fidelizaci\u00f3n de Clientes (Membres\u00eda, Descuentos y Campa\u00f1as)"
+    },
+    {
+      "code": "N03-02",
+      "section": "2.4 Diagramas de Actividad de Negocio",
+      "heading": "Proceso 3: Evaluaci\u00f3n y Selecci\u00f3n Estrat\u00e9gica de Proveedores por Producto"
+    },
+    {
+      "code": "N01-06a",
+      "section": "2.5 Diagramas de Secuencia de Negocio",
+      "heading": "N01 \u00b7 Secuencia: preparar y revisar compra"
+    },
+    {
+      "code": "N01-06b",
+      "section": "2.5 Diagramas de Secuencia de Negocio",
+      "heading": "N01 \u00b7 Secuencia: recepci\u00f3n y trazabilidad"
+    },
+    {
+      "code": "N02-06a",
+      "section": "2.5 Diagramas de Secuencia de Negocio",
+      "heading": "N02 \u00b7 Secuencia: adhesi\u00f3n a membres\u00eda"
+    },
+    {
+      "code": "N02-06b",
+      "section": "2.5 Diagramas de Secuencia de Negocio",
+      "heading": "N02 \u00b7 Secuencia: venta con beneficio"
+    },
+    {
+      "code": "N02-06c",
+      "section": "2.5 Diagramas de Secuencia de Negocio",
+      "heading": "N02 \u00b7 Secuencia: coordinaci\u00f3n de marketing"
+    },
+    {
+      "code": "N03-06",
+      "section": "2.5 Diagramas de Secuencia de Negocio",
+      "heading": "N03 \u00b7 Secuencia: evaluaci\u00f3n y selecci\u00f3n de proveedores"
+    },
+    {
+      "code": "G07-01",
+      "section": "G07. Diagrama de Clases",
+      "heading": "7.1 Capa de Entidades de Negocio (BE) y Servicios"
+    },
+    {
+      "code": "N01-03",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N01 \u00b7 Modelo conceptual"
+    },
+    {
+      "code": "N01-04a",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N01 \u00b7 Clases BE de compras"
+    },
+    {
+      "code": "N01-04b",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N01 \u00b7 Clases BE de inventario"
+    },
+    {
+      "code": "N01-05",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N01 \u00b7 Clases de l\u00f3gica de negocio (BLL)"
+    },
+    {
+      "code": "N02-03",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N02 \u00b7 Modelo conceptual"
+    },
+    {
+      "code": "N02-04",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N02 \u00b7 Clases BE de ventas"
+    },
+    {
+      "code": "N02-05",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N02 \u00b7 Clases de l\u00f3gica de negocio (BLL)"
+    },
+    {
+      "code": "N03-04",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N03 \u00b7 Clases de evaluaci\u00f3n de proveedores"
+    },
+    {
+      "code": "G08-01",
+      "section": "G08. Modelo de Datos",
+      "heading": "8.1 Diagrama Entidad-Relacion (DER)"
+    },
+    {
+      "code": "N01-07a",
+      "section": "G08. Modelo de Datos",
+      "heading": "N01 \u00b7 Modelo de datos: cotizaciones y compras"
+    },
+    {
+      "code": "N01-07b",
+      "section": "G08. Modelo de Datos",
+      "heading": "N01 \u00b7 Modelo de datos: inventario y trazabilidad"
+    },
+    {
+      "code": "N02-07",
+      "section": "G08. Modelo de Datos",
+      "heading": "N02 \u00b7 Modelo de datos: ventas y membres\u00edas"
+    },
+    {
+      "code": "N03-07",
+      "section": "G08. Modelo de Datos",
+      "heading": "N03 \u00b7 Modelo de datos: evaluaci\u00f3n de proveedores"
+    }
+  ]
+}
