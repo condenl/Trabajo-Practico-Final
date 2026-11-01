@@ -49,6 +49,7 @@
     <Compile Include="IntercambioOrdenesBLL.cs" />
     <Compile Include="ProductoBLL.cs" />
     <Compile Include="ProveedorBLL.cs" />
+    <Compile Include="EvaluacionProveedorBLL.cs" />
     <Compile Include="RegistroActividadBitacora.cs" />
     <Compile Include="SeguridadBLL.cs" />
     <Compile Include="SoporteBLL.cs" />

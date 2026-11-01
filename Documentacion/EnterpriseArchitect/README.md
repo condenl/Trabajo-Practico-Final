@@ -1,5 +1,7 @@
 # Diagramas de negocio en Enterprise Architect
 
+Estado al 01/11/2026: la evaluación N03 ya tiene implementación en la aplicación; sus reglas y casos de uso se detallan en [N03_Evaluacion_Proveedores.md](../N03_Evaluacion_Proveedores.md). Las vistas técnicas N03 de este modelo conservan el diseño propuesto anterior; no se presentan como una nueva sincronización automática con esa implementación. Las referencias a «propuesto» más abajo describen esas vistas.
+
 Proyecto editable: `../../diagramas.EAP`.
 
 Las actividades N01-02, N02-02 y N03-02 muestran únicamente tres objetos esenciales: Orden de compra (confección → revisión contable), Membresía (alta → verificación del beneficio) y Propuestas comparables (consolidación → análisis de costos). Se representan con nodos de objeto y seis conectores UML `ObjectFlow`, no como componentes de software. Las nuevas capturas se ubican en 2.4 de Google Docs. `update_ea_activity_objects.ps1` sincroniza el EAP abierto y los modelos JSON; `-VerifyOnly` comprueba productor, objeto y consumidor sin modificar el proyecto. Ejecutarlo con PowerShell de 32 bits después de generar el modelo base y N03. `verification-activity-objects.json` y `verification-activity-document.json` registran la revisión.

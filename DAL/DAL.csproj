@@ -58,6 +58,8 @@
     <Compile Include="Interfaces\IVentaRepository.cs" />
     <Compile Include="ProductoDAL.cs" />
     <Compile Include="ProveedorDAL.cs" />
+    <Compile Include="EvaluacionProveedorDAL.cs" />
+    <Compile Include="Interfaces\IEvaluacionProveedorRepository.cs" />
     <Compile Include="SeguridadDAL.cs" />
     <Compile Include="SoporteDAL.cs" />
     <Compile Include="TraduccionDAL.cs" />

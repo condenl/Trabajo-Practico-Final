@@ -111,6 +111,7 @@ internal static partial class SeedDemoActors
         var membership=Query("SELECT IdCliente FROM dbo.Membresia WHERE Numero='DEMO-2026-001'");
         Require(membership.Rows.Count==0 || (clients.Rows.Count==1 && membership.Rows.Count==1 && (int)membership.Rows[0][0]==(int)clients.Rows[0][0]),"Numero de membresia demo ya utilizado.");
         CheckScenarioConflicts();
+        CheckEvaluationConflicts();
     }
     private static void Apply()
     {
@@ -148,7 +149,9 @@ internal static partial class SeedDemoActors
         if(Query("SELECT IdMembresia FROM dbo.Membresia WHERE IdCliente=@p0",client).Rows.Count==0)
             InsertId("INSERT dbo.Membresia(IdCliente,Numero,FechaAlta,PorcentajeDescuento,Activa) VALUES(@p0,'DEMO-2026-001',GETDATE(),10,1)",client);
         ApplyScenarios();
+        ApplyEvaluationScenarios();
         VerifyScenarios();
+        VerifyEvaluationScenarios();
         CheckIntegrity();
     }
     private static void VerifyLogin()
@@ -184,7 +187,7 @@ internal static partial class SeedDemoActors
                 Require((int)server[1]>=16,"Se requiere SQL Server 16.x o superior.");
                 Console.WriteLine("DESTINO "+builder.DataSource+" / "+builder.InitialCatalog+"; SQL="+server[1]+"; IsLocalDB="+isLocalDb);
                 if(args[0]=="--check-target") { Console.WriteLine("DESTINO LOCAL OK; sin cambios."); return 0; }
-                if(args[0]=="--verify") { VerifyLogin(); VerifyScenarios(); return 0; }
+                if(args[0]=="--verify") { VerifyLogin(); VerifyScenarios(); VerifyEvaluationScenarios(); return 0; }
                 using(transaction=connection.BeginTransaction(IsolationLevel.Serializable))
                 {
                     if(args[0]=="--initialize-new") InitializeRestoredIntegrity();

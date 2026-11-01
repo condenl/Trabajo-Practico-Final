@@ -123,6 +123,12 @@ namespace UI.UserControls
             ConstruirOrdenes();
             ConstruirContabilidad();
             ConstruirRecepcion();
+            if (TienePermiso(TipoPermiso.Aprovisionamiento_Gestion))
+            {
+                var evaluacion = new TabPage("Evaluación de proveedores");
+                evaluacion.Controls.Add(new UC_EvaluacionProveedores());
+                tabs.TabPages.Add(evaluacion);
+            }
             Controls.Add(tabs);
         }
 

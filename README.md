@@ -111,6 +111,16 @@ La biblioteca se restaura por NuGet al compilar en Visual Studio o con `Installe
 
 Verificación: `dotnet test Arquitectura.Tests/Arquitectura.Tests.csproj --configuration Release`. Después de compilar el instalador, `powershell -NoProfile -File Scripts/test-ordenes-archivos.ps1 -ServerInstance "DESKTOP-TFHVP49"` ejecuta pruebas de componentes WinForms y SQL en una base aislada, conserva los XML/PDF generados y no cambia `UI/App.config`. También admite `"(localdb)\MSSQLLocalDB"` 16+.
 
+## N03: evaluación de proveedores
+
+En **Compras e inventario → Evaluación de proveedores**: elegir perfume y cantidad, pulsar **Comparar**, revisar el ranking y **Confirmar proveedor** con un fundamento. **Crear orden en Borrador** permite continuar por el circuito habitual de Contabilidad; reintentar devuelve el mismo borrador.
+
+La evaluación cruza cotizaciones vigentes, precio, prestigio y antigüedad con ventas netas de descuentos, stock utilizable, compras pendientes y antecedentes de recepción. Muestra costo total, margen bruto estimado, reposición sugerida y advertencias. Los pesos predeterminados son 50/30/20 y pueden ajustarse desde **Criterios**. Guarda las comparaciones y decisiones en un historial. Si cambian los datos o pasa el día de evaluación, exige comparar nuevamente antes de confirmar o crear la orden.
+
+La precarga incluye **DEMO Evaluacion - valor vs precio** (el proveedor recomendado no es el más barato; cambiar los pesos muestra el efecto) y **DEMO Evaluacion - sin margen** (ninguna oferta recomendable), con dos productos, un proveedor adicional y tres cotizaciones nuevas. El caso **DEMO Citrico sin stock** conserva una sola cotización para demostrar una comparación insuficiente. Las demos anteriores mantienen su progreso y no se reemplazan al reintentar.
+
+Reglas, fórmulas, casos de uso y alcance: [N03_Evaluacion_Proveedores.md](Documentacion/N03_Evaluacion_Proveedores.md). Pruebas: [Verificacion_N03.md](Documentacion/Verificacion_N03.md). El instalador ejecuta la migración idempotente `SQL/Iteracion3_Evaluacion_Proveedores.sql`; la base local ya recibió esa migración y los datos demo adicionales.
+
 ## Generar el instalador
 
 Con Visual Studio/MSBuild, .NET Framework 4.7.2 e Inno Setup 6 instalados:
