@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ArchivoAtomico.cs" />
     <Compile Include="OrdenesXml.cs" />
+    <Compile Include="ArchivoEvaluacion.cs" />
     <Compile Include="Encriptador.cs" />
     <Compile Include="GestorEventos.cs" />
     <Compile Include="GestorIdioma.cs" />

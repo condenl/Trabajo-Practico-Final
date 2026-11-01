@@ -21,12 +21,20 @@ def tables(document):
             for table in document.tables]
 
 
-def verify(baseline, current, images, reviewed_images=None):
+def verify(baseline, current, images, reviewed_images=None, use_case_replacements=None):
     before, after = Document(baseline), Document(current)
     marker = "2.5 Diagramas de Secuencia de Negocio"
     cut = next(i for i, p in enumerate(before.paragraphs) if p.text == marker)
     assert [p.text for p in before.paragraphs[:cut]] == [p.text for p in after.paragraphs[:cut]], "Earlier paragraphs changed"
-    assert tables(before) == tables(after), "Use-case table text changed"
+    expected_tables = tables(before)
+    changes = json.loads(Path(use_case_replacements).read_text(encoding='utf-8')) if use_case_replacements else []
+    for table in expected_tables:
+        codes={c for row in table for c in row if c.startswith('CU-N')}
+        for row in table:
+            for change in changes:
+                if change['code'] in codes and row[0]==change['field']:
+                    row[1]='\n'.join(change['new'] if line==change['old'] else line for line in row[1].split('\n'))
+    assert expected_tables == tables(after), "Table changes differ from the approved use-case replacements"
     expected = {pixels(path): path.stem for path in Path(images).glob("*.png")}
     native = {path.stem: path for path in Path(images).glob("*.png")}
     downsampled = []
@@ -87,7 +95,7 @@ def verify(baseline, current, images, reviewed_images=None):
                 assert section.startswith(required), f"Wrong section for {code}: {section}"
     assert set(hits) == set(expected.values()), f"Missing EA diagrams: {sorted(set(expected.values()) - set(hits))}"
     assert all(count == 1 for count in Counter(hits).values()), "Duplicate EA diagram"
-    return {"unchanged_prefix_paragraphs": cut, "unchanged_tables": len(after.tables),
+    return {"unchanged_prefix_paragraphs": cut, "preserved_tables": len(after.tables), "authorized_use_case_paragraph_changes": len(changes),
             "total_images": len(after.inline_shapes), "unique_ea_diagrams": len(hits),
             "pixel_exact": not downsampled and not visual_matches, "google_docs_downsampled": downsampled,
             "visually_reviewed_images": visual_matches,
@@ -101,8 +109,9 @@ if __name__ == "__main__":
     parser.add_argument("--images", type=Path, default=Path(__file__).resolve().parents[1] / "Documentacion/EnterpriseArchitect")
     parser.add_argument("--report", type=Path, help="Optional JSON verification report; source documents are never modified")
     parser.add_argument("--reviewed-images", type=Path, help="Explicit visual reviews bound to native and exported file SHA256 hashes")
+    parser.add_argument("--use-case-replacements", type=Path, help="Exact, code- and field-scoped authorized use-case text replacements")
     args = parser.parse_args()
-    report = json.dumps(verify(args.baseline, args.current, args.images, args.reviewed_images), ensure_ascii=True, indent=2)
+    report = json.dumps(verify(args.baseline, args.current, args.images, args.reviewed_images,args.use_case_replacements), ensure_ascii=True, indent=2)
     if args.report:
         args.report.write_text(report + '\n', encoding='utf-8')
     print(report)

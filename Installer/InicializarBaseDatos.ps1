@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
     [string]$ServerInstance = '.\SQLEXPRESS',
     [string]$DatabaseName = 'Trabajo Practico Final',
@@ -221,7 +221,8 @@ try {
 
     $migrationNames = @(
         'Iteracion2_Aprovisionamiento.sql',
-        'Iteracion2_Ventas_Fidelizacion.sql'
+        'Iteracion2_Ventas_Fidelizacion.sql',
+        'Iteracion3_Evaluacion_Proveedores.sql'
     )
     foreach ($migrationName in $migrationNames) {
         $migrationPath = Join-Path $MigrationDirectory $migrationName

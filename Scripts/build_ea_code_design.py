@@ -203,6 +203,16 @@ SEQUENCE_ENDS = {
     "N03-06": {1:7},
 }
 
+# Actor requests and observable outcomes surround the existing code realization.
+ACTOR_GROUPS = {
+    'N01-06a': [(1,3,'Dueño / Departamento de Compras','Registrar cotización','Cotización registrada'),(4,6,'Dueño / Departamento de Compras','Preparar orden','OrdenCompra'),(7,11,'Dueño / Departamento de Compras','Enviar a revisión','Estado de la orden'),(12,14,'Equipo de Contabilidad','Rechazar compra','Estado de la orden'),(15,17,'Equipo de Contabilidad','Aprobar compra','Estado de la orden'),(18,21,'Dueño / Departamento de Compras','Emitir orden aprobada','Estado de la orden')],
+    'N01-06b': [(1,7,'Recepción / Depósito','Confirmar recepción','Resultado de recepción'),(8,9,'Recepción / Depósito','Consultar existencias','int'),(10,11,'Recepción / Depósito','Consultar origen','Trazabilidad del lote')],
+    'N02-06a': [(1,7,'Personal de Ventas','Registrar cliente y adhesión','Resultado del alta y membresía')],
+    'N02-06b': [(1,11,'Personal de Ventas','Confirmar venta','Venta confirmada o motivo de rechazo')],
+    'N02-06c': [(1,2,'Personal de Ventas','Registrar consentimiento','Resultado del registro'),(3,5,'Responsable de Marketing','Solicitar campaña autorizada','Resultado de campaña')],
+    'N03-06': [(1,9,'Dueño / Departamento de Compras','Evaluar y priorizar proveedores','Evaluación y proveedor prioritario')]
+}
+
 
 def sequence(code, participants, calls, frames=(), notes=""):
     d = dict(code=code, title=old[code]["title"], kind="Sequence", nodes=[], links=[], frames=list(frames),
@@ -240,6 +250,43 @@ def sequence(code, participants, calls, frames=(), notes=""):
         if len(f["guards"]) > 1:
             # N01 rejection ends before approval/emission starts.
             f["size"] = 35 * (starts[15] - starts[first])
+    original = d['links']
+    before, after = {}, {}
+    actors = list(dict.fromkeys(g[2] for g in ACTOR_GROUPS[code]))
+    for n in d['nodes']:
+        n['x'] += 310 * len(actors)
+    for i, actor in enumerate(actors):
+        d['nodes'].append(dict(key=actor,name=actor,kind='Actor',x=80+i*310,y=35,w=270,h=100))
+    for first,last,actor,request,outcome in ACTOR_GROUPS[code]:
+        target = calls[first-1][0]
+        key = 'actor-'+str(first)
+        before[starts[first]] = dict(source=actor,target=target,name=request,kind='Sequence',callId=key,isReturn=False,returnType=outcome,actorInteraction=True)
+        closing=max(returns[j] for j in range(first,last+1))
+        after[closing] = dict(source=target,target=actor,name=outcome,kind='Sequence',replyTo=key,isReturn=True,returnType=outcome,actorInteraction=True)
+    expanded, positions = [], {}
+    for link in original:
+        oldseq=link['sequence']
+        if oldseq in before: expanded.append(before[oldseq])
+        positions[oldseq] = len(expanded)+1
+        expanded.append(link)
+        if oldseq in after: expanded.append(after[oldseq])
+    for i,link in enumerate(expanded,1): link['sequence']=i
+    for f in d['frames']:
+        first,last=f['first'],f['last']
+        f['first']=positions[first]-(1 if first in before else 0)
+        f['last']=positions[last]+(1 if last in after else 0)
+        if len(f['guards'])>1: f['size']=35*(positions[starts[15]]-1-f['first'])
+    d['links']=expanded
+    nesting=[]
+    for message in expanded:
+        if message['isReturn']:
+            invocation=nesting.pop()
+            assert (message['replyTo'],message['source'],message['target']) == (invocation['callId'],invocation['target'],invocation['source']), (code,message,invocation)
+        else:
+            assert not nesting or message['source']==nesting[-1]['target'],(code,message,nesting)
+            nesting.append(message)
+    assert not nesting
+    d['notes']+=' Los actores organizacionales inician las solicitudes y reciben el resultado visible; sus mensajes expresan acciones de usuario, no métodos C#. Las líneas de vida internas conservan clases, operaciones y retornos tipados.'
     diagrams.append(d)
 
 

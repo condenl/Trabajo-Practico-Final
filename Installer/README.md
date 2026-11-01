@@ -13,7 +13,7 @@ Este directorio implementa el entregable **A01 de la Iteracion 2** siguiendo la 
 - comprueba la conexión al pulsar Siguiente en la página de SQL y nuevamente antes de instalar; distingue motor ausente, instancia incorrecta y servicio detenido;
 - ofrece **Descargar SQL Server**, que abre la [página oficial de Microsoft en español](https://www.microsoft.com/es-es/sql-server/sql-server-downloads), y **Abrir servicios** cuando corresponde;
 - restaura la base inicial si todavia no existe;
-- ejecuta las migraciones idempotentes de N01 y N02;
+- ejecuta las migraciones idempotentes de N01, N02 y N03;
 - actualiza `UI.exe.config` con la instancia elegida y autenticacion integrada;
 - conserva un registro en `Installer\instalacion-base-datos.log`.
 
@@ -84,3 +84,5 @@ La prueba `powershell -NoProfile -File Scripts/test-localdb-installer.ps1`, desd
 `Scripts/test-demo-scenarios.ps1 -ServerInstance "instancia-local"` verifica además los ocho escenarios con los actores reales y la BLL: transiciones de compras, recepciones, venta con membresía/FEFO, restricciones de permisos, preservación del progreso y rollback transaccional. Crea otra base aislada; nunca ejecuta los casos destructivos de prueba sobre la base de desarrollo o instalada.
 
 Se conserva el respaldo de distribucion generado con SQL Server 16 para las computadoras de la facultad. Microsoft admite [restaurarlo en SQL Server 17](https://learn.microsoft.com/en-us/sql/database-engine/install-windows/supported-version-and-edition-upgrades-2025?view=sql-server-ver17). No reemplazarlo por un respaldo generado en 17 si debe seguir instalando en 16: los respaldos no son compatibles hacia versiones anteriores.
+
+La precarga también incluye los ejemplos de evaluación N03 (valor frente al precio y ausencia de margen). El inicializador aplica `Iteracion3_Evaluacion_Proveedores.sql` tanto en una base nueva como en una existente, conservando sus datos.

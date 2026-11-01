@@ -1,0 +1,23 @@
+﻿[
+    {
+        "producer":  "Confeccionar orden preliminar",
+        "object":  "Orden de compra",
+        "consumer":  "Contabilidad: revisar comparativa y presupuesto",
+        "diagram":  "N01-02",
+        "objectFlows":  2
+    },
+    {
+        "producer":  "Completar ficha y asignar membresía",
+        "object":  "Membresía",
+        "consumer":  "Verificar beneficio vigente; sin membresía, tarifa general",
+        "diagram":  "N02-02",
+        "objectFlows":  2
+    },
+    {
+        "producer":  "Consolidar propuestas comparables por producto",
+        "object":  "Propuestas comparables",
+        "consumer":  "Analizar costos, márgenes e impacto financiero",
+        "diagram":  "N03-02",
+        "objectFlows":  2
+    }
+]

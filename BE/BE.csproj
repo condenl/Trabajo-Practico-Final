@@ -68,6 +68,7 @@
     <Compile Include="OrdenCompra.cs" />
     <Compile Include="Producto.cs" />
     <Compile Include="Proveedor.cs" />
+    <Compile Include="EvaluacionProveedor.cs" />
     <Compile Include="Traduccion.cs" />
     <Compile Include="DVV.cs" />
     <Compile Include="Seguridad\Componente.cs" />

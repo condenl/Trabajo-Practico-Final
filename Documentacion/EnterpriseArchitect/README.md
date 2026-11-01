@@ -1,6 +1,18 @@
 # Diagramas de negocio en Enterprise Architect
 
+Estado al 01/11/2026: la evaluación N03 ya tiene implementación en la aplicación; sus reglas y casos de uso se detallan en [N03_Evaluacion_Proveedores.md](../N03_Evaluacion_Proveedores.md). Las vistas técnicas N03 de este modelo conservan el diseño propuesto anterior; no se presentan como una nueva sincronización automática con esa implementación. Las referencias a «propuesto» más abajo describen esas vistas.
+
 Proyecto editable: `../../diagramas.EAP`.
+
+Las actividades N01-02, N02-02 y N03-02 muestran únicamente tres objetos esenciales: Orden de compra (confección → revisión contable), Membresía (alta → verificación del beneficio) y Propuestas comparables (consolidación → análisis de costos). Se representan con nodos de objeto y seis conectores UML `ObjectFlow`, no como componentes de software. Las nuevas capturas se ubican en 2.4 de Google Docs. `update_ea_activity_objects.ps1` sincroniza el EAP abierto y los modelos JSON; `-VerifyOnly` comprueba productor, objeto y consumidor sin modificar el proyecto. Ejecutarlo con PowerShell de 32 bits después de generar el modelo base y N03. `verification-activity-objects.json` y `verification-activity-document.json` registran la revisión.
+
+## Actores e interacción de casos de uso (25/10/2026)
+
+Las seis secuencias incorporan actores UML explícitos: Dueño / Departamento de Compras, Equipo de Contabilidad, Recepción / Depósito, Personal de Ventas y Responsable de Marketing, según el proceso. Cada solicitud del actor recibe una respuesta visible; las 64 llamadas internas mantienen sus métodos y retornos C#. Se agregan 14 solicitudes de actores con sus 14 respuestas, para un total de 156 mensajes. Marketing y N03 siguen identificados como diseño propuesto.
+
+Las cinco especificaciones CU-N01-01/02/03 y CU-N02-01/02 describen la interacción de alto nivel: solicitud del actor, información ofrecida por el sistema, confirmación y resultado. Las excepciones explican el mensaje al actor y la forma de continuar. Se conserva la regla de dos cotizaciones, la aprobación previa y los límites de recepción y descuento; la emisión de una compra se distingue de la decisión contable. El detalle de clases, métodos y persistencia queda en las realizaciones técnicas.
+
+`update_ea_actor_interactions.ps1` actualiza las secuencias en el EAP abierto, conserva las líneas de vida internas y crea un respaldo. Sincroniza también las notas de los cinco casos de uso desde su Markdown. `-SpecsOnly` sincroniza únicamente esas notas. `verify_ea_code_design.ps1 -SequencesOnly` verifica actores, firmas internas, direcciones y anidamiento de todas las respuestas. `actor-document-replacements.json` permite comprobar exactamente qué texto cambió en las tablas de Google Docs; el resto de las tablas debe mantenerse íntegro.
 
 Alcance: N01 y N02 de las iteraciones 1 y 2 del **Plan de Entregas TD 2026**. N03 pertenece a la iteración 3 y no se presenta como implementado. Los casos de uso y actividades representan actores y actividades organizacionales, sin un actor «Sistema». Desde la revisión del 26/09/2026, las secuencias muestran su realización técnica con clases y nombres de métodos, por pedido del autor.
 

@@ -17,6 +17,7 @@ $arguments=@('/nologo','/target:exe',('/out:'+(Join-Path $seedBin 'SeedDemoActor
 $arguments+=$references|ForEach-Object {'/reference:'+$_}
 $arguments+=Join-Path $root 'Scripts\SeedDemoActors.cs'
 $arguments+=Join-Path $root 'Scripts\SeedDemoScenarios.cs'
+$arguments+=Join-Path $root 'Scripts\SeedDemoEvaluacion.cs'
 $arguments+=Join-Path $root 'Scripts\SeedDemoTargetPolicy.cs'
 & $compiler @arguments
 if($LASTEXITCODE -ne 0){throw 'Fallo la compilacion del seed.'}

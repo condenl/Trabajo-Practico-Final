@@ -114,7 +114,7 @@ VALUES (@IdCotizacion, @IdProducto, @PrecioUnitario, @PlazoEntregaDias);";
             }
         }
 
-        private static int InsertarOrden(SqlConnection conexion, SqlTransaction transaccion, OrdenCompra orden)
+        internal static int InsertarOrden(SqlConnection conexion, SqlTransaction transaccion, OrdenCompra orden)
         {
             // Recheck catalog availability under the same transaction, including concurrent deactivation.
             const string sqlOrden = @"
