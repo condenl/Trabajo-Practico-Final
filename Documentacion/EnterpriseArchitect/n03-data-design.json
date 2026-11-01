@@ -1,0 +1,938 @@
+[
+  {
+    "code": "G08-01",
+    "title": "G08 · DER global de perfumería",
+    "kind": "Logical",
+    "notes": "DER global: claves de las tablas existentes y columnas completas de EvaluacionProveedor, implementada en la migración N03. Las relaciones FK opcionales y la unicidad de IdOrdenCompra respetan el DDL.",
+    "nodes": [
+      {
+        "key": "Proveedor",
+        "name": "Proveedor",
+        "x": 20,
+        "y": 20,
+        "w": 340,
+        "h": 114,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdProveedor",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "CotizacionProveedor",
+        "name": "CotizacionProveedor",
+        "x": 660,
+        "y": 20,
+        "w": 340,
+        "h": 138,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdCotizacion",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProveedor",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "DetalleCotizacionProveedor",
+        "name": "DetalleCotizacionProveedor",
+        "x": 1300,
+        "y": 20,
+        "w": 340,
+        "h": 162,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdDetalleCotizacion",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdCotizacion",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "OrdenCompra",
+        "name": "OrdenCompra",
+        "x": 20,
+        "y": 312,
+        "w": 340,
+        "h": 162,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdOrdenCompra",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProveedor",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdUsuarioAprobadorContable",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "DetalleOrdenCompra",
+        "name": "DetalleOrdenCompra",
+        "x": 660,
+        "y": 312,
+        "w": 340,
+        "h": 162,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdDetalle",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdOrdenCompra",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Producto",
+        "name": "Producto",
+        "x": 1300,
+        "y": 312,
+        "w": 340,
+        "h": 114,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Usuarios",
+        "name": "Usuarios",
+        "x": 20,
+        "y": 604,
+        "w": 340,
+        "h": 114,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "Id",
+            "type": "INT",
+            "stereotype": "PK"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Lote",
+        "name": "Lote",
+        "x": 660,
+        "y": 604,
+        "w": 340,
+        "h": 186,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdLote",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProveedor",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdOrdenCompra",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "EvaluacionProveedor",
+        "name": "EvaluacionProveedor",
+        "x": 1300,
+        "y": 604,
+        "w": 490,
+        "h": 360,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdEvaluacion",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "FechaEvaluacion",
+            "type": "DATETIME2",
+            "stereotype": "",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "Responsable",
+            "type": "NVARCHAR(200)",
+            "stereotype": "",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "SnapshotXml",
+            "type": "NVARCHAR(MAX)",
+            "stereotype": "",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProveedorSeleccionado",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NULL"
+          },
+          {
+            "name": "MotivoSeleccion",
+            "type": "NVARCHAR(500)",
+            "stereotype": "",
+            "notes": "NULL"
+          },
+          {
+            "name": "SeleccionadaPor",
+            "type": "NVARCHAR(200)",
+            "stereotype": "",
+            "notes": "NULL"
+          },
+          {
+            "name": "FechaSeleccion",
+            "type": "DATETIME2",
+            "stereotype": "",
+            "notes": "NULL"
+          },
+          {
+            "name": "IdOrdenCompra",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NULL"
+          }
+        ],
+        "fontSize": 12,
+        "notes": "SQL/Iteracion3_Evaluacion_Proveedores.sql. Tabla implementada. SnapshotXml conserva solicitud, fuentes y resultados. IdOrdenCompra tiene índice único filtrado."
+      },
+      {
+        "key": "Venta",
+        "name": "Venta",
+        "x": 20,
+        "y": 1094,
+        "w": 340,
+        "h": 162,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdVenta",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdCliente",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NULL"
+          },
+          {
+            "name": "IdUsuarioVendedor",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "DetalleVenta",
+        "name": "DetalleVenta",
+        "x": 660,
+        "y": 1094,
+        "w": 340,
+        "h": 186,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdDetalleVenta",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdVenta",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdLote",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "MovimientoStock",
+        "name": "MovimientoStock",
+        "x": 1300,
+        "y": 1094,
+        "w": 340,
+        "h": 138,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdMovimiento",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdLote",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Cliente",
+        "name": "Cliente",
+        "x": 20,
+        "y": 1410,
+        "w": 340,
+        "h": 114,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdCliente",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Membresia",
+        "name": "Membresia",
+        "x": 660,
+        "y": 1410,
+        "w": 340,
+        "h": 138,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdMembresia",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdCliente",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Bitacora",
+        "name": "Bitacora",
+        "x": 1300,
+        "y": 1410,
+        "w": 340,
+        "h": 138,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "Id",
+            "type": "INT",
+            "stereotype": "PK"
+          },
+          {
+            "name": "Usuario",
+            "type": "VARCHAR(150)"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Seguridad_Usuario_Componente",
+        "name": "Seguridad_Usuario_Componente",
+        "x": 20,
+        "y": 1678,
+        "w": 340,
+        "h": 138,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdUsuario",
+            "type": "INT",
+            "stereotype": "PK,FK"
+          },
+          {
+            "name": "IdComponente",
+            "type": "INT",
+            "stereotype": "PK,FK"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Seguridad_Componente",
+        "name": "Seguridad_Componente",
+        "x": 660,
+        "y": 1678,
+        "w": 340,
+        "h": 114,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "Id",
+            "type": "INT",
+            "stereotype": "PK"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Seguridad_Familia_Hijo",
+        "name": "Seguridad_Familia_Hijo",
+        "x": 1300,
+        "y": 1678,
+        "w": 340,
+        "h": 138,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdPadre",
+            "type": "INT",
+            "stereotype": "PK,FK"
+          },
+          {
+            "name": "IdHijo",
+            "type": "INT",
+            "stereotype": "PK,FK"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "note",
+        "name": "",
+        "x": 20,
+        "y": 1966,
+        "w": 1770,
+        "h": 120,
+        "kind": "Note",
+        "notes": "Atributos no clave de N01/N02: consultar sus vistas por proceso.\nEvaluacionProveedor: tabla implementada; pesos y resultados se conservan en SnapshotXml.\nIdProveedorSeleccionado e IdOrdenCompra son referencias opcionales.\nUn mismo borrador solo puede vincularse a una evaluación.",
+        "fontSize": 13
+      }
+    ],
+    "links": [
+      {
+        "source": "CotizacionProveedor",
+        "target": "Proveedor",
+        "name": "IdProveedor",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "DetalleCotizacionProveedor",
+        "target": "CotizacionProveedor",
+        "name": "IdCotizacion",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "DetalleCotizacionProveedor",
+        "target": "Producto",
+        "name": "IdProducto",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "OrdenCompra",
+        "target": "Proveedor",
+        "name": "IdProveedor",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "OrdenCompra",
+        "target": "Usuarios",
+        "name": "IdUsuarioAprobadorContable",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..1"
+      },
+      {
+        "source": "DetalleOrdenCompra",
+        "target": "OrdenCompra",
+        "name": "IdOrdenCompra",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "DetalleOrdenCompra",
+        "target": "Producto",
+        "name": "IdProducto",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Lote",
+        "target": "Producto",
+        "name": "IdProducto",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Lote",
+        "target": "Proveedor",
+        "name": "IdProveedor",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Lote",
+        "target": "OrdenCompra",
+        "name": "IdOrdenCompra",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..1"
+      },
+      {
+        "source": "Venta",
+        "target": "Cliente",
+        "name": "IdCliente",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..1"
+      },
+      {
+        "source": "Venta",
+        "target": "Usuarios",
+        "name": "IdUsuarioVendedor",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..1"
+      },
+      {
+        "source": "DetalleVenta",
+        "target": "Venta",
+        "name": "IdVenta",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "DetalleVenta",
+        "target": "Producto",
+        "name": "IdProducto",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "DetalleVenta",
+        "target": "Lote",
+        "name": "IdLote",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "MovimientoStock",
+        "target": "Lote",
+        "name": "IdLote",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Membresia",
+        "target": "Cliente",
+        "name": "IdCliente",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Seguridad_Usuario_Componente",
+        "target": "Usuarios",
+        "name": "IdUsuario",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Seguridad_Usuario_Componente",
+        "target": "Seguridad_Componente",
+        "name": "IdComponente",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Seguridad_Familia_Hijo",
+        "target": "Seguridad_Componente",
+        "name": "IdPadre",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "Seguridad_Familia_Hijo",
+        "target": "Seguridad_Componente",
+        "name": "IdHijo",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "EvaluacionProveedor",
+        "target": "Producto",
+        "name": "IdProducto",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "EvaluacionProveedor",
+        "target": "Proveedor",
+        "name": "IdProveedorSeleccionado",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..1"
+      },
+      {
+        "source": "EvaluacionProveedor",
+        "target": "OrdenCompra",
+        "name": "IdOrdenCompra",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..1",
+        "targetCardinality": "0..1"
+      }
+    ]
+  },
+  {
+    "code": "N03-07",
+    "title": "N03 · DER de evaluación de proveedores",
+    "kind": "Logical",
+    "notes": "DER global: claves de las tablas existentes y columnas completas de EvaluacionProveedor, implementada en la migración N03. Las relaciones FK opcionales y la unicidad de IdOrdenCompra respetan el DDL.",
+    "nodes": [
+      {
+        "key": "Producto",
+        "name": "Producto",
+        "x": 20,
+        "y": 30,
+        "w": 330,
+        "h": 160,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "Proveedor",
+        "name": "Proveedor",
+        "x": 400,
+        "y": 30,
+        "w": 330,
+        "h": 160,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdProveedor",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "OrdenCompra",
+        "name": "OrdenCompra",
+        "x": 780,
+        "y": 30,
+        "w": 330,
+        "h": 160,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdOrdenCompra",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProveedor",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdUsuarioAprobadorContable",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NULL"
+          }
+        ],
+        "fontSize": 12
+      },
+      {
+        "key": "EvaluacionProveedor",
+        "name": "EvaluacionProveedor",
+        "x": 285,
+        "y": 280,
+        "w": 560,
+        "h": 420,
+        "kind": "Class",
+        "stereotype": "table",
+        "attributes": [
+          {
+            "name": "IdEvaluacion",
+            "type": "INT",
+            "stereotype": "PK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProducto",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "FechaEvaluacion",
+            "type": "DATETIME2",
+            "stereotype": "",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "Responsable",
+            "type": "NVARCHAR(200)",
+            "stereotype": "",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "SnapshotXml",
+            "type": "NVARCHAR(MAX)",
+            "stereotype": "",
+            "notes": "NOT NULL"
+          },
+          {
+            "name": "IdProveedorSeleccionado",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NULL"
+          },
+          {
+            "name": "MotivoSeleccion",
+            "type": "NVARCHAR(500)",
+            "stereotype": "",
+            "notes": "NULL"
+          },
+          {
+            "name": "SeleccionadaPor",
+            "type": "NVARCHAR(200)",
+            "stereotype": "",
+            "notes": "NULL"
+          },
+          {
+            "name": "FechaSeleccion",
+            "type": "DATETIME2",
+            "stereotype": "",
+            "notes": "NULL"
+          },
+          {
+            "name": "IdOrdenCompra",
+            "type": "INT",
+            "stereotype": "FK",
+            "notes": "NULL"
+          }
+        ],
+        "fontSize": 12,
+        "notes": "SQL/Iteracion3_Evaluacion_Proveedores.sql. Tabla implementada. SnapshotXml conserva solicitud, fuentes y resultados. IdOrdenCompra tiene índice único filtrado."
+      },
+      {
+        "key": "note",
+        "name": "",
+        "kind": "Note",
+        "x": 25,
+        "y": 780,
+        "w": 1090,
+        "h": 135,
+        "fontSize": 12,
+        "notes": "SnapshotXml conserva criterios, ofertas, datos utilizados y fundamentos del ranking.\nLa decisión agrega proveedor, motivo, responsable y fecha; no se sobrescribe.\nIdOrdenCompra es opcional y único: reintentar devuelve el mismo borrador.\nNo existen columnas EsPrioritario ni pesos separados en esta tabla."
+      }
+    ],
+    "links": [
+      {
+        "source": "EvaluacionProveedor",
+        "target": "Producto",
+        "name": "IdProducto",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "EvaluacionProveedor",
+        "target": "Proveedor",
+        "name": "IdProveedorSeleccionado",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..1"
+      },
+      {
+        "source": "EvaluacionProveedor",
+        "target": "OrdenCompra",
+        "name": "IdOrdenCompra",
+        "kind": "Association",
+        "stereotype": "FK",
+        "sourceCardinality": "0..1",
+        "targetCardinality": "0..1"
+      }
+    ]
+  }
+]

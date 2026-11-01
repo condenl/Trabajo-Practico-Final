@@ -62,8 +62,8 @@
         "namespace": "BE",
         "x": 40,
         "y": 40,
-        "w": 732,
-        "h": 286,
+        "w": 520,
+        "h": 226,
         "fontSize": 11
       },
       {
@@ -117,10 +117,10 @@
         "source": "BE/CotizacionProveedor.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 942,
+        "x": 660,
         "y": 40,
-        "w": 732,
-        "h": 286,
+        "w": 520,
+        "h": 226,
         "fontSize": 11
       },
       {
@@ -161,10 +161,10 @@
         "source": "BE/DetalleCotizacionProveedor.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 1844,
+        "x": 1280,
         "y": 40,
-        "w": 732,
-        "h": 286,
+        "w": 520,
+        "h": 226,
         "fontSize": 11
       },
       {
@@ -239,9 +239,9 @@
         "proposed": false,
         "namespace": "BE",
         "x": 40,
-        "y": 476,
-        "w": 732,
-        "h": 352,
+        "y": 356,
+        "w": 520,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -292,10 +292,10 @@
         "source": "BE/DetalleOrdenCompra.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 942,
-        "y": 476,
-        "w": 732,
-        "h": 352,
+        "x": 660,
+        "y": 356,
+        "w": 520,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -359,10 +359,10 @@
         "source": "BE/Producto.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 1844,
-        "y": 476,
-        "w": 732,
-        "h": 352,
+        "x": 1280,
+        "y": 356,
+        "w": 520,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -432,9 +432,9 @@
         "proposed": false,
         "namespace": "BLL",
         "x": 40,
-        "y": 978,
-        "w": 732,
-        "h": 462,
+        "y": 723,
+        "w": 520,
+        "h": 362,
         "fontSize": 11
       },
       {
@@ -665,10 +665,10 @@
         "source": "BLL/AprovisionamientoBLL.cs",
         "proposed": false,
         "namespace": "BLL",
-        "x": 942,
-        "y": 978,
-        "w": 732,
-        "h": 462,
+        "x": 660,
+        "y": 723,
+        "w": 520,
+        "h": 362,
         "fontSize": 11
       },
       {
@@ -737,10 +737,10 @@
         "source": "BLL/ProductoBLL.cs",
         "proposed": false,
         "namespace": "BLL",
-        "x": 1844,
-        "y": 978,
-        "w": 732,
-        "h": 462,
+        "x": 1280,
+        "y": 723,
+        "w": 520,
+        "h": 362,
         "fontSize": 11
       }
     ],
@@ -888,8 +888,8 @@
         "namespace": "BE",
         "x": 40,
         "y": 40,
-        "w": 372,
-        "h": 374,
+        "w": 360,
+        "h": 294,
         "fontSize": 11
       },
       {
@@ -968,10 +968,10 @@
         "source": "BE/Lote.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 582,
+        "x": 500,
         "y": 40,
-        "w": 372,
-        "h": 374,
+        "w": 360,
+        "h": 294,
         "fontSize": 11
       },
       {
@@ -1030,10 +1030,10 @@
         "source": "BE/MovimientoStock.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 1124,
+        "x": 960,
         "y": 40,
-        "w": 372,
-        "h": 374,
+        "w": 360,
+        "h": 294,
         "fontSize": 11
       },
       {
@@ -1108,9 +1108,9 @@
         "proposed": false,
         "namespace": "BE",
         "x": 40,
-        "y": 564,
-        "w": 372,
-        "h": 352,
+        "y": 424,
+        "w": 360,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -1169,10 +1169,10 @@
         "source": "BE/Proveedor.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 582,
-        "y": 564,
-        "w": 372,
-        "h": 352,
+        "x": 500,
+        "y": 424,
+        "w": 360,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -1288,10 +1288,10 @@
         "source": "BLL/InventarioBLL.cs",
         "proposed": false,
         "namespace": "BLL",
-        "x": 1124,
-        "y": 564,
-        "w": 372,
-        "h": 352,
+        "x": 960,
+        "y": 424,
+        "w": 360,
+        "h": 277,
         "fontSize": 11
       }
     ],
@@ -1421,8 +1421,8 @@
         "namespace": "BE",
         "x": 40,
         "y": 40,
-        "w": 606,
-        "h": 352,
+        "w": 443,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -1476,10 +1476,10 @@
         "source": "BE/Membresia.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 816,
+        "x": 583,
         "y": 40,
-        "w": 606,
-        "h": 352,
+        "w": 443,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -1543,10 +1543,10 @@
         "source": "BE/Venta.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 1592,
+        "x": 1126,
         "y": 40,
-        "w": 606,
-        "h": 352,
+        "w": 443,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -1603,9 +1603,9 @@
         "proposed": false,
         "namespace": "BE",
         "x": 40,
-        "y": 542,
-        "w": 606,
-        "h": 374,
+        "y": 407,
+        "w": 443,
+        "h": 294,
         "fontSize": 11
       },
       {
@@ -1669,10 +1669,10 @@
         "source": "BE/Producto.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 816,
-        "y": 542,
-        "w": 606,
-        "h": 374,
+        "x": 583,
+        "y": 407,
+        "w": 443,
+        "h": 294,
         "fontSize": 11
       },
       {
@@ -1751,10 +1751,10 @@
         "source": "BE/Lote.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 1592,
-        "y": 542,
-        "w": 606,
-        "h": 374,
+        "x": 1126,
+        "y": 407,
+        "w": 443,
+        "h": 294,
         "fontSize": 11
       },
       {
@@ -1872,9 +1872,9 @@
         "proposed": false,
         "namespace": "BLL",
         "x": 40,
-        "y": 1066,
-        "w": 606,
-        "h": 308,
+        "y": 791,
+        "w": 443,
+        "h": 243,
         "fontSize": 11
       },
       {
@@ -1928,10 +1928,10 @@
             "visibility": "Public"
           }
         ],
-        "x": 816,
-        "y": 1066,
-        "w": 606,
-        "h": 308,
+        "x": 583,
+        "y": 791,
+        "w": 443,
+        "h": 243,
         "fontSize": 11
       }
     ],
@@ -2238,8 +2238,8 @@
         "namespace": "BLL",
         "x": 40,
         "y": 40,
-        "w": 1104,
-        "h": 462,
+        "w": 779,
+        "h": 362,
         "fontSize": 11
       },
       {
@@ -2268,6 +2268,18 @@
               {
                 "name": "orden",
                 "type": "OrdenCompra",
+                "default": ""
+              }
+            ],
+            "visibility": "Public"
+          },
+          {
+            "name": "InsertarOrdenes",
+            "type": "IList<int>",
+            "parameters": [
+              {
+                "name": "ordenes",
+                "type": "IList<OrdenCompra>",
                 "default": ""
               }
             ],
@@ -2379,10 +2391,10 @@
         "source": "DAL/Interfaces/IAprovisionamientoRepository.cs",
         "proposed": false,
         "namespace": "DAL.Interfaces",
-        "x": 1314,
+        "x": 919,
         "y": 40,
-        "w": 1104,
-        "h": 462,
+        "w": 779,
+        "h": 362,
         "fontSize": 11
       },
       {
@@ -2424,6 +2436,44 @@
             ],
             "visibility": "Public",
             "static": false,
+            "abstract": false
+          },
+          {
+            "name": "InsertarOrdenes",
+            "type": "IList<int>",
+            "parameters": [
+              {
+                "name": "ordenes",
+                "type": "IList<OrdenCompra>",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "InsertarOrden",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "conexion",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "transaccion",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "orden",
+                "type": "OrdenCompra",
+                "default": ""
+              }
+            ],
+            "visibility": "Package",
+            "static": true,
             "abstract": false
           },
           {
@@ -2542,10 +2592,10 @@
         "source": "DAL/AprovisionamientoDAL.cs",
         "proposed": false,
         "namespace": "DAL",
-        "x": 2588,
+        "x": 1798,
         "y": 40,
-        "w": 1104,
-        "h": 462,
+        "w": 779,
+        "h": 362,
         "fontSize": 11
       },
       {
@@ -2662,9 +2712,9 @@
         "proposed": false,
         "namespace": "BLL",
         "x": 40,
-        "y": 652,
-        "w": 1104,
-        "h": 286,
+        "y": 492,
+        "w": 779,
+        "h": 226,
         "fontSize": 11
       },
       {
@@ -2765,10 +2815,10 @@
         "source": "DAL/Interfaces/IInventarioRepository.cs",
         "proposed": false,
         "namespace": "DAL.Interfaces",
-        "x": 1314,
-        "y": 652,
-        "w": 1104,
-        "h": 286,
+        "x": 919,
+        "y": 492,
+        "w": 779,
+        "h": 226,
         "fontSize": 11
       },
       {
@@ -2953,10 +3003,10 @@
         "source": "DAL/InventarioDAL.cs",
         "proposed": false,
         "namespace": "DAL",
-        "x": 2588,
-        "y": 652,
-        "w": 1104,
-        "h": 286,
+        "x": 1798,
+        "y": 492,
+        "w": 779,
+        "h": 226,
         "fontSize": 11
       },
       {
@@ -3009,9 +3059,9 @@
         "proposed": false,
         "namespace": "DAL.Interfaces",
         "x": 40,
-        "y": 1088,
-        "w": 1104,
-        "h": 198,
+        "y": 808,
+        "w": 779,
+        "h": 158,
         "fontSize": 11
       },
       {
@@ -3075,10 +3125,10 @@
         "source": "DAL/ProveedorDAL.cs",
         "proposed": false,
         "namespace": "DAL",
-        "x": 1314,
-        "y": 1088,
-        "w": 1104,
-        "h": 198,
+        "x": 919,
+        "y": 808,
+        "w": 779,
+        "h": 158,
         "fontSize": 11
       },
       {
@@ -3130,10 +3180,10 @@
         "source": "DAL/Interfaces/IProductoRepository.cs",
         "proposed": false,
         "namespace": "DAL.Interfaces",
-        "x": 2588,
-        "y": 1088,
-        "w": 1104,
-        "h": 198,
+        "x": 1798,
+        "y": 808,
+        "w": 779,
+        "h": 158,
         "fontSize": 11
       },
       {
@@ -3198,9 +3248,9 @@
         "proposed": false,
         "namespace": "DAL",
         "x": 40,
-        "y": 1436,
-        "w": 1104,
-        "h": 198,
+        "y": 1056,
+        "w": 779,
+        "h": 158,
         "fontSize": 11
       },
       {
@@ -3233,10 +3283,10 @@
         "source": "BE/Interfaces/IRegistroActividad.cs",
         "proposed": false,
         "namespace": "BE.Interfaces",
-        "x": 1314,
-        "y": 1436,
-        "w": 1104,
-        "h": 198,
+        "x": 919,
+        "y": 1056,
+        "w": 779,
+        "h": 158,
         "fontSize": 11
       },
       {
@@ -3271,10 +3321,10 @@
         "source": "BLL/RegistroActividadBitacora.cs",
         "proposed": false,
         "namespace": "BLL",
-        "x": 2588,
-        "y": 1436,
-        "w": 1104,
-        "h": 198,
+        "x": 1798,
+        "y": 1056,
+        "w": 779,
+        "h": 158,
         "fontSize": 11
       }
     ],
@@ -3469,8 +3519,8 @@
         "namespace": "BLL",
         "x": 40,
         "y": 40,
-        "w": 1104,
-        "h": 308,
+        "w": 779,
+        "h": 243,
         "fontSize": 11
       },
       {
@@ -3563,10 +3613,10 @@
         "source": "DAL/Interfaces/IVentaRepository.cs",
         "proposed": false,
         "namespace": "DAL.Interfaces",
-        "x": 1314,
+        "x": 919,
         "y": 40,
-        "w": 1104,
-        "h": 308,
+        "w": 779,
+        "h": 243,
         "fontSize": 11
       },
       {
@@ -3730,10 +3780,10 @@
         "source": "DAL/VentaDAL.cs",
         "proposed": false,
         "namespace": "DAL",
-        "x": 2588,
+        "x": 1798,
         "y": 40,
-        "w": 1104,
-        "h": 308,
+        "w": 779,
+        "h": 243,
         "fontSize": 11
       },
       {
@@ -3786,9 +3836,9 @@
         "proposed": false,
         "namespace": "DAL.Interfaces",
         "x": 40,
-        "y": 498,
-        "w": 1104,
-        "h": 220,
+        "y": 373,
+        "w": 779,
+        "h": 175,
         "fontSize": 11
       },
       {
@@ -3852,10 +3902,10 @@
         "source": "DAL/ProductoDAL.cs",
         "proposed": false,
         "namespace": "DAL",
-        "x": 1314,
-        "y": 498,
-        "w": 1104,
-        "h": 220,
+        "x": 919,
+        "y": 373,
+        "w": 779,
+        "h": 175,
         "fontSize": 11
       },
       {
@@ -3956,10 +4006,10 @@
         "source": "DAL/Interfaces/IInventarioRepository.cs",
         "proposed": false,
         "namespace": "DAL.Interfaces",
-        "x": 2588,
-        "y": 498,
-        "w": 1104,
-        "h": 220,
+        "x": 1798,
+        "y": 373,
+        "w": 779,
+        "h": 175,
         "fontSize": 11
       },
       {
@@ -4145,9 +4195,9 @@
         "proposed": false,
         "namespace": "DAL",
         "x": 40,
-        "y": 868,
-        "w": 1104,
-        "h": 286,
+        "y": 638,
+        "w": 779,
+        "h": 226,
         "fontSize": 11
       },
       {
@@ -4180,10 +4230,10 @@
         "source": "BE/Interfaces/IRegistroActividad.cs",
         "proposed": false,
         "namespace": "BE.Interfaces",
-        "x": 1314,
-        "y": 868,
-        "w": 1104,
-        "h": 286,
+        "x": 919,
+        "y": 638,
+        "w": 779,
+        "h": 226,
         "fontSize": 11
       },
       {
@@ -4218,10 +4268,10 @@
         "source": "BLL/RegistroActividadBitacora.cs",
         "proposed": false,
         "namespace": "BLL",
-        "x": 2588,
-        "y": 868,
-        "w": 1104,
-        "h": 286,
+        "x": 1798,
+        "y": 638,
+        "w": 779,
+        "h": 226,
         "fontSize": 11
       },
       {
@@ -4276,9 +4326,9 @@
           }
         ],
         "x": 40,
-        "y": 1304,
-        "w": 1104,
-        "h": 176,
+        "y": 954,
+        "w": 779,
+        "h": 141,
         "fontSize": 11
       }
     ],
@@ -4346,8 +4396,200 @@
     "kind": "Logical",
     "nodes": [
       {
-        "key": "Proveedor",
-        "name": "Proveedor",
+        "key": "EvaluacionProveedor",
+        "name": "EvaluacionProveedor",
+        "kind": "Class",
+        "stereotype": "BE",
+        "attributes": [
+          {
+            "name": "IdEvaluacion",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "FechaEvaluacion",
+            "type": "DateTime",
+            "visibility": "Public"
+          },
+          {
+            "name": "Responsable",
+            "type": "string",
+            "visibility": "Public"
+          },
+          {
+            "name": "Solicitud",
+            "type": "SolicitudEvaluacion",
+            "visibility": "Public"
+          },
+          {
+            "name": "Datos",
+            "type": "DatosEvaluacion",
+            "visibility": "Public"
+          },
+          {
+            "name": "FirmaDatos",
+            "type": "string",
+            "visibility": "Public"
+          },
+          {
+            "name": "CantidadSugerida",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "PrecioVentaReferencia",
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "IdProveedorRecomendado",
+            "type": "int?",
+            "visibility": "Public"
+          },
+          {
+            "name": "IdProveedorSeleccionado",
+            "type": "int?",
+            "visibility": "Public"
+          },
+          {
+            "name": "MotivoSeleccion",
+            "type": "string",
+            "visibility": "Public"
+          },
+          {
+            "name": "SeleccionadaPor",
+            "type": "string",
+            "visibility": "Public"
+          },
+          {
+            "name": "FechaSeleccion",
+            "type": "DateTime?",
+            "visibility": "Public"
+          },
+          {
+            "name": "IdOrdenCompra",
+            "type": "int?",
+            "visibility": "Public"
+          },
+          {
+            "name": "Resultados",
+            "type": "List<ResultadoProveedor>",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [],
+        "abstract": false,
+        "notes": "BE/EvaluacionProveedor.cs",
+        "source": "BE/EvaluacionProveedor.cs",
+        "proposed": false,
+        "namespace": "BE",
+        "x": 40,
+        "y": 40,
+        "w": 360,
+        "h": 325,
+        "fontSize": 11
+      },
+      {
+        "key": "SolicitudEvaluacion",
+        "name": "SolicitudEvaluacion",
+        "kind": "Class",
+        "stereotype": "BE",
+        "attributes": [
+          {
+            "name": "IdProducto",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "Cantidad",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "PesoPrecio",
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "PesoPrestigio",
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "PesoAntiguedad",
+            "type": "decimal",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [],
+        "abstract": false,
+        "notes": "BE/EvaluacionProveedor.cs",
+        "source": "BE/EvaluacionProveedor.cs",
+        "proposed": false,
+        "namespace": "BE",
+        "x": 500,
+        "y": 40,
+        "w": 360,
+        "h": 325,
+        "fontSize": 11
+      },
+      {
+        "key": "DatosEvaluacion",
+        "name": "DatosEvaluacion",
+        "kind": "Class",
+        "stereotype": "BE",
+        "attributes": [
+          {
+            "name": "FechaCorte",
+            "type": "DateTime",
+            "visibility": "Public"
+          },
+          {
+            "name": "Producto",
+            "type": "Producto",
+            "visibility": "Public"
+          },
+          {
+            "name": "StockDisponible",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "ComprasPendientes",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "UnidadesVendidas90Dias",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "ImporteNetoVentas90Dias",
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "Ofertas",
+            "type": "List<OfertaEvaluable>",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [],
+        "abstract": false,
+        "notes": "BE/EvaluacionProveedor.cs",
+        "source": "BE/EvaluacionProveedor.cs",
+        "proposed": false,
+        "namespace": "BE",
+        "x": 40,
+        "y": 400,
+        "w": 360,
+        "h": 291,
+        "fontSize": 11
+      },
+      {
+        "key": "OfertaEvaluable",
+        "name": "OfertaEvaluable",
         "kind": "Class",
         "stereotype": "BE",
         "attributes": [
@@ -4357,18 +4599,13 @@
             "visibility": "Public"
           },
           {
-            "name": "RazonSocial",
+            "name": "Proveedor",
             "type": "string",
             "visibility": "Public"
           },
           {
-            "name": "Cuit",
-            "type": "string",
-            "visibility": "Public"
-          },
-          {
-            "name": "Contacto",
-            "type": "string",
+            "name": "Activo",
+            "type": "bool",
             "visibility": "Public"
           },
           {
@@ -4382,213 +4619,425 @@
             "visibility": "Public"
           },
           {
-            "name": "Activo",
-            "type": "bool",
+            "name": "IdCotizacion",
+            "type": "int?",
+            "visibility": "Public"
+          },
+          {
+            "name": "FechaEmision",
+            "type": "DateTime?",
+            "visibility": "Public"
+          },
+          {
+            "name": "FechaVigencia",
+            "type": "DateTime?",
+            "visibility": "Public"
+          },
+          {
+            "name": "PrecioUnitario",
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "PlazoEntregaDias",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "UnidadesCompradas180Dias",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "UnidadesRecibidas180Dias",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "ImporteComprado180Dias",
+            "type": "decimal",
             "visibility": "Public"
           }
         ],
-        "methods": [
-          {
-            "name": "Proveedor",
-            "type": "",
-            "parameters": [],
-            "visibility": "Public",
-            "stereotype": "create"
-          }
-        ],
+        "methods": [],
         "abstract": false,
-        "notes": "BE/Proveedor.cs",
-        "source": "BE/Proveedor.cs",
+        "notes": "BE/EvaluacionProveedor.cs",
+        "source": "BE/EvaluacionProveedor.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 40,
-        "y": 40,
-        "w": 732,
-        "h": 418,
+        "x": 500,
+        "y": 400,
+        "w": 360,
+        "h": 291,
         "fontSize": 11
       },
       {
-        "key": "Producto",
-        "name": "Producto",
+        "key": "ResultadoProveedor",
+        "name": "ResultadoProveedor",
         "kind": "Class",
         "stereotype": "BE",
         "attributes": [
           {
-            "name": "IdProducto",
+            "name": "IdProveedor",
             "type": "int",
             "visibility": "Public"
           },
           {
-            "name": "Codigo",
+            "name": "Proveedor",
             "type": "string",
             "visibility": "Public"
           },
           {
-            "name": "Nombre",
-            "type": "string",
+            "name": "IdCotizacion",
+            "type": "int?",
             "visibility": "Public"
           },
           {
-            "name": "Marca",
-            "type": "string",
-            "visibility": "Public"
-          },
-          {
-            "name": "FamiliaOlfativa",
-            "type": "string",
-            "visibility": "Public"
-          },
-          {
-            "name": "PrecioVenta",
+            "name": "PrecioUnitario",
             "type": "decimal",
             "visibility": "Public"
           },
           {
-            "name": "StockMinimo",
+            "name": "PlazoEntregaDias",
             "type": "int",
             "visibility": "Public"
           },
           {
-            "name": "Activo",
-            "type": "bool",
+            "name": "CostoTotal",
+            "type": "decimal",
             "visibility": "Public"
-          }
-        ],
-        "methods": [
-          {
-            "name": "Producto",
-            "type": "",
-            "parameters": [],
-            "visibility": "Public",
-            "stereotype": "create"
-          }
-        ],
-        "abstract": false,
-        "notes": "BE/Producto.cs",
-        "source": "BE/Producto.cs",
-        "proposed": false,
-        "namespace": "BE",
-        "x": 942,
-        "y": 40,
-        "w": 732,
-        "h": 418,
-        "fontSize": 11
-      },
-      {
-        "key": "EvaluacionProveedor",
-        "name": "EvaluacionProveedor",
-        "x": 1844,
-        "y": 40,
-        "w": 732,
-        "h": 418,
-        "kind": "Class",
-        "stereotype": "diseño N03",
-        "attributes": [
-          {
-            "name": "IdEvaluacion",
-            "type": "int"
           },
           {
-            "name": "IdProveedor",
-            "type": "int"
+            "name": "MargenEstimado",
+            "type": "decimal",
+            "visibility": "Public"
           },
           {
-            "name": "IdProducto",
-            "type": "int"
-          },
-          {
-            "name": "FechaEvaluacion",
-            "type": "DateTime"
-          },
-          {
-            "name": "PuntajePrestigio",
-            "type": "decimal"
+            "name": "BeneficioBrutoEstimado",
+            "type": "decimal",
+            "visibility": "Public"
           },
           {
             "name": "PuntajePrecio",
-            "type": "decimal"
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "PuntajePrestigio",
+            "type": "decimal",
+            "visibility": "Public"
           },
           {
             "name": "PuntajeAntiguedad",
-            "type": "decimal"
-          },
-          {
-            "name": "PesoPrestigio",
-            "type": "decimal"
-          },
-          {
-            "name": "PesoPrecio",
-            "type": "decimal"
-          },
-          {
-            "name": "PesoAntiguedad",
-            "type": "decimal"
+            "type": "decimal",
+            "visibility": "Public"
           },
           {
             "name": "PuntajePonderadoFinal",
-            "type": "decimal"
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "Elegible",
+            "type": "bool",
+            "visibility": "Public"
           },
           {
             "name": "Fundamentos",
-            "type": "string"
+            "type": "string",
+            "visibility": "Public"
           },
           {
-            "name": "EsPrioritario",
-            "type": "bool"
-          }
-        ],
-        "fontSize": 11,
-        "proposed": true,
-        "notes": "Diseño N03: clase y operación propuestas, todavía sin implementación C#.",
-        "methods": [
+            "name": "Advertencias",
+            "type": "string",
+            "visibility": "Public"
+          },
           {
-            "name": "CalcularPuntajePonderado",
-            "type": "decimal",
-            "parameters": [],
+            "name": "UnidadesCompradas180Dias",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "UnidadesRecibidas180Dias",
+            "type": "int",
             "visibility": "Public"
           }
-        ]
+        ],
+        "methods": [],
+        "abstract": false,
+        "notes": "BE/EvaluacionProveedor.cs",
+        "source": "BE/EvaluacionProveedor.cs",
+        "proposed": false,
+        "namespace": "BE",
+        "x": 40,
+        "y": 726,
+        "w": 360,
+        "h": 359,
+        "fontSize": 11
       },
+      {
+        "key": "ResumenEvaluacion",
+        "name": "ResumenEvaluacion",
+        "kind": "Class",
+        "stereotype": "BE",
+        "attributes": [
+          {
+            "name": "IdEvaluacion",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "Fecha",
+            "type": "DateTime",
+            "visibility": "Public"
+          },
+          {
+            "name": "Responsable",
+            "type": "string",
+            "visibility": "Public"
+          },
+          {
+            "name": "ProveedorSeleccionado",
+            "type": "string",
+            "visibility": "Public"
+          },
+          {
+            "name": "IdOrdenCompra",
+            "type": "int?",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [],
+        "abstract": false,
+        "notes": "BE/EvaluacionProveedor.cs",
+        "source": "BE/EvaluacionProveedor.cs",
+        "proposed": false,
+        "namespace": "BE",
+        "x": 500,
+        "y": 726,
+        "w": 360,
+        "h": 359,
+        "fontSize": 11
+      }
+    ],
+    "links": [
+      {
+        "source": "EvaluacionProveedor",
+        "target": "SolicitudEvaluacion",
+        "kind": "Association",
+        "name": "",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "EvaluacionProveedor",
+        "target": "DatosEvaluacion",
+        "kind": "Association",
+        "name": "",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "EvaluacionProveedor",
+        "target": "ResultadoProveedor",
+        "kind": "Association",
+        "name": "",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "DatosEvaluacion",
+        "target": "OfertaEvaluable",
+        "kind": "Association",
+        "name": "",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..*"
+      }
+    ],
+    "notes": "Atributos y operaciones compartidos con G07-01. Firmas verificadas en el código. Las clases propuestas están identificadas explícitamente. Las BE conservan sus constructores y propiedades; la lógica reside en BLL."
+  },
+  {
+    "code": "N03-05",
+    "title": "N03 · Clases de lógica y persistencia de evaluación",
+    "kind": "Logical",
+    "nodes": [
       {
         "key": "EvaluacionProveedorBLL",
         "name": "EvaluacionProveedorBLL",
         "kind": "Class",
-        "stereotype": "propuesto N03",
-        "proposed": true,
-        "attributes": [],
-        "notes": "Diseño N03; no existe todavía en BLL.",
+        "stereotype": "BLL",
+        "attributes": [
+          {
+            "name": "repositorio",
+            "type": "IEvaluacionProveedorRepository",
+            "visibility": "Private"
+          },
+          {
+            "name": "obtenerUsuario",
+            "type": "Func<Usuario>",
+            "visibility": "Private"
+          },
+          {
+            "name": "reloj",
+            "type": "Func<DateTime>",
+            "visibility": "Private"
+          }
+        ],
         "methods": [
           {
             "name": "Evaluar",
             "type": "EvaluacionProveedor",
             "parameters": [
               {
-                "name": "evaluacion",
-                "type": "EvaluacionProveedor",
+                "name": "solicitud",
+                "type": "SolicitudEvaluacion",
                 "default": ""
               }
             ],
-            "visibility": "Public"
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "Obtener",
+            "type": "EvaluacionProveedor",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ConsultarHistorial",
+            "type": "IList<ResumenEvaluacion>",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "SeleccionarPrioritario",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "idProveedor",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "motivo",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "CrearOrdenBorrador",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
           },
           {
             "name": "ValidarEvaluacion",
             "type": "void",
             "parameters": [
               {
-                "name": "evaluacion",
-                "type": "EvaluacionProveedor",
+                "name": "s",
+                "type": "SolicitudEvaluacion",
                 "default": ""
               }
             ],
-            "visibility": "Public"
+            "visibility": "Public",
+            "static": true,
+            "abstract": false
           },
           {
-            "name": "SeleccionarPrioritario",
+            "name": "Calcular",
             "type": "EvaluacionProveedor",
             "parameters": [
               {
-                "name": "evaluaciones",
-                "type": "List<EvaluacionProveedor>",
+                "name": "s",
+                "type": "SolicitudEvaluacion",
+                "default": ""
+              },
+              {
+                "name": "datos",
+                "type": "DatosEvaluacion",
+                "default": ""
+              },
+              {
+                "name": "fecha",
+                "type": "DateTime",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": true,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "BLL/EvaluacionProveedorBLL.cs",
+        "source": "BLL/EvaluacionProveedorBLL.cs",
+        "proposed": false,
+        "namespace": "BLL",
+        "x": 40,
+        "y": 40,
+        "w": 660,
+        "h": 240,
+        "fontSize": 11
+      },
+      {
+        "key": "IEvaluacionProveedorRepository",
+        "name": "IEvaluacionProveedorRepository",
+        "kind": "Interface",
+        "stereotype": "interface",
+        "attributes": [],
+        "methods": [
+          {
+            "name": "ObtenerDatos",
+            "type": "DatosEvaluacion",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "fechaCorte",
+                "type": "DateTime",
                 "default": ""
               }
             ],
@@ -4605,321 +5054,113 @@
               }
             ],
             "visibility": "Public"
-          }
-        ],
-        "x": 40,
-        "y": 608,
-        "w": 732,
-        "h": 462,
-        "fontSize": 11
-      },
-      {
-        "key": "AprovisionamientoBLL",
-        "name": "AprovisionamientoBLL",
-        "kind": "Class",
-        "stereotype": "BLL",
-        "attributes": [
-          {
-            "name": "CantidadMinimaCotizacionesComparables",
-            "type": "int",
-            "visibility": "Private"
           },
           {
-            "name": "repositorio",
-            "type": "IAprovisionamientoRepository",
-            "visibility": "Private"
-          },
-          {
-            "name": "proveedores",
-            "type": "IProveedorRepository",
-            "visibility": "Private"
-          },
-          {
-            "name": "productos",
-            "type": "IProductoRepository",
-            "visibility": "Private"
-          },
-          {
-            "name": "registroActividad",
-            "type": "IRegistroActividad",
-            "visibility": "Private"
-          }
-        ],
-        "methods": [
-          {
-            "name": "RegistrarCotizacion",
-            "type": "int",
+            "name": "ObtenerEvaluacion",
+            "type": "EvaluacionProveedor",
             "parameters": [
               {
-                "name": "cotizacion",
-                "type": "CotizacionProveedor",
-                "default": ""
-              }
-            ],
-            "visibility": "Public",
-            "static": false,
-            "abstract": false
-          },
-          {
-            "name": "CrearOrdenPreliminar",
-            "type": "bool",
-            "parameters": [
-              {
-                "name": "orden",
-                "type": "OrdenCompra",
-                "default": ""
-              },
-              {
-                "name": "detalles",
-                "type": "List<DetalleOrdenCompra>",
-                "default": ""
-              }
-            ],
-            "visibility": "Public",
-            "static": false,
-            "abstract": false
-          },
-          {
-            "name": "EnviarOrdenARevisionContable",
-            "type": "bool",
-            "parameters": [
-              {
-                "name": "idOrdenCompra",
+                "name": "idEvaluacion",
                 "type": "int",
                 "default": ""
               }
             ],
-            "visibility": "Public",
-            "static": false,
-            "abstract": false
+            "visibility": "Public"
           },
           {
-            "name": "AprobarOrdenCompra",
-            "type": "bool",
+            "name": "ListarHistorial",
+            "type": "IList<ResumenEvaluacion>",
             "parameters": [
               {
-                "name": "idOrdenCompra",
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public"
+          },
+          {
+            "name": "SeleccionarPrioritario",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "idEvaluacion",
                 "type": "int",
                 "default": ""
               },
-              {
-                "name": "idUsuarioContable",
-                "type": "int",
-                "default": ""
-              }
-            ],
-            "visibility": "Public",
-            "static": false,
-            "abstract": false
-          },
-          {
-            "name": "RechazarOrdenCompra",
-            "type": "bool",
-            "parameters": [
-              {
-                "name": "idOrdenCompra",
-                "type": "int",
-                "default": ""
-              },
-              {
-                "name": "motivo",
-                "type": "string",
-                "default": ""
-              }
-            ],
-            "visibility": "Public",
-            "static": false,
-            "abstract": false
-          },
-          {
-            "name": "EmitirOrdenAprobada",
-            "type": "bool",
-            "parameters": [
-              {
-                "name": "idOrdenCompra",
-                "type": "int",
-                "default": ""
-              }
-            ],
-            "visibility": "Public",
-            "static": false,
-            "abstract": false
-          },
-          {
-            "name": "RecepcionarMercaderia",
-            "type": "bool",
-            "parameters": [
-              {
-                "name": "idOrdenCompra",
-                "type": "int",
-                "default": ""
-              },
-              {
-                "name": "lotesRecibidos",
-                "type": "List<Lote>",
-                "default": ""
-              }
-            ],
-            "visibility": "Public",
-            "static": false,
-            "abstract": false
-          },
-          {
-            "name": "ConsultarHistorialCompras",
-            "type": "List<OrdenCompra>",
-            "parameters": [
               {
                 "name": "idProveedor",
-                "type": "int?",
-                "default": ""
-              }
-            ],
-            "visibility": "Public",
-            "static": false,
-            "abstract": false
-          },
-          {
-            "name": "CambiarEstado",
-            "type": "void",
-            "parameters": [
-              {
-                "name": "orden",
-                "type": "OrdenCompra",
-                "default": ""
-              },
-              {
-                "name": "nuevoEstado",
-                "type": "EstadoOrdenCompra",
-                "default": ""
-              },
-              {
-                "name": "idUsuarioContable",
-                "type": "int?",
+                "type": "int",
                 "default": ""
               },
               {
                 "name": "motivo",
                 "type": "string",
                 "default": ""
-              }
-            ],
-            "visibility": "Private",
-            "static": false,
-            "abstract": false
-          },
-          {
-            "name": "ValidarCotizacion",
-            "type": "void",
-            "parameters": [
+              },
               {
-                "name": "cotizacion",
-                "type": "CotizacionProveedor",
+                "name": "responsable",
+                "type": "string",
                 "default": ""
               }
             ],
-            "visibility": "Private",
-            "static": true,
-            "abstract": false
+            "visibility": "Public"
           },
           {
-            "name": "ValidarOrdenPreliminar",
-            "type": "void",
-            "parameters": [
-              {
-                "name": "orden",
-                "type": "OrdenCompra",
-                "default": ""
-              }
-            ],
-            "visibility": "Private",
-            "static": true,
-            "abstract": false
-          }
-        ],
-        "abstract": false,
-        "notes": "BLL/AprovisionamientoBLL.cs",
-        "source": "BLL/AprovisionamientoBLL.cs",
-        "proposed": false,
-        "namespace": "BLL",
-        "x": 942,
-        "y": 608,
-        "w": 732,
-        "h": 462,
-        "fontSize": 11
-      },
-      {
-        "key": "InventarioBLL",
-        "name": "InventarioBLL",
-        "kind": "Class",
-        "stereotype": "BLL",
-        "attributes": [
-          {
-            "name": "repositorio",
-            "type": "IInventarioRepository",
-            "visibility": "Private"
-          },
-          {
-            "name": "registroActividad",
-            "type": "IRegistroActividad",
-            "visibility": "Private"
-          }
-        ],
-        "methods": [
-          {
-            "name": "VerificarStock",
+            "name": "CrearOrdenBorrador",
             "type": "int",
             "parameters": [
               {
-                "name": "idProducto",
-                "type": "int",
-                "default": ""
-              }
-            ],
-            "visibility": "Public",
-            "static": false,
-            "abstract": false
-          },
-          {
-            "name": "RegistrarIngresoLote",
-            "type": "bool",
-            "parameters": [
-              {
-                "name": "lote",
-                "type": "Lote",
-                "default": ""
-              }
-            ],
-            "visibility": "Public",
-            "static": false,
-            "abstract": false
-          },
-          {
-            "name": "DescontarStockLote",
-            "type": "bool",
-            "parameters": [
-              {
-                "name": "idLote",
+                "name": "idEvaluacion",
                 "type": "int",
                 "default": ""
               },
               {
-                "name": "cantidad",
-                "type": "int",
+                "name": "responsable",
+                "type": "string",
                 "default": ""
               }
             ],
-            "visibility": "Public",
-            "static": false,
-            "abstract": false
-          },
+            "visibility": "Public"
+          }
+        ],
+        "abstract": false,
+        "notes": "DAL/Interfaces/IEvaluacionProveedorRepository.cs",
+        "source": "DAL/Interfaces/IEvaluacionProveedorRepository.cs",
+        "proposed": false,
+        "namespace": "DAL.Interfaces",
+        "x": 40,
+        "y": 315,
+        "w": 660,
+        "h": 172,
+        "fontSize": 11
+      },
+      {
+        "key": "EvaluacionProveedorDAL",
+        "name": "EvaluacionProveedorDAL",
+        "kind": "Class",
+        "stereotype": "DAL",
+        "attributes": [
           {
-            "name": "ObtenerLotesDisponibles",
-            "type": "List<Lote>",
+            "name": "Instancia",
+            "type": "EvaluacionProveedorDAL",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [
+          {
+            "name": "ObtenerDatos",
+            "type": "DatosEvaluacion",
             "parameters": [
               {
                 "name": "idProducto",
                 "type": "int",
                 "default": ""
+              },
+              {
+                "name": "fechaCorte",
+                "type": "DateTime",
+                "default": ""
               }
             ],
             "visibility": "Public",
@@ -4927,11 +5168,83 @@
             "abstract": false
           },
           {
-            "name": "ObtenerTrazabilidad",
-            "type": "List<Lote>",
+            "name": "LeerDatos",
+            "type": "DatosEvaluacion",
             "parameters": [
               {
-                "name": "idProducto",
+                "name": "c",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "t",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "producto",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "fecha",
+                "type": "DateTime",
+                "default": ""
+              }
+            ],
+            "visibility": "Private",
+            "static": true,
+            "abstract": false
+          },
+          {
+            "name": "GuardarEvaluacion",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "e",
+                "type": "EvaluacionProveedor",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "Leer",
+            "type": "EvaluacionProveedor",
+            "parameters": [
+              {
+                "name": "c",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "t",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "id",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "bloquear",
+                "type": "bool",
+                "default": ""
+              }
+            ],
+            "visibility": "Private",
+            "static": true,
+            "abstract": false
+          },
+          {
+            "name": "ObtenerEvaluacion",
+            "type": "EvaluacionProveedor",
+            "parameters": [
+              {
+                "name": "id",
                 "type": "int",
                 "default": ""
               }
@@ -4941,66 +5254,189 @@
             "abstract": false
           },
           {
-            "name": "ValidarLote",
+            "name": "ListarHistorial",
+            "type": "IList<ResumenEvaluacion>",
+            "parameters": [
+              {
+                "name": "producto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ComprobarVigencia",
             "type": "void",
             "parameters": [
               {
-                "name": "lote",
-                "type": "Lote",
+                "name": "c",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "t",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "e",
+                "type": "EvaluacionProveedor",
                 "default": ""
               }
             ],
-            "visibility": "Package",
+            "visibility": "Private",
+            "static": true,
+            "abstract": false
+          },
+          {
+            "name": "SeleccionarPrioritario",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "proveedor",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "motivo",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "CrearOrdenBorrador",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "DAL/EvaluacionProveedorDAL.cs",
+        "source": "DAL/EvaluacionProveedorDAL.cs",
+        "proposed": false,
+        "namespace": "DAL",
+        "x": 40,
+        "y": 522,
+        "w": 660,
+        "h": 240,
+        "fontSize": 11
+      },
+      {
+        "key": "ArchivoEvaluacion",
+        "name": "ArchivoEvaluacion",
+        "kind": "Class",
+        "stereotype": "Servicios",
+        "attributes": [],
+        "methods": [
+          {
+            "name": "Serializar",
+            "type": "string",
+            "parameters": [
+              {
+                "name": "valor",
+                "type": "T",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": true,
+            "abstract": false
+          },
+          {
+            "name": "Leer",
+            "type": "EvaluacionProveedor",
+            "parameters": [
+              {
+                "name": "xml",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": true,
+            "abstract": false
+          },
+          {
+            "name": "Firma",
+            "type": "string",
+            "parameters": [
+              {
+                "name": "datos",
+                "type": "DatosEvaluacion",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
             "static": true,
             "abstract": false
           }
         ],
         "abstract": false,
-        "notes": "BLL/InventarioBLL.cs",
-        "source": "BLL/InventarioBLL.cs",
+        "notes": "Servicios/ArchivoEvaluacion.cs",
+        "source": "Servicios/ArchivoEvaluacion.cs",
         "proposed": false,
-        "namespace": "BLL",
-        "x": 1844,
-        "y": 608,
-        "w": 732,
-        "h": 462,
+        "namespace": "Servicios",
+        "x": 40,
+        "y": 797,
+        "w": 660,
+        "h": 121,
         "fontSize": 11
       }
     ],
     "links": [
       {
-        "source": "Proveedor",
-        "target": "EvaluacionProveedor",
-        "name": "",
-        "kind": "Association",
-        "sourceCardinality": "1",
-        "targetCardinality": "0..*"
-      },
-      {
-        "source": "Producto",
-        "target": "EvaluacionProveedor",
-        "name": "",
-        "kind": "Association",
-        "sourceCardinality": "1",
-        "targetCardinality": "0..*"
-      },
-      {
         "source": "EvaluacionProveedorBLL",
-        "target": "EvaluacionProveedor",
+        "target": "IEvaluacionProveedorRepository",
         "name": "",
         "kind": "Dependency"
       },
       {
         "source": "EvaluacionProveedorBLL",
-        "target": "AprovisionamientoBLL",
+        "target": "ArchivoEvaluacion",
         "name": "",
         "kind": "Dependency"
       },
       {
-        "source": "EvaluacionProveedorBLL",
-        "target": "InventarioBLL",
+        "source": "EvaluacionProveedorDAL",
+        "target": "ArchivoEvaluacion",
         "name": "",
         "kind": "Dependency"
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "IEvaluacionProveedorRepository",
+        "name": "",
+        "kind": "Realization"
       }
     ],
     "notes": "Atributos y operaciones compartidos con G07-01. Firmas verificadas en el código. Las clases propuestas están identificadas explícitamente. Las BE conservan sus constructores y propiedades; la lógica reside en BLL."
@@ -5068,8 +5504,8 @@
         "namespace": "BE",
         "x": 40,
         "y": 40,
-        "w": 1104,
-        "h": 352,
+        "w": 779,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -5123,10 +5559,10 @@
         "source": "BE/CotizacionProveedor.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 1314,
+        "x": 919,
         "y": 40,
-        "w": 1104,
-        "h": 352,
+        "w": 779,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -5167,10 +5603,10 @@
         "source": "BE/DetalleCotizacionProveedor.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 2588,
+        "x": 1798,
         "y": 40,
-        "w": 1104,
-        "h": 352,
+        "w": 779,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -5244,10 +5680,10 @@
         "source": "BE/OrdenCompra.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 3862,
+        "x": 2677,
         "y": 40,
-        "w": 1104,
-        "h": 352,
+        "w": 779,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -5298,10 +5734,10 @@
         "source": "BE/DetalleOrdenCompra.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 5136,
+        "x": 3556,
         "y": 40,
-        "w": 1104,
-        "h": 352,
+        "w": 779,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -5366,9 +5802,9 @@
         "proposed": false,
         "namespace": "BE",
         "x": 40,
-        "y": 542,
-        "w": 1104,
-        "h": 462,
+        "y": 407,
+        "w": 779,
+        "h": 362,
         "fontSize": 11
       },
       {
@@ -5437,10 +5873,10 @@
         "source": "BLL/ProveedorBLL.cs",
         "proposed": false,
         "namespace": "BLL",
-        "x": 1314,
-        "y": 542,
-        "w": 1104,
-        "h": 462,
+        "x": 919,
+        "y": 407,
+        "w": 779,
+        "h": 362,
         "fontSize": 11
       },
       {
@@ -5671,10 +6107,10 @@
         "source": "BLL/AprovisionamientoBLL.cs",
         "proposed": false,
         "namespace": "BLL",
-        "x": 2588,
-        "y": 542,
-        "w": 1104,
-        "h": 462,
+        "x": 1798,
+        "y": 407,
+        "w": 779,
+        "h": 362,
         "fontSize": 11
       },
       {
@@ -5743,10 +6179,10 @@
         "source": "BLL/ProductoBLL.cs",
         "proposed": false,
         "namespace": "BLL",
-        "x": 3862,
-        "y": 542,
-        "w": 1104,
-        "h": 462,
+        "x": 2677,
+        "y": 407,
+        "w": 779,
+        "h": 362,
         "fontSize": 11
       },
       {
@@ -5825,10 +6261,10 @@
         "source": "BE/Lote.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 5136,
-        "y": 542,
-        "w": 1104,
-        "h": 462,
+        "x": 3556,
+        "y": 407,
+        "w": 779,
+        "h": 362,
         "fontSize": 11
       },
       {
@@ -5888,9 +6324,9 @@
         "proposed": false,
         "namespace": "BE",
         "x": 40,
-        "y": 1154,
-        "w": 1104,
-        "h": 352,
+        "y": 859,
+        "w": 779,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -6006,10 +6442,10 @@
         "source": "BLL/InventarioBLL.cs",
         "proposed": false,
         "namespace": "BLL",
-        "x": 1314,
-        "y": 1154,
-        "w": 1104,
-        "h": 352,
+        "x": 919,
+        "y": 859,
+        "w": 779,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -6083,10 +6519,10 @@
         "source": "BE/Cliente.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 2588,
-        "y": 1154,
-        "w": 1104,
-        "h": 352,
+        "x": 1798,
+        "y": 859,
+        "w": 779,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -6140,10 +6576,10 @@
         "source": "BE/Membresia.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 3862,
-        "y": 1154,
-        "w": 1104,
-        "h": 352,
+        "x": 2677,
+        "y": 859,
+        "w": 779,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -6207,10 +6643,10 @@
         "source": "BE/Venta.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 5136,
-        "y": 1154,
-        "w": 1104,
-        "h": 352,
+        "x": 3556,
+        "y": 859,
+        "w": 779,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -6267,9 +6703,9 @@
         "proposed": false,
         "namespace": "BE",
         "x": 40,
-        "y": 1656,
-        "w": 1104,
-        "h": 308,
+        "y": 1226,
+        "w": 779,
+        "h": 260,
         "fontSize": 11
       },
       {
@@ -6386,10 +6822,10 @@
         "source": "BLL/VentaBLL.cs",
         "proposed": false,
         "namespace": "BLL",
-        "x": 1314,
-        "y": 1656,
-        "w": 1104,
-        "h": 308,
+        "x": 919,
+        "y": 1226,
+        "w": 779,
+        "h": 260,
         "fontSize": 11
       },
       {
@@ -6443,10 +6879,10 @@
             "visibility": "Public"
           }
         ],
-        "x": 2588,
-        "y": 1656,
-        "w": 1104,
-        "h": 308,
+        "x": 1798,
+        "y": 1226,
+        "w": 779,
+        "h": 260,
         "fontSize": 11
       },
       {
@@ -6475,6 +6911,18 @@
               {
                 "name": "orden",
                 "type": "OrdenCompra",
+                "default": ""
+              }
+            ],
+            "visibility": "Public"
+          },
+          {
+            "name": "InsertarOrdenes",
+            "type": "IList<int>",
+            "parameters": [
+              {
+                "name": "ordenes",
+                "type": "IList<OrdenCompra>",
                 "default": ""
               }
             ],
@@ -6586,10 +7034,10 @@
         "source": "DAL/Interfaces/IAprovisionamientoRepository.cs",
         "proposed": false,
         "namespace": "DAL.Interfaces",
-        "x": 3862,
-        "y": 1656,
-        "w": 1104,
-        "h": 308,
+        "x": 2677,
+        "y": 1226,
+        "w": 779,
+        "h": 260,
         "fontSize": 11
       },
       {
@@ -6631,6 +7079,44 @@
             ],
             "visibility": "Public",
             "static": false,
+            "abstract": false
+          },
+          {
+            "name": "InsertarOrdenes",
+            "type": "IList<int>",
+            "parameters": [
+              {
+                "name": "ordenes",
+                "type": "IList<OrdenCompra>",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "InsertarOrden",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "conexion",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "transaccion",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "orden",
+                "type": "OrdenCompra",
+                "default": ""
+              }
+            ],
+            "visibility": "Package",
+            "static": true,
             "abstract": false
           },
           {
@@ -6749,10 +7235,10 @@
         "source": "DAL/AprovisionamientoDAL.cs",
         "proposed": false,
         "namespace": "DAL",
-        "x": 5136,
-        "y": 1656,
-        "w": 1104,
-        "h": 308,
+        "x": 3556,
+        "y": 1226,
+        "w": 779,
+        "h": 260,
         "fontSize": 11
       },
       {
@@ -6854,9 +7340,9 @@
         "proposed": false,
         "namespace": "DAL.Interfaces",
         "x": 40,
-        "y": 2114,
-        "w": 1104,
-        "h": 286,
+        "y": 1576,
+        "w": 779,
+        "h": 226,
         "fontSize": 11
       },
       {
@@ -7041,10 +7527,10 @@
         "source": "DAL/InventarioDAL.cs",
         "proposed": false,
         "namespace": "DAL",
-        "x": 1314,
-        "y": 2114,
-        "w": 1104,
-        "h": 286,
+        "x": 919,
+        "y": 1576,
+        "w": 779,
+        "h": 226,
         "fontSize": 11
       },
       {
@@ -7096,10 +7582,10 @@
         "source": "DAL/Interfaces/IProveedorRepository.cs",
         "proposed": false,
         "namespace": "DAL.Interfaces",
-        "x": 2588,
-        "y": 2114,
-        "w": 1104,
-        "h": 286,
+        "x": 1798,
+        "y": 1576,
+        "w": 779,
+        "h": 226,
         "fontSize": 11
       },
       {
@@ -7163,10 +7649,10 @@
         "source": "DAL/ProveedorDAL.cs",
         "proposed": false,
         "namespace": "DAL",
-        "x": 3862,
-        "y": 2114,
-        "w": 1104,
-        "h": 286,
+        "x": 2677,
+        "y": 1576,
+        "w": 779,
+        "h": 226,
         "fontSize": 11
       },
       {
@@ -7218,10 +7704,10 @@
         "source": "DAL/Interfaces/IProductoRepository.cs",
         "proposed": false,
         "namespace": "DAL.Interfaces",
-        "x": 5136,
-        "y": 2114,
-        "w": 1104,
-        "h": 286,
+        "x": 3556,
+        "y": 1576,
+        "w": 779,
+        "h": 226,
         "fontSize": 11
       },
       {
@@ -7286,9 +7772,9 @@
         "proposed": false,
         "namespace": "DAL",
         "x": 40,
-        "y": 2550,
-        "w": 1104,
-        "h": 308,
+        "y": 1892,
+        "w": 779,
+        "h": 243,
         "fontSize": 11
       },
       {
@@ -7321,10 +7807,10 @@
         "source": "BE/Interfaces/IRegistroActividad.cs",
         "proposed": false,
         "namespace": "BE.Interfaces",
-        "x": 1314,
-        "y": 2550,
-        "w": 1104,
-        "h": 308,
+        "x": 919,
+        "y": 1892,
+        "w": 779,
+        "h": 243,
         "fontSize": 11
       },
       {
@@ -7359,10 +7845,10 @@
         "source": "BLL/RegistroActividadBitacora.cs",
         "proposed": false,
         "namespace": "BLL",
-        "x": 2588,
-        "y": 2550,
-        "w": 1104,
-        "h": 308,
+        "x": 1798,
+        "y": 1892,
+        "w": 779,
+        "h": 243,
         "fontSize": 11
       },
       {
@@ -7455,10 +7941,10 @@
         "source": "DAL/Interfaces/IVentaRepository.cs",
         "proposed": false,
         "namespace": "DAL.Interfaces",
-        "x": 3862,
-        "y": 2550,
-        "w": 1104,
-        "h": 308,
+        "x": 2677,
+        "y": 1892,
+        "w": 779,
+        "h": 243,
         "fontSize": 11
       },
       {
@@ -7622,127 +8108,613 @@
         "source": "DAL/VentaDAL.cs",
         "proposed": false,
         "namespace": "DAL",
-        "x": 5136,
-        "y": 2550,
-        "w": 1104,
-        "h": 308,
+        "x": 3556,
+        "y": 1892,
+        "w": 779,
+        "h": 243,
         "fontSize": 11
       },
       {
         "key": "EvaluacionProveedor",
         "name": "EvaluacionProveedor",
-        "x": 40,
-        "y": 3008,
-        "w": 1104,
-        "h": 418,
         "kind": "Class",
-        "stereotype": "diseño N03",
+        "stereotype": "BE",
         "attributes": [
           {
             "name": "IdEvaluacion",
-            "type": "int"
-          },
-          {
-            "name": "IdProveedor",
-            "type": "int"
-          },
-          {
-            "name": "IdProducto",
-            "type": "int"
+            "type": "int",
+            "visibility": "Public"
           },
           {
             "name": "FechaEvaluacion",
-            "type": "DateTime"
+            "type": "DateTime",
+            "visibility": "Public"
           },
           {
-            "name": "PuntajePrestigio",
-            "type": "decimal"
+            "name": "Responsable",
+            "type": "string",
+            "visibility": "Public"
           },
           {
-            "name": "PuntajePrecio",
-            "type": "decimal"
+            "name": "Solicitud",
+            "type": "SolicitudEvaluacion",
+            "visibility": "Public"
           },
           {
-            "name": "PuntajeAntiguedad",
-            "type": "decimal"
+            "name": "Datos",
+            "type": "DatosEvaluacion",
+            "visibility": "Public"
           },
           {
-            "name": "PesoPrestigio",
-            "type": "decimal"
+            "name": "FirmaDatos",
+            "type": "string",
+            "visibility": "Public"
+          },
+          {
+            "name": "CantidadSugerida",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "PrecioVentaReferencia",
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "IdProveedorRecomendado",
+            "type": "int?",
+            "visibility": "Public"
+          },
+          {
+            "name": "IdProveedorSeleccionado",
+            "type": "int?",
+            "visibility": "Public"
+          },
+          {
+            "name": "MotivoSeleccion",
+            "type": "string",
+            "visibility": "Public"
+          },
+          {
+            "name": "SeleccionadaPor",
+            "type": "string",
+            "visibility": "Public"
+          },
+          {
+            "name": "FechaSeleccion",
+            "type": "DateTime?",
+            "visibility": "Public"
+          },
+          {
+            "name": "IdOrdenCompra",
+            "type": "int?",
+            "visibility": "Public"
+          },
+          {
+            "name": "Resultados",
+            "type": "List<ResultadoProveedor>",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [],
+        "abstract": false,
+        "notes": "BE/EvaluacionProveedor.cs",
+        "source": "BE/EvaluacionProveedor.cs",
+        "proposed": false,
+        "namespace": "BE",
+        "x": 40,
+        "y": 2225,
+        "w": 779,
+        "h": 379,
+        "fontSize": 11
+      },
+      {
+        "key": "SolicitudEvaluacion",
+        "name": "SolicitudEvaluacion",
+        "kind": "Class",
+        "stereotype": "BE",
+        "attributes": [
+          {
+            "name": "IdProducto",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "Cantidad",
+            "type": "int",
+            "visibility": "Public"
           },
           {
             "name": "PesoPrecio",
-            "type": "decimal"
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "PesoPrestigio",
+            "type": "decimal",
+            "visibility": "Public"
           },
           {
             "name": "PesoAntiguedad",
-            "type": "decimal"
+            "type": "decimal",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [],
+        "abstract": false,
+        "notes": "BE/EvaluacionProveedor.cs",
+        "source": "BE/EvaluacionProveedor.cs",
+        "proposed": false,
+        "namespace": "BE",
+        "x": 919,
+        "y": 2225,
+        "w": 779,
+        "h": 379,
+        "fontSize": 11
+      },
+      {
+        "key": "DatosEvaluacion",
+        "name": "DatosEvaluacion",
+        "kind": "Class",
+        "stereotype": "BE",
+        "attributes": [
+          {
+            "name": "FechaCorte",
+            "type": "DateTime",
+            "visibility": "Public"
+          },
+          {
+            "name": "Producto",
+            "type": "Producto",
+            "visibility": "Public"
+          },
+          {
+            "name": "StockDisponible",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "ComprasPendientes",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "UnidadesVendidas90Dias",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "ImporteNetoVentas90Dias",
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "Ofertas",
+            "type": "List<OfertaEvaluable>",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [],
+        "abstract": false,
+        "notes": "BE/EvaluacionProveedor.cs",
+        "source": "BE/EvaluacionProveedor.cs",
+        "proposed": false,
+        "namespace": "BE",
+        "x": 1798,
+        "y": 2225,
+        "w": 779,
+        "h": 379,
+        "fontSize": 11
+      },
+      {
+        "key": "OfertaEvaluable",
+        "name": "OfertaEvaluable",
+        "kind": "Class",
+        "stereotype": "BE",
+        "attributes": [
+          {
+            "name": "IdProveedor",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "Proveedor",
+            "type": "string",
+            "visibility": "Public"
+          },
+          {
+            "name": "Activo",
+            "type": "bool",
+            "visibility": "Public"
+          },
+          {
+            "name": "AntiguedadMercado",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "IndicePrestigio",
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "IdCotizacion",
+            "type": "int?",
+            "visibility": "Public"
+          },
+          {
+            "name": "FechaEmision",
+            "type": "DateTime?",
+            "visibility": "Public"
+          },
+          {
+            "name": "FechaVigencia",
+            "type": "DateTime?",
+            "visibility": "Public"
+          },
+          {
+            "name": "PrecioUnitario",
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "PlazoEntregaDias",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "UnidadesCompradas180Dias",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "UnidadesRecibidas180Dias",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "ImporteComprado180Dias",
+            "type": "decimal",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [],
+        "abstract": false,
+        "notes": "BE/EvaluacionProveedor.cs",
+        "source": "BE/EvaluacionProveedor.cs",
+        "proposed": false,
+        "namespace": "BE",
+        "x": 2677,
+        "y": 2225,
+        "w": 779,
+        "h": 379,
+        "fontSize": 11
+      },
+      {
+        "key": "ResultadoProveedor",
+        "name": "ResultadoProveedor",
+        "kind": "Class",
+        "stereotype": "BE",
+        "attributes": [
+          {
+            "name": "IdProveedor",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "Proveedor",
+            "type": "string",
+            "visibility": "Public"
+          },
+          {
+            "name": "IdCotizacion",
+            "type": "int?",
+            "visibility": "Public"
+          },
+          {
+            "name": "PrecioUnitario",
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "PlazoEntregaDias",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "CostoTotal",
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "MargenEstimado",
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "BeneficioBrutoEstimado",
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "PuntajePrecio",
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "PuntajePrestigio",
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "PuntajeAntiguedad",
+            "type": "decimal",
+            "visibility": "Public"
           },
           {
             "name": "PuntajePonderadoFinal",
-            "type": "decimal"
+            "type": "decimal",
+            "visibility": "Public"
+          },
+          {
+            "name": "Elegible",
+            "type": "bool",
+            "visibility": "Public"
           },
           {
             "name": "Fundamentos",
-            "type": "string"
+            "type": "string",
+            "visibility": "Public"
           },
           {
-            "name": "EsPrioritario",
-            "type": "bool"
-          }
-        ],
-        "fontSize": 11,
-        "proposed": true,
-        "notes": "Diseño N03: clase y operación propuestas, todavía sin implementación C#.",
-        "methods": [
+            "name": "Advertencias",
+            "type": "string",
+            "visibility": "Public"
+          },
           {
-            "name": "CalcularPuntajePonderado",
-            "type": "decimal",
-            "parameters": [],
+            "name": "UnidadesCompradas180Dias",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "UnidadesRecibidas180Dias",
+            "type": "int",
             "visibility": "Public"
           }
-        ]
+        ],
+        "methods": [],
+        "abstract": false,
+        "notes": "BE/EvaluacionProveedor.cs",
+        "source": "BE/EvaluacionProveedor.cs",
+        "proposed": false,
+        "namespace": "BE",
+        "x": 3556,
+        "y": 2225,
+        "w": 779,
+        "h": 379,
+        "fontSize": 11
+      },
+      {
+        "key": "ResumenEvaluacion",
+        "name": "ResumenEvaluacion",
+        "kind": "Class",
+        "stereotype": "BE",
+        "attributes": [
+          {
+            "name": "IdEvaluacion",
+            "type": "int",
+            "visibility": "Public"
+          },
+          {
+            "name": "Fecha",
+            "type": "DateTime",
+            "visibility": "Public"
+          },
+          {
+            "name": "Responsable",
+            "type": "string",
+            "visibility": "Public"
+          },
+          {
+            "name": "ProveedorSeleccionado",
+            "type": "string",
+            "visibility": "Public"
+          },
+          {
+            "name": "IdOrdenCompra",
+            "type": "int?",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [],
+        "abstract": false,
+        "notes": "BE/EvaluacionProveedor.cs",
+        "source": "BE/EvaluacionProveedor.cs",
+        "proposed": false,
+        "namespace": "BE",
+        "x": 40,
+        "y": 2694,
+        "w": 779,
+        "h": 260,
+        "fontSize": 11
       },
       {
         "key": "EvaluacionProveedorBLL",
         "name": "EvaluacionProveedorBLL",
         "kind": "Class",
-        "stereotype": "propuesto N03",
-        "proposed": true,
-        "attributes": [],
-        "notes": "Diseño N03; no existe todavía en BLL.",
+        "stereotype": "BLL",
+        "attributes": [
+          {
+            "name": "repositorio",
+            "type": "IEvaluacionProveedorRepository",
+            "visibility": "Private"
+          },
+          {
+            "name": "obtenerUsuario",
+            "type": "Func<Usuario>",
+            "visibility": "Private"
+          },
+          {
+            "name": "reloj",
+            "type": "Func<DateTime>",
+            "visibility": "Private"
+          }
+        ],
         "methods": [
           {
             "name": "Evaluar",
             "type": "EvaluacionProveedor",
             "parameters": [
               {
-                "name": "evaluacion",
-                "type": "EvaluacionProveedor",
+                "name": "solicitud",
+                "type": "SolicitudEvaluacion",
                 "default": ""
               }
             ],
-            "visibility": "Public"
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "Obtener",
+            "type": "EvaluacionProveedor",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ConsultarHistorial",
+            "type": "IList<ResumenEvaluacion>",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "SeleccionarPrioritario",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "idProveedor",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "motivo",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "CrearOrdenBorrador",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
           },
           {
             "name": "ValidarEvaluacion",
             "type": "void",
             "parameters": [
               {
-                "name": "evaluacion",
-                "type": "EvaluacionProveedor",
+                "name": "s",
+                "type": "SolicitudEvaluacion",
                 "default": ""
               }
             ],
-            "visibility": "Public"
+            "visibility": "Public",
+            "static": true,
+            "abstract": false
           },
           {
-            "name": "SeleccionarPrioritario",
+            "name": "Calcular",
             "type": "EvaluacionProveedor",
             "parameters": [
               {
-                "name": "evaluaciones",
-                "type": "List<EvaluacionProveedor>",
+                "name": "s",
+                "type": "SolicitudEvaluacion",
+                "default": ""
+              },
+              {
+                "name": "datos",
+                "type": "DatosEvaluacion",
+                "default": ""
+              },
+              {
+                "name": "fecha",
+                "type": "DateTime",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": true,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "BLL/EvaluacionProveedorBLL.cs",
+        "source": "BLL/EvaluacionProveedorBLL.cs",
+        "proposed": false,
+        "namespace": "BLL",
+        "x": 919,
+        "y": 2694,
+        "w": 779,
+        "h": 260,
+        "fontSize": 11
+      },
+      {
+        "key": "IEvaluacionProveedorRepository",
+        "name": "IEvaluacionProveedorRepository",
+        "kind": "Interface",
+        "stereotype": "interface",
+        "attributes": [],
+        "methods": [
+          {
+            "name": "ObtenerDatos",
+            "type": "DatosEvaluacion",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "fechaCorte",
+                "type": "DateTime",
                 "default": ""
               }
             ],
@@ -7759,12 +8731,362 @@
               }
             ],
             "visibility": "Public"
+          },
+          {
+            "name": "ObtenerEvaluacion",
+            "type": "EvaluacionProveedor",
+            "parameters": [
+              {
+                "name": "idEvaluacion",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public"
+          },
+          {
+            "name": "ListarHistorial",
+            "type": "IList<ResumenEvaluacion>",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public"
+          },
+          {
+            "name": "SeleccionarPrioritario",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "idEvaluacion",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "idProveedor",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "motivo",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public"
+          },
+          {
+            "name": "CrearOrdenBorrador",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "idEvaluacion",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public"
           }
         ],
-        "x": 1314,
-        "y": 3008,
-        "w": 1104,
-        "h": 418,
+        "abstract": false,
+        "notes": "DAL/Interfaces/IEvaluacionProveedorRepository.cs",
+        "source": "DAL/Interfaces/IEvaluacionProveedorRepository.cs",
+        "proposed": false,
+        "namespace": "DAL.Interfaces",
+        "x": 1798,
+        "y": 2694,
+        "w": 779,
+        "h": 260,
+        "fontSize": 11
+      },
+      {
+        "key": "EvaluacionProveedorDAL",
+        "name": "EvaluacionProveedorDAL",
+        "kind": "Class",
+        "stereotype": "DAL",
+        "attributes": [
+          {
+            "name": "Instancia",
+            "type": "EvaluacionProveedorDAL",
+            "visibility": "Public"
+          }
+        ],
+        "methods": [
+          {
+            "name": "ObtenerDatos",
+            "type": "DatosEvaluacion",
+            "parameters": [
+              {
+                "name": "idProducto",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "fechaCorte",
+                "type": "DateTime",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "LeerDatos",
+            "type": "DatosEvaluacion",
+            "parameters": [
+              {
+                "name": "c",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "t",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "producto",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "fecha",
+                "type": "DateTime",
+                "default": ""
+              }
+            ],
+            "visibility": "Private",
+            "static": true,
+            "abstract": false
+          },
+          {
+            "name": "GuardarEvaluacion",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "e",
+                "type": "EvaluacionProveedor",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "Leer",
+            "type": "EvaluacionProveedor",
+            "parameters": [
+              {
+                "name": "c",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "t",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "id",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "bloquear",
+                "type": "bool",
+                "default": ""
+              }
+            ],
+            "visibility": "Private",
+            "static": true,
+            "abstract": false
+          },
+          {
+            "name": "ObtenerEvaluacion",
+            "type": "EvaluacionProveedor",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ListarHistorial",
+            "type": "IList<ResumenEvaluacion>",
+            "parameters": [
+              {
+                "name": "producto",
+                "type": "int",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "ComprobarVigencia",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "c",
+                "type": "SqlConnection",
+                "default": ""
+              },
+              {
+                "name": "t",
+                "type": "SqlTransaction",
+                "default": ""
+              },
+              {
+                "name": "e",
+                "type": "EvaluacionProveedor",
+                "default": ""
+              }
+            ],
+            "visibility": "Private",
+            "static": true,
+            "abstract": false
+          },
+          {
+            "name": "SeleccionarPrioritario",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "proveedor",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "motivo",
+                "type": "string",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "CrearOrdenBorrador",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "int",
+                "default": ""
+              },
+              {
+                "name": "responsable",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "DAL/EvaluacionProveedorDAL.cs",
+        "source": "DAL/EvaluacionProveedorDAL.cs",
+        "proposed": false,
+        "namespace": "DAL",
+        "x": 2677,
+        "y": 2694,
+        "w": 779,
+        "h": 260,
+        "fontSize": 11
+      },
+      {
+        "key": "ArchivoEvaluacion",
+        "name": "ArchivoEvaluacion",
+        "kind": "Class",
+        "stereotype": "Servicios",
+        "attributes": [],
+        "methods": [
+          {
+            "name": "Serializar",
+            "type": "string",
+            "parameters": [
+              {
+                "name": "valor",
+                "type": "T",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": true,
+            "abstract": false
+          },
+          {
+            "name": "Leer",
+            "type": "EvaluacionProveedor",
+            "parameters": [
+              {
+                "name": "xml",
+                "type": "string",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": true,
+            "abstract": false
+          },
+          {
+            "name": "Firma",
+            "type": "string",
+            "parameters": [
+              {
+                "name": "datos",
+                "type": "DatosEvaluacion",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": true,
+            "abstract": false
+          }
+        ],
+        "abstract": false,
+        "notes": "Servicios/ArchivoEvaluacion.cs",
+        "source": "Servicios/ArchivoEvaluacion.cs",
+        "proposed": false,
+        "namespace": "Servicios",
+        "x": 3556,
+        "y": 2694,
+        "w": 779,
+        "h": 260,
         "fontSize": 11
       },
       {
@@ -7833,10 +9155,10 @@
         "source": "BE/Persona.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 2588,
-        "y": 3008,
-        "w": 1104,
-        "h": 418,
+        "x": 40,
+        "y": 3044,
+        "w": 779,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -7922,10 +9244,10 @@
         "source": "BE/Usuario.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 3862,
-        "y": 3008,
-        "w": 1104,
-        "h": 418,
+        "x": 919,
+        "y": 3044,
+        "w": 779,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -8009,10 +9331,10 @@
         "source": "BE/Seguridad/Componente.cs",
         "proposed": false,
         "namespace": "BE.Seguridad",
-        "x": 5136,
-        "y": 3008,
-        "w": 1104,
-        "h": 418,
+        "x": 1798,
+        "y": 3044,
+        "w": 779,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -8086,10 +9408,10 @@
         "source": "BE/Seguridad/Familia.cs",
         "proposed": false,
         "namespace": "BE.Seguridad",
-        "x": 40,
-        "y": 3576,
-        "w": 1104,
-        "h": 264,
+        "x": 2677,
+        "y": 3044,
+        "w": 779,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -8157,10 +9479,10 @@
         "source": "BE/Seguridad/Patente.cs",
         "proposed": false,
         "namespace": "BE.Seguridad",
-        "x": 1314,
-        "y": 3576,
-        "w": 1104,
-        "h": 264,
+        "x": 3556,
+        "y": 3044,
+        "w": 779,
+        "h": 277,
         "fontSize": 11
       },
       {
@@ -8232,10 +9554,10 @@
         "source": "BE/EventoBitacora.cs",
         "proposed": false,
         "namespace": "BE",
-        "x": 2588,
-        "y": 3576,
-        "w": 1104,
-        "h": 264,
+        "x": 40,
+        "y": 3411,
+        "w": 779,
+        "h": 209,
         "fontSize": 11
       }
     ],
@@ -8315,22 +9637,6 @@
       {
         "source": "Lote",
         "target": "MovimientoStock",
-        "name": "",
-        "kind": "Association",
-        "sourceCardinality": "1",
-        "targetCardinality": "0..*"
-      },
-      {
-        "source": "Producto",
-        "target": "EvaluacionProveedor",
-        "name": "",
-        "kind": "Association",
-        "sourceCardinality": "1",
-        "targetCardinality": "0..*"
-      },
-      {
-        "source": "Proveedor",
-        "target": "EvaluacionProveedor",
         "name": "",
         "kind": "Association",
         "sourceCardinality": "1",
@@ -8589,22 +9895,120 @@
         "kind": "Realization"
       },
       {
+        "source": "EvaluacionProveedor",
+        "target": "SolicitudEvaluacion",
+        "kind": "Association",
+        "name": "",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "EvaluacionProveedor",
+        "target": "DatosEvaluacion",
+        "kind": "Association",
+        "name": "",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "EvaluacionProveedor",
+        "target": "ResultadoProveedor",
+        "kind": "Association",
+        "name": "",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "DatosEvaluacion",
+        "target": "OfertaEvaluable",
+        "kind": "Association",
+        "name": "",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..*"
+      },
+      {
+        "source": "EvaluacionProveedorBLL",
+        "target": "IEvaluacionProveedorRepository",
+        "name": "",
+        "kind": "Dependency"
+      },
+      {
+        "source": "EvaluacionProveedorBLL",
+        "target": "ArchivoEvaluacion",
+        "name": "",
+        "kind": "Dependency"
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "ArchivoEvaluacion",
+        "name": "",
+        "kind": "Dependency"
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "IEvaluacionProveedorRepository",
+        "name": "",
+        "kind": "Realization"
+      },
+      {
+        "source": "DatosEvaluacion",
+        "target": "Producto",
+        "kind": "Association",
+        "name": "",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "SolicitudEvaluacion",
+        "target": "Producto",
+        "kind": "Association",
+        "name": "",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "OfertaEvaluable",
+        "target": "Proveedor",
+        "kind": "Association",
+        "name": "",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "ResultadoProveedor",
+        "target": "Proveedor",
+        "kind": "Association",
+        "name": "",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "1"
+      },
+      {
+        "source": "EvaluacionProveedor",
+        "target": "Proveedor",
+        "kind": "Association",
+        "name": "",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..1"
+      },
+      {
+        "source": "EvaluacionProveedor",
+        "target": "OrdenCompra",
+        "kind": "Association",
+        "name": "",
+        "sourceCardinality": "0..*",
+        "targetCardinality": "0..1"
+      },
+      {
         "source": "EvaluacionProveedorBLL",
         "target": "EvaluacionProveedor",
-        "name": "",
-        "kind": "Dependency"
+        "kind": "Dependency",
+        "name": ""
       },
       {
-        "source": "EvaluacionProveedorBLL",
-        "target": "AprovisionamientoBLL",
-        "name": "",
-        "kind": "Dependency"
-      },
-      {
-        "source": "EvaluacionProveedorBLL",
-        "target": "InventarioBLL",
-        "name": "",
-        "kind": "Dependency"
+        "source": "EvaluacionProveedorDAL",
+        "target": "AprovisionamientoDAL",
+        "kind": "Dependency",
+        "name": ""
       }
     ],
     "notes": "Atributos y operaciones compartidos con G07-01. Firmas verificadas en el código. Las clases propuestas están identificadas explícitamente. Las BE conservan sus constructores y propiedades; la lógica reside en BLL."
@@ -10562,21 +11966,21 @@
     "kind": "Sequence",
     "nodes": [
       {
-        "key": "EvaluacionProveedorBLL",
-        "name": "EvaluacionProveedorBLL",
+        "key": "UC_EvaluacionProveedores",
+        "name": "UC_EvaluacionProveedores",
         "kind": "Object",
-        "classifier": "EvaluacionProveedorBLL",
+        "classifier": "UC_EvaluacionProveedores",
         "x": 530,
         "y": 50,
         "w": 255,
         "h": 90,
-        "stereotype": "propuesto"
+        "stereotype": ""
       },
       {
-        "key": "ProveedorBLL",
-        "name": "ProveedorBLL",
+        "key": "EvaluacionProveedorBLL",
+        "name": "EvaluacionProveedorBLL",
         "kind": "Object",
-        "classifier": "ProveedorBLL",
+        "classifier": "EvaluacionProveedorBLL",
         "x": 840,
         "y": 50,
         "w": 255,
@@ -10584,10 +11988,10 @@
         "stereotype": ""
       },
       {
-        "key": "ProductoBLL",
-        "name": "ProductoBLL",
+        "key": "EvaluacionProveedorDAL",
+        "name": "EvaluacionProveedorDAL",
         "kind": "Object",
-        "classifier": "ProductoBLL",
+        "classifier": "EvaluacionProveedorDAL",
         "x": 1150,
         "y": 50,
         "w": 255,
@@ -10595,10 +11999,10 @@
         "stereotype": ""
       },
       {
-        "key": "AprovisionamientoBLL",
-        "name": "AprovisionamientoBLL",
+        "key": "ArchivoEvaluacion",
+        "name": "ArchivoEvaluacion",
         "kind": "Object",
-        "classifier": "AprovisionamientoBLL",
+        "classifier": "ArchivoEvaluacion",
         "x": 1460,
         "y": 50,
         "w": 255,
@@ -10606,26 +12010,15 @@
         "stereotype": ""
       },
       {
-        "key": "InventarioBLL",
-        "name": "InventarioBLL",
+        "key": "AprovisionamientoDAL",
+        "name": "AprovisionamientoDAL",
         "kind": "Object",
-        "classifier": "InventarioBLL",
+        "classifier": "AprovisionamientoDAL",
         "x": 1770,
         "y": 50,
         "w": 255,
         "h": 90,
         "stereotype": ""
-      },
-      {
-        "key": "EvaluacionProveedor",
-        "name": "EvaluacionProveedor",
-        "kind": "Object",
-        "classifier": "EvaluacionProveedor",
-        "x": 2080,
-        "y": 50,
-        "w": 255,
-        "h": 90,
-        "stereotype": "propuesto"
       },
       {
         "key": "Dueño / Departamento de Compras",
@@ -10640,112 +12033,35 @@
     "links": [
       {
         "source": "Dueño / Departamento de Compras",
-        "target": "EvaluacionProveedorBLL",
-        "name": "Evaluar y priorizar proveedores",
+        "target": "UC_EvaluacionProveedores",
+        "name": "Comparar proveedores",
         "kind": "Sequence",
         "callId": "actor-1",
         "isReturn": false,
-        "returnType": "Evaluación y proveedor prioritario",
+        "returnType": "Comparación guardada / error",
         "actorInteraction": true,
         "sequence": 1
       },
       {
-        "source": "EvaluacionProveedorBLL",
-        "target": "EvaluacionProveedorBLL",
-        "name": "Evaluar",
+        "source": "UC_EvaluacionProveedores",
+        "target": "UC_EvaluacionProveedores",
+        "name": "Comparar",
         "kind": "Sequence",
         "sequence": 2,
         "callId": 1,
         "isReturn": false,
-        "returnType": "EvaluacionProveedor",
-        "proposed": true
+        "returnType": "void",
+        "proposed": false
       },
       {
-        "source": "EvaluacionProveedorBLL",
-        "target": "ProveedorBLL",
-        "name": "Obtener",
+        "source": "UC_EvaluacionProveedores",
+        "target": "EvaluacionProveedorBLL",
+        "name": "Evaluar",
         "kind": "Sequence",
         "sequence": 3,
         "callId": 2,
         "isReturn": false,
-        "returnType": "Proveedor",
-        "proposed": false
-      },
-      {
-        "source": "ProveedorBLL",
-        "target": "EvaluacionProveedorBLL",
-        "name": "Proveedor",
-        "kind": "Sequence",
-        "sequence": 4,
-        "replyTo": 2,
-        "isReturn": true,
-        "returnType": "Proveedor",
-        "proposed": false
-      },
-      {
-        "source": "EvaluacionProveedorBLL",
-        "target": "ProductoBLL",
-        "name": "Obtener",
-        "kind": "Sequence",
-        "sequence": 5,
-        "callId": 3,
-        "isReturn": false,
-        "returnType": "Producto",
-        "proposed": false
-      },
-      {
-        "source": "ProductoBLL",
-        "target": "EvaluacionProveedorBLL",
-        "name": "Producto",
-        "kind": "Sequence",
-        "sequence": 6,
-        "replyTo": 3,
-        "isReturn": true,
-        "returnType": "Producto",
-        "proposed": false
-      },
-      {
-        "source": "EvaluacionProveedorBLL",
-        "target": "AprovisionamientoBLL",
-        "name": "ConsultarHistorialCompras",
-        "kind": "Sequence",
-        "sequence": 7,
-        "callId": 4,
-        "isReturn": false,
-        "returnType": "List<OrdenCompra>",
-        "proposed": false
-      },
-      {
-        "source": "AprovisionamientoBLL",
-        "target": "EvaluacionProveedorBLL",
-        "name": "List<OrdenCompra>",
-        "kind": "Sequence",
-        "sequence": 8,
-        "replyTo": 4,
-        "isReturn": true,
-        "returnType": "List<OrdenCompra>",
-        "proposed": false
-      },
-      {
-        "source": "EvaluacionProveedorBLL",
-        "target": "InventarioBLL",
-        "name": "ObtenerTrazabilidad",
-        "kind": "Sequence",
-        "sequence": 9,
-        "callId": 5,
-        "isReturn": false,
-        "returnType": "List<Lote>",
-        "proposed": false
-      },
-      {
-        "source": "InventarioBLL",
-        "target": "EvaluacionProveedorBLL",
-        "name": "List<Lote>",
-        "kind": "Sequence",
-        "sequence": 10,
-        "replyTo": 5,
-        "isReturn": true,
-        "returnType": "List<Lote>",
+        "returnType": "EvaluacionProveedor",
         "proposed": false
       },
       {
@@ -10753,113 +12069,552 @@
         "target": "EvaluacionProveedorBLL",
         "name": "ValidarEvaluacion",
         "kind": "Sequence",
-        "sequence": 11,
-        "callId": 6,
+        "sequence": 4,
+        "callId": 3,
         "isReturn": false,
         "returnType": "void",
-        "proposed": true
+        "proposed": false
       },
       {
         "source": "EvaluacionProveedorBLL",
         "target": "EvaluacionProveedorBLL",
         "name": "void",
         "kind": "Sequence",
-        "sequence": 12,
-        "replyTo": 6,
+        "sequence": 5,
+        "replyTo": 3,
         "isReturn": true,
         "returnType": "void",
-        "proposed": true
+        "proposed": false
       },
       {
         "source": "EvaluacionProveedorBLL",
-        "target": "EvaluacionProveedor",
-        "name": "CalcularPuntajePonderado",
+        "target": "EvaluacionProveedorDAL",
+        "name": "ObtenerDatos",
         "kind": "Sequence",
-        "sequence": 13,
-        "callId": 7,
+        "sequence": 6,
+        "callId": 4,
         "isReturn": false,
-        "returnType": "decimal",
-        "proposed": true
+        "returnType": "DatosEvaluacion",
+        "proposed": false
       },
       {
-        "source": "EvaluacionProveedor",
+        "source": "EvaluacionProveedorDAL",
         "target": "EvaluacionProveedorBLL",
-        "name": "decimal",
+        "name": "DatosEvaluacion",
         "kind": "Sequence",
-        "sequence": 14,
-        "replyTo": 7,
+        "sequence": 7,
+        "replyTo": 4,
         "isReturn": true,
-        "returnType": "decimal",
-        "proposed": true
+        "returnType": "DatosEvaluacion",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorBLL",
+        "target": "EvaluacionProveedorBLL",
+        "name": "Calcular",
+        "kind": "Sequence",
+        "sequence": 8,
+        "callId": 5,
+        "isReturn": false,
+        "returnType": "EvaluacionProveedor",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorBLL",
+        "target": "ArchivoEvaluacion",
+        "name": "Firma",
+        "kind": "Sequence",
+        "sequence": 9,
+        "callId": 6,
+        "isReturn": false,
+        "returnType": "string",
+        "proposed": false
+      },
+      {
+        "source": "ArchivoEvaluacion",
+        "target": "EvaluacionProveedorBLL",
+        "name": "string",
+        "kind": "Sequence",
+        "sequence": 10,
+        "replyTo": 6,
+        "isReturn": true,
+        "returnType": "string",
+        "proposed": false
       },
       {
         "source": "EvaluacionProveedorBLL",
         "target": "EvaluacionProveedorBLL",
         "name": "EvaluacionProveedor",
         "kind": "Sequence",
-        "sequence": 15,
-        "replyTo": 1,
+        "sequence": 11,
+        "replyTo": 5,
         "isReturn": true,
         "returnType": "EvaluacionProveedor",
-        "proposed": true
+        "proposed": false
       },
       {
         "source": "EvaluacionProveedorBLL",
-        "target": "EvaluacionProveedorBLL",
-        "name": "SeleccionarPrioritario",
-        "kind": "Sequence",
-        "sequence": 16,
-        "callId": 8,
-        "isReturn": false,
-        "returnType": "EvaluacionProveedor",
-        "proposed": true
-      },
-      {
-        "source": "EvaluacionProveedorBLL",
-        "target": "EvaluacionProveedorBLL",
-        "name": "EvaluacionProveedor",
-        "kind": "Sequence",
-        "sequence": 17,
-        "replyTo": 8,
-        "isReturn": true,
-        "returnType": "EvaluacionProveedor",
-        "proposed": true
-      },
-      {
-        "source": "EvaluacionProveedorBLL",
-        "target": "EvaluacionProveedorBLL",
+        "target": "EvaluacionProveedorDAL",
         "name": "GuardarEvaluacion",
         "kind": "Sequence",
-        "sequence": 18,
-        "callId": 9,
+        "sequence": 12,
+        "callId": 7,
         "isReturn": false,
         "returnType": "int",
-        "proposed": true
+        "proposed": false
       },
       {
-        "source": "EvaluacionProveedorBLL",
+        "source": "EvaluacionProveedorDAL",
+        "target": "ArchivoEvaluacion",
+        "name": "Serializar",
+        "kind": "Sequence",
+        "sequence": 13,
+        "callId": 8,
+        "isReturn": false,
+        "returnType": "string",
+        "proposed": false
+      },
+      {
+        "source": "ArchivoEvaluacion",
+        "target": "EvaluacionProveedorDAL",
+        "name": "string",
+        "kind": "Sequence",
+        "sequence": 14,
+        "replyTo": 8,
+        "isReturn": true,
+        "returnType": "string",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
         "target": "EvaluacionProveedorBLL",
         "name": "int",
         "kind": "Sequence",
-        "sequence": 19,
-        "replyTo": 9,
+        "sequence": 15,
+        "replyTo": 7,
         "isReturn": true,
         "returnType": "int",
-        "proposed": true
+        "proposed": false
       },
       {
         "source": "EvaluacionProveedorBLL",
+        "target": "UC_EvaluacionProveedores",
+        "name": "EvaluacionProveedor",
+        "kind": "Sequence",
+        "sequence": 16,
+        "replyTo": 2,
+        "isReturn": true,
+        "returnType": "EvaluacionProveedor",
+        "proposed": false
+      },
+      {
+        "source": "UC_EvaluacionProveedores",
+        "target": "UC_EvaluacionProveedores",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 17,
+        "replyTo": 1,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "UC_EvaluacionProveedores",
         "target": "Dueño / Departamento de Compras",
-        "name": "Evaluación y proveedor prioritario",
+        "name": "Comparación guardada / error",
         "kind": "Sequence",
         "replyTo": "actor-1",
         "isReturn": true,
-        "returnType": "Evaluación y proveedor prioritario",
+        "returnType": "Comparación guardada / error",
         "actorInteraction": true,
-        "sequence": 20
+        "sequence": 18
+      },
+      {
+        "source": "Dueño / Departamento de Compras",
+        "target": "UC_EvaluacionProveedores",
+        "name": "Confirmar proveedor",
+        "kind": "Sequence",
+        "callId": "actor-9",
+        "isReturn": false,
+        "returnType": "Decisión fundamentada / error",
+        "actorInteraction": true,
+        "sequence": 19
+      },
+      {
+        "source": "UC_EvaluacionProveedores",
+        "target": "UC_EvaluacionProveedores",
+        "name": "Confirmar",
+        "kind": "Sequence",
+        "sequence": 20,
+        "callId": 9,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "UC_EvaluacionProveedores",
+        "target": "EvaluacionProveedorBLL",
+        "name": "SeleccionarPrioritario",
+        "kind": "Sequence",
+        "sequence": 21,
+        "callId": 10,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorBLL",
+        "target": "EvaluacionProveedorBLL",
+        "name": "Obtener",
+        "kind": "Sequence",
+        "sequence": 22,
+        "callId": 11,
+        "isReturn": false,
+        "returnType": "EvaluacionProveedor",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorBLL",
+        "target": "EvaluacionProveedorBLL",
+        "name": "EvaluacionProveedor",
+        "kind": "Sequence",
+        "sequence": 23,
+        "replyTo": 11,
+        "isReturn": true,
+        "returnType": "EvaluacionProveedor",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorBLL",
+        "target": "EvaluacionProveedorDAL",
+        "name": "SeleccionarPrioritario",
+        "kind": "Sequence",
+        "sequence": 24,
+        "callId": 12,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "EvaluacionProveedorDAL",
+        "name": "ComprobarVigencia",
+        "kind": "Sequence",
+        "sequence": 25,
+        "callId": 13,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "EvaluacionProveedorDAL",
+        "name": "LeerDatos",
+        "kind": "Sequence",
+        "sequence": 26,
+        "callId": 14,
+        "isReturn": false,
+        "returnType": "DatosEvaluacion",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "EvaluacionProveedorDAL",
+        "name": "DatosEvaluacion",
+        "kind": "Sequence",
+        "sequence": 27,
+        "replyTo": 14,
+        "isReturn": true,
+        "returnType": "DatosEvaluacion",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "ArchivoEvaluacion",
+        "name": "Firma",
+        "kind": "Sequence",
+        "sequence": 28,
+        "callId": 15,
+        "isReturn": false,
+        "returnType": "string",
+        "proposed": false
+      },
+      {
+        "source": "ArchivoEvaluacion",
+        "target": "EvaluacionProveedorDAL",
+        "name": "string",
+        "kind": "Sequence",
+        "sequence": 29,
+        "replyTo": 15,
+        "isReturn": true,
+        "returnType": "string",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "EvaluacionProveedorDAL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 30,
+        "replyTo": 13,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "EvaluacionProveedorBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 31,
+        "replyTo": 12,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorBLL",
+        "target": "UC_EvaluacionProveedores",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 32,
+        "replyTo": 10,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "UC_EvaluacionProveedores",
+        "target": "UC_EvaluacionProveedores",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 33,
+        "replyTo": 9,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "UC_EvaluacionProveedores",
+        "target": "Dueño / Departamento de Compras",
+        "name": "Decisión fundamentada / error",
+        "kind": "Sequence",
+        "replyTo": "actor-9",
+        "isReturn": true,
+        "returnType": "Decisión fundamentada / error",
+        "actorInteraction": true,
+        "sequence": 34
+      },
+      {
+        "source": "Dueño / Departamento de Compras",
+        "target": "UC_EvaluacionProveedores",
+        "name": "Crear orden en Borrador",
+        "kind": "Sequence",
+        "callId": "actor-16",
+        "isReturn": false,
+        "returnType": "Número de orden / error",
+        "actorInteraction": true,
+        "sequence": 35
+      },
+      {
+        "source": "UC_EvaluacionProveedores",
+        "target": "UC_EvaluacionProveedores",
+        "name": "CrearOrden",
+        "kind": "Sequence",
+        "sequence": 36,
+        "callId": 16,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "UC_EvaluacionProveedores",
+        "target": "EvaluacionProveedorBLL",
+        "name": "CrearOrdenBorrador",
+        "kind": "Sequence",
+        "sequence": 37,
+        "callId": 17,
+        "isReturn": false,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorBLL",
+        "target": "EvaluacionProveedorDAL",
+        "name": "CrearOrdenBorrador",
+        "kind": "Sequence",
+        "sequence": 38,
+        "callId": 18,
+        "isReturn": false,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "EvaluacionProveedorDAL",
+        "name": "ComprobarVigencia",
+        "kind": "Sequence",
+        "sequence": 39,
+        "callId": 19,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "EvaluacionProveedorDAL",
+        "name": "LeerDatos",
+        "kind": "Sequence",
+        "sequence": 40,
+        "callId": 20,
+        "isReturn": false,
+        "returnType": "DatosEvaluacion",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "EvaluacionProveedorDAL",
+        "name": "DatosEvaluacion",
+        "kind": "Sequence",
+        "sequence": 41,
+        "replyTo": 20,
+        "isReturn": true,
+        "returnType": "DatosEvaluacion",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "ArchivoEvaluacion",
+        "name": "Firma",
+        "kind": "Sequence",
+        "sequence": 42,
+        "callId": 21,
+        "isReturn": false,
+        "returnType": "string",
+        "proposed": false
+      },
+      {
+        "source": "ArchivoEvaluacion",
+        "target": "EvaluacionProveedorDAL",
+        "name": "string",
+        "kind": "Sequence",
+        "sequence": 43,
+        "replyTo": 21,
+        "isReturn": true,
+        "returnType": "string",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "EvaluacionProveedorDAL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 44,
+        "replyTo": 19,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "AprovisionamientoDAL",
+        "name": "InsertarOrden",
+        "kind": "Sequence",
+        "sequence": 45,
+        "callId": 22,
+        "isReturn": false,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "AprovisionamientoDAL",
+        "target": "EvaluacionProveedorDAL",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 46,
+        "replyTo": 22,
+        "isReturn": true,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorDAL",
+        "target": "EvaluacionProveedorBLL",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 47,
+        "replyTo": 18,
+        "isReturn": true,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorBLL",
+        "target": "UC_EvaluacionProveedores",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 48,
+        "replyTo": 17,
+        "isReturn": true,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "UC_EvaluacionProveedores",
+        "target": "EvaluacionProveedorBLL",
+        "name": "Obtener",
+        "kind": "Sequence",
+        "sequence": 49,
+        "callId": 23,
+        "isReturn": false,
+        "returnType": "EvaluacionProveedor",
+        "proposed": false
+      },
+      {
+        "source": "EvaluacionProveedorBLL",
+        "target": "UC_EvaluacionProveedores",
+        "name": "EvaluacionProveedor",
+        "kind": "Sequence",
+        "sequence": 50,
+        "replyTo": 23,
+        "isReturn": true,
+        "returnType": "EvaluacionProveedor",
+        "proposed": false
+      },
+      {
+        "source": "UC_EvaluacionProveedores",
+        "target": "UC_EvaluacionProveedores",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 51,
+        "replyTo": 16,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "UC_EvaluacionProveedores",
+        "target": "Dueño / Departamento de Compras",
+        "name": "Número de orden / error",
+        "kind": "Sequence",
+        "replyTo": "actor-16",
+        "isReturn": true,
+        "returnType": "Número de orden / error",
+        "actorInteraction": true,
+        "sequence": 52
       }
     ],
-    "frames": [],
-    "notes": "Realización en clases. Las llamadas usan nombres exactos de operaciones. Cada respuesta discontinua vuelve al emisor de la llamada e indica su tipo de retorno; void representa fin de ejecución sin valor. Los retornos corresponden al flujo normal; las excepciones se describen en las notas. Propuesta N03: EvaluacionProveedorBLL y EvaluacionProveedor no existen aún en C#. Obtener, ConsultarHistorialCompras y ObtenerTrazabilidad sí existen en las BLL consultadas. La conveniencia y los fundamentos se validan antes de priorizar; GuardarEvaluacion requiere persistencia futura. Los actores organizacionales inician las solicitudes y reciben el resultado visible; sus mensajes expresan acciones de usuario, no métodos C#. Las líneas de vida internas conservan clases, operaciones y retornos tipados."
+    "frames": [
+      {
+        "kind": 1,
+        "first": 39,
+        "last": 46,
+        "guards": [
+          "No hay orden vinculada; datos vigentes"
+        ],
+        "size": 280
+      }
+    ],
+    "notes": "Realización en clases. Las llamadas usan nombres exactos de operaciones. Cada respuesta discontinua vuelve al emisor de la llamada e indica su tipo de retorno; void representa fin de ejecución sin valor. Los retornos corresponden al flujo normal; las excepciones se describen en las notas. Implementación N03: comparar y guardar evidencia, confirmar una oferta elegible con fundamento, crear un único borrador. Se muestran las colaboraciones principales; se omiten consultas auxiliares de refresco e historial. ObtenerDatos y las escrituras usan transacciones serializables. ComprobarVigencia rechaza cambios de datos o de fecha antes de escribir. Reintentar CrearOrdenBorrador devuelve el ID existente; no emite, aprueba ni recepciona la orden. Las respuestas void de UI representan finalización; las excepciones se comunican al actor mediante Ejecutar/Informar. Los actores organizacionales inician las solicitudes y reciben el resultado visible; sus mensajes expresan acciones de usuario, no métodos C#. Las líneas de vida internas conservan clases, operaciones y retornos tipados."
   }
 ]
