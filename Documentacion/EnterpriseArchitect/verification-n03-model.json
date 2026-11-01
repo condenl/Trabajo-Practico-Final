@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-01",
+  "model_commit": "d7cb97e",
+  "canonical_classes": 49,
+  "class_representations": 130,
+  "sequence_messages": 188,
+  "technical_views": 14,
+  "native_checks": [
+    "VERIFIED N01-04a",
+    "VERIFIED N01-04b",
+    "VERIFIED N02-04",
+    "VERIFIED N01-05",
+    "VERIFIED N02-05",
+    "VERIFIED N03-04",
+    "VERIFIED N03-05",
+    "VERIFIED G07-01",
+    "VERIFIED N01-06a",
+    "VERIFIED N01-06b",
+    "VERIFIED N02-06a",
+    "VERIFIED N02-06b",
+    "VERIFIED N02-06c",
+    "VERIFIED N03-06",
+    "PASS: 130 class representations; 188 sequence messages; 14 diagrams"
+  ],
+  "physical_views": {
+    "G08-01": {
+      "columns": 10,
+      "fk": 3,
+      "overlapping_elements": false
+    },
+    "N03-07": {
+      "columns": 10,
+      "fk": 3,
+      "overlapping_elements": false
+    }
+  },
+  "eap_sha256": "caa5c23a69dbd43d479d574490bf01a5fcd4f8497a80ffabd55f44ea3e6a888a",
+  "native_png_sha256": {
+    "G07-01": "4fbfcf546fe86d1a36035a8381ccb9c2947d8836a9f2468821e07f8e0017e51f",
+    "G08-01": "41e9c60628fb7547bd9a0533ff79eba2a4bd49f0b15099d18680a46002d9b82e",
+    "N01-01": "d1b58b51d85ad500f404730a34cfe5f76daa083f93806a4d38581f2fa460f8ed",
+    "N01-02": "4632bef7c81949101a4de3c01581b69e76a8abcd8da897bed2a1ee6e7ea599eb",
+    "N01-03": "319d2f42fceb1b821a79c7a0a883ba9e486956323fdb1444d2180d4c11594ed9",
+    "N01-04a": "d5d550723f349cdca2f4789a190ae623bf651d24adbfb877cfcb82931f1d06bc",
+    "N01-04b": "0b6fa41cf4e2245d9c35b7e699f0ab2fdf2a77e4bfdaa645f6e63fa565f05055",
+    "N01-05": "951e3420166f912f7702796c7806fbe763fcd87468b0bd454c1821b663fba121",
+    "N01-06a": "375e81cb9991f735ba8811d44d32419f9b7ac205fd0c74934e274afed6e03a82",
+    "N01-06b": "a43170ddce9a7f677f8a7b20a631da16845b806f9253813c21d255ee476936ff",
+    "N01-07a": "04d52997be116a4ec5b0e088a2da826d60fe52eef080bd68cb796678f1d9cce6",
+    "N01-07b": "eb057f6afc12fb273c4d0e1baf76cb415210e25f3b3e076d9f4d0b93d40a9f0d",
+    "N02-01": "2e3acacc78fa4050956bae65854f282ee6e474ee74811aa301c9583f6b830d6b",
+    "N02-02": "e431284ca312509eb76490725e20e0d16c02e0e30e561aeebb9fec59c177db1c",
+    "N02-03": "173cf60a85d60c8af6d39ee898ff596792cfef7ad12342db6f0491eff5425242",
+    "N02-04": "aab9e816ac2cb709767266a3ff7a1736f8295bbae50ee87ffd18dd0d379ab9e0",
+    "N02-05": "25406bad17ce6af3dbf5d369be3d16e8a117ba1d7706c05b384b116c68286ab0",
+    "N02-06a": "ca1f921e5e5248bff24b9869a6775c9a85d07a4f8947b4fce3589443ea9760dd",
+    "N02-06b": "27b72e4aed5c72cdba5f2435e8f7209747cf8d70e7f7ebc3845a26d60655fafe",
+    "N02-06c": "534745ebfcd775fece428a4d799363b34e6234832fad1172c66cfb517986109a",
+    "N02-07": "3c06e1769ae7dda7dfbd6e314193a3a6649c0c018e423779102df99b0f6cf13b",
+    "N03-01": "a64be83a1441de746dd8e19de0bf3e3c905fa4e238b3f65f5ca8bb6c239fac59",
+    "N03-02": "4f75c9ca7cb9a221ddd1dd9f846e3be50f938e95dc06502b802154d4ce4e9f1f",
+    "N03-04": "b501b324db6440aaa98aac496f4f4f1a06fe7d5ace4384cae7691547515fe1e4",
+    "N03-05": "0e76d59be0b78a63caf732e5619d6d43d2d8d80bbd38f292e5e93a2ed7ce6098",
+    "N03-06": "44d67d107e6557b81be845f5e582408f8ce32772be9dea9fef48876c6f236ebf",
+    "N03-07": "b23e2e838103fc22ba0a1d2c19623368169b1483071bfbb283e25a92749e15b7"
+  }
+}

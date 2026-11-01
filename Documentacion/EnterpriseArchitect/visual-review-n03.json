@@ -1,0 +1,8 @@
+[
+  {
+    "code": "G07-01",
+    "native_sha256": "4fbfcf546fe86d1a36035a8381ccb9c2947d8836a9f2468821e07f8e0017e51f",
+    "exported_sha256": "0bcdec00162df018f0c872450d0fe24e4a1604871c29533eec3a9b0e9d6e5a64",
+    "reason": "Google Docs reduced global panorama to 2048px. Visually reviewed all rows against native PNG; detail is retained in per-process views."
+  }
+]

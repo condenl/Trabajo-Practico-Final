@@ -1,0 +1,18 @@
+[
+  {
+    "old": "Los actores organizacionales inician las acciones y reciben sus resultados. Las clases internas muestran métodos y retornos tipados. Marketing y N03 son diseños propuestos.",
+    "new": "Los actores organizacionales inician las acciones y reciben sus resultados. Las clases internas muestran métodos y retornos tipados. Marketing mantiene el diseño propuesto; N03 refleja la implementación de evaluación y selección de proveedores."
+  },
+  {
+    "old": "Diseño de N03 para la iteración 3, no implementadas todavía.",
+    "new": "N03 implementa la comparación, la elección fundamentada y la creación de un único borrador. Valida los datos antes de confirmar; las respuestas discontinuas muestran los tipos de retorno."
+  },
+  {
+    "old": "N03 · Clases de evaluación de proveedores",
+    "new": "N03 · Entidades de evaluación de proveedores"
+  },
+  {
+    "after": "N03 · Entidades de evaluación de proveedores",
+    "new": "N03 · Clases de lógica y persistencia de evaluación"
+  }
+]
