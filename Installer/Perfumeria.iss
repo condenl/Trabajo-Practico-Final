@@ -1,4 +1,4 @@
-#define MyAppName "Perfumeria"
+﻿#define MyAppName "Perfumeria"
 #define MyAppVersion "2.0.0"
 #define MyAppPublisher "Trabajo Practico Final"
 #define MyAppExeName "UI.exe"
@@ -50,22 +50,178 @@ Filename: "{app}\{#MyAppExeName}"; Description: "Ejecutar Perfumeria"; Flags: no
 [Code]
 var
   SqlServerPage: TInputQueryWizardPage;
-  PrerequisitesChecked: Boolean;
+  SqlStatusLabel: TNewStaticText;
+  SqlDownloadButton: TNewButton;
+  SqlServicesButton: TNewButton;
+  SqlDiscoveryAttempted: Boolean;
+
+procedure DownloadSqlClick(Sender: TObject);
+var
+  ResultCode: Integer;
+begin
+  if not ShellExec('open', 'https://www.microsoft.com/es-es/sql-server/sql-server-downloads',
+    '', '', SW_SHOWNORMAL, ewNoWait, ResultCode) then
+    MsgBox('No se pudo abrir el navegador. Visite https://www.microsoft.com/es-es/sql-server/sql-server-downloads y descargue SQL Server Express 2022 o superior.', mbInformation, MB_OK);
+end;
+
+procedure OpenSqlServicesClick(Sender: TObject);
+var
+  ResultCode: Integer;
+begin
+  if not ShellExec('open', ExpandConstant('{sys}\services.msc'), '', '', SW_SHOWNORMAL, ewNoWait, ResultCode) then
+    MsgBox('Abra Servicios desde el menú Inicio de Windows. Busque SQL Server y active el servicio de la instancia elegida.', mbInformation, MB_OK);
+end;
+
+procedure SqlInstanceChanged(Sender: TObject);
+begin
+  SqlStatusLabel.Font.Color := clWindowText;
+  SqlStatusLabel.Caption := 'Pulse Siguiente para comprobar la instancia elegida. Puede usar «Descargar SQL Server» si todavía no instaló el motor.';
+  SqlServicesButton.Visible := False;
+end;
 
 procedure InitializeWizard;
 begin
   SqlServerPage := CreateInputQueryPage(
     wpSelectDir,
     'Servidor de base de datos',
-    'Indique la instancia de SQL Server disponible',
-    'El instalador usara autenticacion integrada de Windows y requiere SQL Server 16.x (2022) o superior, incluida la version 17.x. Use . para la instancia predeterminada o .\SQLEXPRESS para Express.');
+    'Seleccione una instancia para guardar los datos de Perfumería',
+    'Requiere SQL Server 2022 (16.x) o superior y autenticación de Windows. Use . para la instancia predeterminada, .\SQLEXPRESS para Express o (localdb)\MSSQLLocalDB para LocalDB.');
   SqlServerPage.Add('Instancia SQL Server:', False);
-  SqlServerPage.Values[0] := '.';
+  SqlServerPage.Values[0] := ExpandConstant('{param:SQLSERVER|}');
+
+  SqlDownloadButton := TNewButton.Create(WizardForm);
+  SqlDownloadButton.Parent := SqlServerPage.Surface;
+  SqlDownloadButton.Left := 0;
+  SqlDownloadButton.Top := SqlServerPage.Edits[0].Top + SqlServerPage.Edits[0].Height + ScaleY(12);
+  SqlDownloadButton.Width := ScaleX(190);
+  SqlDownloadButton.Height := ScaleY(25);
+  SqlDownloadButton.Caption := 'Descargar SQL Server';
+  SqlDownloadButton.OnClick := @DownloadSqlClick;
+
+  SqlServicesButton := TNewButton.Create(WizardForm);
+  SqlServicesButton.Parent := SqlServerPage.Surface;
+  SqlServicesButton.Left := SqlDownloadButton.Left + SqlDownloadButton.Width + ScaleX(8);
+  SqlServicesButton.Top := SqlDownloadButton.Top;
+  SqlServicesButton.Width := ScaleX(140);
+  SqlServicesButton.Height := SqlDownloadButton.Height;
+  SqlServicesButton.Caption := 'Abrir servicios';
+  SqlServicesButton.OnClick := @OpenSqlServicesClick;
+  SqlServicesButton.Visible := False;
+
+  SqlStatusLabel := TNewStaticText.Create(WizardForm);
+  SqlStatusLabel.Parent := SqlServerPage.Surface;
+  SqlStatusLabel.Left := 0;
+  SqlStatusLabel.Top := SqlDownloadButton.Top + SqlDownloadButton.Height + ScaleY(10);
+  SqlStatusLabel.Width := SqlServerPage.SurfaceWidth;
+  SqlStatusLabel.Height := SqlServerPage.SurfaceHeight - SqlStatusLabel.Top;
+  SqlStatusLabel.AutoSize := False;
+  SqlStatusLabel.WordWrap := True;
+  SqlStatusLabel.Caption := 'Si falta el motor, pulse «Descargar SQL Server» para abrir Microsoft e instalar Express. Tener SSMS instalado no alcanza. Después indique la instancia y pulse Siguiente para comprobarla.';
+  SqlServerPage.Edits[0].OnChange := @SqlInstanceChanged;
+end;
+
+procedure CurPageChanged(CurPageID: Integer);
+var
+  Parameters: String;
+  ResultFile: String;
+  SelectedInstance: String;
+  ResultCode: Integer;
+begin
+  if (CurPageID <> SqlServerPage.ID) or SqlDiscoveryAttempted then exit;
+  SqlDiscoveryAttempted := True;
+  // Respect /SQLSERVER and any value already entered; never replace a user's choice.
+  if Trim(SqlServerPage.Values[0]) <> '' then exit;
+  SqlStatusLabel.Caption := 'Buscando una instancia local compatible. Esto puede tardar unos segundos...';
+  SqlStatusLabel.Repaint;
+  WizardForm.NextButton.Enabled := False;
+  try
+    ExtractTemporaryFile('VerificarPrerrequisitos.ps1');
+    ResultFile := ExpandConstant('{tmp}\Perfumeria-Instancias.ini');
+    DeleteFile(ResultFile);
+    Parameters := '-NoProfile -ExecutionPolicy Bypass -File "' + ExpandConstant('{tmp}\VerificarPrerrequisitos.ps1') +
+      '" -DiscoverSqlInstances -ResultPath "' + ResultFile + '" -LogPath "' +
+      ExpandConstant('{tmp}\Perfumeria-Instancias.log') + '"';
+    if Exec(ExpandConstant('{sys}\WindowsPowerShell\v1.0\powershell.exe'), Parameters, '', SW_HIDE,
+      ewWaitUntilTerminated, ResultCode) then
+    begin
+      SelectedInstance := GetIniString('Prerequisites', 'SelectedInstance', '', ResultFile);
+      if (ResultCode = 0) and (Trim(SqlServerPage.Values[0]) = '') then
+        SqlServerPage.Values[0] := SelectedInstance;
+      SqlStatusLabel.Caption := GetIniString('Prerequisites', 'Message',
+        'No se pudo elegir una instancia automáticamente. Ingrese su nombre y pulse Siguiente.', ResultFile);
+    end
+    else
+      SqlStatusLabel.Caption := 'No se pudo buscar una instancia automáticamente. Ingrese su nombre y pulse Siguiente.';
+  finally
+    WizardForm.NextButton.Enabled := True;
+  end;
 end;
 
 function GetSqlServerInstance(Param: String): String;
 begin
-  Result := SqlServerPage.Values[0];
+  Result := Trim(SqlServerPage.Values[0]);
+end;
+
+function ValidSqlInstance: Boolean;
+var
+  Instance: String;
+  I: Integer;
+begin
+  Instance := GetSqlServerInstance('');
+  Result := (Length(Instance) > 0) and (Length(Instance) <= 128);
+  for I := 1 to Length(Instance) do
+    if Pos(Instance[I], 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.\()-') = 0 then
+      Result := False;
+end;
+
+function CheckPrerequisites(SqlOnly: Boolean; var Message: String): Integer;
+var
+  Parameters: String;
+  ResultFile: String;
+begin
+  Result := 26;
+  Message := 'Ingrese un nombre de instancia válido, por ejemplo ., .\SQLEXPRESS o (localdb)\MSSQLLocalDB.';
+  if not ValidSqlInstance then exit;
+  ExtractTemporaryFile('VerificarPrerrequisitos.ps1');
+  ResultFile := ExpandConstant('{tmp}\Perfumeria-Prerrequisitos.ini');
+  DeleteFile(ResultFile);
+  Parameters := '-NoProfile -ExecutionPolicy Bypass -File "' + ExpandConstant('{tmp}\VerificarPrerrequisitos.ps1') +
+    '" -ServerInstance "' + GetSqlServerInstance('') + '" -DownloadDirectory "' +
+    ExpandConstant('{userappdata}\Perfumeria\Prerrequisitos') + '" -ResultPath "' + ResultFile +
+    '" -LogPath "' + ExpandConstant('{tmp}\Perfumeria-Prerrequisitos.log') + '"';
+  if SqlOnly then Parameters := Parameters + ' -CheckSqlOnly'
+  else Parameters := Parameters + ' -InstallDotNet';
+  if not Exec(ExpandConstant('{sys}\WindowsPowerShell\v1.0\powershell.exe'), Parameters, '', SW_HIDE,
+    ewWaitUntilTerminated, Result) then
+  begin
+    Result := 99;
+    Message := 'No se pudo iniciar la verificación. Compruebe que Windows PowerShell esté disponible.';
+    exit;
+  end;
+  Message := GetIniString('Prerequisites', 'Message',
+    'No se pudo completar la verificación. Revise el registro temporal Perfumeria-Prerrequisitos.log.', ResultFile);
+end;
+
+function NextButtonClick(CurPageID: Integer): Boolean;
+var
+  Code: Integer;
+  Message: String;
+begin
+  Result := True;
+  if CurPageID <> SqlServerPage.ID then exit;
+  SqlStatusLabel.Font.Color := clWindowText;
+  SqlStatusLabel.Caption := 'Comprobando la conexión y el estado de SQL Server...';
+  SqlStatusLabel.Repaint;
+  WizardForm.NextButton.Enabled := False;
+  try
+    Code := CheckPrerequisites(True, Message);
+  finally
+    WizardForm.NextButton.Enabled := True;
+  end;
+  SqlStatusLabel.Caption := Message;
+  SqlServicesButton.Visible := Code = 24;
+  Result := Code = 0;
+  if not Result then SqlStatusLabel.Font.Color := clRed;
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
@@ -92,50 +248,13 @@ end;
 function PrepareToInstall(var NeedsRestart: Boolean): String;
 var
   ResultCode: Integer;
-  Parameters: String;
-  DownloadDirectory: String;
+  Message: String;
 begin
   Result := '';
-  if PrerequisitesChecked then
-    exit;
-
-  ExtractTemporaryFile('VerificarPrerrequisitos.ps1');
-  DownloadDirectory := ExpandConstant('{userappdata}\Perfumeria\Prerrequisitos');
-  Parameters := '-NoProfile -ExecutionPolicy Bypass -File "' +
-    ExpandConstant('{tmp}\VerificarPrerrequisitos.ps1') + '" -ServerInstance "' +
-    GetSqlServerInstance('') + '" -DownloadDirectory "' + DownloadDirectory +
-    '" -InstallDotNet -LogPath "' + ExpandConstant('{tmp}\Perfumeria-Prerrequisitos.log') + '"';
-
-  WizardForm.StatusLabel.Caption := 'Verificando .NET Framework y SQL Server 16.x o superior...';
-  if not Exec(ExpandConstant('{sys}\WindowsPowerShell\v1.0\powershell.exe'), Parameters, '', SW_HIDE,
-    ewWaitUntilTerminated, ResultCode) then
-  begin
-    Result := 'No se pudo ejecutar la verificacion de prerrequisitos.';
-    exit;
-  end;
-
-  case ResultCode of
-    0:
-      begin
-        PrerequisitesChecked := True;
-        Result := '';
-      end;
-    20:
-      Result := 'No se encontro la instancia indicada. Se descargo el instalador oficial de SQL Server 2022 Express en: ' +
-        DownloadDirectory + '. Instalelo y vuelva a ejecutar este instalador.';
-    21:
-      begin
-        ShellExec('', 'https://www.microsoft.com/en-us/download/details.aspx?id=104781', '', '', SW_SHOWNORMAL, ewNoWait, ResultCode);
-        Result := 'No se pudo conectar a la instancia indicada y Microsoft no entrego el instalador automatico. Revise el nombre, el servicio y los permisos de SQL Server. Si falta el motor, instale SQL Server 2022 o superior desde la pagina oficial y vuelva a ejecutar este instalador.';
-      end;
-    22:
-      Result := 'La instancia seleccionada es anterior a SQL Server 16.x (2022). Indique una instancia 16.x o superior (por ejemplo, 17.x).';
-    30:
-      begin
-        NeedsRestart := True;
-        Result := '.NET Framework fue instalado y Windows debe reiniciarse antes de continuar.';
-      end;
-    else
-      Result := 'Fallo la verificacion de prerrequisitos. Revise el registro temporal Perfumeria-Prerrequisitos.log.';
-  end;
+  WizardForm.StatusLabel.Caption := 'Verificando .NET Framework y la conexión con SQL Server...';
+  // Always recheck: the chosen instance or its service may have changed since the SQL page.
+  ResultCode := CheckPrerequisites(False, Message);
+  if ResultCode = 30 then NeedsRestart := True;
+  if ResultCode <> 0 then
+    Result := Message + #13#10#13#10 + 'Vuelva a la página «Servidor de base de datos» para corregir la instancia, abrir Servicios o descargar el motor desde Microsoft. Luego vuelva a intentar.';
 end;

@@ -6,17 +6,39 @@ Este directorio implementa el entregable **A01 de la Iteracion 2** siguiendo la 
 
 - instala los binarios Release de la aplicacion en `Program Files`;
 - crea accesos directos en el menu Inicio y, opcionalmente, en el escritorio;
-- solicita la instancia de SQL Server;
+- busca y precarga una instancia SQL Server local compatible, permitiendo cambiarla;
 - verifica .NET Framework 4.7.2 o superior antes de copiar la aplicacion;
 - verifica que la instancia indicada sea SQL Server 16.x (SQL Server 2022) o superior, incluida 17.x (SQL Server 2025);
 - si falta .NET, lo descarga desde Microsoft en segundo plano, valida su firma digital y lo instala silenciosamente;
-- si falta SQL Server, intenta descargar el bootstrapper firmado de SQL Server 2022 Express y, si Microsoft retira temporalmente el enlace versionado, abre la pagina oficial de descarga;
+- comprueba la conexión al pulsar Siguiente en la página de SQL y nuevamente antes de instalar; distingue motor ausente, instancia incorrecta y servicio detenido;
+- ofrece **Descargar SQL Server**, que abre la [página oficial de Microsoft en español](https://www.microsoft.com/es-es/sql-server/sql-server-downloads), y **Abrir servicios** cuando corresponde;
 - restaura la base inicial si todavia no existe;
 - ejecuta las migraciones idempotentes de N01 y N02;
 - actualiza `UI.exe.config` con la instancia elegida y autenticacion integrada;
 - conserva un registro en `Installer\instalacion-base-datos.log`.
 
-Los prerrequisitos descargados se guardan en `%APPDATA%\Perfumeria\Prerrequisitos`. El motor SQL no se instala silenciosamente: su configuracion requiere aceptar los terminos de Microsoft y elegir una instancia. El instalador de Perfumeria se reanuda al volver a ejecutarlo una vez instalado SQL Server 2022.
+La descarga automática de .NET se guarda en `%APPDATA%\Perfumeria\Prerrequisitos`. Para SQL Server se utiliza la página oficial en lugar de un enlace fijo al ejecutable, que puede dejar de estar disponible. El motor SQL no se instala ni se descarga automáticamente por un fallo de conexión: primero se informa la causa. Después de instalar Express 2022 o superior, se puede regresar al asistente de Perfumería, indicar la instancia y pulsar Siguiente para volver a comprobarla.
+
+## Cuando SQL Server no está disponible
+
+Al entrar por primera vez en la página de SQL, el asistente consulta las instancias locales y comprueba su conexión y versión. Prioriza una que ya contenga la base `Trabajo Practico Final`; en una instalación nueva, prefiere un servicio Express compatible, luego otros servicios SQL y finalmente LocalDB. Omite servicios detenidos, conexiones fallidas y versiones anteriores a 16. Si no encuentra una opción verificable, deja el campo vacío para indicar el destino manualmente. Los tiempos de conexión de esta búsqueda son acotados y no se descargan componentes ni se crean bases de la aplicación.
+
+El campo sigue siendo editable. Una selección manual o un argumento `/SQLSERVER="instancia"` se respeta y no se reemplaza al retroceder y avanzar. Si se modifica el campo, el mensaje anterior se limpia y se vuelve a comprobar al pulsar Siguiente.
+
+
+| Situación | Mensaje y acción del asistente |
+| --- | --- |
+| No hay motor ni instancias locales detectadas | «Motor de base de datos no instalado». **Descargar SQL Server** abre Microsoft para instalar Express 2022 o superior. Tener SSMS no equivale a tener el motor. |
+| El nombre no existe, pero hay otras instancias | Muestra los nombres detectados para corregir el campo. No pide reinstalar el motor. |
+| El servicio de esa instancia está detenido, pausado o iniciándose | Identifica el servicio y ofrece **Abrir servicios**. Iniciarlo o reanudarlo, esperar y volver a pulsar Siguiente. No cambia servicios automáticamente. |
+| Servicio activo, pero sin conexión | Indica revisar el nombre y la configuración de la instancia; no afirma que falte SQL Server. |
+| Instancia registrada sin su servicio | Indica revisar o reparar esa instalación. |
+| LocalDB instalado sin conexión | Indica comprobar el nombre y la cuenta de Windows con `SqlLocalDB info`. LocalDB no utiliza un servicio de Windows; una conexión válida lo inicia automáticamente. |
+| Versión anterior a 16 | Permite elegir otra instancia o descargar Express 2022 o superior. Acepta 16, 17 y versiones posteriores. |
+
+Si no se puede leer el inventario de servicios o del registro, el diagnóstico es conservador: informa un problema de conexión sin declarar que el motor está ausente. Una conexión remota fallida tampoco se clasifica usando el inventario local. Se consultan ambas vistas del registro de Windows (32/64 bits).
+
+La verificación no restaura ni modifica bases de la aplicación. El asistente permanece en la página de SQL ante un problema y permite corregirlo y reintentar. Los detalles técnicos quedan en `%TEMP%\Perfumeria-Prerrequisitos.log`. El intercambio interno de mensajes con Inno Setup utiliza un INI UTF-16 para conservar acentos.
 
 ## Generacion del `.exe`
 
@@ -51,7 +73,9 @@ El resultado se genera en `Installer\Output\Perfumeria_Setup_Iteracion2.exe`.
 
 Ejecutar el instalador en una maquina virtual con y sin los prerrequisitos. Confirmar que detecta .NET Framework 4.7.2+, acepta SQL Server 16.x y 17.x, rechaza versiones anteriores a 16 y facilita la descarga si falta una dependencia. Luego confirmar que se puede iniciar sesion, registrar una compra, aprobarla con Contabilidad, recibir un lote y registrar una venta con descuento de membresia.
 
-La version se consulta en la instancia indicada, no en SSMS. Si ya tiene SQL Server 17.x, indicar su nombre correcto (`.` para la predeterminada o `.\NOMBRE` para una instancia con nombre); no necesita instalar 16.x adicionalmente. Una instancia detenida o sin permisos de conexion no se puede verificar.
+La versión se consulta en la instancia indicada, no en SSMS. Si ya tiene SQL Server 17.x, indicar su nombre correcto (`.` para la predeterminada o `.\NOMBRE` para una instancia con nombre); no necesita instalar 16.x adicionalmente. Si está detenida, el asistente indica cómo iniciar su servicio antes de verificar la versión.
+
+`powershell -NoProfile -File Scripts/test-sql-prerequisites.ps1` prueba los diagnósticos y la prioridad de selección con inventarios simulados (incluido servicio detenido y ausencia de motor), sin detener servicios reales. También prueba conexiones reales a `.` y `(localdb)\MSSQLLocalDB`, un nombre inexistente, una entrada inválida y el descubrimiento automático. Requiere esas dos instancias locales 16+ para los casos de conexión. `Scripts/test-sql-version-policy.ps1` comprueba la aceptación de versiones en prerrequisitos, inicialización y seed.
 
 LocalDB 16+ también está admitido, por ejemplo `(localdb)\MSSQLLocalDB`. La precarga valida el destino antes de restaurar y distingue LocalDB de una instancia normal. Para retomar una restauración que falló con la validación local de una versión anterior, seguir [la recuperación explícita del README](../README.md#localdb-y-recuperación-de-la-instalación-fallida); no se borran bases ni se recalcula la integridad de bases existentes automáticamente.
 
