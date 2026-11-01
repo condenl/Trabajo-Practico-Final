@@ -1,7 +1,7 @@
 """Build code-aligned UML views without adding fictitious behavior to data entities.
 
-This is the final modeling layer after build_ea_reconciliation.py. N03 and
-MarketingBLL are explicit design proposals, never represented as existing C#.
+This is the final modeling layer after build_ea_reconciliation.py. N03 is
+implemented; only MarketingBLL remains an explicitly identified design proposal.
 """
 import json
 import re
@@ -36,6 +36,21 @@ def method(name, result="void", params="", **kwargs):
 
 def load_class(name, path, extra_methods=(), include_fields=False):
     source = (ROOT / path).read_text("utf-8-sig")
+    # Several N03 transport classes share a file. Extract only the requested body.
+    declaration = re.search(r"\b(?:class|interface)\s+" + re.escape(name) + r"\b[^\{]*\{", source)
+    assert declaration, (name, path)
+    start, depth, end = declaration.end(), 1, declaration.end()
+    while depth:
+        depth += (source[end] == "{") - (source[end] == "}")
+        end += 1
+    source = source[start:end-1]
+    # A nested grid/view class is not a member API of the enclosing UserControl.
+    while nested := re.search(r'\b(?:public|internal|private|protected)\s+(?:(?:sealed|abstract|static)\s+)*class\s+\w+[^\{]*\{', source):
+        depth, end = 1, nested.end()
+        while depth:
+            depth += (source[end] == '{') - (source[end] == '}')
+            end += 1
+        source = source[:nested.start()] + source[end:]
     attrs = []
     for match in re.finditer(r"public\s+(?:(?:virtual|override|abstract|static)\s+)*([\w<>?,.\[\] ]+?)\s+(\w+)\s*\{\s*get\b", source):
         kind, prop = match.groups()
@@ -45,7 +60,7 @@ def load_class(name, path, extra_methods=(), include_fields=False):
             kind, field = match.groups()
             attrs.append(dict(name=field, type=kind, visibility="Private"))
     methods = []
-    pattern = r"\b(public|internal|private|protected)\s+((?:(?:static|abstract|virtual|override|sealed|async)\s+)*)([\w<>?,.\[\] ]+?)\s+(\w+)\s*\(([^)]*)\)"
+    pattern = r"\b(public|internal|private|protected)\s+((?:(?:static|abstract|virtual|override|sealed|async)\s+)*)([\w<>?,.\[\] ]+?)\s+(\w+)(?:<[^>]+>)?\s*\(([^)]*)\)"
     for access, modifiers, result, operation, args in re.findall(pattern, source):
         if access != "public" and operation not in extra_methods:
             continue
@@ -61,7 +76,7 @@ def load_class(name, path, extra_methods=(), include_fields=False):
                    re.findall(r"^\s*([\w<>?,.\[\] ]+?)\s+(\w+)\(([^)]*)\);", source, re.M)]
     registry[name] = dict(key=name, name=name, kind="Interface" if "/Interfaces/" in path else "Class",
                           stereotype="interface" if "/Interfaces/" in path else path.split("/")[0], attributes=attrs, methods=methods,
-                          abstract=bool(re.search(r"abstract class " + re.escape(name), source)),
+                          abstract=bool(re.search(r"abstract class " + re.escape(name), (ROOT / path).read_text('utf-8-sig'))),
                           notes=path, source=path, proposed=False,
                           namespace=path.rsplit("/", 1)[0].replace("/", "."))
 
@@ -85,16 +100,14 @@ for name in ["AprovisionamientoDAL", "InventarioDAL", "VentaDAL", "ProductoDAL",
 for name in ["UC_Aprovisionamiento", "UC_Ventas"]:
     load_class(name, f"UI/UserControls/{name}.cs", ["RegistrarCotizacion", "CrearOrden", "EnviarRevision", "AprobarOrden", "RechazarOrden", "EmitirOrden", "RegistrarRecepcion", "ConsultarInventario", "RegistrarCliente", "BuscarCliente", "ConfirmarVenta", "Notificar", "MostrarError"])
 
-evaluation = deepcopy(next(n for n in old["N03-04"]["nodes"] if n["name"] == "EvaluacionProveedor"))
-evaluation.update(proposed=True, notes="Diseño N03: clase y operación propuestas, todavía sin implementación C#.",
-                  methods=[method("CalcularPuntajePonderado", "decimal")])
-registry["EvaluacionProveedor"] = evaluation
-registry["EvaluacionProveedorBLL"] = dict(key="EvaluacionProveedorBLL", name="EvaluacionProveedorBLL", kind="Class",
-    stereotype="propuesto N03", proposed=True, attributes=[], notes="Diseño N03; no existe todavía en BLL.", methods=[
-        method("Evaluar", "EvaluacionProveedor", "EvaluacionProveedor evaluacion"),
-        method("ValidarEvaluacion", "void", "EvaluacionProveedor evaluacion"),
-        method("SeleccionarPrioritario", "EvaluacionProveedor", "List<EvaluacionProveedor> evaluaciones"),
-        method("GuardarEvaluacion", "int", "EvaluacionProveedor evaluacion")])
+for name in ['SolicitudEvaluacion', 'DatosEvaluacion', 'OfertaEvaluable', 'ResultadoProveedor', 'EvaluacionProveedor', 'ResumenEvaluacion']:
+    load_class(name, 'BE/EvaluacionProveedor.cs')
+load_class('EvaluacionProveedorBLL', 'BLL/EvaluacionProveedorBLL.cs', include_fields=True)
+load_class('IEvaluacionProveedorRepository', 'DAL/Interfaces/IEvaluacionProveedorRepository.cs')
+load_class('EvaluacionProveedorDAL', 'DAL/EvaluacionProveedorDAL.cs', ['LeerDatos', 'Leer', 'ComprobarVigencia'])
+load_class('ArchivoEvaluacion', 'Servicios/ArchivoEvaluacion.cs')
+load_class('UC_EvaluacionProveedores', 'UI/UserControls/UC_EvaluacionProveedores.cs', ['Comparar', 'Confirmar', 'CrearOrden'])
+load_class('AprovisionamientoDAL', 'DAL/AprovisionamientoDAL.cs', ['InsertarOrden'])
 registry["MarketingBLL"] = dict(key="MarketingBLL", name="MarketingBLL", kind="Class", stereotype="propuesto N02",
     proposed=True, attributes=[], notes="Diseño de campañas; no existe motor de envío implementado.", methods=[
         method("SeleccionarDestinatarios", "List<Cliente>", "List<Cliente> clientes"),
@@ -106,24 +119,24 @@ diagrams = []
 
 def signature_width(c):
     lines = [a["name"] + ": " + a["type"] for a in c.get("attributes", [])]
-    lines += [m["name"] + "(" + ", ".join(p["name"] + ": " + p["type"] for p in m["parameters"]) + "): " + m["type"] for m in c.get("methods", [])]
-    return max(340, min(1250, 60 + max(map(len, lines), default=20) * 6))
+    lines += [m["name"] + "(" + ", ".join(p["type"] for p in m["parameters"]) + "): " + m["type"] for m in c.get("methods", [])]
+    return max(360, min(1100, 65 + max(map(len, lines), default=20) * 7))
 
 
 def class_view(code, names, columns=3, links=None):
-    original = old[code]
+    original = old.get(code, dict(title='N03 · Clases de lógica y persistencia de evaluación'))
     d = dict(code=code, title=original["title"], kind="Logical", nodes=[], links=deepcopy(links if links is not None else original["links"]),
              notes="Atributos y operaciones compartidos con G07-01. Firmas verificadas en el código. Las clases propuestas están identificadas explícitamente. Las BE conservan sus constructores y propiedades; la lógica reside en BLL.")
     width = max(signature_width(registry[n]) for n in names)
-    xgap, y = 170, 40
+    xgap, y = 100, 40
     for start in range(0, len(names), columns):
         row = names[start:start + columns]
-        height = max(110 + 22 * (len(registry[n].get("attributes", [])) + len(registry[n].get("methods", []))) for n in row)
+        height = max((70 if code.startswith('N03') else 90) + 17 * (len(registry[n].get("attributes", [])) + len(registry[n].get("methods", []))) for n in row)
         for col, name in enumerate(row):
             n = deepcopy(registry[name])
             n.update(x=40 + col * (width + xgap), y=y, w=width, h=height, fontSize=11)
             d["nodes"].append(n)
-        y += height + 150
+        y += height + (35 if code.startswith('N03') else 90)
     d["links"] = [l for l in d["links"] if l["source"] in names and l["target"] in names]
     diagrams.append(d)
     return d
@@ -140,27 +153,35 @@ details = {
     "N02-04": ["Cliente", "Membresia", "Venta", "DetalleVenta", "Producto", "Lote", "VentaBLL", "MarketingBLL"],
     "N01-05": ["AprovisionamientoBLL", "IAprovisionamientoRepository", "AprovisionamientoDAL", "InventarioBLL", "IInventarioRepository", "InventarioDAL", "IProveedorRepository", "ProveedorDAL", "IProductoRepository", "ProductoDAL", "IRegistroActividad", "RegistroActividadBitacora"],
     "N02-05": ["VentaBLL", "IVentaRepository", "VentaDAL", "IProductoRepository", "ProductoDAL", "IInventarioRepository", "InventarioDAL", "IRegistroActividad", "RegistroActividadBitacora", "MarketingBLL"],
-    "N03-04": ["Proveedor", "Producto", "EvaluacionProveedor", "EvaluacionProveedorBLL", "AprovisionamientoBLL", "InventarioBLL"]}
+    "N03-04": ["EvaluacionProveedor", "SolicitudEvaluacion", "DatosEvaluacion", "OfertaEvaluable", "ResultadoProveedor", "ResumenEvaluacion"],
+    "N03-05": ["EvaluacionProveedorBLL", "IEvaluacionProveedorRepository", "EvaluacionProveedorDAL", "ArchivoEvaluacion"]}
 for code, names in details.items():
-    d = class_view(code, names, columns=3)
+    n03_links = [dict(source=a, target=b, kind='Association', name='', sourceCardinality='0..*', targetCardinality=card)
+        for a,b,card in [('EvaluacionProveedor','SolicitudEvaluacion','1'),('EvaluacionProveedor','DatosEvaluacion','1'),
+            ('EvaluacionProveedor','ResultadoProveedor','0..*'),('DatosEvaluacion','Producto','1'),('DatosEvaluacion','OfertaEvaluable','0..*'),
+            ('SolicitudEvaluacion','Producto','1'),('OfertaEvaluable','Proveedor','1'),('ResultadoProveedor','Proveedor','1'),
+            ('EvaluacionProveedor','Proveedor','0..1'),('EvaluacionProveedor','OrdenCompra','0..1')]]
+    d = class_view(code, names, columns=2 if code == 'N03-04' else 1 if code == 'N03-05' else 3,
+        links=n03_links if code == 'N03-04' else [] if code == 'N03-05' else None)
     deps = {"N01-04a": [("ProveedorBLL", "Proveedor"), ("AprovisionamientoBLL", "OrdenCompra"), ("AprovisionamientoBLL", "CotizacionProveedor"), ("ProductoBLL", "Producto")],
             "N01-04b": [("InventarioBLL", "Lote"), ("InventarioBLL", "MovimientoStock")],
             "N02-04": [("VentaBLL", "Cliente"), ("VentaBLL", "Venta"), ("VentaBLL", "Membresia"), ("MarketingBLL", "Cliente")],
-            "N03-04": [("EvaluacionProveedorBLL", "EvaluacionProveedor"), ("EvaluacionProveedorBLL", "AprovisionamientoBLL"), ("EvaluacionProveedorBLL", "InventarioBLL")],
+            "N03-04": [],
+            "N03-05": [("EvaluacionProveedorBLL", "IEvaluacionProveedorRepository"), ("EvaluacionProveedorBLL", "ArchivoEvaluacion"), ("EvaluacionProveedorDAL", "ArchivoEvaluacion")],
             "N02-05": [("MarketingBLL", "VentaBLL")]}.get(code, [])
     for a, b in deps:
         uses(d, a, b)
     for implementation, contract in [("AprovisionamientoDAL", "IAprovisionamientoRepository"),
             ("InventarioDAL", "IInventarioRepository"), ("ProductoDAL", "IProductoRepository"),
             ("ProveedorDAL", "IProveedorRepository"), ("VentaDAL", "IVentaRepository"),
-            ("RegistroActividadBitacora", "IRegistroActividad")]:
+            ("RegistroActividadBitacora", "IRegistroActividad"), ("EvaluacionProveedorDAL", "IEvaluacionProveedorRepository")]:
         if implementation in names and contract in names:
             d["links"].append(dict(source=implementation, target=contract, name="", kind="Realization"))
 
 # Associations are undirected unless navigation is explicitly modeled. Reuse the
 # global multiplicities in both orientations and avoid reversed duplicates.
 association_definitions = {frozenset((l["source"], l["target"])): l
-    for l in old["G07-01"]["links"] if l["kind"] == "Association"}
+    for l in old["G07-01"]["links"] if l["kind"] == "Association" and 'EvaluacionProveedor' not in (l['source'],l['target'])}
 
 
 def normalize_links(links):
@@ -184,11 +205,14 @@ for d in diagrams:
 
 # The global view contains the same canonical members, not just class names.
 global_names = list(dict.fromkeys([n for names in details.values() for n in names] + ["Persona", "Usuario", "Componente", "Familia", "Patente", "EventoBitacora", "RegistroActividadBitacora"]))
-global_links = deepcopy(old["G07-01"]["links"])
+global_links = [deepcopy(l) for l in old["G07-01"]["links"] if 'EvaluacionProveedor' not in (l['source'],l['target'])]
 for d in diagrams:
     for edge in d["links"]:
         if not any(e["source"] == edge["source"] and e["target"] == edge["target"] and e["kind"] == edge["kind"] for e in global_links):
             global_links.append(deepcopy(edge))
+global_links.extend(deepcopy(n03_links))
+global_links.extend(dict(source=a,target=b,kind='Dependency',name='') for a,b in [
+    ('EvaluacionProveedorBLL','EvaluacionProveedor'),('EvaluacionProveedorDAL','AprovisionamientoDAL')])
 class_view("G07-01", global_names, columns=5, links=normalize_links(global_links))
 
 
@@ -200,7 +224,7 @@ SEQUENCE_ENDS = {
     "N02-06a": {1:6},
     "N02-06b": {1:11, 2:10, 6:9},
     "N02-06c": {1:2},
-    "N03-06": {1:7},
+    "N03-06": {1:8,2:8,5:6,7:8,9:15,10:15,12:15,13:15,16:23,17:22,18:22,19:21},
 }
 
 # Actor requests and observable outcomes surround the existing code realization.
@@ -210,7 +234,9 @@ ACTOR_GROUPS = {
     'N02-06a': [(1,7,'Personal de Ventas','Registrar cliente y adhesión','Resultado del alta y membresía')],
     'N02-06b': [(1,11,'Personal de Ventas','Confirmar venta','Venta confirmada o motivo de rechazo')],
     'N02-06c': [(1,2,'Personal de Ventas','Registrar consentimiento','Resultado del registro'),(3,5,'Responsable de Marketing','Solicitar campaña autorizada','Resultado de campaña')],
-    'N03-06': [(1,9,'Dueño / Departamento de Compras','Evaluar y priorizar proveedores','Evaluación y proveedor prioritario')]
+    'N03-06': [(1,8,'Dueño / Departamento de Compras','Comparar proveedores','Comparación guardada / error'),
+        (9,15,'Dueño / Departamento de Compras','Confirmar proveedor','Decisión fundamentada / error'),
+        (16,23,'Dueño / Departamento de Compras','Crear orden en Borrador','Número de orden / error')]
 }
 
 
@@ -331,11 +357,12 @@ sequence("N02-06c", [U,V,VD,"MarketingBLL"], [
     [dict(kind=1, first=3, last=5, guards=["Solo autorizados"], size=105)],
     "RegistrarCliente/GuardarCliente existen y conservan el consentimiento. MarketingBLL y sus tres operaciones son una propuesta no implementada. La adquisición de la lista de clientes y el canal de envío quedan pendientes de implementación; no se dibuja una llamada inexistente a VentaDAL para obtener segmentos.")
 E="EvaluacionProveedorBLL"
-sequence("N03-06", [E,"ProveedorBLL","ProductoBLL",A,I,"EvaluacionProveedor"], [
-    (E,E,"Evaluar"),(E,"ProveedorBLL","Obtener"),(E,"ProductoBLL","Obtener"),
-    (E,A,"ConsultarHistorialCompras"),(E,I,"ObtenerTrazabilidad"),(E,E,"ValidarEvaluacion"),
-    (E,"EvaluacionProveedor","CalcularPuntajePonderado"),(E,E,"SeleccionarPrioritario"),(E,E,"GuardarEvaluacion")],
-    [], "Propuesta N03: EvaluacionProveedorBLL y EvaluacionProveedor no existen aún en C#. Obtener, ConsultarHistorialCompras y ObtenerTrazabilidad sí existen en las BLL consultadas. La conveniencia y los fundamentos se validan antes de priorizar; GuardarEvaluacion requiere persistencia futura.")
+U,D,F,P='UC_EvaluacionProveedores','EvaluacionProveedorDAL','ArchivoEvaluacion','AprovisionamientoDAL'
+sequence("N03-06", [U,E,D,F,P], [
+    (U,U,'Comparar'),(U,E,'Evaluar'),(E,E,'ValidarEvaluacion'),(E,D,'ObtenerDatos'),(E,E,'Calcular'),(E,F,'Firma'),(E,D,'GuardarEvaluacion'),(D,F,'Serializar'),
+    (U,U,'Confirmar'),(U,E,'SeleccionarPrioritario'),(E,E,'Obtener'),(E,D,'SeleccionarPrioritario'),(D,D,'ComprobarVigencia'),(D,D,'LeerDatos'),(D,F,'Firma'),
+    (U,U,'CrearOrden'),(U,E,'CrearOrdenBorrador'),(E,D,'CrearOrdenBorrador'),(D,D,'ComprobarVigencia'),(D,D,'LeerDatos'),(D,F,'Firma'),(D,P,'InsertarOrden'),(U,E,'Obtener')],
+    [dict(kind=1, first=19, last=22, guards=['No hay orden vinculada; datos vigentes'], size=280)], "Implementación N03: comparar y guardar evidencia, confirmar una oferta elegible con fundamento, crear un único borrador. Se muestran las colaboraciones principales; se omiten consultas auxiliares de refresco e historial. ObtenerDatos y las escrituras usan transacciones serializables. ComprobarVigencia rechaza cambios de datos o de fecha antes de escribir. Reintentar CrearOrdenBorrador devuelve el ID existente; no emite, aprueba ni recepciona la orden. Las respuestas void de UI representan finalización; las excepciones se comunican al actor mediante Ejecutar/Informar.")
 
 # Verify repeated class representations are generated from one definition.
 for d in diagrams:

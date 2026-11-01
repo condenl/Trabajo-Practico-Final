@@ -84,6 +84,7 @@ foreach($s in $specs) {
         # supports the actual connector type; convert only these recorded connectors below.
         $creationKind=if($l.kind -eq 'Realization'){'Dependency'}else{$l.kind}
         $c=$elements[$l.source].Connectors.AddNew($l.name,$creationKind);$c.SupplierID=$elements[$l.target].ElementID
+        if($l.stereotype){$c.Stereotype=$l.stereotype}
         if($l.kind -eq 'Sequence'){$c.DiagramID=$d.DiagramID;$c.SequenceNo=$l.sequence;$c.TransitionAction='Call';$c.TransitionEvent='Synchronous'}
         if($l.sourceCardinality){$c.ClientEnd.Cardinality=$l.sourceCardinality}
         if($l.targetCardinality){$c.SupplierEnd.Cardinality=$l.targetCardinality}

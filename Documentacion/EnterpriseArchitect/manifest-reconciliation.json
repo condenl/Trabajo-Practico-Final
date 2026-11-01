@@ -2,7 +2,7 @@
     {
         "code":  "G07-01",
         "title":  "G07 · Clases globales de perfumería",
-        "diagramId":  29,
+        "diagramId":  36,
         "guid":  "{33653786-6881-4df1-94F3-562DD7B28630}",
         "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\G07-01.png"
     },
@@ -23,7 +23,7 @@
     {
         "code":  "N03-04",
         "title":  "N03 · Clases de evaluación de proveedores",
-        "diagramId":  24,
+        "diagramId":  31,
         "guid":  "{CDEE8171-C21D-4039-88A4-4C74CECB944F}",
         "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N03-04.png"
     },
@@ -40,5 +40,12 @@
         "diagramId":  26,
         "guid":  "{621DB96D-7566-48ba-AF01-F396895C8E3F}",
         "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N03-07.png"
+    },
+    {
+        "code":  "N03-05",
+        "title":  "N03 - Clases de logica y persistencia de evaluacion",
+        "diagramId":  37,
+        "guid":  "{CB903E23-FB7C-4595-839F-117E1D1369DA}",
+        "file":  "C:\\Users\\Default\\Trabajo Practico Final\\Documentacion\\EnterpriseArchitect\\N03-05.png"
     }
 ]

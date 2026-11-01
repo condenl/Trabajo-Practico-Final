@@ -1802,6 +1802,18 @@
         "visibility": "Public"
       },
       {
+        "name": "InsertarOrdenes",
+        "type": "IList<int>",
+        "parameters": [
+          {
+            "name": "ordenes",
+            "type": "IList<OrdenCompra>",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
         "name": "ObtenerOrden",
         "type": "OrdenCompra",
         "parameters": [
@@ -2268,6 +2280,44 @@
         ],
         "visibility": "Public",
         "static": false,
+        "abstract": false
+      },
+      {
+        "name": "InsertarOrdenes",
+        "type": "IList<int>",
+        "parameters": [
+          {
+            "name": "ordenes",
+            "type": "IList<OrdenCompra>",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "InsertarOrden",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "conexion",
+            "type": "SqlConnection",
+            "default": ""
+          },
+          {
+            "name": "transaccion",
+            "type": "SqlTransaction",
+            "default": ""
+          },
+          {
+            "name": "orden",
+            "type": "OrdenCompra",
+            "default": ""
+          }
+        ],
+        "visibility": "Package",
+        "static": true,
         "abstract": false
       },
       {
@@ -2878,53 +2928,13 @@
         "visibility": "Public"
       },
       {
-        "name": "IdOrdenCompra",
-        "type": "int",
-        "visibility": "Public"
-      },
-      {
-        "name": "IdProveedor",
-        "type": "int",
-        "visibility": "Public"
-      },
-      {
-        "name": "Fecha",
-        "type": "DateTime",
-        "visibility": "Public"
-      },
-      {
-        "name": "Total",
-        "type": "decimal",
-        "visibility": "Public"
-      },
-      {
-        "name": "Estado",
+        "name": "RutaArchivoPrueba",
         "type": "string",
         "visibility": "Public"
       },
       {
-        "name": "CreadaPor",
-        "type": "string",
-        "visibility": "Public"
-      },
-      {
-        "name": "Unidades",
-        "type": "int",
-        "visibility": "Public"
-      },
-      {
-        "name": "Orden",
-        "type": "OrdenCompra",
-        "visibility": "Public"
-      },
-      {
-        "name": "IdOrdenCompra",
-        "type": "int",
-        "visibility": "Public"
-      },
-      {
-        "name": "Descripcion",
-        "type": "string",
+        "name": "ConfirmarImportacionPrueba",
+        "type": "bool",
         "visibility": "Public"
       }
     ],
@@ -3094,20 +3104,6 @@
         "visibility": "Private",
         "static": false,
         "abstract": false
-      },
-      {
-        "name": "Crear",
-        "type": "OrdenCompraVista",
-        "parameters": [
-          {
-            "name": "orden",
-            "type": "OrdenCompra",
-            "default": ""
-          }
-        ],
-        "visibility": "Public",
-        "static": true,
-        "abstract": false
       }
     ],
     "abstract": false,
@@ -3222,121 +3218,572 @@
     "proposed": false,
     "namespace": "UI.UserControls"
   },
-  "EvaluacionProveedor": {
-    "key": "EvaluacionProveedor",
-    "name": "EvaluacionProveedor",
-    "x": 330,
-    "y": 290,
-    "w": 360,
-    "h": 410,
+  "SolicitudEvaluacion": {
+    "key": "SolicitudEvaluacion",
+    "name": "SolicitudEvaluacion",
     "kind": "Class",
-    "stereotype": "diseño N03",
+    "stereotype": "BE",
     "attributes": [
       {
-        "name": "IdEvaluacion",
-        "type": "int"
-      },
-      {
-        "name": "IdProveedor",
-        "type": "int"
-      },
-      {
         "name": "IdProducto",
-        "type": "int"
+        "type": "int",
+        "visibility": "Public"
       },
       {
-        "name": "FechaEvaluacion",
-        "type": "DateTime"
-      },
-      {
-        "name": "PuntajePrestigio",
-        "type": "decimal"
-      },
-      {
-        "name": "PuntajePrecio",
-        "type": "decimal"
-      },
-      {
-        "name": "PuntajeAntiguedad",
-        "type": "decimal"
-      },
-      {
-        "name": "PesoPrestigio",
-        "type": "decimal"
+        "name": "Cantidad",
+        "type": "int",
+        "visibility": "Public"
       },
       {
         "name": "PesoPrecio",
-        "type": "decimal"
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "PesoPrestigio",
+        "type": "decimal",
+        "visibility": "Public"
       },
       {
         "name": "PesoAntiguedad",
-        "type": "decimal"
+        "type": "decimal",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [],
+    "abstract": false,
+    "notes": "BE/EvaluacionProveedor.cs",
+    "source": "BE/EvaluacionProveedor.cs",
+    "proposed": false,
+    "namespace": "BE"
+  },
+  "DatosEvaluacion": {
+    "key": "DatosEvaluacion",
+    "name": "DatosEvaluacion",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "FechaCorte",
+        "type": "DateTime",
+        "visibility": "Public"
+      },
+      {
+        "name": "Producto",
+        "type": "Producto",
+        "visibility": "Public"
+      },
+      {
+        "name": "StockDisponible",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "ComprasPendientes",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "UnidadesVendidas90Dias",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "ImporteNetoVentas90Dias",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "Ofertas",
+        "type": "List<OfertaEvaluable>",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [],
+    "abstract": false,
+    "notes": "BE/EvaluacionProveedor.cs",
+    "source": "BE/EvaluacionProveedor.cs",
+    "proposed": false,
+    "namespace": "BE"
+  },
+  "OfertaEvaluable": {
+    "key": "OfertaEvaluable",
+    "name": "OfertaEvaluable",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdProveedor",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Proveedor",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Activo",
+        "type": "bool",
+        "visibility": "Public"
+      },
+      {
+        "name": "AntiguedadMercado",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "IndicePrestigio",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdCotizacion",
+        "type": "int?",
+        "visibility": "Public"
+      },
+      {
+        "name": "FechaEmision",
+        "type": "DateTime?",
+        "visibility": "Public"
+      },
+      {
+        "name": "FechaVigencia",
+        "type": "DateTime?",
+        "visibility": "Public"
+      },
+      {
+        "name": "PrecioUnitario",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "PlazoEntregaDias",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "UnidadesCompradas180Dias",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "UnidadesRecibidas180Dias",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "ImporteComprado180Dias",
+        "type": "decimal",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [],
+    "abstract": false,
+    "notes": "BE/EvaluacionProveedor.cs",
+    "source": "BE/EvaluacionProveedor.cs",
+    "proposed": false,
+    "namespace": "BE"
+  },
+  "ResultadoProveedor": {
+    "key": "ResultadoProveedor",
+    "name": "ResultadoProveedor",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdProveedor",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Proveedor",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdCotizacion",
+        "type": "int?",
+        "visibility": "Public"
+      },
+      {
+        "name": "PrecioUnitario",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "PlazoEntregaDias",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "CostoTotal",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "MargenEstimado",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "BeneficioBrutoEstimado",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "PuntajePrecio",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "PuntajePrestigio",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "PuntajeAntiguedad",
+        "type": "decimal",
+        "visibility": "Public"
       },
       {
         "name": "PuntajePonderadoFinal",
-        "type": "decimal"
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "Elegible",
+        "type": "bool",
+        "visibility": "Public"
       },
       {
         "name": "Fundamentos",
-        "type": "string"
+        "type": "string",
+        "visibility": "Public"
       },
       {
-        "name": "EsPrioritario",
-        "type": "bool"
-      }
-    ],
-    "fontSize": 12,
-    "proposed": true,
-    "notes": "Diseño N03: clase y operación propuestas, todavía sin implementación C#.",
-    "methods": [
+        "name": "Advertencias",
+        "type": "string",
+        "visibility": "Public"
+      },
       {
-        "name": "CalcularPuntajePonderado",
-        "type": "decimal",
-        "parameters": [],
+        "name": "UnidadesCompradas180Dias",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "UnidadesRecibidas180Dias",
+        "type": "int",
         "visibility": "Public"
       }
-    ]
+    ],
+    "methods": [],
+    "abstract": false,
+    "notes": "BE/EvaluacionProveedor.cs",
+    "source": "BE/EvaluacionProveedor.cs",
+    "proposed": false,
+    "namespace": "BE"
+  },
+  "EvaluacionProveedor": {
+    "key": "EvaluacionProveedor",
+    "name": "EvaluacionProveedor",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdEvaluacion",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "FechaEvaluacion",
+        "type": "DateTime",
+        "visibility": "Public"
+      },
+      {
+        "name": "Responsable",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "Solicitud",
+        "type": "SolicitudEvaluacion",
+        "visibility": "Public"
+      },
+      {
+        "name": "Datos",
+        "type": "DatosEvaluacion",
+        "visibility": "Public"
+      },
+      {
+        "name": "FirmaDatos",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "CantidadSugerida",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "PrecioVentaReferencia",
+        "type": "decimal",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdProveedorRecomendado",
+        "type": "int?",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdProveedorSeleccionado",
+        "type": "int?",
+        "visibility": "Public"
+      },
+      {
+        "name": "MotivoSeleccion",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "SeleccionadaPor",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "FechaSeleccion",
+        "type": "DateTime?",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdOrdenCompra",
+        "type": "int?",
+        "visibility": "Public"
+      },
+      {
+        "name": "Resultados",
+        "type": "List<ResultadoProveedor>",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [],
+    "abstract": false,
+    "notes": "BE/EvaluacionProveedor.cs",
+    "source": "BE/EvaluacionProveedor.cs",
+    "proposed": false,
+    "namespace": "BE"
+  },
+  "ResumenEvaluacion": {
+    "key": "ResumenEvaluacion",
+    "name": "ResumenEvaluacion",
+    "kind": "Class",
+    "stereotype": "BE",
+    "attributes": [
+      {
+        "name": "IdEvaluacion",
+        "type": "int",
+        "visibility": "Public"
+      },
+      {
+        "name": "Fecha",
+        "type": "DateTime",
+        "visibility": "Public"
+      },
+      {
+        "name": "Responsable",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "ProveedorSeleccionado",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "IdOrdenCompra",
+        "type": "int?",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [],
+    "abstract": false,
+    "notes": "BE/EvaluacionProveedor.cs",
+    "source": "BE/EvaluacionProveedor.cs",
+    "proposed": false,
+    "namespace": "BE"
   },
   "EvaluacionProveedorBLL": {
     "key": "EvaluacionProveedorBLL",
     "name": "EvaluacionProveedorBLL",
     "kind": "Class",
-    "stereotype": "propuesto N03",
-    "proposed": true,
-    "attributes": [],
-    "notes": "Diseño N03; no existe todavía en BLL.",
+    "stereotype": "BLL",
+    "attributes": [
+      {
+        "name": "repositorio",
+        "type": "IEvaluacionProveedorRepository",
+        "visibility": "Private"
+      },
+      {
+        "name": "obtenerUsuario",
+        "type": "Func<Usuario>",
+        "visibility": "Private"
+      },
+      {
+        "name": "reloj",
+        "type": "Func<DateTime>",
+        "visibility": "Private"
+      }
+    ],
     "methods": [
       {
         "name": "Evaluar",
         "type": "EvaluacionProveedor",
         "parameters": [
           {
-            "name": "evaluacion",
-            "type": "EvaluacionProveedor",
+            "name": "solicitud",
+            "type": "SolicitudEvaluacion",
             "default": ""
           }
         ],
-        "visibility": "Public"
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "Obtener",
+        "type": "EvaluacionProveedor",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ConsultarHistorial",
+        "type": "IList<ResumenEvaluacion>",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "SeleccionarPrioritario",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "idProveedor",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "motivo",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "CrearOrdenBorrador",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
       },
       {
         "name": "ValidarEvaluacion",
         "type": "void",
         "parameters": [
           {
-            "name": "evaluacion",
-            "type": "EvaluacionProveedor",
+            "name": "s",
+            "type": "SolicitudEvaluacion",
             "default": ""
           }
         ],
-        "visibility": "Public"
+        "visibility": "Public",
+        "static": true,
+        "abstract": false
       },
       {
-        "name": "SeleccionarPrioritario",
+        "name": "Calcular",
         "type": "EvaluacionProveedor",
         "parameters": [
           {
-            "name": "evaluaciones",
-            "type": "List<EvaluacionProveedor>",
+            "name": "s",
+            "type": "SolicitudEvaluacion",
+            "default": ""
+          },
+          {
+            "name": "datos",
+            "type": "DatosEvaluacion",
+            "default": ""
+          },
+          {
+            "name": "fecha",
+            "type": "DateTime",
+            "default": ""
+          },
+          {
+            "name": "responsable",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": true,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "BLL/EvaluacionProveedorBLL.cs",
+    "source": "BLL/EvaluacionProveedorBLL.cs",
+    "proposed": false,
+    "namespace": "BLL"
+  },
+  "IEvaluacionProveedorRepository": {
+    "key": "IEvaluacionProveedorRepository",
+    "name": "IEvaluacionProveedorRepository",
+    "kind": "Interface",
+    "stereotype": "interface",
+    "attributes": [],
+    "methods": [
+      {
+        "name": "ObtenerDatos",
+        "type": "DatosEvaluacion",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "fechaCorte",
+            "type": "DateTime",
             "default": ""
           }
         ],
@@ -3353,8 +3800,402 @@
           }
         ],
         "visibility": "Public"
+      },
+      {
+        "name": "ObtenerEvaluacion",
+        "type": "EvaluacionProveedor",
+        "parameters": [
+          {
+            "name": "idEvaluacion",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "ListarHistorial",
+        "type": "IList<ResumenEvaluacion>",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "SeleccionarPrioritario",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "idEvaluacion",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "idProveedor",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "motivo",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "responsable",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
+      },
+      {
+        "name": "CrearOrdenBorrador",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "idEvaluacion",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "responsable",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public"
       }
-    ]
+    ],
+    "abstract": false,
+    "notes": "DAL/Interfaces/IEvaluacionProveedorRepository.cs",
+    "source": "DAL/Interfaces/IEvaluacionProveedorRepository.cs",
+    "proposed": false,
+    "namespace": "DAL.Interfaces"
+  },
+  "EvaluacionProveedorDAL": {
+    "key": "EvaluacionProveedorDAL",
+    "name": "EvaluacionProveedorDAL",
+    "kind": "Class",
+    "stereotype": "DAL",
+    "attributes": [
+      {
+        "name": "Instancia",
+        "type": "EvaluacionProveedorDAL",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "ObtenerDatos",
+        "type": "DatosEvaluacion",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "fechaCorte",
+            "type": "DateTime",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "LeerDatos",
+        "type": "DatosEvaluacion",
+        "parameters": [
+          {
+            "name": "c",
+            "type": "SqlConnection",
+            "default": ""
+          },
+          {
+            "name": "t",
+            "type": "SqlTransaction",
+            "default": ""
+          },
+          {
+            "name": "producto",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "fecha",
+            "type": "DateTime",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": true,
+        "abstract": false
+      },
+      {
+        "name": "GuardarEvaluacion",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "e",
+            "type": "EvaluacionProveedor",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "Leer",
+        "type": "EvaluacionProveedor",
+        "parameters": [
+          {
+            "name": "c",
+            "type": "SqlConnection",
+            "default": ""
+          },
+          {
+            "name": "t",
+            "type": "SqlTransaction",
+            "default": ""
+          },
+          {
+            "name": "id",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "bloquear",
+            "type": "bool",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": true,
+        "abstract": false
+      },
+      {
+        "name": "ObtenerEvaluacion",
+        "type": "EvaluacionProveedor",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ListarHistorial",
+        "type": "IList<ResumenEvaluacion>",
+        "parameters": [
+          {
+            "name": "producto",
+            "type": "int",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ComprobarVigencia",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "c",
+            "type": "SqlConnection",
+            "default": ""
+          },
+          {
+            "name": "t",
+            "type": "SqlTransaction",
+            "default": ""
+          },
+          {
+            "name": "e",
+            "type": "EvaluacionProveedor",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": true,
+        "abstract": false
+      },
+      {
+        "name": "SeleccionarPrioritario",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "proveedor",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "motivo",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "responsable",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "CrearOrdenBorrador",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "int",
+            "default": ""
+          },
+          {
+            "name": "responsable",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "DAL/EvaluacionProveedorDAL.cs",
+    "source": "DAL/EvaluacionProveedorDAL.cs",
+    "proposed": false,
+    "namespace": "DAL"
+  },
+  "ArchivoEvaluacion": {
+    "key": "ArchivoEvaluacion",
+    "name": "ArchivoEvaluacion",
+    "kind": "Class",
+    "stereotype": "Servicios",
+    "attributes": [],
+    "methods": [
+      {
+        "name": "Serializar",
+        "type": "string",
+        "parameters": [
+          {
+            "name": "valor",
+            "type": "T",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": true,
+        "abstract": false
+      },
+      {
+        "name": "Leer",
+        "type": "EvaluacionProveedor",
+        "parameters": [
+          {
+            "name": "xml",
+            "type": "string",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": true,
+        "abstract": false
+      },
+      {
+        "name": "Firma",
+        "type": "string",
+        "parameters": [
+          {
+            "name": "datos",
+            "type": "DatosEvaluacion",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": true,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "Servicios/ArchivoEvaluacion.cs",
+    "source": "Servicios/ArchivoEvaluacion.cs",
+    "proposed": false,
+    "namespace": "Servicios"
+  },
+  "UC_EvaluacionProveedores": {
+    "key": "UC_EvaluacionProveedores",
+    "name": "UC_EvaluacionProveedores",
+    "kind": "Class",
+    "stereotype": "UI",
+    "attributes": [
+      {
+        "name": "ModoPrueba",
+        "type": "bool",
+        "visibility": "Public"
+      },
+      {
+        "name": "UltimoError",
+        "type": "string",
+        "visibility": "Public"
+      },
+      {
+        "name": "UltimoMensaje",
+        "type": "string",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "Comparar",
+        "type": "void",
+        "parameters": [],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "Confirmar",
+        "type": "void",
+        "parameters": [],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "CrearOrden",
+        "type": "void",
+        "parameters": [],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "UI/UserControls/UC_EvaluacionProveedores.cs",
+    "source": "UI/UserControls/UC_EvaluacionProveedores.cs",
+    "proposed": false,
+    "namespace": "UI.UserControls"
   },
   "MarketingBLL": {
     "key": "MarketingBLL",

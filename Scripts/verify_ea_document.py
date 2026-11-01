@@ -21,11 +21,22 @@ def tables(document):
             for table in document.tables]
 
 
-def verify(baseline, current, images, reviewed_images=None, use_case_replacements=None):
+def verify(baseline, current, images, reviewed_images=None, use_case_replacements=None, paragraph_replacements=None):
     before, after = Document(baseline), Document(current)
-    marker = "2.5 Diagramas de Secuencia de Negocio"
+    marker = next(p.text for p in before.paragraphs if 'Diagramas de Secuencia de Negocio' in p.text)
     cut = next(i for i, p in enumerate(before.paragraphs) if p.text == marker)
     assert [p.text for p in before.paragraphs[:cut]] == [p.text for p in after.paragraphs[:cut]], "Earlier paragraphs changed"
+    paragraph_changes = json.loads(Path(paragraph_replacements).read_text(encoding='utf-8')) if paragraph_replacements else []
+    if paragraph_changes:
+        expected_text = [p.text for p in before.paragraphs if p.text.strip()]
+        for change in paragraph_changes:
+            if 'old' in change:
+                assert expected_text.count(change['old']) == 1, 'Replacement must identify exactly one paragraph'
+                expected_text[expected_text.index(change['old'])] = change['new']
+            else:
+                assert expected_text.count(change['after']) == 1, 'Insertion anchor must be unique'
+                expected_text.insert(expected_text.index(change['after']) + 1, change['new'])
+        assert expected_text == [p.text for p in after.paragraphs if p.text.strip()], 'Unexpected document text changes'
     expected_tables = tables(before)
     changes = json.loads(Path(use_case_replacements).read_text(encoding='utf-8')) if use_case_replacements else []
     for table in expected_tables:
@@ -35,6 +46,17 @@ def verify(baseline, current, images, reviewed_images=None, use_case_replacement
                 if change['code'] in codes and row[0]==change['field']:
                     row[1]='\n'.join(change['new'] if line==change['old'] else line for line in row[1].split('\n'))
     assert expected_tables == tables(after), "Table changes differ from the approved use-case replacements"
+    def earlier_images(document):
+        preserved = Counter()
+        for paragraph in document.paragraphs:
+            if paragraph.text.startswith('2.3 Diagrama de Casos de Uso del Negocio'):
+                break
+            for blip in paragraph._p.findall('.//{http://schemas.openxmlformats.org/drawingml/2006/main}blip'):
+                blob = document.part.related_parts[blip.get('{http://schemas.openxmlformats.org/officeDocument/2006/relationships}embed')].blob
+                preserved[hashlib.sha256(blob).hexdigest()] += 1
+        return preserved
+    preserved_images = earlier_images(before)
+    assert preserved_images == earlier_images(after), 'Unrelated earlier images changed'
     expected = {pixels(path): path.stem for path in Path(images).glob("*.png")}
     native = {path.stem: path for path in Path(images).glob("*.png")}
     downsampled = []
@@ -44,6 +66,8 @@ def verify(baseline, current, images, reviewed_images=None, use_case_replacement
     embed = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}embed"
     hits, placements = [], []
     section, heading = "", ""
+    activity_section = next(p.text.split()[0] for p in after.paragraphs if 'Diagramas de Actividad de Negocio' in p.text)
+    sequence_section = marker.split()[0]
     for paragraph in after.paragraphs:
         if paragraph.text.strip():
             heading = paragraph.text
@@ -53,16 +77,17 @@ def verify(baseline, current, images, reviewed_images=None, use_case_replacement
             part = after.part.related_parts[blip.get(embed)]
             code = expected.get(pixels(BytesIO(part.blob)))
             if code is None:
-                # Google Docs reduces uploaded images wider than 2048 pixels.
+                # Google Docs limits either image dimension to 2048 pixels.
                 # Require both matching aspect ratio and near-identical resampled pixels.
                 with Image.open(BytesIO(part.blob)) as uploaded:
                     uploaded = uploaded.convert('RGB')
                     candidates = []
                     for name, path in native.items():
                         with Image.open(path) as source:
-                            if source.width <= 2048 or uploaded.width != 2048:
+                            if max(source.size) <= 2048 or max(uploaded.size) != 2048:
                                 continue
-                            if abs(uploaded.height - source.height * 2048 / source.width) > 1:
+                            scale = 2048 / max(source.size)
+                            if any(abs(actual - original * scale) > 1 for actual, original in zip(uploaded.size, source.size)):
                                 continue
                             source = source.convert('RGB')
                             error = min(sum(ImageStat.Stat(ImageChops.difference(uploaded,
@@ -89,13 +114,15 @@ def verify(baseline, current, images, reviewed_images=None, use_case_replacement
                 for crop in paragraph._p.findall(".//a:srcRect", ns):
                     assert all(int(value) == 0 for value in crop.attrib.values()), f"Cropped image: {code}"
                 required = ("2.3" if code.endswith("-01") and code.startswith("N") else
-                            "2.4" if code.endswith("-02") else
-                            "2.5" if "-06" in code else
+                            activity_section if code.endswith("-02") else
+                            sequence_section if "-06" in code else
                             "G08" if "-07" in code or code == "G08-01" else "G07")
                 assert section.startswith(required), f"Wrong section for {code}: {section}"
     assert set(hits) == set(expected.values()), f"Missing EA diagrams: {sorted(set(expected.values()) - set(hits))}"
     assert all(count == 1 for count in Counter(hits).values()), "Duplicate EA diagram"
     return {"unchanged_prefix_paragraphs": cut, "preserved_tables": len(after.tables), "authorized_use_case_paragraph_changes": len(changes),
+            "preserved_earlier_images": sum(preserved_images.values()),
+            "authorized_document_paragraph_changes": len(paragraph_changes),
             "total_images": len(after.inline_shapes), "unique_ea_diagrams": len(hits),
             "pixel_exact": not downsampled and not visual_matches, "google_docs_downsampled": downsampled,
             "visually_reviewed_images": visual_matches,
@@ -110,8 +137,9 @@ if __name__ == "__main__":
     parser.add_argument("--report", type=Path, help="Optional JSON verification report; source documents are never modified")
     parser.add_argument("--reviewed-images", type=Path, help="Explicit visual reviews bound to native and exported file SHA256 hashes")
     parser.add_argument("--use-case-replacements", type=Path, help="Exact, code- and field-scoped authorized use-case text replacements")
+    parser.add_argument("--paragraph-replacements", type=Path, help="Exact paragraph replacements and anchored insertions; all remaining text must match")
     args = parser.parse_args()
-    report = json.dumps(verify(args.baseline, args.current, args.images, args.reviewed_images,args.use_case_replacements), ensure_ascii=True, indent=2)
+    report = json.dumps(verify(args.baseline, args.current, args.images, args.reviewed_images,args.use_case_replacements,args.paragraph_replacements), ensure_ascii=True, indent=2)
     if args.report:
         args.report.write_text(report + '\n', encoding='utf-8')
     print(report)
