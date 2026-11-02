@@ -27,7 +27,7 @@ def verify(baseline, current, images, reviewed_images=None, use_case_replacement
     cut = next(i for i, p in enumerate(before.paragraphs) if p.text == marker)
     assert [p.text for p in before.paragraphs[:cut]] == [p.text for p in after.paragraphs[:cut]], "Earlier paragraphs changed"
     paragraph_changes = json.loads(Path(paragraph_replacements).read_text(encoding='utf-8')) if paragraph_replacements else []
-    if paragraph_changes:
+    if paragraph_replacements:
         expected_text = [p.text for p in before.paragraphs if p.text.strip()]
         for change in paragraph_changes:
             if 'old' in change:

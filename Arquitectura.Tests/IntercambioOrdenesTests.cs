@@ -13,6 +13,42 @@ namespace Arquitectura.Tests;
 public class IntercambioOrdenesTests
 {
     [TestMethod]
+    public void Ejemplo_TresOrdenesImportablesConCatalogoActualSinGuardarCompras()
+    {
+        using var f = new Fixture();
+        f.Proveedores.Datos[11] = new Proveedor { IdProveedor = 11, Cuit = "00000000001", Activo = false };
+        f.Productos.Datos[21] = new Producto { IdProducto = 21, Codigo = "INACTIVO", Activo = false };
+        var ejemplo = f.Bll.CrearEjemplo();
+        var xml = OrdenesXml.Serializar(ejemplo);
+        File.WriteAllText(f.Xml, xml, new System.Text.UTF8Encoding(false));
+        var copia = OrdenesXml.Leer(f.Xml);
+        Assert.HasCount(3, copia.Ordenes);
+        Assert.AreEqual(3, f.Bll.ValidarImportacion(copia));
+        Assert.IsTrue(copia.Ordenes.All(o => o.ProveedorCuit == "99000000001" &&
+            o.Estado == EstadoOrdenCompra.Borrador && o.Detalles.Single().ProductoCodigo == "PERF-ÁMBAR"));
+        Assert.AreEqual(3, copia.Ordenes.Select(o => o.IdOrdenOrigen).Distinct().Count());
+        StringAssert.Contains(xml, "encoding=\"utf-8\"");
+        StringAssert.Contains(xml, "&amp;");
+        Assert.HasCount(1, f.Repo.Ordenes);
+        Assert.IsEmpty(f.Registro.Actividades);
+    }
+
+    [TestMethod]
+    public void Ejemplo_RequiereActorYCatalogosActivos()
+    {
+        using var f = new Fixture();
+        f.Actor = null;
+        Assert.Throws<UnauthorizedAccessException>(() => f.Bll.CrearEjemplo());
+        f.Actor = new Usuario { Email = "compras@example.test" };
+        f.Actor.Permisos.Add(new Patente { PermisoAsociado = TipoPermiso.Aprovisionamiento_Gestion });
+        f.Proveedores.Datos[10].Activo = false;
+        Assert.Throws<InvalidOperationException>(() => f.Bll.CrearEjemplo());
+        f.Proveedores.Datos[10].Activo = true;
+        f.Productos.Datos[20].Activo = false;
+        Assert.Throws<InvalidOperationException>(() => f.Bll.CrearEjemplo());
+    }
+
+    [TestMethod]
     public void XmlSerializer_Roundtrip_ConservaMetadatosYDetalles()
     {
         using var f = new Fixture();

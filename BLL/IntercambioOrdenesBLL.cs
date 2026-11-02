@@ -70,6 +70,34 @@ namespace BLL
             return PrepararImportacion(archivo).Count;
         }
 
+        public ArchivoOrdenesCompra CrearEjemplo()
+        {
+            ExigirActor();
+            var disponibles = proveedores.Listar(true).Where(p => p.Activo).OrderBy(p => p.Cuit).Take(3).ToList();
+            var perfumes = productos.Listar(true).Where(p => p.Activo).OrderBy(p => p.Codigo).Take(3).ToList();
+            if (disponibles.Count == 0 || perfumes.Count == 0)
+                throw new InvalidOperationException("Para generar el XML de ejemplo debe existir al menos un proveedor y un perfume activos.");
+            var archivo = new ArchivoOrdenesCompra { Version = 1, FechaExportacionUtc = DateTime.UtcNow };
+            for (int i = 0; i < 3; i++)
+            {
+                Proveedor proveedor = disponibles[i % disponibles.Count];
+                Producto producto = perfumes[i % perfumes.Count];
+                // Illustrative quantities/prices, never quotations or persisted purchases.
+                int cantidad = (i + 1) * 5;
+                decimal precio = 1000m + i * 500m;
+                archivo.Ordenes.Add(new OrdenCompraArchivo {
+                    IdOrdenOrigen = i + 1, ProveedorCuit = proveedor.Cuit, ProveedorNombre = proveedor.RazonSocial,
+                    FechaEmision = DateTime.Today, Estado = EstadoOrdenCompra.Borrador,
+                    Total = cantidad * precio, CreadaPor = "EJEMPLO XML",
+                    Detalles = new List<DetalleOrdenArchivo> { new DetalleOrdenArchivo {
+                        ProductoCodigo = producto.Codigo, ProductoNombre = producto.Nombre,
+                        Cantidad = cantidad, CantidadRecibida = 0, PrecioUnitario = precio } }
+                });
+            }
+            OrdenesXml.Validar(archivo);
+            return archivo;
+        }
+
         public List<int> Importar(ArchivoOrdenesCompra archivo)
         {
             // Revalidate after the confirmation dialog; never persist a previously trusted preview.

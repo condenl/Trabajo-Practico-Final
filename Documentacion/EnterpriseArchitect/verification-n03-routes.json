@@ -1,0 +1,156 @@
+﻿[
+    {
+        "code":  "N03-04",
+        "relations":  4,
+        "intersections":  0,
+        "sharedSegments":  0,
+        "throughClasses":  0,
+        "nativeRoutes":  [
+                             {
+                                 "source":  "EvaluacionProveedor",
+                                 "target":  "SolicitudEvaluacion",
+                                 "kind":  "Association",
+                                 "points":  [
+                                                {
+                                                    "x":  410,
+                                                    "y":  202
+                                                },
+                                                {
+                                                    "x":  490,
+                                                    "y":  202
+                                                }
+                                            ]
+                             },
+                             {
+                                 "source":  "EvaluacionProveedor",
+                                 "target":  "DatosEvaluacion",
+                                 "kind":  "Association",
+                                 "points":  [
+                                                {
+                                                    "x":  220,
+                                                    "y":  375
+                                                },
+                                                {
+                                                    "x":  220,
+                                                    "y":  390
+                                                }
+                                            ]
+                             },
+                             {
+                                 "source":  "EvaluacionProveedor",
+                                 "target":  "ResultadoProveedor",
+                                 "kind":  "Association",
+                                 "points":  [
+                                                {
+                                                    "x":  30,
+                                                    "y":  202
+                                                },
+                                                {
+                                                    "x":  -5,
+                                                    "y":  202
+                                                },
+                                                {
+                                                    "x":  -5,
+                                                    "y":  905
+                                                },
+                                                {
+                                                    "x":  30,
+                                                    "y":  905
+                                                }
+                                            ]
+                             },
+                             {
+                                 "source":  "DatosEvaluacion",
+                                 "target":  "OfertaEvaluable",
+                                 "kind":  "Association",
+                                 "points":  [
+                                                {
+                                                    "x":  410,
+                                                    "y":  545
+                                                },
+                                                {
+                                                    "x":  490,
+                                                    "y":  545
+                                                }
+                                            ]
+                             }
+                         ]
+    },
+    {
+        "code":  "N03-05",
+        "relations":  4,
+        "intersections":  0,
+        "sharedSegments":  0,
+        "throughClasses":  0,
+        "nativeRoutes":  [
+                             {
+                                 "source":  "EvaluacionProveedorBLL",
+                                 "target":  "IEvaluacionProveedorRepository",
+                                 "kind":  "Dependency",
+                                 "points":  [
+                                                {
+                                                    "x":  370,
+                                                    "y":  290
+                                                },
+                                                {
+                                                    "x":  370,
+                                                    "y":  305
+                                                }
+                                            ]
+                             },
+                             {
+                                 "source":  "EvaluacionProveedorBLL",
+                                 "target":  "ArchivoEvaluacion",
+                                 "kind":  "Dependency",
+                                 "points":  [
+                                                {
+                                                    "x":  710,
+                                                    "y":  160
+                                                },
+                                                {
+                                                    "x":  755,
+                                                    "y":  160
+                                                },
+                                                {
+                                                    "x":  755,
+                                                    "y":  857
+                                                },
+                                                {
+                                                    "x":  710,
+                                                    "y":  857
+                                                }
+                                            ]
+                             },
+                             {
+                                 "source":  "EvaluacionProveedorDAL",
+                                 "target":  "ArchivoEvaluacion",
+                                 "kind":  "Dependency",
+                                 "points":  [
+                                                {
+                                                    "x":  370,
+                                                    "y":  772
+                                                },
+                                                {
+                                                    "x":  370,
+                                                    "y":  787
+                                                }
+                                            ]
+                             },
+                             {
+                                 "source":  "EvaluacionProveedorDAL",
+                                 "target":  "IEvaluacionProveedorRepository",
+                                 "kind":  "Realisation",
+                                 "points":  [
+                                                {
+                                                    "x":  370,
+                                                    "y":  512
+                                                },
+                                                {
+                                                    "x":  370,
+                                                    "y":  497
+                                                }
+                                            ]
+                             }
+                         ]
+    }
+]

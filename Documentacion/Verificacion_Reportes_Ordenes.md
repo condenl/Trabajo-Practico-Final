@@ -2,6 +2,16 @@
 
 Fecha: 31/10/2026.
 
+## Ampliación del 01/11/2026: Sample XML
+
+Se agregó el botón **Sample XML** junto a Importar XML. Copia tres órdenes en formato `ArchivoOrdenesCompra` versión 1, generadas con CUIT y códigos activos de la base actual. Cantidades y precios son ilustrativos. Generar/copiar el ejemplo no inserta compras ni movimientos. Con un único proveedor/perfume también se obtienen tres órdenes distintas; sin catálogos activos se informa qué falta.
+
+`Ejemplos/ordenes-compra-3.xml` contiene tres órdenes para los catálogos demo, se valida con el lector real y también se incluye en el instalador.
+
+Validación: **66 pruebas automáticas correctas** y **24 comprobaciones de integración correctas** sobre SQL Server 16. La integración comprobó el archivo demo, el portapapeles real, la importación del XML copiado como tres borradores, la actualización de grilla y la ausencia de cambios de stock. Se usó la base aislada `Perfumeria_Archivos_Test_bf7b18eba3a046fb955f04bbd43de0c5`; la base de desarrollo y `UI/App.config` se conservaron.
+
+Se abrió además el host visual y se hizo clic en Sample XML con el modo de prueba desactivado: el botón se ve completo y el diálogo confirma la copia y explica cómo guardar/importar el archivo. Release y `Installer/build-installer.ps1` compilaron correctamente; `Installer/Output/Perfumeria_Setup_Iteracion2.exe` incluye el botón y el ejemplo.
+
 ## Funcionalidad
 
 En Aprovisionamiento → Órdenes de compra hay tres botones sobre la grilla: Reporte PDF, Exportar XML e Importar XML. Las exportaciones incluyen todo el listado visible y sus detalles. El reporte utiliza PDFsharp/MigraDoc GDI 6.2.4; el intercambio XML usa `System.Xml.Serialization.XmlSerializer`.
