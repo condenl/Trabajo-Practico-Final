@@ -74,11 +74,18 @@ begin
     MsgBox('Abra Servicios desde el menú Inicio de Windows. Busque SQL Server y active el servicio de la instancia elegida.', mbInformation, MB_OK);
 end;
 
+procedure UpdateSqlActions(Code: Integer);
+begin
+  // Offer a download only when the engine is absent or the selected version is too old.
+  SqlDownloadButton.Visible := (Code = 20) or (Code = 22);
+  SqlServicesButton.Visible := Code = 24;
+end;
+
 procedure SqlInstanceChanged(Sender: TObject);
 begin
   SqlStatusLabel.Font.Color := clWindowText;
-  SqlStatusLabel.Caption := 'Pulse Siguiente para comprobar la instancia elegida. Puede usar «Descargar SQL Server» si todavía no instaló el motor.';
-  SqlServicesButton.Visible := False;
+  SqlStatusLabel.Caption := 'Pulse Siguiente para comprobar la instancia elegida.';
+  UpdateSqlActions(0);
 end;
 
 procedure InitializeWizard;
@@ -99,10 +106,11 @@ begin
   SqlDownloadButton.Height := ScaleY(25);
   SqlDownloadButton.Caption := 'Descargar SQL Server';
   SqlDownloadButton.OnClick := @DownloadSqlClick;
+  SqlDownloadButton.Visible := False;
 
   SqlServicesButton := TNewButton.Create(WizardForm);
   SqlServicesButton.Parent := SqlServerPage.Surface;
-  SqlServicesButton.Left := SqlDownloadButton.Left + SqlDownloadButton.Width + ScaleX(8);
+  SqlServicesButton.Left := SqlDownloadButton.Left;
   SqlServicesButton.Top := SqlDownloadButton.Top;
   SqlServicesButton.Width := ScaleX(140);
   SqlServicesButton.Height := SqlDownloadButton.Height;
@@ -118,7 +126,7 @@ begin
   SqlStatusLabel.Height := SqlServerPage.SurfaceHeight - SqlStatusLabel.Top;
   SqlStatusLabel.AutoSize := False;
   SqlStatusLabel.WordWrap := True;
-  SqlStatusLabel.Caption := 'Si falta el motor, pulse «Descargar SQL Server» para abrir Microsoft e instalar Express. Tener SSMS instalado no alcanza. Después indique la instancia y pulse Siguiente para comprobarla.';
+  SqlStatusLabel.Caption := 'Indique una instancia y pulse Siguiente para comprobar la conexión y la versión de SQL Server.';
   SqlServerPage.Edits[0].OnChange := @SqlInstanceChanged;
 end;
 
@@ -151,6 +159,7 @@ begin
         SqlServerPage.Values[0] := SelectedInstance;
       SqlStatusLabel.Caption := GetIniString('Prerequisites', 'Message',
         'No se pudo elegir una instancia automáticamente. Ingrese su nombre y pulse Siguiente.', ResultFile);
+      UpdateSqlActions(ResultCode);
     end
     else
       SqlStatusLabel.Caption := 'No se pudo buscar una instancia automáticamente. Ingrese su nombre y pulse Siguiente.';
@@ -213,6 +222,7 @@ begin
   if CurPageID <> SqlServerPage.ID then exit;
   SqlStatusLabel.Font.Color := clWindowText;
   SqlStatusLabel.Caption := 'Comprobando la conexión y el estado de SQL Server...';
+  UpdateSqlActions(0);
   SqlStatusLabel.Repaint;
   WizardForm.NextButton.Enabled := False;
   try
@@ -221,7 +231,7 @@ begin
     WizardForm.NextButton.Enabled := True;
   end;
   SqlStatusLabel.Caption := Message;
-  SqlServicesButton.Visible := Code = 24;
+  UpdateSqlActions(Code);
   Result := Code = 0;
   if not Result then SqlStatusLabel.Font.Color := clRed;
 end;
@@ -256,6 +266,7 @@ begin
   WizardForm.StatusLabel.Caption := 'Verificando .NET Framework y la conexión con SQL Server...';
   // Always recheck: the chosen instance or its service may have changed since the SQL page.
   ResultCode := CheckPrerequisites(False, Message);
+  UpdateSqlActions(ResultCode);
   if ResultCode = 30 then NeedsRestart := True;
   if ResultCode <> 0 then
     Result := Message + #13#10#13#10 + 'Vuelva a la página «Servidor de base de datos» para corregir la instancia, abrir Servicios o descargar el motor desde Microsoft. Luego vuelva a intentar.';
