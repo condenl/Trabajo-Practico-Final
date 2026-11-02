@@ -11,7 +11,7 @@ Este directorio implementa el entregable **A01 de la Iteracion 2** siguiendo la 
 - verifica que la instancia indicada sea SQL Server 16.x (SQL Server 2022) o superior, incluida 17.x (SQL Server 2025);
 - si falta .NET, lo descarga desde Microsoft en segundo plano, valida su firma digital y lo instala silenciosamente;
 - comprueba la conexión al pulsar Siguiente en la página de SQL y nuevamente antes de instalar; distingue motor ausente, instancia incorrecta y servicio detenido;
-- ofrece **Descargar SQL Server**, que abre la [página oficial de Microsoft en español](https://www.microsoft.com/es-es/sql-server/sql-server-downloads), y **Abrir servicios** cuando corresponde;
+- muestra **Descargar SQL Server** únicamente si el diagnóstico confirma motor ausente o una versión anterior a 16; abre la [página oficial de Microsoft en español](https://www.microsoft.com/es-es/sql-server/sql-server-downloads). Para un servicio detenido muestra **Abrir servicios**;
 - restaura la base inicial si todavia no existe;
 - ejecuta las migraciones idempotentes de N01, N02 y N03;
 - actualiza `UI.exe.config` con la instancia elegida y autenticacion integrada;
@@ -24,6 +24,8 @@ La descarga automática de .NET se guarda en `%APPDATA%\Perfumeria\Prerrequisito
 Al entrar por primera vez en la página de SQL, el asistente consulta las instancias locales y comprueba su conexión y versión. Prioriza una que ya contenga la base `Trabajo Practico Final`; en una instalación nueva, prefiere un servicio Express compatible, luego otros servicios SQL y finalmente LocalDB. Omite servicios detenidos, conexiones fallidas y versiones anteriores a 16. Si no encuentra una opción verificable, deja el campo vacío para indicar el destino manualmente. Los tiempos de conexión de esta búsqueda son acotados y no se descargan componentes ni se crean bases de la aplicación.
 
 El campo sigue siendo editable. Una selección manual o un argumento `/SQLSERVER="instancia"` se respeta y no se reemplaza al retroceder y avanzar. Si se modifica el campo, el mensaje anterior se limpia y se vuelve a comprobar al pulsar Siguiente.
+
+El botón de descarga comienza oculto. Sigue oculto si ya hay una instancia compatible, mientras se comprueba una instancia nueva, ante un nombre incorrecto o un fallo de conexión. Al editar el campo se ocultan las acciones del diagnóstico anterior; reaparecen únicamente las que correspondan al resultado de la nueva comprobación.
 
 
 | Situación | Mensaje y acción del asistente |
