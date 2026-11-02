@@ -310,8 +310,29 @@ namespace UI.UserControls
         private void CargarOrdenes()
         {
             if (!TienePermiso(TipoPermiso.Aprovisionamiento_Gestion)) return;
-            dgvOrdenes.DataSource = aprovisionamientoBLL.ConsultarHistorialCompras(null).Select(OrdenCompraVista.Crear).ToList();
+            MostrarOrdenes(dgvOrdenes, aprovisionamientoBLL.ConsultarHistorialCompras(null));
             btnReporteOrdenesPdf.Enabled = btnExportarOrdenesXml.Enabled = dgvOrdenes.Rows.Count > 0;
+        }
+
+        private void MostrarOrdenes(DataGridView grilla, IEnumerable<OrdenCompra> ordenes)
+        {
+            // Include inactive catalog entries so historical orders keep their names.
+            var proveedores = proveedorBLL.Listar(false).ToDictionary(p => p.IdProveedor);
+            var productos = productoBLL.Listar(false).ToDictionary(p => p.IdProducto);
+            grilla.DataSource = ordenes.Select(o => OrdenCompraVista.Crear(o, proveedores, productos)).ToList();
+            grilla.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            grilla.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            grilla.Columns["IdOrdenCompra"].HeaderText = "Orden";
+            grilla.Columns["IdOrdenCompra"].FillWeight = 50;
+            grilla.Columns["Proveedor"].FillWeight = 140;
+            grilla.Columns["Productos"].HeaderText = "Productos y cantidades";
+            grilla.Columns["Productos"].FillWeight = 240;
+            grilla.Columns["Fecha"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            grilla.Columns["Total"].DefaultCellStyle.Format = "N2";
+            grilla.Columns["Total"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            grilla.Columns["CreadaPor"].HeaderText = "Responsable";
+            grilla.Columns["Unidades"].HeaderText = "Cantidad total";
+            grilla.Columns["Unidades"].FillWeight = 65;
         }
 
         private ArchivoOrdenesCompra ObtenerListadoGrilla()
@@ -401,9 +422,8 @@ namespace UI.UserControls
         private void CargarPendientes()
         {
             if (!TienePermiso(TipoPermiso.Contabilidad_AprobarCompras)) return;
-            dgvPendientes.DataSource = aprovisionamientoBLL.ConsultarHistorialCompras(null)
-                .Where(o => o.Estado == EstadoOrdenCompra.PendienteAprobacion)
-                .Select(OrdenCompraVista.Crear).ToList();
+            MostrarOrdenes(dgvPendientes, aprovisionamientoBLL.ConsultarHistorialCompras(null)
+                .Where(o => o.Estado == EstadoOrdenCompra.PendienteAprobacion));
         }
 
         private void CargarOrdenesRecepcion()
@@ -644,19 +664,29 @@ namespace UI.UserControls
         private sealed class OrdenCompraVista
         {
             public int IdOrdenCompra { get; set; }
-            public int IdProveedor { get; set; }
+            public string Proveedor { get; set; }
+            public string Productos { get; set; }
             public DateTime Fecha { get; set; }
             public decimal Total { get; set; }
             public string Estado { get; set; }
             public string CreadaPor { get; set; }
             public int Unidades { get; set; }
 
-            public static OrdenCompraVista Crear(OrdenCompra orden)
+            public static OrdenCompraVista Crear(OrdenCompra orden, IDictionary<int, Proveedor> proveedores, IDictionary<int, Producto> productos)
             {
+                Proveedor proveedor;
+                proveedores.TryGetValue(orden.IdProveedor, out proveedor);
                 return new OrdenCompraVista
                 {
                     IdOrdenCompra = orden.IdOrdenCompra,
-                    IdProveedor = orden.IdProveedor,
+                    Proveedor = proveedor != null ? proveedor.RazonSocial : "Proveedor no disponible",
+                    Productos = string.Join(Environment.NewLine, orden.Detalles.Select(d =>
+                    {
+                        Producto producto;
+                        productos.TryGetValue(d.IdProducto, out producto);
+                        string nombre = producto != null ? producto.Nombre : "Producto no disponible";
+                        return nombre + " × " + d.Cantidad;
+                    })),
                     Fecha = orden.FechaEmision,
                     Total = orden.Total,
                     Estado = orden.Estado.ToString(),
