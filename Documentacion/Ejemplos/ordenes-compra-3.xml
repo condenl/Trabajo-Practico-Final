@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArchivoOrdenesCompra version="1">
+  <FechaExportacionUtc>2026-11-01T12:00:00Z</FechaExportacionUtc>
+  <Ordenes>
+    <Orden>
+      <IdOrdenOrigen>1</IdOrdenOrigen>
+      <ProveedorCuit>99000000001</ProveedorCuit>
+      <ProveedorNombre>DEMO Proveedor 1</ProveedorNombre>
+      <FechaEmision>2026-11-01T00:00:00</FechaEmision>
+      <Estado>Borrador</Estado>
+      <Total>60000</Total>
+      <CreadaPor>EJEMPLO XML</CreadaPor>
+      <IdUsuarioAprobadorContable p4:nil="true" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" />
+      <FechaAprobacion p4:nil="true" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" />
+      <Detalles>
+        <Detalle>
+          <ProductoCodigo>DEMO-FLORAL</ProductoCodigo>
+          <ProductoNombre>DEMO Floral 50 ml</ProductoNombre>
+          <Cantidad>5</Cantidad>
+          <CantidadRecibida>0</CantidadRecibida>
+          <PrecioUnitario>12000</PrecioUnitario>
+        </Detalle>
+      </Detalles>
+    </Orden>
+    <Orden>
+      <IdOrdenOrigen>2</IdOrdenOrigen>
+      <ProveedorCuit>99000000002</ProveedorCuit>
+      <ProveedorNombre>DEMO Proveedor 2</ProveedorNombre>
+      <FechaEmision>2026-11-01T00:00:00</FechaEmision>
+      <Estado>Borrador</Estado>
+      <Total>180000</Total>
+      <CreadaPor>EJEMPLO XML</CreadaPor>
+      <IdUsuarioAprobadorContable p4:nil="true" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" />
+      <FechaAprobacion p4:nil="true" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" />
+      <Detalles>
+        <Detalle>
+          <ProductoCodigo>DEMO-MADERA</ProductoCodigo>
+          <ProductoNombre>DEMO Madera 100 ml</ProductoNombre>
+          <Cantidad>10</Cantidad>
+          <CantidadRecibida>0</CantidadRecibida>
+          <PrecioUnitario>18000</PrecioUnitario>
+        </Detalle>
+      </Detalles>
+    </Orden>
+    <Orden>
+      <IdOrdenOrigen>3</IdOrdenOrigen>
+      <ProveedorCuit>99000000001</ProveedorCuit>
+      <ProveedorNombre>DEMO Proveedor 1</ProveedorNombre>
+      <FechaEmision>2026-11-01T00:00:00</FechaEmision>
+      <Estado>Borrador</Estado>
+      <Total>135000</Total>
+      <CreadaPor>EJEMPLO XML</CreadaPor>
+      <IdUsuarioAprobadorContable p4:nil="true" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" />
+      <FechaAprobacion p4:nil="true" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" />
+      <Detalles>
+        <Detalle>
+          <ProductoCodigo>DEMO-CITRICO</ProductoCodigo>
+          <ProductoNombre>DEMO Citrico sin stock</ProductoNombre>
+          <Cantidad>15</Cantidad>
+          <CantidadRecibida>0</CantidadRecibida>
+          <PrecioUnitario>9000</PrecioUnitario>
+        </Detalle>
+      </Detalles>
+    </Orden>
+  </Ordenes>
+</ArchivoOrdenesCompra>

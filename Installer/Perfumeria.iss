@@ -33,6 +33,7 @@ Source: "..\UI\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesub
 Source: "bin\SeedDemoActors.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Documentacion\Licencias_Reportes.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Documentacion\Ejemplos\ordenes-compra-3.xml"; DestDir: "{app}\Documentacion\Ejemplos"; Flags: ignoreversion
 Source: "InicializarBaseDatos.ps1"; DestDir: "{app}\Installer"; Flags: ignoreversion
 Source: "VerificarPrerrequisitos.ps1"; DestDir: "{app}\Installer"; Flags: ignoreversion
 Source: "VerificarPrerrequisitos.ps1"; Flags: dontcopy

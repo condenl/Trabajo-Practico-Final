@@ -58,13 +58,29 @@ namespace Servicios
             Validar(archivo);
             ArchivoAtomico.Guardar(ruta, stream =>
             {
-                var serializer = new XmlSerializer(typeof(ArchivoOrdenesCompra));
-                var namespaces = new XmlSerializerNamespaces();
-                namespaces.Add("", "");
-                using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Encoding = new UTF8Encoding(false), Indent = true, CloseOutput = false }))
-                    serializer.Serialize(writer, archivo, namespaces);
+                Escribir(stream, archivo);
                 if (stream.Length > MaximoBytes) throw new InvalidDataException("El XML supera el límite de 10 MB.");
             });
+        }
+
+        public static string Serializar(ArchivoOrdenesCompra archivo)
+        {
+            Validar(archivo);
+            using (var stream = new MemoryStream())
+            {
+                Escribir(stream, archivo);
+                if (stream.Length > MaximoBytes) throw new InvalidDataException("El XML supera el límite de 10 MB.");
+                return Encoding.UTF8.GetString(stream.ToArray());
+            }
+        }
+
+        private static void Escribir(Stream stream, ArchivoOrdenesCompra archivo)
+        {
+            var serializer = new XmlSerializer(typeof(ArchivoOrdenesCompra));
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add("", "");
+            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Encoding = new UTF8Encoding(false), Indent = true, CloseOutput = false }))
+                serializer.Serialize(writer, archivo, namespaces);
         }
 
         public static ArchivoOrdenesCompra Leer(string ruta)

@@ -68,6 +68,17 @@ internal static class TestOrdenesArchivos
                 ui.Controls.OfType<TabControl>().Single().SelectedIndex = 1;
                 Assert(ui.UltimoError == null, "La grilla carga sin errores");
                 int inicial = Count("OrdenCompra"), detalles = Count("DetalleOrdenCompra"), stock = Count("MovimientoStock");
+                var ejemploDemo = OrdenesXml.Leer(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ordenes-compra-3.xml"));
+                Assert(ejemploDemo.Ordenes.Count == 3 && new IntercambioOrdenesBLL().ValidarImportacion(ejemploDemo) == 3,
+                    "Archivo XML de ejemplo incluido contiene tres ordenes compatibles con los catalogos demo");
+                InvokeButton(ui, "btnSampleOrdenesXml");
+                string ejemploRuta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "sample-ordenes.xml");
+                File.WriteAllText(ejemploRuta, Clipboard.GetText(), new System.Text.UTF8Encoding(false));
+                var ejemplo = OrdenesXml.Leer(ejemploRuta);
+                Assert(ui.UltimoError == null && ejemplo.Ordenes.Count == 3 &&
+                    new IntercambioOrdenesBLL().ValidarImportacion(ejemplo) == 3, "Sample XML copia tres ordenes importables del catalogo actual al portapapeles");
+                Assert(Count("OrdenCompra") == inicial && Count("DetalleOrdenCompra") == detalles &&
+                    Count("MovimientoStock") == stock, "Generar ejemplo no crea compras ni movimientos");
                 int unidades = Convert.ToInt32(Query("SELECT SUM(CantidadDisponible) FROM Lote").Rows[0][0]);
                 string root = AppDomain.CurrentDomain.BaseDirectory;
                 ui.RutaArchivoPrueba = Path.Combine(root, "ordenes.xml");
@@ -115,6 +126,13 @@ internal static class TestOrdenesArchivos
                 }
                 catch (SqlException) { }
                 Assert(Count("OrdenCompra") == despues && Count("DetalleOrdenCompra") == antesDetalles, "SQL revierte incluso la primera orden si falla la segunda (rollback real)");
+
+                ui.RutaArchivoPrueba = ejemploRuta;
+                InvokeButton(ui, "btnImportarOrdenesXml");
+                Assert(ui.UltimoError == null && Count("OrdenCompra") == despues + 3 &&
+                    Find<DataGridView>(ui, "dgvOrdenes").Rows.Count == despues + 3,
+                    "El XML copiado por Sample XML se importa como tres borradores y actualiza la grilla");
+                Assert(Count("MovimientoStock") == stock, "Importar el ejemplo no altera stock");
 
                 Usuarios.Logout();
                 var contable = Usuarios.Login("demo.contabilidad@perfumeria.example", "DemoContabilidad2026!");

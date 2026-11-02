@@ -198,7 +198,8 @@ namespace UI.UserControls
             btnReporteOrdenesPdf = Boton("Reporte PDF", "btnReporteOrdenesPdf", GenerarReportePdf);
             btnExportarOrdenesXml = Boton("Exportar XML", "btnExportarOrdenesXml", ExportarOrdenesXml);
             var importar = Boton("Importar XML", "btnImportarOrdenesXml", ImportarOrdenesXml);
-            foreach (Button boton in new[] { btnReporteOrdenesPdf, btnExportarOrdenesXml, importar })
+            var ejemplo = Boton("Sample XML", "btnSampleOrdenesXml", CopiarXmlEjemplo);
+            foreach (Button boton in new[] { btnReporteOrdenesPdf, btnExportarOrdenesXml, importar, ejemplo })
             {
                 boton.Margin = new Padding(3);
                 archivos.Controls.Add(boton);
@@ -382,6 +383,18 @@ namespace UI.UserControls
                 CargarOrdenes();
                 Informar("Se importaron " + ids.Count + " órdenes como borradores. Nuevos IDs: " +
                     string.Join(", ", ids.Take(10)) + (ids.Count > 10 ? "..." : "") + ".");
+            }, null);
+        }
+
+        private void CopiarXmlEjemplo(object sender, EventArgs e)
+        {
+            Ejecutar(delegate
+            {
+                string xml = OrdenesXml.Serializar(intercambioOrdenesBLL.CrearEjemplo());
+                Clipboard.SetDataObject(xml, true, 5, 100);
+                Informar("Se copió al portapapeles un XML con 3 órdenes de ejemplo y precios ilustrativos.\n" +
+                    "Pegue el contenido en un archivo .xml guardado como UTF-8 y ábralo con Importar XML.\n" +
+                    "Todavía no se creó ninguna orden.");
             }, null);
         }
 
