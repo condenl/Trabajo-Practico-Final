@@ -139,7 +139,29 @@ internal static class TestDemoScenarios
                 Assert(before == Snapshot(), "Recepcion rechazada sin efectos parciales");
                 Assert(Purchases.RecepcionarMercaderia(Order(5), Lots(floral, wood, 3, 2, "TEST-PARCIAL")), "Primera recepcion parcial");
                 State(5, EstadoOrdenCompra.RecibidaParcial);
-                Assert(Purchases.RecepcionarMercaderia(Order(5), Lots(floral, wood, 7, 3, "TEST-COMPLETA")), "Completar recepcion emitida");
+                before = Snapshot();
+                var duplicados = Lots(floral, wood, 7, 3, "TEST-ROLLBACK-DUP");
+                duplicados[1].CodigoLote = "TEST-PARCIAL-M";
+                try
+                {
+                    Purchases.RecepcionarMercaderia(Order(5), duplicados);
+                    throw new Exception("La recepcion con lote duplicado debio rechazarse");
+                }
+                catch (InvalidOperationException error)
+                {
+                    string producto = Convert.ToString(Query("SELECT Nombre FROM Producto WHERE IdProducto=@p0", wood).Rows[0][0]);
+                    string proveedor = Convert.ToString(Query("SELECT p.RazonSocial FROM Proveedor p JOIN OrdenCompra o ON o.IdProveedor=p.IdProveedor WHERE o.IdOrdenCompra=@p0", Order(5)).Rows[0][0]);
+                    Assert(error.Message.Contains("TEST-PARCIAL-M") && error.Message.Contains(producto) && error.Message.Contains(proveedor)
+                        && !error.Message.Contains("UQ_Lote_Origen"), "Lote duplicado informa codigo, producto y proveedor sin exponer SQL");
+                }
+                Assert(before == Snapshot(), "Lote duplicado revierte el primer lote, movimientos, cantidades y estado de toda la recepcion");
+                var sinCertificado = Lots(floral, wood, 7, 3, "TEST-COMPLETA");
+                sinCertificado.ForEach(l => l.CertificadoOrigen = null);
+                Assert(Purchases.RecepcionarMercaderia(Order(5), sinCertificado), "Completar recepcion sin certificado opcional");
+                Assert(Query("SELECT IdLote FROM Lote WHERE CodigoLote LIKE 'TEST-COMPLETA-%' AND CertificadoOrigen='' ").Rows.Count == 2,
+                    "Certificado omitido se persiste sin modificar esquema ni inventar datos");
+                Assert(Convert.ToString(Query("SELECT CertificadoOrigen FROM Lote WHERE CodigoLote='TEST-PARCIAL-M'").Rows[0][0]) == "CERT-TEST-PARCIAL-M",
+                    "Los certificados informados siguen guardandose");
                 Assert(Purchases.RecepcionarMercaderia(Order(6), Lots(floral, wood, 6, 3, "TEST-PENDIENTE")), "Completar escenario parcial precargado");
                 State(5, EstadoOrdenCompra.Recibida); State(6, EstadoOrdenCompra.Recibida);
 

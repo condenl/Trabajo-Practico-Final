@@ -12,7 +12,7 @@ namespace Arquitectura.Tests
     public class InventarioBLLTests
     {
         [TestMethod]
-        public void RegistrarIngresoLote_ExigeOrigenYCertificado()
+        public void RegistrarIngresoLote_PermiteOmitirCertificado()
         {
             FakeInventarioRepository repositorio = new FakeInventarioRepository();
             InventarioBLL servicio = new InventarioBLL(repositorio, new FakeRegistroActividad());
@@ -25,7 +25,27 @@ namespace Arquitectura.Tests
                 CantidadIngresada = 2
             };
 
-            Assert.Throws<ArgumentException>(() => servicio.RegistrarIngresoLote(lote));
+            Assert.IsTrue(servicio.RegistrarIngresoLote(lote));
+            Assert.AreEqual(1, lote.IdLote);
+        }
+
+        [TestMethod]
+        public void RegistrarIngresoLote_SigueExigiendoOrigen()
+        {
+            InventarioBLL servicio = new InventarioBLL(new FakeInventarioRepository(), new FakeRegistroActividad());
+            Assert.Throws<ArgumentException>(() => servicio.RegistrarIngresoLote(new Lote {
+                IdProducto = 1, IdProveedor = 1, CodigoLote = "L-1", CantidadIngresada = 2
+            }));
+        }
+
+        [TestMethod]
+        public void RegistrarIngresoLote_ValidaLongitudDelCertificadoOpcional()
+        {
+            InventarioBLL servicio = new InventarioBLL(new FakeInventarioRepository(), new FakeRegistroActividad());
+            Assert.Throws<ArgumentException>(() => servicio.RegistrarIngresoLote(new Lote {
+                IdProducto = 1, IdProveedor = 1, CodigoLote = "L-1", Origen = "Francia",
+                CantidadIngresada = 2, CertificadoOrigen = new string('A', 251)
+            }));
         }
 
         [TestMethod]
