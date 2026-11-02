@@ -114,6 +114,28 @@ namespace DAL
 
         internal static int InsertarLote(SqlConnection conexion, SqlTransaction transaccion, Lote lote)
         {
+            // La lectura bloquea también la clave aún inexistente hasta terminar la recepción.
+            // Así una recepción concurrente no puede insertar el mismo origen entre la validación y el alta.
+            const string sqlExistente = @"
+SELECT p.Nombre, pr.RazonSocial
+FROM Lote l WITH (UPDLOCK, HOLDLOCK)
+INNER JOIN Producto p ON p.IdProducto = l.IdProducto
+INNER JOIN Proveedor pr ON pr.IdProveedor = l.IdProveedor
+WHERE l.IdProducto = @IdProducto AND l.IdProveedor = @IdProveedor AND l.CodigoLote = @CodigoLote;";
+            using (SqlCommand comando = new SqlCommand(sqlExistente, conexion, transaccion))
+            {
+                comando.Parameters.AddWithValue("@IdProducto", lote.IdProducto);
+                comando.Parameters.AddWithValue("@IdProveedor", lote.IdProveedor);
+                comando.Parameters.AddWithValue("@CodigoLote", lote.CodigoLote);
+                using (SqlDataReader lector = comando.ExecuteReader())
+                {
+                    if (lector.Read())
+                        throw new InvalidOperationException(string.Format(
+                            "El lote '{0}' del producto '{1}' y proveedor '{2}' ya está registrado. No se registró el ingreso. Revise la trazabilidad y el código del lote recibido para evitar duplicar mercadería.",
+                            lote.CodigoLote, lector.GetString(0), lector.GetString(1)));
+                }
+            }
+
             const string sql = @"
 INSERT INTO Lote
     (IdProducto, IdProveedor, IdOrdenCompra, CodigoLote, Origen, CertificadoOrigen, FechaVencimiento, FechaRecepcion, CantidadIngresada, CantidadDisponible)
@@ -128,7 +150,7 @@ SELECT CAST(SCOPE_IDENTITY() AS INT);";
                 comando.Parameters.AddWithValue("@IdOrdenCompra", (object)lote.IdOrdenCompra ?? DBNull.Value);
                 comando.Parameters.AddWithValue("@CodigoLote", lote.CodigoLote);
                 comando.Parameters.AddWithValue("@Origen", lote.Origen);
-                comando.Parameters.AddWithValue("@CertificadoOrigen", lote.CertificadoOrigen);
+                comando.Parameters.AddWithValue("@CertificadoOrigen", lote.CertificadoOrigen ?? string.Empty);
                 comando.Parameters.AddWithValue("@FechaVencimiento", (object)lote.FechaVencimiento ?? DBNull.Value);
                 comando.Parameters.AddWithValue("@FechaRecepcion", lote.FechaRecepcion);
                 comando.Parameters.AddWithValue("@CantidadIngresada", lote.CantidadIngresada);

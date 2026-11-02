@@ -67,7 +67,6 @@ namespace UI.UserControls
         private readonly ComboBox cmbRecepcionProducto = Combo("cmbRecepcionProducto");
         private readonly TextBox txtLoteCodigo = new TextBox { Name = "txtLoteCodigo" };
         private readonly TextBox txtLoteOrigen = new TextBox { Name = "txtLoteOrigen" };
-        private readonly TextBox txtLoteCertificado = new TextBox { Name = "txtLoteCertificado" };
         private readonly NumericUpDown nudLoteCantidad = new NumericUpDown { Name = "nudLoteCantidad", Minimum = 1, Maximum = 100000, Value = 1 };
         private readonly DateTimePicker dtpLoteVencimiento = new DateTimePicker { Name = "dtpLoteVencimiento", Value = DateTime.Today.AddYears(2), ShowCheckBox = true, Checked = true };
         private readonly ComboBox cmbInventarioProducto = Combo("cmbInventarioProducto");
@@ -243,7 +242,6 @@ namespace UI.UserControls
             AgregarCampo(recepcion, "Perfume", cmbRecepcionProducto, 200);
             AgregarCampo(recepcion, "Código lote", txtLoteCodigo, 110);
             AgregarCampo(recepcion, "Origen", txtLoteOrigen, 130);
-            AgregarCampo(recepcion, "Certificado", txtLoteCertificado, 130);
             AgregarCampo(recepcion, "Cantidad", nudLoteCantidad, 80);
             AgregarCampo(recepcion, "Vencimiento", dtpLoteVencimiento, 135);
             recepcion.Controls.Add(Boton("Registrar recepción", "btnRegistrarRecepcion", RegistrarRecepcion));
@@ -564,12 +562,12 @@ namespace UI.UserControls
                     IdProducto = ValorSeleccionado(cmbRecepcionProducto),
                     CodigoLote = txtLoteCodigo.Text.Trim(),
                     Origen = txtLoteOrigen.Text.Trim(),
-                    CertificadoOrigen = txtLoteCertificado.Text.Trim(),
                     CantidadIngresada = Convert.ToInt32(nudLoteCantidad.Value),
                     FechaVencimiento = dtpLoteVencimiento.Checked ? (DateTime?)dtpLoteVencimiento.Value.Date : null
                 };
                 aprovisionamientoBLL.RecepcionarMercaderia(orden.IdOrdenCompra, new List<Lote> { lote });
                 CargarOrdenesRecepcion();
+                txtLoteCodigo.Clear();
             }, "Recepción registrada con trazabilidad de origen.");
         }
 
@@ -580,6 +578,8 @@ namespace UI.UserControls
                 int idProducto = ValorSeleccionado(cmbInventarioProducto);
                 lblStock.Text = "Stock disponible: " + inventarioBLL.VerificarStock(idProducto);
                 dgvTrazabilidad.DataSource = inventarioBLL.ObtenerTrazabilidad(idProducto);
+                if (dgvTrazabilidad.Columns.Contains("CertificadoOrigen"))
+                    dgvTrazabilidad.Columns["CertificadoOrigen"].Visible = false;
             }, null);
         }
 

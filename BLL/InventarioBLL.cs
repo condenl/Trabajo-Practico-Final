@@ -78,7 +78,8 @@ namespace BLL
             if (lote.IdProveedor <= 0) throw new ArgumentException("El lote debe indicar el proveedor de origen.");
             if (string.IsNullOrWhiteSpace(lote.CodigoLote)) throw new ArgumentException("El código de lote es obligatorio.");
             if (string.IsNullOrWhiteSpace(lote.Origen)) throw new ArgumentException("El origen del lote es obligatorio.");
-            if (string.IsNullOrWhiteSpace(lote.CertificadoOrigen)) throw new ArgumentException("El certificado de origen es obligatorio.");
+            if (lote.CertificadoOrigen != null && lote.CertificadoOrigen.Length > 250)
+                throw new ArgumentException("El certificado de origen no puede superar los 250 caracteres.");
             if (lote.CantidadIngresada <= 0) throw new ArgumentException("La cantidad ingresada debe ser mayor que cero.");
             if (lote.FechaVencimiento.HasValue && lote.FechaVencimiento.Value.Date <= DateTime.Today)
                 throw new ArgumentException("No se puede ingresar un lote vencido o con vencimiento en la fecha actual.");
