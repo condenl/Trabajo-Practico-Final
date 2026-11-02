@@ -94,9 +94,16 @@ namespace BLL
 
             if (sinComparativa.Count > 0)
             {
+                List<string> nombres = sinComparativa.Select(id =>
+                {
+                    Producto producto = productos.Obtener(id);
+                    if (producto == null) return "Producto no disponible (revise el catálogo)";
+                    return !string.IsNullOrWhiteSpace(producto.Nombre) ? producto.Nombre
+                        : !string.IsNullOrWhiteSpace(producto.Codigo) ? producto.Codigo : "Producto sin nombre (revise el catálogo)";
+                }).ToList();
                 throw new InvalidOperationException(
-                    "La orden no puede enviarse a Contabilidad porque faltan al menos dos cotizaciones vigentes para los productos: "
-                    + string.Join(", ", sinComparativa));
+                    "No se puede enviar la orden a Contabilidad. Cada producto necesita al menos dos cotizaciones vigentes de proveedores distintos. "
+                    + "Registre las cotizaciones faltantes para: " + string.Join(", ", nombres) + ".");
             }
 
             CambiarEstado(orden, EstadoOrdenCompra.PendienteAprobacion, null, null);
