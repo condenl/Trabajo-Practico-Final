@@ -2,6 +2,10 @@
 
 Estado al **01/11/2026**. Proyecto editable: `../../diagramas.EAP`. Capturas nativas incorporadas al [documento de Google Docs](https://docs.google.com/document/d/1kzEZpgX8bMnYrq-REzqYnlg_LAO2toCLVCEgpALjPnM/edit).
 
+Revisión de rutas N03: se separaron los puntos de entrada de la dependencia BLL y la realización DAL sobre la interfaz. Las relaciones cortas son directas; la dependencia BLL → ArchivoEvaluacion y la asociación EvaluacionProveedor → ResultadoProveedor usan carriles exteriores. `verify_ea_n03_routes.ps1` comprueba las rutas realmente almacenadas en EA: ambas vistas N03 tienen cero cruces, tramos compartidos y recorridos por dentro de clases, manteniendo tipos UML y multiplicidades. `verification-n03-routes.json` contiene esa evidencia. Las diez representaciones de clases mantienen sus atributos y operaciones.
+
+Las dos capturas corregidas se sustituyeron en Google Docs. `verification-n03-routes-document.json` confirma la conservación de todo el texto, las 12 tablas y las 21 imágenes anteriores; siguen presentes 27 diagramas EA únicos. El PDF conserva 59 páginas, se inspeccionaron las páginas 53/54 y las adyacentes 52/55 permanecen idénticas por píxeles. Para reproducir las rutas, ejecutar el comando de `route_ea_globals.py --all-logical` indicado más abajo y actualizar `N03-04,N03-05`; no basta con regenerar las imágenes antiguas.
+
 ## Sincronización con N03 implementado
 
 La secuencia N03-06 refleja `UC_EvaluacionProveedores`, `EvaluacionProveedorBLL`, `EvaluacionProveedorDAL`, `ArchivoEvaluacion` y la inserción transaccional de `AprovisionamientoDAL`. El actor Dueño / Departamento de Compras inicia comparar, confirmar y crear el borrador. Sus **52 mensajes** incluyen llamadas con nombres del código y respuestas discontinuas con el tipo real, dirigidas al emisor de la llamada. Se conserva el orden de activaciones y retornos. Las notas del diagrama explican las consultas auxiliares omitidas, la validación de vigencia, las excepciones y el reintento que devuelve la orden existente.

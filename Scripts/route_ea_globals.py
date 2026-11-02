@@ -8,8 +8,47 @@ parser.add_argument('--output', default='global-routes.json')
 parser.add_argument('--all-logical', action='store_true')
 args=parser.parse_args()
 models=json.loads((out/args.input).read_text('utf-8'))
+
+def n03_paths(diagram):
+    """Keep the small N03 views planar, with distinct ports per relationship.
+
+    A shortest-path router can send the BLL use and DAL realization into the
+    same interface port. Dedicated straight ports and one outer lane make the
+    direction of each relationship visible without changing its UML type.
+    """
+    nodes = {node['key']: node for node in diagram['nodes']}
+    def port(name, side):
+        n = nodes[name]
+        x, y, w, h = n['x'], n['y'], n['w'], n['h']
+        # EA Path stores routing points, not locked endpoint coordinates. Keep
+        # these points outside the boxes so EA attaches to their border rather
+        # than drawing the final segment through an attribute compartment.
+        return {'left': (x-10, y+h/2), 'right': (x+w+10, y+h/2),
+                'top': (x+w/2, y-10), 'bottom': (x+w/2, y+h+10)}[side]
+    for link in diagram['links']:
+        source, target = link['source'], link['target']
+        if diagram['code'] == 'N03-04':
+            if (source, target) == ('EvaluacionProveedor', 'DatosEvaluacion'):
+                points = [port(source, 'bottom'), port(target, 'top')]
+            elif (source, target) == ('EvaluacionProveedor', 'ResultadoProveedor'):
+                a, b = port(source, 'left'), port(target, 'left')
+                points = [a, (a[0]-35, a[1]), (a[0]-35, b[1]), b]
+            else:
+                points = [port(source, 'right'), port(target, 'left')]
+        elif (source, target) == ('EvaluacionProveedorBLL', 'ArchivoEvaluacion'):
+            a, b = port(source, 'right'), port(target, 'right')
+            points = [a, (a[0]+45, a[1]), (a[0]+45, b[1]), b]
+        elif target == 'IEvaluacionProveedorRepository' and source == 'EvaluacionProveedorDAL':
+            points = [port(source, 'top'), port(target, 'bottom')]
+        else:
+            points = [port(source, 'bottom'), port(target, 'top')]
+        link['path'] = ''.join(f'{x:g}:{-y:g};' for x, y in points)
+
 for d in models:
     if not (d['kind']=='Logical' if args.all_logical else d['code'].startswith('G0')): continue
+    if d['code'] in ('N03-04', 'N03-05'):
+        n03_paths(d)
+        continue
     rects={n['key']:n for n in d['nodes']}
     blocked=set()
     for n in rects.values():

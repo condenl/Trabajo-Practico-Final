@@ -4873,7 +4873,7 @@
         "name": "",
         "sourceCardinality": "0..*",
         "targetCardinality": "1",
-        "path": "430:-200;470:-200;"
+        "path": "410:-202.5;490:-202.5;"
       },
       {
         "source": "EvaluacionProveedor",
@@ -4882,7 +4882,7 @@
         "name": "",
         "sourceCardinality": "0..*",
         "targetCardinality": "1",
-        "path": "10:-200;10:-550;"
+        "path": "220:-375;220:-390;"
       },
       {
         "source": "EvaluacionProveedor",
@@ -4891,7 +4891,7 @@
         "name": "",
         "sourceCardinality": "0..*",
         "targetCardinality": "0..*",
-        "path": "430:-200;430:-910;"
+        "path": "30:-202.5;-5:-202.5;-5:-905.5;30:-905.5;"
       },
       {
         "source": "DatosEvaluacion",
@@ -4900,7 +4900,7 @@
         "name": "",
         "sourceCardinality": "0..*",
         "targetCardinality": "0..*",
-        "path": "430:-550;470:-550;"
+        "path": "410:-545.5;490:-545.5;"
       }
     ],
     "notes": "Atributos y operaciones compartidos con G07-01. Firmas verificadas en el código. Las clases propuestas están identificadas explícitamente. Las BE conservan sus constructores y propiedades; la lógica reside en BLL."
@@ -5468,28 +5468,28 @@
         "target": "IEvaluacionProveedorRepository",
         "name": "",
         "kind": "Dependency",
-        "path": "10:-160;10:-400;"
+        "path": "370:-290;370:-305;"
       },
       {
         "source": "EvaluacionProveedorBLL",
         "target": "ArchivoEvaluacion",
         "name": "",
         "kind": "Dependency",
-        "path": "730:-160;730:-860;"
+        "path": "710:-160;755:-160;755:-857.5;710:-857.5;"
       },
       {
         "source": "EvaluacionProveedorDAL",
         "target": "ArchivoEvaluacion",
         "name": "",
         "kind": "Dependency",
-        "path": "10:-640;10:-860;"
+        "path": "370:-772;370:-787;"
       },
       {
         "source": "EvaluacionProveedorDAL",
         "target": "IEvaluacionProveedorRepository",
         "name": "",
         "kind": "Realization",
-        "path": "10:-640;10:-400;"
+        "path": "370:-512;370:-497;"
       }
     ],
     "notes": "Atributos y operaciones compartidos con G07-01. Firmas verificadas en el código. Las clases propuestas están identificadas explícitamente. Las BE conservan sus constructores y propiedades; la lógica reside en BLL."

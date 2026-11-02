@@ -1,4 +1,4 @@
-param([switch]$SequencesOnly)
+param([switch]$SequencesOnly, [string]$Codes='')
 # Read-only verification of the active EA model against canonical C# signatures.
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
@@ -7,6 +7,7 @@ $repo=([Runtime.InteropServices.Marshal]::GetActiveObject('EA.App')).Repository
 if($repo.ConnectionString -ne (Join-Path $root 'diagramas.EAP')){throw 'Proyecto incorrecto'}
 $specs=Get-Content (Join-Path $out 'code-design-routed.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 if($SequencesOnly){$specs=@($specs|Where-Object kind -eq 'Sequence')}
+if($Codes){$specs=@($specs|Where-Object code -in ($Codes -split ','))}
 $catalog=Get-Content (Join-Path $out 'class-catalog.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $manifest=Get-Content (Join-Path $out 'manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $manifest+=Get-Content (Join-Path $out 'manifest-reconciliation.json') -Raw -Encoding UTF8 | ConvertFrom-Json
