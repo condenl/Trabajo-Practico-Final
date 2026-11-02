@@ -52,7 +52,7 @@ namespace UI
             // 
             this.btnBitacora.Location = new System.Drawing.Point(12, 12);
             this.btnBitacora.Name = "btnBitacora";
-            this.btnBitacora.Size = new System.Drawing.Size(120, 43);
+            this.btnBitacora.Size = new System.Drawing.Size(145, 43);
             this.btnBitacora.TabIndex = 0;
             this.btnBitacora.Tag = "menu_bitacora";
             this.btnBitacora.Text = "Bitacora";
@@ -63,7 +63,7 @@ namespace UI
             // 
             this.btnCerrarSesion.Location = new System.Drawing.Point(12, 568);
             this.btnCerrarSesion.Name = "btnCerrarSesion";
-            this.btnCerrarSesion.Size = new System.Drawing.Size(120, 43);
+            this.btnCerrarSesion.Size = new System.Drawing.Size(145, 43);
             this.btnCerrarSesion.TabIndex = 1;
             this.btnCerrarSesion.Tag = "menu_logout";
             this.btnCerrarSesion.Text = "Cerrar Sesion";
@@ -74,7 +74,7 @@ namespace UI
             // 
             this.btnUsuarios.Location = new System.Drawing.Point(12, 76);
             this.btnUsuarios.Name = "btnUsuarios";
-            this.btnUsuarios.Size = new System.Drawing.Size(120, 43);
+            this.btnUsuarios.Size = new System.Drawing.Size(145, 43);
             this.btnUsuarios.TabIndex = 2;
             this.btnUsuarios.Tag = "menu_usuarios";
             this.btnUsuarios.Text = "Usuarios";
@@ -85,7 +85,7 @@ namespace UI
             // 
             this.btnRoles.Location = new System.Drawing.Point(12, 146);
             this.btnRoles.Name = "btnRoles";
-            this.btnRoles.Size = new System.Drawing.Size(120, 43);
+            this.btnRoles.Size = new System.Drawing.Size(145, 43);
             this.btnRoles.TabIndex = 3;
             this.btnRoles.Tag = "menu_roles";
             this.btnRoles.Text = "Roles";
@@ -96,10 +96,10 @@ namespace UI
             // 
             this.btnSoporteTecnico.Location = new System.Drawing.Point(12, 212);
             this.btnSoporteTecnico.Name = "btnSoporteTecnico";
-            this.btnSoporteTecnico.Size = new System.Drawing.Size(120, 43);
+            this.btnSoporteTecnico.Size = new System.Drawing.Size(145, 43);
             this.btnSoporteTecnico.TabIndex = 4;
             this.btnSoporteTecnico.Tag = "menu_soporte_admin";
-            this.btnSoporteTecnico.Text = "Soporte Tecnico";
+            this.btnSoporteTecnico.Text = "Soporte Técnico";
             this.btnSoporteTecnico.UseVisualStyleBackColor = true;
             this.btnSoporteTecnico.Click += new System.EventHandler(this.btnSoporteTecnico_Click);
             // 
@@ -107,7 +107,7 @@ namespace UI
             // 
             this.btnTraducciones.Location = new System.Drawing.Point(12, 279);
             this.btnTraducciones.Name = "btnTraducciones";
-            this.btnTraducciones.Size = new System.Drawing.Size(120, 43);
+            this.btnTraducciones.Size = new System.Drawing.Size(145, 43);
             this.btnTraducciones.TabIndex = 6;
             this.btnTraducciones.Tag = "menu_traducciones";
             this.btnTraducciones.Text = "Traducciones";
@@ -120,7 +120,7 @@ namespace UI
             this.cmbIdioma.FormattingEnabled = true;
             this.cmbIdioma.Location = new System.Drawing.Point(12, 530);
             this.cmbIdioma.Name = "cmbIdioma";
-            this.cmbIdioma.Size = new System.Drawing.Size(121, 21);
+            this.cmbIdioma.Size = new System.Drawing.Size(145, 21);
             this.cmbIdioma.TabIndex = 5;
             this.cmbIdioma.SelectedIndexChanged += new System.EventHandler(this.cmbIdioma_SelectedIndexChanged);
             // 
@@ -128,10 +128,10 @@ namespace UI
             // 
             this.btnAuditoria.Location = new System.Drawing.Point(12, 346);
             this.btnAuditoria.Name = "btnAuditoria";
-            this.btnAuditoria.Size = new System.Drawing.Size(120, 43);
+            this.btnAuditoria.Size = new System.Drawing.Size(145, 43);
             this.btnAuditoria.TabIndex = 7;
             this.btnAuditoria.Tag = "btnAuditoria";
-            this.btnAuditoria.Text = "Auditoria";
+            this.btnAuditoria.Text = "Auditoría";
             this.btnAuditoria.UseVisualStyleBackColor = true;
             this.btnAuditoria.Click += new System.EventHandler(this.btnAuditoria_Click);
             // 
@@ -144,7 +144,7 @@ namespace UI
             //
             this.btnVentas.Location = new System.Drawing.Point(12, 413);
             this.btnVentas.Name = "btnVentas";
-            this.btnVentas.Size = new System.Drawing.Size(120, 43);
+            this.btnVentas.Size = new System.Drawing.Size(145, 43);
             this.btnVentas.TabIndex = 8;
             this.btnVentas.Text = "Ventas";
             this.btnVentas.UseVisualStyleBackColor = true;

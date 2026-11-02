@@ -48,6 +48,24 @@ namespace UI
                 _usuarioLogueado.TienePermiso(TipoPermiso.Inventario_Recepcionar);
         }
 
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            // Visible includes parent visibility; arrange after the form is shown
+            // and WinForms has applied font/DPI scaling and actor permissions.
+            int siguiente = btnBitacora.Top;
+            int separacion = Math.Max(6, btnAprovisionamiento.Height / 4);
+            SuspendLayout();
+            foreach (Button boton in new[] { btnBitacora, btnUsuarios, btnRoles, btnSoporteTecnico,
+                btnTraducciones, btnAuditoria, btnVentas, btnAprovisionamiento })
+            {
+                if (!boton.Visible) continue;
+                boton.Top = siguiente;
+                siguiente += boton.Height + separacion;
+            }
+            ResumeLayout(false);
+        }
+
         private void ConfigurarIdiomas()
         {
             cmbIdioma.DataSource = null;
@@ -93,7 +111,10 @@ namespace UI
             {
                 if (control.Tag != null)
                 {
-                    control.Text = traduccionBLL.Traducir(control.Tag.ToString());
+                    string etiqueta = control.Tag.ToString();
+                    string texto = traduccionBLL.Traducir(etiqueta);
+                    if (!string.IsNullOrWhiteSpace(texto) && texto != etiqueta && texto != "[" + etiqueta + "]")
+                        control.Text = texto;
                 }
             }
             
