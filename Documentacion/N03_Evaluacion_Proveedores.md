@@ -6,6 +6,10 @@ Elegir un proveedor conveniente para un perfume y una cantidad concreta. La orga
 
 El proceso se utiliza desde **Compras e inventario → Evaluación de proveedores**, con el actor Dueño/Compras. La operación cotidiana tiene tres pasos: comparar, confirmar proveedor y, si se decide comprar, crear una orden en Borrador. Los pesos se ajustan solamente si hace falta desde Criterios; no hay pasos de negociación ni contratos adicionales.
 
+La vista principal presenta gráficos de barras del puntaje y margen bruto por proveedor, junto con stock utilizable, compras pendientes, ventas y reposición sugerida. Seleccionar una barra cambia la oferta sobre la que se toma la decisión. El listado completo queda en otra pestaña; Criterios e Historial se despliegan a demanda. Se utilizan los controles de gráficos integrados en .NET Framework 4.7.2.
+
+Actualizar vuelve a consultar los catálogos y el historial. Si la comparación sigue en preparación, genera otra con los datos actuales y conserva la oferta elegida y el fundamento escrito; la instantánea anterior permanece disponible. Si ya existe una decisión confirmada, recarga su registro sin recalcular ni modificar la evidencia. Comparar permite iniciar una evaluación nueva.
+
 ## Información cruzada y reglas
 
 | Información | Uso en la decisión |

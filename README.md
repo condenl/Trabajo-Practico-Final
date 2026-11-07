@@ -2,6 +2,14 @@
 
 Aplicación de escritorio C# (.NET Framework 4.7.2) con SQL Server **16.x (SQL Server 2022) o superior**, incluida la versión **17.x (SQL Server 2025)**. Las cuentas de acceso pertenecen a la base de datos; funcionan tanto desde Visual Studio como desde `UI.exe` y la aplicación instalada.
 
+## Uso de Compras y evaluación
+
+Compras abre la grilla de órdenes. **Nuevo borrador** despliega sus campos; las altas de proveedores y perfumes están en **Catálogos → Nuevo proveedor / Nuevo perfume**, en ventanas separadas. Al guardar, las listas se recargan. **Actualizar** y el cambio de pestaña consultan catálogos, órdenes, pendientes y recepción; la selección se conserva si todavía existe y se informa la hora de carga.
+
+En **Evaluación de proveedores**, **Comparar** muestra barras de puntaje y margen bruto, con indicadores de stock, compras pendientes, ventas y reposición. Una barra permite elegir proveedor; **Listado completo** muestra todas las ofertas, incluidas las excluidas. Los gráficos sintetizan las primeras ocho. **Criterios** e **Historial** se despliegan cuando se necesitan.
+
+**Actualizar** recalcula una comparación todavía no confirmada y conserva su elección y fundamento en preparación. La comparación anterior permanece en el historial. Para una decisión confirmada, recarga ese registro; **Comparar** inicia otro análisis con datos actuales. Los gráficos usan el control incluido en .NET Framework y no requieren instalar otra biblioteca.
+
 ## Usuarios de demostración
 
 Credenciales públicas y deliberadamente conocidas, **solo para pruebas y entregas académicas**. No habilitar estos datos en una base de producción ni reutilizar estas contraseñas para cuentas reales. El campo Usuario del login recibe el correo completo.
