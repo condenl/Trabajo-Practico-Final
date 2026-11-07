@@ -56,6 +56,8 @@
   <ItemGroup>
     <Compile Include="Reportes\ReporteOrdenesPdf.cs" />
     <Compile Include="FormAltaCatalogo.cs" />
+    <Compile Include="FormAltaCliente.cs" />
+    <Compile Include="FormRestaurarUsuario.cs" />
     <Compile Include="UserControls\UC_EvaluacionProveedores.cs" />
     <Compile Include="FormPrincipal.cs">
       <SubType>Form</SubType>

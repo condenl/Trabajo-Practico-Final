@@ -71,6 +71,29 @@ namespace BLL
 
         public int RegistrarVenta(Venta venta)
         {
+            return RegistrarVenta(venta, null, null);
+        }
+
+        public int RegistrarVenta(Venta venta, decimal? subtotalEsperado, decimal? descuentoEsperado)
+        {
+            CalcularVenta(venta);
+            if ((subtotalEsperado.HasValue && venta.Subtotal != subtotalEsperado.Value) ||
+                (descuentoEsperado.HasValue && venta.Descuento != descuentoEsperado.Value))
+                throw new InvalidOperationException("Los importes cambiaron. Actualice la venta, revise el total y vuelva a confirmar.");
+            int idVenta = ventaRepository.RegistrarVenta(venta, ObtenerResponsable());
+            venta.IdVenta = idVenta;
+            registroActividad.Registrar("VENTA_REGISTRADA", "Venta " + idVenta + " registrada por " + venta.Total.ToString("0.00") + ".");
+            return idVenta;
+        }
+
+        // Uses the same prices, membership rounding and available lots as registration, without writes.
+        public void CotizarVenta(Venta venta)
+        {
+            CalcularVenta(venta);
+        }
+
+        private void CalcularVenta(Venta venta)
+        {
             ExigirPermisoVenta();
             if (venta == null) throw new ArgumentNullException("venta");
             if (venta.Detalles == null || venta.Detalles.Count == 0)
@@ -123,11 +146,6 @@ namespace BLL
             if (venta.Fecha == DateTime.MinValue) venta.Fecha = DateTime.Now;
             if (!venta.IdUsuarioVendedor.HasValue && Session.Instance.Usuario != null)
                 venta.IdUsuarioVendedor = Session.Instance.Usuario.Id;
-
-            int idVenta = ventaRepository.RegistrarVenta(venta, ObtenerResponsable());
-            venta.IdVenta = idVenta;
-            registroActividad.Registrar("VENTA_REGISTRADA", "Venta " + idVenta + " registrada por " + venta.Total.ToString("0.00") + ".");
-            return idVenta;
         }
 
         public List<Venta> ConsultarHistorialCliente(int idCliente)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BE;
 using DAL;
 using Servicios;
@@ -15,8 +16,13 @@ namespace BLL
 
         public void HacerRollback(UsuarioAuditoria snapshot)
         {
+            if (snapshot == null) throw new ArgumentNullException("snapshot");
+            if (snapshot.AuditAction != "UPDATE" && snapshot.AuditAction != "DELETE")
+                throw new InvalidOperationException("Esta versión no admite restauración.");
+            var actual = new UsuarioBLL().ListarTodos().FirstOrDefault(u => u.Id == snapshot.Id);
             if (snapshot.AuditAction == "UPDATE")
             {
+                if (actual == null) throw new InvalidOperationException("La cuenta ya no existe. Seleccione su versión anterior a la eliminación.");
                 Usuario usuarioParaRestaurar = new Usuario
                 {
                     Id = snapshot.Id,
@@ -30,18 +36,20 @@ namespace BLL
                     IntentosFallidos = snapshot.IntentosFallidos,
                     DVH = snapshot.DVH
                 };
-                UsuarioBLL gestorUsuario = new UsuarioBLL();
-                Usuario usuarioActual = gestorUsuario.BuscarPorEmail(usuarioParaRestaurar.Email);
+                Usuario usuarioActual = actual;
                 string responsable = Session.Instance.Usuario?.Email ?? "SISTEMA";
 
                 if (usuarioActual != null)
                 {
                     AuditoriaDAL.Instancia.GuardarSnapshot("UPDATE", usuarioActual, responsable);
                 }
-                gestorUsuario.Guardar(usuarioParaRestaurar);
+                // Historical credentials are already hashed; do not validate them as a new password.
+                usuarioParaRestaurar.Dni = Encriptador.EncriptarAES(usuarioParaRestaurar.Dni);
+                UsuarioDAL.Instancia.Modificar(usuarioParaRestaurar);
             }
             else if (snapshot.AuditAction == "DELETE")
             {
+                if (actual != null) throw new InvalidOperationException("La cuenta ya existe. Actualice el historial antes de restaurar.");
                 AuditoriaDAL.Instancia.RestaurarEliminado(snapshot);
                 UsuarioBLL gestorUsuario = new UsuarioBLL();
                 gestorUsuario.RecalcularDV();

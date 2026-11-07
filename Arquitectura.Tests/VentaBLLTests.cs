@@ -84,6 +84,33 @@ namespace Arquitectura.Tests
             Assert.IsEmpty(fixture.Ventas.Ventas);
         }
 
+        [TestMethod]
+        public void CotizarVenta_NoPersisteYCoincideConElRegistro()
+        {
+            var fixture = new Fixture();
+            int cliente = fixture.Servicio.RegistrarCliente(fixture.CrearCliente(), true, 10m);
+            var previa = new Venta { IdCliente = cliente, Detalles = new List<DetalleVenta> { new DetalleVenta { IdProducto = 1, Cantidad = 3 } } };
+            fixture.Servicio.CotizarVenta(previa);
+            Assert.IsEmpty(fixture.Ventas.Ventas);
+            Assert.AreEqual(6, fixture.Inventario.Lotes[1].Sum(l => l.CantidadDisponible));
+            var venta = new Venta { IdCliente = cliente, Detalles = new List<DetalleVenta> { new DetalleVenta { IdProducto = 1, Cantidad = 3 } } };
+            fixture.Servicio.RegistrarVenta(venta, previa.Subtotal, previa.Descuento);
+            Assert.AreEqual(previa.Total, venta.Total);
+            Assert.AreEqual(previa.Descuento, venta.Descuento);
+        }
+
+        [TestMethod]
+        public void RegistrarVenta_RechazaCambioDeImportesDesdeLaVistaPrevia()
+        {
+            var fixture = new Fixture();
+            var venta = new Venta { Detalles = new List<DetalleVenta> { new DetalleVenta { IdProducto = 1, Cantidad = 1 } } };
+            fixture.Servicio.CotizarVenta(venta);
+            decimal subtotal = venta.Subtotal;
+            fixture.Productos.Datos[1].PrecioVenta += 1m;
+            Assert.Throws<InvalidOperationException>(() => fixture.Servicio.RegistrarVenta(venta, subtotal, 0m));
+            Assert.IsEmpty(fixture.Ventas.Ventas);
+        }
+
         private sealed class Fixture
         {
             public readonly FakeVentaRepository Ventas = new FakeVentaRepository();

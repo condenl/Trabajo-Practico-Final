@@ -3,8 +3,12 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using UI.UserControls;
+using BE;
+using BE.Seguridad;
+using Servicios;
+using UI;
 
-// Read-only layout check. Uses the same database config as UI.exe to load products.
+// Layout-only check for the separate client form. --check never invokes persistence.
 internal static class VentasLayoutProbe
 {
     [STAThread]
@@ -14,38 +18,36 @@ internal static class VentasLayoutProbe
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            using (var form = new Form { Text = "Verificacion de layout - Ventas", ClientSize = new Size(800, 600) })
-            using (var ventas = new UC_Ventas())
+            var actor = new Usuario(); actor.Permisos.Add(new Patente { PermisoAsociado = TipoPermiso.Ventas_Registrar }); Session.Instance.Login(actor);
+            using (var form = new FormAltaCliente())
             {
-                form.Controls.Add(ventas);
                 form.CreateControl();
-                ventas.CreateControl();
                 foreach (float fontSize in new[] { 8.25f, 12f, 16f })
                 using (var font = new Font("Segoe UI", fontSize))
                 {
-                    ventas.Font = font;
+                    form.Font = font;
                     foreach (int width in new[] { 600, 800, 1100 })
                     {
                         form.ClientSize = new Size(width, 650);
                         LayoutTree(form);
-                        var options = ventas.Controls.Find("opcionesCliente", true).Single();
-                        foreach (CheckBox check in options.Controls.OfType<CheckBox>())
+                        foreach (CheckBox check in new[] { (CheckBox)form.Controls.Find("chkMarketing", true).Single(), (CheckBox)form.Controls.Find("chkMembresia", true).Single() })
                         {
                             Size preferred = check.GetPreferredSize(Size.Empty);
                             if (check.Width < preferred.Width || check.Height < preferred.Height ||
-                                !options.ClientRectangle.Contains(check.Bounds))
+                                !check.Parent.ClientRectangle.Contains(check.Bounds))
                                 throw new Exception("Checkbox clipped: " + check.Name + " width=" + width + " font=" + fontSize);
                         }
                         Console.WriteLine("PASS Ventas width=" + width + " font=" + fontSize);
                     }
-                    ventas.Font = Control.DefaultFont;
+                    form.Font = Control.DefaultFont;
                 }
                 form.ClientSize = new Size(800, 600);
-                if (!args.Contains("--check")) Application.Run(form);
+                if (!args.Contains("--check")) throw new Exception("Use --check; este probe no admite guardado interactivo con una sesión ficticia.");
             }
             return 0;
         }
         catch (Exception error) { Console.Error.WriteLine(error); return 1; }
+        finally { Session.Instance.Logout(); }
     }
 
     private static void LayoutTree(Control control)

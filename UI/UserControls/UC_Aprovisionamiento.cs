@@ -31,6 +31,15 @@ namespace UI.UserControls
         private bool recargando;
         private bool enlazandoRecepcion;
         private FlowLayoutPanel formularioOrden;
+        private Button enviarRevision, emitirProveedor;
+        private readonly Label ayudaOrden = new Label { Name = "lblAccionOrden", AutoSize = true, Margin = new Padding(6, 8, 3, 3), MaximumSize = new Size(460, 0) };
+        private readonly ComboBox filtroProveedor = Combo("cmbFiltroProveedor");
+        private readonly ComboBox filtroEstado = Combo("cmbFiltroEstado");
+        private readonly CheckBox filtrarFechas = new CheckBox { Name = "chkFechasOrdenes", Text = "Por fecha", AutoSize = true };
+        private readonly DateTimePicker fechaDesde = new DateTimePicker { Name = "dtpOrdenDesde", Format = DateTimePickerFormat.Short, Value = DateTime.Today.AddMonths(-1), Width = 110, Enabled = false };
+        private readonly DateTimePicker fechaHasta = new DateTimePicker { Name = "dtpOrdenHasta", Format = DateTimePickerFormat.Short, Value = DateTime.Today, Width = 110, Enabled = false };
+        private List<OrdenCompra> ordenesCargadas = new List<OrdenCompra>();
+        private bool cargandoFiltros;
         private readonly Label estadoCarga = new Label { Name = "lblActualizacionCompras", Dock = DockStyle.Bottom, AutoSize = true, Padding = new Padding(10, 4, 10, 4) };
 
         private readonly TabControl tabs = new TabControl { Dock = DockStyle.Fill };
@@ -173,8 +182,9 @@ namespace UI.UserControls
 
         private void ConstruirOrdenes()
         {
-            TableLayoutPanel layout = new TableLayoutPanel { Dock = DockStyle.Fill, RowCount = 5, ColumnCount = 1, Padding = new Padding(12) };
+            TableLayoutPanel layout = new TableLayoutPanel { Dock = DockStyle.Fill, RowCount = 6, ColumnCount = 1, Padding = new Padding(12) };
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 48));
+            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
@@ -182,9 +192,13 @@ namespace UI.UserControls
             layout.Controls.Add(Titulo("Orden de compra y envío a revisión contable"), 0, 0);
             FlowLayoutPanel barra = FlujoHorizontal();
             barra.Controls.Add(Boton("Nuevo borrador", "btnNuevoBorrador", delegate { formularioOrden.Visible = !formularioOrden.Visible; }));
-            barra.Controls.Add(Boton("Enviar a Contabilidad", "btnEnviarRevision", EnviarRevision));
-            barra.Controls.Add(Boton("Emitir al proveedor", "btnEmitirOrden", EmitirOrden));
+            enviarRevision = Boton("Enviar a Contabilidad", "btnEnviarRevision", EnviarRevision);
+            emitirProveedor = Boton("Emitir al proveedor", "btnEmitirOrden", EmitirOrden);
+            barra.Controls.Add(enviarRevision); barra.Controls.Add(emitirProveedor);
             barra.Controls.Add(Boton("Actualizar", "btnActualizarOrdenes", delegate { RecargarTodo(); }));
+            barra.Controls.Add(ayudaOrden);
+            dgvOrdenes.SelectionChanged += delegate { ActualizarAccionesOrden(); };
+            dgvOrdenes.CurrentCellChanged += delegate { ActualizarAccionesOrden(); };
             foreach (Button boton in barra.Controls.OfType<Button>()) boton.Margin = new Padding(3);
             layout.Controls.Add(barra, 0, 1);
             formularioOrden = FlujoHorizontal(); formularioOrden.Name = "panelNuevaOrden"; formularioOrden.Visible = false;
@@ -206,9 +220,23 @@ namespace UI.UserControls
                 archivos.Controls.Add(boton);
             }
             archivos.Controls.Add(new Label { AutoSize = true, MaximumSize = new Size(430, 0), Margin = new Padding(10, 9, 3, 3),
-                Text = "PDF/XML: listado completo con detalles. Importar crea borradores nuevos." });
+                Text = "PDF/XML: órdenes del listado filtrado. Importar crea borradores nuevos." });
             layout.Controls.Add(archivos, 0, 3);
-            layout.Controls.Add(dgvOrdenes, 0, 4);
+            var filtros = FlujoHorizontal();
+            filtroEstado.DisplayMember = "Texto";
+            filtroEstado.Items.Add(new FiltroEstado { Texto = "Todos los estados" });
+            foreach (EstadoOrdenCompra valor in Enum.GetValues(typeof(EstadoOrdenCompra)))
+                filtroEstado.Items.Add(new FiltroEstado { Valor = valor, Texto = NombreEstado(valor) });
+            filtroEstado.SelectedIndex = 0;
+            AgregarCampo(filtros, "Proveedor", filtroProveedor, 200); AgregarCampo(filtros, "Estado", filtroEstado, 175);
+            filtros.Controls.Add(filtrarFechas); AgregarCampo(filtros, "Desde", fechaDesde, 110); AgregarCampo(filtros, "Hasta", fechaHasta, 110);
+            filtros.Controls.Add(Boton("Limpiar filtros", "btnLimpiarFiltrosOrdenes", delegate { LimpiarFiltrosOrdenes(); }));
+            filtroProveedor.SelectedIndexChanged += delegate { AplicarFiltrosOrdenes(); };
+            filtroEstado.SelectedIndexChanged += delegate { AplicarFiltrosOrdenes(); };
+            filtrarFechas.CheckedChanged += delegate { fechaDesde.Enabled = fechaHasta.Enabled = filtrarFechas.Checked; AplicarFiltrosOrdenes(); };
+            fechaDesde.ValueChanged += delegate { if (fechaDesde.Value.Date > fechaHasta.Value.Date) fechaHasta.Value = fechaDesde.Value; AplicarFiltrosOrdenes(); };
+            fechaHasta.ValueChanged += delegate { if (fechaHasta.Value.Date < fechaDesde.Value.Date) fechaDesde.Value = fechaHasta.Value; AplicarFiltrosOrdenes(); };
+            layout.Controls.Add(filtros, 0, 4); layout.Controls.Add(dgvOrdenes, 0, 5);
             tabOrdenes.Controls.Add(layout);
         }
 
@@ -316,9 +344,57 @@ namespace UI.UserControls
         private void CargarOrdenes()
         {
             if (!TienePermiso(TipoPermiso.Aprovisionamiento_Gestion)) return;
-            MostrarOrdenes(dgvOrdenes, aprovisionamientoBLL.ConsultarHistorialCompras(null));
-            btnReporteOrdenesPdf.Enabled = btnExportarOrdenesXml.Enabled = dgvOrdenes.Rows.Count > 0;
+            ordenesCargadas = aprovisionamientoBLL.ConsultarHistorialCompras(null);
+            cargandoFiltros = true;
+            try {
+                var opciones = proveedorBLL.Listar(false); opciones.Insert(0, new Proveedor { IdProveedor = 0, RazonSocial = "Todos los proveedores" });
+                Enlazar(filtroProveedor, opciones, "RazonSocial", "IdProveedor");
+            } finally { cargandoFiltros = false; }
+            AplicarFiltrosOrdenes();
         }
+
+        private void AplicarFiltrosOrdenes()
+        {
+            if (cargandoFiltros || enviarRevision == null) return;
+            Ejecutar(delegate {
+                var proveedor = filtroProveedor.SelectedItem as Proveedor; var estado = filtroEstado.SelectedItem as FiltroEstado;
+                var filtradas = ordenesCargadas.Where(o => (proveedor == null || proveedor.IdProveedor == 0 || o.IdProveedor == proveedor.IdProveedor)
+                    && (estado == null || !estado.Valor.HasValue || o.Estado == estado.Valor.Value)
+                    && (!filtrarFechas.Checked || (o.FechaEmision.Date >= fechaDesde.Value.Date && o.FechaEmision.Date <= fechaHasta.Value.Date)));
+                MostrarOrdenes(dgvOrdenes, filtradas);
+                btnReporteOrdenesPdf.Enabled = btnExportarOrdenesXml.Enabled = dgvOrdenes.Rows.Count > 0;
+                ActualizarAccionesOrden();
+            }, null);
+        }
+
+        private void LimpiarFiltrosOrdenes()
+        {
+            cargandoFiltros = true;
+            try { filtroProveedor.SelectedValue = 0; filtroEstado.SelectedIndex = 0; filtrarFechas.Checked = false; }
+            finally { cargandoFiltros = false; }
+            AplicarFiltrosOrdenes();
+        }
+
+        private void ActualizarAccionesOrden()
+        {
+            if (enviarRevision == null) return;
+            var orden = Seleccion(dgvOrdenes);
+            enviarRevision.Enabled = orden != null && orden.EstadoCodigo == EstadoOrdenCompra.Borrador;
+            emitirProveedor.Enabled = orden != null && orden.EstadoCodigo == EstadoOrdenCompra.Aprobada;
+            ayudaOrden.Text = orden == null ? "Seleccione una orden del listado." :
+                orden.EstadoCodigo == EstadoOrdenCompra.Borrador ? "Borrador: puede enviarlo a Contabilidad." :
+                orden.EstadoCodigo == EstadoOrdenCompra.Aprobada ? "Aprobada: puede emitirla al proveedor." :
+                orden.EstadoCodigo == EstadoOrdenCompra.PendienteAprobacion ? "Pendiente: Contabilidad debe revisarla." :
+                orden.EstadoCodigo == EstadoOrdenCompra.Emitida || orden.EstadoCodigo == EstadoOrdenCompra.RecibidaParcial ? "La recepción continúa en Recepción e inventario." : "Esta orden no admite envío ni emisión.";
+        }
+
+        private static string NombreEstado(EstadoOrdenCompra estado)
+        {
+            if (estado == EstadoOrdenCompra.PendienteAprobacion) return "Pendiente de aprobación";
+            if (estado == EstadoOrdenCompra.RecibidaParcial) return "Recibida parcialmente";
+            return estado.ToString();
+        }
+        private sealed class FiltroEstado { public EstadoOrdenCompra? Valor { get; set; } public string Texto { get; set; } }
 
         private void MostrarOrdenes(DataGridView grilla, IEnumerable<OrdenCompra> ordenes)
         {
@@ -327,6 +403,7 @@ namespace UI.UserControls
             var proveedores = proveedorBLL.Listar(false).ToDictionary(p => p.IdProveedor);
             var productos = productoBLL.Listar(false).ToDictionary(p => p.IdProducto);
             grilla.DataSource = ordenes.Select(o => OrdenCompraVista.Crear(o, proveedores, productos)).ToList();
+            grilla.Columns["EstadoCodigo"].Visible = false;
             grilla.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             grilla.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             grilla.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -502,6 +579,7 @@ namespace UI.UserControls
                     }
                 });
                 CargarOrdenes();
+                LimpiarFiltrosOrdenes();
                 foreach (DataGridViewRow fila in dgvOrdenes.Rows)
                     if (((OrdenCompraVista)fila.DataBoundItem).IdOrdenCompra == orden.IdOrdenCompra)
                     { dgvOrdenes.CurrentCell = fila.Cells[0]; break; }
@@ -648,6 +726,7 @@ namespace UI.UserControls
             public DateTime Fecha { get; set; }
             public decimal Total { get; set; }
             public string Estado { get; set; }
+            public EstadoOrdenCompra EstadoCodigo { get; set; }
             public string CreadaPor { get; set; }
             public int Unidades { get; set; }
 
@@ -668,7 +747,7 @@ namespace UI.UserControls
                     })),
                     Fecha = orden.FechaEmision,
                     Total = orden.Total,
-                    Estado = orden.Estado.ToString(),
+                    Estado = NombreEstado(orden.Estado), EstadoCodigo = orden.Estado,
                     CreadaPor = orden.CreadaPor,
                     Unidades = orden.Detalles.Sum(d => d.Cantidad)
                 };
@@ -679,7 +758,7 @@ namespace UI.UserControls
         {
             public OrdenCompra Orden { get; private set; }
             public int IdOrdenCompra { get { return Orden.IdOrdenCompra; } }
-            public string Descripcion { get { return "Orden " + Orden.IdOrdenCompra + " - " + Orden.Estado; } }
+            public string Descripcion { get { return "Orden " + Orden.IdOrdenCompra + " - " + NombreEstado(Orden.Estado); } }
 
             public OrdenRecepcionVista(OrdenCompra orden)
             {
