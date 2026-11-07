@@ -1,439 +1,588 @@
-﻿[
-    {
-        "code":  "N03-01",
-        "title":  "N03 · Casos de uso de evaluación de proveedores",
-        "kind":  "Use Case",
-        "notes":  "Diseño organizacional previsto para la iteración 3. No implementado en las iteraciones 1 y 2. Conserva CU15-CU20 del documento original.",
-        "nodes":  [
-                      {
-                          "key":  "owner",
-                          "name":  "Dueño / Compras",
-                          "x":  30,
-                          "y":  70,
-                          "w":  160,
-                          "h":  100,
-                          "kind":  "Actor"
-                      },
-                      {
-                          "key":  "supplier",
-                          "name":  "Proveedor",
-                          "x":  30,
-                          "y":  300,
-                          "w":  160,
-                          "h":  100,
-                          "kind":  "Actor"
-                      },
-                      {
-                          "key":  "accounting",
-                          "name":  "Equipo de Contabilidad",
-                          "x":  30,
-                          "y":  530,
-                          "w":  160,
-                          "h":  100,
-                          "kind":  "Actor"
-                      },
-                      {
-                          "key":  "CU15",
-                          "name":  "CU15\nSolicitar catálogos y antecedentes comerciales",
-                          "x":  350,
-                          "y":  35,
-                          "w":  320,
-                          "h":  105,
-                          "kind":  "UseCase"
-                      },
-                      {
-                          "key":  "CU16",
-                          "name":  "CU16\nRemitir precios, escalas y certificaciones",
-                          "x":  350,
-                          "y":  185,
-                          "w":  320,
-                          "h":  105,
-                          "kind":  "UseCase"
-                      },
-                      {
-                          "key":  "CU17",
-                          "name":  "CU17\nEmitir informe de costos, márgenes y rentabilidad",
-                          "x":  350,
-                          "y":  335,
-                          "w":  320,
-                          "h":  105,
-                          "kind":  "UseCase"
-                      },
-                      {
-                          "key":  "CU18",
-                          "name":  "CU18\nEvaluar prestigio, precio y antigüedad",
-                          "x":  350,
-                          "y":  485,
-                          "w":  320,
-                          "h":  105,
-                          "kind":  "UseCase"
-                      },
-                      {
-                          "key":  "CU19",
-                          "name":  "CU19\nAsignar proveedor prioritario por producto",
-                          "x":  350,
-                          "y":  635,
-                          "w":  320,
-                          "h":  105,
-                          "kind":  "UseCase"
-                      },
-                      {
-                          "key":  "CU20",
-                          "name":  "CU20\nFormalizar acuerdo comercial preferencial",
-                          "x":  350,
-                          "y":  785,
-                          "w":  320,
-                          "h":  105,
-                          "kind":  "UseCase"
-                      }
-                  ],
-        "links":  [
-                      {
-                          "source":  "owner",
-                          "target":  "CU15",
-                          "name":  "",
-                          "kind":  "Association"
-                      },
-                      {
-                          "source":  "supplier",
-                          "target":  "CU16",
-                          "name":  "",
-                          "kind":  "Association"
-                      },
-                      {
-                          "source":  "accounting",
-                          "target":  "CU17",
-                          "name":  "",
-                          "kind":  "Association"
-                      },
-                      {
-                          "source":  "owner",
-                          "target":  "CU18",
-                          "name":  "",
-                          "kind":  "Association"
-                      },
-                      {
-                          "source":  "owner",
-                          "target":  "CU19",
-                          "name":  "",
-                          "kind":  "Association"
-                      },
-                      {
-                          "source":  "owner",
-                          "target":  "CU20",
-                          "name":  "",
-                          "kind":  "Association"
-                      },
-                      {
-                          "source":  "supplier",
-                          "target":  "CU20",
-                          "name":  "",
-                          "kind":  "Association"
-                      },
-                      {
-                          "source":  "CU19",
-                          "target":  "CU18",
-                          "name":  "",
-                          "kind":  "Dependency",
-                          "stereotype":  "include"
-                      },
-                      {
-                          "source":  "CU20",
-                          "target":  "CU19",
-                          "name":  "",
-                          "kind":  "Dependency",
-                          "stereotype":  "extend"
-                      }
-                  ]
-    },
-    {
-        "code":  "N03-02",
-        "title":  "N03 · Actividad de evaluación y selección de proveedores",
-        "kind":  "Activity",
-        "notes":  "Proceso organizacional de N03, previsto para la iteración 3; no representa funcionalidad implementada en las entregas 1 y 2.",
-        "nodes":  [
-                      {
-                          "key":  "lane0",
-                          "name":  "Dueño / Compras",
-                          "x":  20,
-                          "y":  20,
-                          "w":  260,
-                          "h":  1675,
-                          "kind":  "ActivityPartition"
-                      },
-                      {
-                          "key":  "lane1",
-                          "name":  "Proveedores",
-                          "x":  290,
-                          "y":  20,
-                          "w":  260,
-                          "h":  1675,
-                          "kind":  "ActivityPartition"
-                      },
-                      {
-                          "key":  "lane2",
-                          "name":  "Equipo de Contabilidad",
-                          "x":  560,
-                          "y":  20,
-                          "w":  260,
-                          "h":  1675,
-                          "kind":  "ActivityPartition"
-                      },
-                      {
-                          "key":  "start",
-                          "name":  "",
-                          "x":  132,
-                          "y":  85,
-                          "w":  35,
-                          "h":  35,
-                          "kind":  "StateNode",
-                          "subtype":  100
-                      },
-                      {
-                          "key":  "products",
-                          "name":  "Identificar productos con baja rotación o riesgo de pérdida",
-                          "x":  42,
-                          "y":  210,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "ask",
-                          "name":  "Solicitar precios, antecedentes y certificaciones",
-                          "x":  42,
-                          "y":  335,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "reply",
-                          "name":  "Remitir propuestas comerciales y trayectoria",
-                          "x":  312,
-                          "y":  335,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "consolidate",
-                          "name":  "Consolidar propuestas comparables por producto",
-                          "x":  42,
-                          "y":  460,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "cost",
-                          "name":  "Analizar costos, márgenes e impacto financiero",
-                          "x":  582,
-                          "y":  460,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "opinion",
-                          "name":  "Emitir dictamen de viabilidad y comparación de costos",
-                          "x":  582,
-                          "y":  585,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "evaluate",
-                          "name":  "Ponderar prestigio, precio y antigüedad",
-                          "x":  42,
-                          "y":  710,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "threshold",
-                          "name":  "¿Es conveniente?",
-                          "x":  102,
-                          "y":  835,
-                          "w":  95,
-                          "h":  65,
-                          "kind":  "Decision"
-                      },
-                      {
-                          "key":  "reject",
-                          "name":  "Descartar propuesta y diferir selección",
-                          "x":  120,
-                          "y":  960,
-                          "w":  155,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "endreject",
-                          "name":  "",
-                          "x":  230,
-                          "y":  1085,
-                          "w":  35,
-                          "h":  35,
-                          "kind":  "StateNode",
-                          "subtype":  101
-                      },
-                      {
-                          "key":  "select",
-                          "name":  "Designar proveedor prioritario por producto",
-                          "x":  47,
-                          "y":  1210,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "propose",
-                          "name":  "Proponer acuerdo comercial preferencial",
-                          "x":  47,
-                          "y":  1335,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "accept",
-                          "name":  "Acordar condiciones de suministro",
-                          "x":  312,
-                          "y":  1335,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "record",
-                          "name":  "Conservar fundamentos de la decisión y el acuerdo",
-                          "x":  47,
-                          "y":  1460,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "endok",
-                          "name":  "",
-                          "x":  117,
-                          "y":  1585,
-                          "w":  35,
-                          "h":  35,
-                          "kind":  "StateNode",
-                          "subtype":  101
-                      },
-                      {
-                          "w":  190,
-                          "key":  "object-flow-consolidate",
-                          "name":  "Propuestas comparables",
-                          "x":  600,
-                          "y":  473,
-                          "notes":  "Objeto de negocio producido por «Consolidar propuestas comparables por producto» y utilizado por «Analizar costos, márgenes e impacto financiero». Flujo de objetos UML; no representa un componente de software.",
-                          "kind":  "Object",
-                          "h":  55
-                      }
-                  ],
-        "links":  [
-                      {
-                          "source":  "start",
-                          "target":  "products",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "products",
-                          "target":  "ask",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "ask",
-                          "target":  "reply",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "reply",
-                          "target":  "consolidate",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "cost",
-                          "target":  "opinion",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "opinion",
-                          "target":  "evaluate",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "evaluate",
-                          "target":  "threshold",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "threshold",
-                          "target":  "reject",
-                          "name":  "No",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "reject",
-                          "target":  "endreject",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "threshold",
-                          "target":  "select",
-                          "name":  "Sí",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "select",
-                          "target":  "propose",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "propose",
-                          "target":  "accept",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "accept",
-                          "target":  "record",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "record",
-                          "target":  "endok",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "target":  "object-flow-consolidate",
-                          "name":  "",
-                          "source":  "consolidate",
-                          "kind":  "ObjectFlow"
-                      },
-                      {
-                          "target":  "cost",
-                          "name":  "",
-                          "source":  "object-flow-consolidate",
-                          "kind":  "ObjectFlow"
-                      }
-                  ]
-    }
+[
+  {
+    "code": "N03-01",
+    "title": "N03 · Casos de uso de evaluación de proveedores",
+    "kind": "Use Case",
+    "notes": "Descomposición del CU018 en objetivos concretos del Dueño / Departamento de Compras. Comparar cruza fuentes del negocio y valora ofertas; confirmar e iniciar compra comprueban la vigencia de la comparación. La compra requiere una selección fundamentada previa. Consultar historial es independiente. Registrar cotizaciones y aprobar órdenes pertenecen a N01; no se formalizan acuerdos comerciales en N03.",
+    "nodes": [
+      {
+        "key": "scope",
+        "name": "Evaluación y selección de proveedores",
+        "x": 245,
+        "y": 30,
+        "w": 990,
+        "h": 990,
+        "kind": "Boundary",
+        "fontSize": 12
+      },
+      {
+        "key": "owner",
+        "name": "Dueño / Departamento de Compras",
+        "x": 25,
+        "y": 415,
+        "w": 190,
+        "h": 120,
+        "kind": "Actor",
+        "fontSize": 12
+      },
+      {
+        "key": "compare",
+        "name": "CU018.1\nComparar proveedores para un producto y cantidad",
+        "x": 285,
+        "y": 70,
+        "w": 315,
+        "h": 125,
+        "kind": "UseCase",
+        "fontSize": 12,
+        "notes": "N03-A / CU018.1. Producto, cantidad y pesos; comparación fechada con ranking, exclusiones, margen, antecedentes y reposición sugerida. Se conserva incluso sin ofertas elegibles."
+      },
+      {
+        "key": "select",
+        "name": "CU018.2\nConfirmar proveedor con fundamento",
+        "x": 285,
+        "y": 390,
+        "w": 315,
+        "h": 125,
+        "kind": "UseCase",
+        "fontSize": 12,
+        "notes": "N03-B / CU018.2. Comparación con oferta elegible; elegir proveedor y conservar motivo de 10 a 500 caracteres, fecha y responsable. La decisión confirmada no se sobrescribe."
+      },
+      {
+        "key": "order",
+        "name": "CU018.3\nIniciar una orden de compra en Borrador",
+        "x": 285,
+        "y": 650,
+        "w": 315,
+        "h": 125,
+        "kind": "UseCase",
+        "fontSize": 12,
+        "notes": "N03-C / CU018.3. Proveedor previamente confirmado. Crear un único borrador vinculado a la evaluación; reintentar devuelve la misma orden. Continúa por N01, sin aprobación ni ingreso de stock automático."
+      },
+      {
+        "key": "history",
+        "name": "CU018.4\nConsultar historial y fundamentos",
+        "x": 285,
+        "y": 865,
+        "w": 315,
+        "h": 105,
+        "kind": "UseCase",
+        "fontSize": 12,
+        "notes": "Consultar las comparaciones del producto y recuperar sus resultados y decisiones. No obliga a generar una nueva comparación."
+      },
+      {
+        "key": "sources",
+        "name": "Cruzar stock, ventas y compras pendientes",
+        "x": 835,
+        "y": 70,
+        "w": 330,
+        "h": 125,
+        "kind": "UseCase",
+        "fontSize": 12,
+        "notes": "Inventario utilizable, ventas netas de los últimos 90 días, órdenes pendientes y antecedentes de compras/recepciones de 180 días."
+      },
+      {
+        "key": "value",
+        "name": "Valorar precio, prestigio, antigüedad y margen",
+        "x": 835,
+        "y": 250,
+        "w": 330,
+        "h": 125,
+        "kind": "UseCase",
+        "fontSize": 12,
+        "notes": "Al menos dos cotizaciones vigentes de proveedores distintos. Puntaje ponderado y margen bruto estimado positivo. Explicar exclusiones y advertencias; el responsable puede elegir otra oferta elegible."
+      },
+      {
+        "key": "current",
+        "name": "Verificar vigencia de la comparación",
+        "x": 835,
+        "y": 565,
+        "w": 330,
+        "h": 125,
+        "kind": "UseCase",
+        "fontSize": 12,
+        "notes": "Antes de confirmar o crear un borrador, comprobar que no cambió la fecha ni la información considerada; de cambiar, solicitar una nueva comparación."
+      },
+      {
+        "key": "note",
+        "name": "",
+        "x": 720,
+        "y": 800,
+        "w": 450,
+        "h": 155,
+        "kind": "Note",
+        "fontSize": 12,
+        "notes": "Confirmar requiere una oferta elegible.\nCrear el borrador requiere una decisión confirmada y es opcional.\nLa aprobación contable y la recepción continúan por N01."
+      }
+    ],
+    "links": [
+      {
+        "source": "owner",
+        "target": "compare",
+        "name": "",
+        "kind": "Association"
+      },
+      {
+        "source": "owner",
+        "target": "select",
+        "name": "",
+        "kind": "Association"
+      },
+      {
+        "source": "owner",
+        "target": "order",
+        "name": "",
+        "kind": "Association"
+      },
+      {
+        "source": "owner",
+        "target": "history",
+        "name": "",
+        "kind": "Association"
+      },
+      {
+        "source": "compare",
+        "target": "sources",
+        "name": "",
+        "kind": "Dependency",
+        "stereotype": "include"
+      },
+      {
+        "source": "compare",
+        "target": "value",
+        "name": "",
+        "kind": "Dependency",
+        "stereotype": "include"
+      },
+      {
+        "source": "select",
+        "target": "current",
+        "name": "",
+        "kind": "Dependency",
+        "stereotype": "include"
+      },
+      {
+        "source": "order",
+        "target": "current",
+        "name": "",
+        "kind": "Dependency",
+        "stereotype": "include"
+      }
+    ]
+  },
+  {
+    "code": "N03-02",
+    "title": "N03 · Actividad de evaluación y selección de proveedores",
+    "kind": "Activity",
+    "notes": "Proceso organizacional implementado: reunir propuestas, cruzar información del negocio, comparar, elegir con fundamento e iniciar opcionalmente un borrador. El responsable puede elegir cualquier oferta elegible. Sin dos cotizaciones vigentes o sin margen positivo se conserva la comparación sin recomendación. Si cambian los datos se repite la comparación; las tareas de aprobación y recepción pertenecen a N01.",
+    "nodes": [
+      {
+        "key": "lane0",
+        "name": "Dueño / Departamento de Compras",
+        "x": 20,
+        "y": 25,
+        "w": 630,
+        "h": 1520,
+        "kind": "ActivityPartition",
+        "fontSize": 12
+      },
+      {
+        "key": "lane1",
+        "name": "Proveedores",
+        "x": 665,
+        "y": 25,
+        "w": 325,
+        "h": 1520,
+        "kind": "ActivityPartition",
+        "fontSize": 12
+      },
+      {
+        "key": "start",
+        "name": "",
+        "x": 255,
+        "y": 70,
+        "w": 30,
+        "h": 30,
+        "kind": "StateNode",
+        "fontSize": 12,
+        "subtype": 100
+      },
+      {
+        "key": "need",
+        "name": "Definir producto, cantidad y criterios de evaluación",
+        "x": 100,
+        "y": 130,
+        "w": 340,
+        "h": 65,
+        "kind": "Activity",
+        "fontSize": 12
+      },
+      {
+        "key": "quotes",
+        "name": "Aportar precios, plazos, vigencia y trayectoria",
+        "x": 700,
+        "y": 130,
+        "w": 260,
+        "h": 65,
+        "kind": "Activity",
+        "fontSize": 12
+      },
+      {
+        "key": "offers",
+        "name": "Propuestas comerciales",
+        "x": 725,
+        "y": 240,
+        "w": 210,
+        "h": 45,
+        "kind": "Object",
+        "fontSize": 12
+      },
+      {
+        "key": "sources",
+        "name": "Reunir stock utilizable, ventas y compras pendientes",
+        "x": 100,
+        "y": 370,
+        "w": 340,
+        "h": 65,
+        "kind": "Activity",
+        "fontSize": 12
+      },
+      {
+        "key": "compare",
+        "name": "Comparar ofertas y conservar ranking fechado con fundamentos",
+        "x": 100,
+        "y": 455,
+        "w": 340,
+        "h": 75,
+        "kind": "Activity",
+        "fontSize": 12
+      },
+      {
+        "key": "ranking",
+        "name": "Comparación de proveedores",
+        "x": 100,
+        "y": 550,
+        "w": 340,
+        "h": 45,
+        "kind": "Object",
+        "fontSize": 12
+      },
+      {
+        "key": "review",
+        "name": "Revisar alternativas, antecedentes y reposición sugerida",
+        "x": 100,
+        "y": 625,
+        "w": 340,
+        "h": 65,
+        "kind": "Activity",
+        "fontSize": 12
+      },
+      {
+        "key": "eligible",
+        "name": "¿Oferta elegible?",
+        "x": 230,
+        "y": 725,
+        "w": 80,
+        "h": 55,
+        "kind": "Decision",
+        "fontSize": 12
+      },
+      {
+        "key": "defer",
+        "name": "Diferir selección y solicitar nuevas cotizaciones",
+        "x": 455,
+        "y": 725,
+        "w": 170,
+        "h": 80,
+        "kind": "Activity",
+        "fontSize": 12
+      },
+      {
+        "key": "enddefer",
+        "name": "",
+        "x": 525,
+        "y": 850,
+        "w": 30,
+        "h": 30,
+        "kind": "StateNode",
+        "fontSize": 12,
+        "subtype": 101
+      },
+      {
+        "key": "select",
+        "name": "Elegir oferta y fundamentar la decisión",
+        "x": 100,
+        "y": 825,
+        "w": 340,
+        "h": 65,
+        "kind": "Activity",
+        "fontSize": 12
+      },
+      {
+        "key": "current",
+        "name": "¿Datos vigentes?",
+        "x": 230,
+        "y": 925,
+        "w": 80,
+        "h": 55,
+        "kind": "Decision",
+        "fontSize": 12
+      },
+      {
+        "key": "refresh",
+        "name": "Actualizar antecedentes y repetir comparación",
+        "x": 455,
+        "y": 925,
+        "w": 170,
+        "h": 80,
+        "kind": "Activity",
+        "fontSize": 12
+      },
+      {
+        "key": "decision",
+        "name": "Conservar elección, motivo y responsable",
+        "x": 100,
+        "y": 1025,
+        "w": 340,
+        "h": 65,
+        "kind": "Activity",
+        "fontSize": 12
+      },
+      {
+        "key": "buy",
+        "name": "¿Iniciar compra?",
+        "x": 230,
+        "y": 1120,
+        "w": 80,
+        "h": 55,
+        "kind": "Decision",
+        "fontSize": 12
+      },
+      {
+        "key": "enddecision",
+        "name": "",
+        "x": 525,
+        "y": 1220,
+        "w": 30,
+        "h": 30,
+        "kind": "StateNode",
+        "fontSize": 12,
+        "subtype": 101
+      },
+      {
+        "key": "draft",
+        "name": "Revalidar datos y confeccionar borrador vinculado a la evaluación",
+        "x": 100,
+        "y": 1220,
+        "w": 340,
+        "h": 65,
+        "kind": "Activity",
+        "fontSize": 12,
+        "notes": "Si cambió la información, se vuelve a comparar sin crear una orden parcial. Reintentar devuelve el borrador ya vinculado."
+      },
+      {
+        "key": "order",
+        "name": "Orden de compra [Borrador]",
+        "x": 100,
+        "y": 1310,
+        "w": 340,
+        "h": 45,
+        "kind": "Object",
+        "fontSize": 12
+      },
+      {
+        "key": "continue",
+        "name": "Continuar circuito de compras y aprobación (N01)",
+        "x": 100,
+        "y": 1390,
+        "w": 340,
+        "h": 65,
+        "kind": "Activity",
+        "fontSize": 12
+      },
+      {
+        "key": "endok",
+        "name": "",
+        "x": 255,
+        "y": 1490,
+        "w": 30,
+        "h": 30,
+        "kind": "StateNode",
+        "fontSize": 12,
+        "subtype": 101
+      },
+      {
+        "key": "note",
+        "name": "",
+        "x": 700,
+        "y": 350,
+        "w": 260,
+        "h": 275,
+        "kind": "Note",
+        "fontSize": 12,
+        "notes": "Comparar precio, prestigio y antigüedad; estimar margen y plazo.\nCruzar ventas de 90 días y compras de 180 días.\nOfertas elegibles: al menos dos proveedores con cotización vigente y margen bruto positivo.\nLa aprobación contable continúa en N01."
+      },
+      {
+        "key": "merge",
+        "name": "",
+        "x": 255,
+        "y": 330,
+        "w": 30,
+        "h": 20,
+        "kind": "Decision",
+        "fontSize": 12,
+        "notes": "Merge de la primera recopilación y la actualización de antecedentes; no es una sincronización."
+      },
+      {
+        "key": "collect",
+        "name": "Reunir propuestas y antecedentes comerciales",
+        "x": 100,
+        "y": 240,
+        "w": 340,
+        "h": 65,
+        "kind": "Activity",
+        "fontSize": 12
+      }
+    ],
+    "links": [
+      {
+        "source": "start",
+        "target": "need",
+        "name": "",
+        "kind": "ControlFlow"
+      },
+      {
+        "source": "need",
+        "target": "quotes",
+        "name": "",
+        "kind": "ControlFlow"
+      },
+      {
+        "source": "sources",
+        "target": "compare",
+        "name": "",
+        "kind": "ControlFlow"
+      },
+      {
+        "source": "review",
+        "target": "eligible",
+        "name": "",
+        "kind": "ControlFlow"
+      },
+      {
+        "source": "eligible",
+        "target": "defer",
+        "name": "[No]",
+        "kind": "ControlFlow"
+      },
+      {
+        "source": "defer",
+        "target": "enddefer",
+        "name": "",
+        "kind": "ControlFlow"
+      },
+      {
+        "source": "eligible",
+        "target": "select",
+        "name": "[Sí]",
+        "kind": "ControlFlow"
+      },
+      {
+        "source": "select",
+        "target": "current",
+        "name": "",
+        "kind": "ControlFlow"
+      },
+      {
+        "source": "current",
+        "target": "refresh",
+        "name": "[No]",
+        "kind": "ControlFlow"
+      },
+      {
+        "source": "refresh",
+        "target": "merge",
+        "name": "",
+        "kind": "ControlFlow",
+        "path": "640:-965;640:-340;"
+      },
+      {
+        "source": "current",
+        "target": "decision",
+        "name": "[Sí]",
+        "kind": "ControlFlow"
+      },
+      {
+        "source": "decision",
+        "target": "buy",
+        "name": "",
+        "kind": "ControlFlow"
+      },
+      {
+        "source": "buy",
+        "target": "enddecision",
+        "name": "[No]",
+        "kind": "ControlFlow"
+      },
+      {
+        "source": "buy",
+        "target": "draft",
+        "name": "[Sí]",
+        "kind": "ControlFlow"
+      },
+      {
+        "source": "continue",
+        "target": "endok",
+        "name": "",
+        "kind": "ControlFlow"
+      },
+      {
+        "source": "quotes",
+        "target": "offers",
+        "name": "",
+        "kind": "ObjectFlow"
+      },
+      {
+        "source": "offers",
+        "target": "collect",
+        "name": "",
+        "kind": "ObjectFlow"
+      },
+      {
+        "source": "compare",
+        "target": "ranking",
+        "name": "",
+        "kind": "ObjectFlow"
+      },
+      {
+        "source": "ranking",
+        "target": "review",
+        "name": "",
+        "kind": "ObjectFlow"
+      },
+      {
+        "source": "draft",
+        "target": "order",
+        "name": "",
+        "kind": "ObjectFlow"
+      },
+      {
+        "source": "order",
+        "target": "continue",
+        "name": "",
+        "kind": "ObjectFlow"
+      },
+      {
+        "source": "collect",
+        "target": "merge",
+        "name": "",
+        "kind": "ControlFlow"
+      },
+      {
+        "source": "merge",
+        "target": "sources",
+        "name": "",
+        "kind": "ControlFlow"
+      }
+    ]
+  }
 ]

@@ -1,6 +1,20 @@
 # Diagramas de Enterprise Architect
 
-Estado al **01/11/2026**. Proyecto editable: `../../diagramas.EAP`. Capturas nativas incorporadas al [documento de Google Docs](https://docs.google.com/document/d/1kzEZpgX8bMnYrq-REzqYnlg_LAO2toCLVCEgpALjPnM/edit).
+Estado al **07/11/2026**. Proyecto editable: `../../diagramas.EAP`. Capturas nativas incorporadas al [documento de Google Docs](https://docs.google.com/document/d/1kzEZpgX8bMnYrq-REzqYnlg_LAO2toCLVCEgpALjPnM/edit).
+
+## Revisión de actividades y casos de uso N02 y N03
+
+N02-02 distingue la membresía vigente, la nueva adhesión y la venta sin membresía. El objeto Membresía vigente se produce y consume en Personal de Ventas. Un merge reúne las alternativas de precio; el consentimiento de marketing es independiente del descuento.
+
+N03-01 descompone el CU018 en comparar para un producto y cantidad, confirmar con fundamento, iniciar un borrador y consultar el historial. Explicita el cruce de stock, ventas y compras pendientes, la valoración de ofertas y la vigencia de los datos. Las relaciones include apuntan al comportamiento incluido; la selección previa se expresa como precondición para crear el borrador.
+
+N03-02 representa el proceso implementado y sustituye el diseño anterior con dictamen contable y acuerdo comercial preferencial. Conserva propuestas, comparación y borrador como objetos de negocio, con sus productores y consumidores. La comparación sin ofertas elegibles se conserva; los datos modificados obligan a comparar nuevamente; iniciar la compra es opcional. Aprobación y recepción continúan por N01.
+
+N03-06 conserva exactamente sus 52 mensajes y 26 respuestas. La opción nativa Extend Source Activation Down se aplica a las tres solicitudes del actor para mantener su participación continua durante el escenario. Las barras representan intervalos de activación relativos, sin medir tiempos de ejecución en milisegundos. Los métodos de clases, destinatarios de retornos y tipos permanecen iguales.
+
+Se reemplazaron las cuatro capturas en sus secciones existentes de Google Docs, se quitaron los recortes heredados y se revisaron las páginas 32, 42, 43 y 47 de su PDF. `verification-business-document.json` confirma 13 tablas, 48 imágenes y 27 diagramas únicos, sin cambios de texto ni tablas y sin recortes. El PDF tiene 60 páginas. `verification-business-review.json` valida contra EA los nodos, flujos de objetos, merges y emparejamiento de todos los retornos.
+
+Para reproducir estas vistas, ejecutar `python Scripts/build_ea_business_review.py` y, con PowerShell de 32 bits, `Scripts/update_ea_business_review.ps1`. El actualizador conserva los GUID de diagramas y archiva los elementos anteriores editables, además de respaldar el EAP existente. Aplicar esta capa después de los generadores históricos. `inspect_ea_business_review.ps1` exporta el estado nativo para `verify_ea_business_review.py`; los archivos temporales de referencia se conservan fuera del repositorio. Las fuentes canónicas de N03-06 también conservan la configuración de activación al regenerar la secuencia técnica.
 
 Revisión de rutas N03: se separaron los puntos de entrada de la dependencia BLL y la realización DAL sobre la interfaz. Las relaciones cortas son directas; la dependencia BLL → ArchivoEvaluacion y la asociación EvaluacionProveedor → ResultadoProveedor usan carriles exteriores. `verify_ea_n03_routes.ps1` comprueba las rutas realmente almacenadas en EA: ambas vistas N03 tienen cero cruces, tramos compartidos y recorridos por dentro de clases, manteniendo tipos UML y multiplicidades. `verification-n03-routes.json` contiene esa evidencia. Las diez representaciones de clases mantienen sus atributos y operaciones.
 

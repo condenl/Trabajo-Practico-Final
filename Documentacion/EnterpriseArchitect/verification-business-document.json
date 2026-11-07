@@ -1,0 +1,209 @@
+{
+  "unchanged_prefix_paragraphs": 353,
+  "all_paragraph_text_preserved": true,
+  "preserved_tables": 13,
+  "authorized_use_case_paragraph_changes": 0,
+  "preserved_earlier_images": 21,
+  "authorized_document_paragraph_changes": 0,
+  "total_images": 48,
+  "unique_ea_diagrams": 27,
+  "pixel_exact": false,
+  "google_docs_downsampled": [
+    {
+      "code": "N01-06a",
+      "width": 2048,
+      "mean_pixel_error": 0.6533
+    },
+    {
+      "code": "N01-06b",
+      "width": 2048,
+      "mean_pixel_error": 0.5523
+    },
+    {
+      "code": "N02-06b",
+      "width": 2048,
+      "mean_pixel_error": 1.2286
+    },
+    {
+      "code": "N02-06c",
+      "width": 2048,
+      "mean_pixel_error": 0.5632
+    },
+    {
+      "code": "N03-06",
+      "width": 2048,
+      "mean_pixel_error": 0.6146
+    },
+    {
+      "code": "N01-04a",
+      "width": 2048,
+      "mean_pixel_error": 0.2876
+    },
+    {
+      "code": "N01-05",
+      "width": 2048,
+      "mean_pixel_error": 2.0954
+    },
+    {
+      "code": "N02-04",
+      "width": 2048,
+      "mean_pixel_error": 0.4496
+    },
+    {
+      "code": "N02-05",
+      "width": 2048,
+      "mean_pixel_error": 1.2289
+    },
+    {
+      "code": "G08-01",
+      "width": 1782,
+      "mean_pixel_error": 0.3146
+    }
+  ],
+  "visually_reviewed_images": [
+    {
+      "code": "G07-01",
+      "native_sha256": "4fbfcf546fe86d1a36035a8381ccb9c2947d8836a9f2468821e07f8e0017e51f",
+      "exported_sha256": "0bcdec00162df018f0c872450d0fe24e4a1604871c29533eec3a9b0e9d6e5a64",
+      "reason": "Google Docs reduced global panorama to 2048px. Visually reviewed all rows against native PNG; detail is retained in per-process views."
+    }
+  ],
+  "duplicates": [],
+  "placements": [
+    {
+      "code": "N01-01",
+      "section": "2.3 Diagrama de Casos de Uso del Negocio",
+      "heading": "2.3 Diagrama de Casos de Uso del Negocio"
+    },
+    {
+      "code": "N02-01",
+      "section": "2.3 Diagrama de Casos de Uso del Negocio",
+      "heading": "2.3 Diagrama de Casos de Uso del Negocio"
+    },
+    {
+      "code": "N03-01",
+      "section": "2.3 Diagrama de Casos de Uso del Negocio",
+      "heading": "2.3 Diagrama de Casos de Uso del Negocio"
+    },
+    {
+      "code": "N01-02",
+      "section": "2.5 Diagramas de Actividad de Negocio",
+      "heading": "Proceso 1: Aprovisionamiento de Perfumes, Trazabilidad y Aprobaci\u00f3n Contable"
+    },
+    {
+      "code": "N02-02",
+      "section": "2.5 Diagramas de Actividad de Negocio",
+      "heading": "Proceso 2: Venta y Fidelizaci\u00f3n de Clientes (Membres\u00eda, Descuentos y Campa\u00f1as)"
+    },
+    {
+      "code": "N03-02",
+      "section": "2.5 Diagramas de Actividad de Negocio",
+      "heading": "Proceso 3: Evaluaci\u00f3n y Selecci\u00f3n Estrat\u00e9gica de Proveedores por Producto"
+    },
+    {
+      "code": "N01-06a",
+      "section": "2.6 Diagramas de Secuencia de Negocio",
+      "heading": "N01 \u00b7 Secuencia: preparar y revisar compra"
+    },
+    {
+      "code": "N01-06b",
+      "section": "2.6 Diagramas de Secuencia de Negocio",
+      "heading": "N01 \u00b7 Secuencia: recepci\u00f3n y trazabilidad"
+    },
+    {
+      "code": "N02-06a",
+      "section": "2.6 Diagramas de Secuencia de Negocio",
+      "heading": "N02 \u00b7 Secuencia: adhesi\u00f3n a membres\u00eda"
+    },
+    {
+      "code": "N02-06b",
+      "section": "2.6 Diagramas de Secuencia de Negocio",
+      "heading": "N02 \u00b7 Secuencia: venta con beneficio"
+    },
+    {
+      "code": "N02-06c",
+      "section": "2.6 Diagramas de Secuencia de Negocio",
+      "heading": "N02 \u00b7 Secuencia: coordinaci\u00f3n de marketing"
+    },
+    {
+      "code": "N03-06",
+      "section": "2.6 Diagramas de Secuencia de Negocio",
+      "heading": "N03 \u00b7 Secuencia: evaluaci\u00f3n y selecci\u00f3n de proveedores"
+    },
+    {
+      "code": "G07-01",
+      "section": "G07. Diagrama de Clases",
+      "heading": "7.1 Capa de Entidades de Negocio (BE) y Servicios"
+    },
+    {
+      "code": "N01-03",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N01 \u00b7 Modelo conceptual"
+    },
+    {
+      "code": "N01-04a",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N01 \u00b7 Clases BE de compras"
+    },
+    {
+      "code": "N01-04b",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N01 \u00b7 Clases BE de inventario"
+    },
+    {
+      "code": "N01-05",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N01 \u00b7 Clases de l\u00f3gica de negocio (BLL)"
+    },
+    {
+      "code": "N02-03",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N02 \u00b7 Modelo conceptual"
+    },
+    {
+      "code": "N02-04",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N02 \u00b7 Clases BE de ventas"
+    },
+    {
+      "code": "N02-05",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N02 \u00b7 Clases de l\u00f3gica de negocio (BLL)"
+    },
+    {
+      "code": "N03-04",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N03 \u00b7 Entidades de evaluaci\u00f3n de proveedores"
+    },
+    {
+      "code": "N03-05",
+      "section": "G07. Diagrama de Clases",
+      "heading": "N03 \u00b7 Clases de l\u00f3gica y persistencia de evaluaci\u00f3n"
+    },
+    {
+      "code": "G08-01",
+      "section": "G08. Modelo de Datos",
+      "heading": "8.1 Diagrama Entidad-Relacion (DER)"
+    },
+    {
+      "code": "N01-07a",
+      "section": "G08. Modelo de Datos",
+      "heading": "N01 \u00b7 Modelo de datos: cotizaciones y compras"
+    },
+    {
+      "code": "N01-07b",
+      "section": "G08. Modelo de Datos",
+      "heading": "N01 \u00b7 Modelo de datos: inventario y trazabilidad"
+    },
+    {
+      "code": "N02-07",
+      "section": "G08. Modelo de Datos",
+      "heading": "N02 \u00b7 Modelo de datos: ventas y membres\u00edas"
+    },
+    {
+      "code": "N03-07",
+      "section": "G08. Modelo de Datos",
+      "heading": "N03 \u00b7 Modelo de datos: evaluaci\u00f3n de proveedores"
+    }
+  ]
+}

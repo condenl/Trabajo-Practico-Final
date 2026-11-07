@@ -37,6 +37,8 @@ def verify(baseline, current, images, reviewed_images=None, use_case_replacement
                 assert expected_text.count(change['after']) == 1, 'Insertion anchor must be unique'
                 expected_text.insert(expected_text.index(change['after']) + 1, change['new'])
         assert expected_text == [p.text for p in after.paragraphs if p.text.strip()], 'Unexpected document text changes'
+    else:
+        assert [p.text for p in before.paragraphs] == [p.text for p in after.paragraphs], 'Unexpected document text changes'
     expected_tables = tables(before)
     changes = json.loads(Path(use_case_replacements).read_text(encoding='utf-8')) if use_case_replacements else []
     for table in expected_tables:
@@ -120,7 +122,7 @@ def verify(baseline, current, images, reviewed_images=None, use_case_replacement
                 assert section.startswith(required), f"Wrong section for {code}: {section}"
     assert set(hits) == set(expected.values()), f"Missing EA diagrams: {sorted(set(expected.values()) - set(hits))}"
     assert all(count == 1 for count in Counter(hits).values()), "Duplicate EA diagram"
-    return {"unchanged_prefix_paragraphs": cut, "preserved_tables": len(after.tables), "authorized_use_case_paragraph_changes": len(changes),
+    return {"unchanged_prefix_paragraphs": cut, "all_paragraph_text_preserved": [p.text for p in before.paragraphs] == [p.text for p in after.paragraphs], "preserved_tables": len(after.tables), "authorized_use_case_paragraph_changes": len(changes),
             "preserved_earlier_images": sum(preserved_images.values()),
             "authorized_document_paragraph_changes": len(paragraph_changes),
             "total_images": len(after.inline_shapes), "unique_ea_diagrams": len(hits),
