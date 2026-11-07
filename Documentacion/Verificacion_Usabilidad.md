@@ -1,0 +1,11 @@
+# Verificación de refresco y usabilidad
+
+Revisión del 07/11/2026 sobre bases nuevas y aisladas de SQL Server 16. Los scripts no modifican UI/App.config ni la base de trabajo.
+
+`Scripts/test-ordenes-archivos.ps1` completó **39 verificaciones**. Reproduce una vista abierta antes de agregar proveedor, perfume, orden y stock desde otra operación. Los botones Actualizar recargan los catálogos, la grilla, los pendientes de Contabilidad y la trazabilidad; conservan las selecciones disponibles. Las ventanas de altas guardan mediante BLL, conservan la validación, cancelan sin escrituras y rechazan actores sin permiso. Nuevo borrador no guarda al cancelar y selecciona la fila recién creada al confirmar. Se mantienen las verificaciones de PDF/XML, permisos y rollback de importación.
+
+`Scripts/test-evaluacion-proveedores.ps1` completó **30 verificaciones**. Compara los valores de ambos gráficos con los resultados persistidos de BLL. Una cotización modificada fuera de la vista aparece al actualizar, sin sobrescribir la instantánea anterior ni perder la alternativa elegida y el fundamento. Elegir una barra funciona con el listado oculto. Una decisión confirmada mantiene su registro y orden vinculada. Se verifican separación de barras en ventana reducida, fuentes reales de planificación, ausencia de movimientos de stock y unicidad concurrente del borrador.
+
+La revisión nativa de la aplicación sobre estas bases comprobó el inicio en Compras, la grilla con mayor espacio, el menú Catálogos y el formulario separado de perfume. En N03 se compararon las tres alternativas del escenario de valor frente a precio y se eligió la oferta económica desde el gráfico de margen, con actualización del proveedor y resaltado de ambas barras. Se revisó la adaptación del diseño al reducir la ventana; el historial queda detrás de su botón para reservar espacio a los gráficos.
+
+Las pruebas se ejecutan con los mismos controles y BLL de la aplicación. El host visual de N03 abre FormPrincipal con la cuenta demo de Compras y únicamente admite la base aislada creada por su script. Release e Inno Setup se compilan con `Installer/build-installer.ps1`; el instalador distribuido incluye la interfaz y el README actualizados.

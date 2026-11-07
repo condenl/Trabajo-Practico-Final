@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using BE;
 using BLL;
 using DAL;
@@ -22,6 +23,14 @@ internal static class TestEvaluacionProveedores
     private static void Exec(string sql) { using (var cmd = new SqlCommand(sql, connection)) cmd.ExecuteNonQuery(); }
     private static T Find<T>(Control c, string name) where T : Control { return (T)c.Controls.Find(name, true).Single(); }
     private static void Click(Control c, string name) { typeof(Button).GetMethod("OnClick", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(Find<Button>(c, name), new object[] { EventArgs.Empty }); }
+    private static void ClickBar(Chart chart, int indice)
+    {
+        Application.DoEvents(); var area = chart.ChartAreas[0];
+        int x = (int)area.AxisY.ValueToPixelPosition(chart.Series[0].Points[indice].YValues[0] / 2);
+        int y = (int)area.AxisX.ValueToPixelPosition(indice + 1);
+        typeof(Control).GetMethod("OnMouseClick", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(chart,
+            new object[] { new MouseEventArgs(MouseButtons.Left, 1, x, y, 0) });
+    }
     [STAThread]
     private static int Main(string[] args)
     {
@@ -33,10 +42,14 @@ internal static class TestEvaluacionProveedores
             Application.EnableVisualStyles(); Application.SetCompatibleTextRenderingDefault(false);
             var actor = users.Login("demo.dueno@perfumeria.example", "DemoDueno2026!");
             Assert(actor != null, "Login real de Compras/Dueno");
+            if (args.Length == 1 && args[0] == "--app")
+            {
+                using (var f = new UI.FormPrincipal(actor)) Application.Run(f);
+                return 0;
+            }
             if (args.Length == 0)
             {
-                using (var f = new Form { Text = "Prueba N03 - Evaluacion de proveedores", Width = 1180, Height = 820 })
-                { f.Controls.Add(new UC_EvaluacionProveedores()); Application.Run(f); }
+                using (var f = new UI.FormPrincipal(actor) { Text = "Prueba UX - Perfumeria" }) Application.Run(f);
                 return 0;
             }
             using (connection = new SqlConnection(builder.ConnectionString))
@@ -59,6 +72,8 @@ internal static class TestEvaluacionProveedores
                     Application.DoEvents();
                     var grid = Find<DataGridView>(ui, "dgvEvaluacion");
                     Assert(grid.Rows.Count > 0, "La grilla vinculada presenta los candidatos");
+                    Assert(grid.CurrentRow != null && Find<Button>(ui, "btnConfirmarProveedor").Enabled,
+                        "La recomendacion queda seleccionada desde el resumen visual sin abrir el listado");
                     grid.CurrentCell = grid.Rows[0].Cells[0];
                     Assert(ui.UltimoError == null, "Boton Comparar usa consultas SQL y guarda analisis");
                     var resumen = (ResumenEvaluacion)Find<ComboBox>(ui, "cmbHistorialEvaluacion").Items[0];
@@ -67,6 +82,40 @@ internal static class TestEvaluacionProveedores
                     Assert(e.Resultados.Any(r => r.PrecioUnitario < e.Resultados[0].PrecioUnitario && r.Elegible), "Existe una oferta mas barata que la recomendada");
                     Assert(e.Datos.StockDisponible == 14 && e.Datos.ComprasPendientes == 16, "Planificacion usa stock y pedidos pendientes reales");
                     Assert(Number("SELECT COUNT(*) FROM OrdenCompra") == ordenes && Number("SELECT COUNT(*) FROM MovimientoStock") == movimientos, "Comparar no compra ni modifica stock");
+                    var graficoPuntaje = Find<Chart>(ui, "chartPuntajes");
+                    var graficoMargen = Find<Chart>(ui, "chartMargenes");
+                    Assert(graficoPuntaje.Bottom <= graficoPuntaje.Parent.ClientSize.Height && graficoMargen.Bottom <= graficoMargen.Parent.ClientSize.Height,
+                        "Ambos graficos caben en su area y no quedan recortados por la fila del formulario");
+                    var tamanoInicial = form.ClientSize;
+                    form.ClientSize = new System.Drawing.Size(1000, 570); Application.DoEvents();
+                    Assert(Math.Abs(graficoPuntaje.ChartAreas[0].AxisX.ValueToPixelPosition(1) - graficoPuntaje.ChartAreas[0].AxisX.ValueToPixelPosition(2)) >= 14,
+                        "La ventana reducida conserva espacio legible entre proveedores del grafico");
+                    form.ClientSize = tamanoInicial; Application.DoEvents();
+                    Assert(graficoPuntaje.Series[0].Points.Count == e.Resultados.Count &&
+                        graficoPuntaje.Series[0].Points.Zip(e.Resultados, (p,r) => (int)p.Tag == r.IdProveedor && Math.Abs(p.YValues[0] - (double)r.PuntajePonderadoFinal) < 0.00001).All(v => v),
+                        "Las barras de puntaje corresponden a proveedores y valores reales del ranking");
+                    Assert(graficoMargen.Series[0].Points.Zip(e.Resultados, (p,r) => Math.Abs(p.YValues[0] - (double)r.MargenEstimado) < 0.00001).All(v => v),
+                        "El grafico de margen muestra porcentajes reales, sin mezclar importes");
+                    ClickBar(graficoMargen, 1);
+                    string alternativaElegida = e.Resultados[1].Proveedor;
+                    Assert(Find<Label>(ui, "lblDetalleProveedor").Text.StartsWith(e.Resultados[1].Proveedor),
+                        "Elegir una barra cambia el proveedor de la decision aunque el listado este oculto");
+                    var evaluacionOriginal = e;
+                    decimal precioOriginal = e.Resultados.Single(r => r.IdProveedor == proveedor).PrecioUnitario;
+                    Exec("UPDATE DetalleCotizacionProveedor SET PrecioUnitario=PrecioUnitario+100 WHERE IdProducto=" + producto +
+                        " AND IdCotizacion=" + e.Resultados.Single(r => r.IdProveedor == proveedor).IdCotizacion.Value);
+                    Find<TextBox>(ui, "txtMotivoSeleccion").Text = "Fundamento en preparacion que debe conservarse al actualizar.";
+                    Click(ui, "btnActualizarEvaluacion");
+                    e = bll.Obtener(((ResumenEvaluacion)Find<ComboBox>(ui, "cmbHistorialEvaluacion").Items[0]).IdEvaluacion);
+                    Assert(ui.UltimoError == null && e.IdEvaluacion != evaluacionOriginal.IdEvaluacion && e.Resultados.Single(r => r.IdProveedor == proveedor).PrecioUnitario == precioOriginal + 100,
+                        "Actualizar vuelve a consultar y comparar despues de una cotizacion modificada por otra sesion");
+                    Assert(bll.Obtener(evaluacionOriginal.IdEvaluacion).Resultados.Single(r => r.IdProveedor == proveedor).PrecioUnitario == precioOriginal,
+                        "Actualizar no sobrescribe la instantanea historica anterior");
+                    Assert(Find<TextBox>(ui, "txtMotivoSeleccion").Text.Contains("conservarse") && (int)Find<ComboBox>(ui, "cmbEvaluacionProducto").SelectedValue == producto &&
+                        Find<Label>(ui, "lblDetalleProveedor").Text.StartsWith(alternativaElegida),
+                        "Actualizar conserva el producto, proveedor y fundamento en preparacion");
+                    ClickBar(graficoPuntaje, 0);
+                    Find<TextBox>(ui, "txtMotivoSeleccion").Clear();
                     Click(ui, "btnConfirmarProveedor"); Assert(ui.UltimoError != null, "Confirmar exige fundamento");
                     Find<TextBox>(ui, "txtMotivoSeleccion").Text = "Se elige por su equilibrio entre precio, prestigio y trayectoria.";
                     Click(ui, "btnConfirmarProveedor"); Assert(ui.UltimoError == null && bll.Obtener(e.IdEvaluacion).IdProveedorSeleccionado == proveedor, "Decision justificada queda persistida");
@@ -77,6 +126,11 @@ internal static class TestEvaluacionProveedores
                     Assert(o.Detalles[0].IdProducto == producto && o.Detalles[0].Cantidad == e.Solicitud.Cantidad && o.Detalles[0].PrecioUnitario == e.Resultados[0].PrecioUnitario, "Borrador conserva producto, cantidad y precio evaluados");
                     Assert(bll.CrearOrdenBorrador(e.IdEvaluacion) == orden && Number("SELECT COUNT(*) FROM OrdenCompra") == ordenes + 1, "Reintentar no duplica orden");
                     Assert(Number("SELECT COUNT(*) FROM MovimientoStock") == movimientos, "Seleccion y borrador conservan stock");
+                    int evaluacionesGuardadas = Number("SELECT COUNT(*) FROM EvaluacionProveedor");
+                    Click(ui, "btnActualizarEvaluacion");
+                    Assert(ui.UltimoError == null && Number("SELECT COUNT(*) FROM EvaluacionProveedor") == evaluacionesGuardadas &&
+                        bll.Obtener(e.IdEvaluacion).IdOrdenCompra == orden && !Find<Button>(ui, "btnOrdenEvaluacion").Enabled,
+                        "Actualizar una decision confirmada conserva su historial y el unico borrador vinculado");
                 }
                 var s = new SolicitudEvaluacion { IdProducto = producto, Cantidad = 3 };
                 var antes = bll.Evaluar(s);

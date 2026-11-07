@@ -27,25 +27,17 @@ namespace UI.UserControls
         private readonly IntercambioOrdenesBLL intercambioOrdenesBLL = new IntercambioOrdenesBLL();
         private Button btnReporteOrdenesPdf;
         private Button btnExportarOrdenesXml;
+        private UC_EvaluacionProveedores evaluacion;
+        private bool recargando;
+        private bool enlazandoRecepcion;
+        private FlowLayoutPanel formularioOrden;
+        private readonly Label estadoCarga = new Label { Name = "lblActualizacionCompras", Dock = DockStyle.Bottom, AutoSize = true, Padding = new Padding(10, 4, 10, 4) };
 
         private readonly TabControl tabs = new TabControl { Dock = DockStyle.Fill };
-        private readonly TabPage tabCatalogos = new TabPage("Catálogos y cotizaciones");
+        private readonly TabPage tabCatalogos = new TabPage("Cotizaciones");
         private readonly TabPage tabOrdenes = new TabPage("Órdenes de compra");
         private readonly TabPage tabContabilidad = new TabPage("Aprobación contable");
         private readonly TabPage tabRecepcion = new TabPage("Recepción e inventario");
-
-        private readonly TextBox txtProveedorRazon = new TextBox { Name = "txtProveedorRazon" };
-        private readonly TextBox txtProveedorCuit = new TextBox { Name = "txtProveedorCuit" };
-        private readonly TextBox txtProveedorContacto = new TextBox { Name = "txtProveedorContacto" };
-        private readonly NumericUpDown nudProveedorAntiguedad = new NumericUpDown { Name = "nudProveedorAntiguedad", Maximum = 200 };
-        private readonly NumericUpDown nudProveedorPrestigio = new NumericUpDown { Name = "nudProveedorPrestigio", Maximum = 100, DecimalPlaces = 2 };
-
-        private readonly TextBox txtProductoCodigo = new TextBox { Name = "txtProductoCodigo" };
-        private readonly TextBox txtProductoNombre = new TextBox { Name = "txtProductoNombre" };
-        private readonly TextBox txtProductoMarca = new TextBox { Name = "txtProductoMarca" };
-        private readonly TextBox txtProductoFamilia = new TextBox { Name = "txtProductoFamilia" };
-        private readonly NumericUpDown nudProductoPrecio = Dinero("nudProductoPrecio");
-        private readonly NumericUpDown nudProductoStockMinimo = new NumericUpDown { Name = "nudProductoStockMinimo", Maximum = 100000 };
 
         private readonly ComboBox cmbCotizacionProveedor = Combo("cmbCotizacionProveedor");
         private readonly ComboBox cmbCotizacionProducto = Combo("cmbCotizacionProducto");
@@ -82,9 +74,12 @@ namespace UI.UserControls
         {
             usuario = usuarioActual;
             Dock = DockStyle.Fill;
+            BindingContext = new BindingContext();
             ConstruirInterfaz();
             ConfigurarAcceso();
             RecargarTodo();
+            if (tabs.TabPages.Contains(tabOrdenes)) tabs.SelectedTab = tabOrdenes;
+            tabs.SelectedIndexChanged += delegate { RecargarTodo(); };
         }
 
         private static ComboBox Combo(string nombre)
@@ -124,44 +119,44 @@ namespace UI.UserControls
             ConstruirRecepcion();
             if (TienePermiso(TipoPermiso.Aprovisionamiento_Gestion))
             {
-                var evaluacion = new TabPage("Evaluación de proveedores");
-                evaluacion.Controls.Add(new UC_EvaluacionProveedores());
-                tabs.TabPages.Add(evaluacion);
+                var paginaEvaluacion = new TabPage("Evaluación de proveedores");
+                evaluacion = new UC_EvaluacionProveedores();
+                paginaEvaluacion.Controls.Add(evaluacion);
+                tabs.TabPages.Add(paginaEvaluacion);
             }
             Controls.Add(tabs);
+            Controls.Add(estadoCarga);
+            if (TienePermiso(TipoPermiso.Aprovisionamiento_Gestion))
+            {
+                var menu = new MenuStrip { Name = "menuCompras", Dock = DockStyle.Top };
+                var catalogos = new ToolStripMenuItem("Catálogos") { Name = "menuCatalogos" };
+                catalogos.DropDownItems.Add(new ToolStripMenuItem("Nuevo proveedor...", null, delegate { AbrirAlta(true); }) { Name = "menuNuevoProveedor" });
+                catalogos.DropDownItems.Add(new ToolStripMenuItem("Nuevo perfume...", null, delegate { AbrirAlta(false); }) { Name = "menuNuevoPerfume" });
+                menu.Items.Add(catalogos); Controls.Add(menu);
+            }
+        }
+
+        private void AbrirAlta(bool proveedor)
+        {
+            Ejecutar(delegate
+            {
+                if (!TienePermiso(TipoPermiso.Aprovisionamiento_Gestion)) throw new UnauthorizedAccessException("Se requiere permiso de Compras.");
+                using (Form alta = proveedor ? (Form)new FormAltaProveedor() : new FormAltaPerfume())
+                    if (alta.ShowDialog(this) == DialogResult.OK)
+                    {
+                        RecargarTodo();
+                        estadoCarga.Text = (proveedor ? "Proveedor" : "Perfume") + " agregado. Listas actualizadas a las " + DateTime.Now.ToString("HH:mm:ss") + ".";
+                    }
+            }, null);
         }
 
         private void ConstruirCatalogos()
         {
-            FlowLayoutPanel flujo = FlujoVertical();
-            Label titulo = Titulo("Aprovisionamiento: catálogos y cotizaciones comparables");
-            flujo.Controls.Add(titulo);
-
-            GroupBox proveedor = Grupo("Registrar proveedor", 1180, 115);
-            FlowLayoutPanel fp = FlujoHorizontal();
-            AgregarCampo(fp, "Razón social", txtProveedorRazon, 180);
-            AgregarCampo(fp, "CUIT", txtProveedorCuit, 120);
-            AgregarCampo(fp, "Contacto", txtProveedorContacto, 180);
-            AgregarCampo(fp, "Antigüedad (años)", nudProveedorAntiguedad, 90);
-            AgregarCampo(fp, "Prestigio (0-100)", nudProveedorPrestigio, 90);
-            Button guardarProveedor = Boton("Guardar proveedor", "btnGuardarProveedor", GuardarProveedor);
-            fp.Controls.Add(guardarProveedor);
-            proveedor.Controls.Add(fp);
-            flujo.Controls.Add(proveedor);
-
-            GroupBox producto = Grupo("Registrar perfume", 1180, 115);
-            FlowLayoutPanel fprod = FlujoHorizontal();
-            AgregarCampo(fprod, "Código", txtProductoCodigo, 90);
-            AgregarCampo(fprod, "Nombre", txtProductoNombre, 180);
-            AgregarCampo(fprod, "Marca", txtProductoMarca, 130);
-            AgregarCampo(fprod, "Familia olfativa", txtProductoFamilia, 130);
-            AgregarCampo(fprod, "Precio venta", nudProductoPrecio, 100);
-            AgregarCampo(fprod, "Stock mínimo", nudProductoStockMinimo, 90);
-            fprod.Controls.Add(Boton("Guardar perfume", "btnGuardarProducto", GuardarProducto));
-            producto.Controls.Add(fprod);
-            flujo.Controls.Add(producto);
-
-            GroupBox cotizacion = Grupo("Registrar cotización recibida", 1180, 125);
+            var flujo = new TableLayoutPanel { Dock = DockStyle.Fill, Padding = new Padding(12), ColumnCount = 1, RowCount = 3, AutoScroll = true };
+            flujo.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            flujo.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            flujo.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+            flujo.Controls.Add(Titulo("Registrar cotización recibida"), 0, 0);
             FlowLayoutPanel fc = FlujoHorizontal();
             AgregarCampo(fc, "Proveedor", cmbCotizacionProveedor, 200);
             AgregarCampo(fc, "Perfume", cmbCotizacionProducto, 200);
@@ -170,29 +165,36 @@ namespace UI.UserControls
             AgregarCampo(fc, "Vigencia", dtpCotizacionVigencia, 135);
             AgregarCampo(fc, "Condiciones", txtCotizacionCondiciones, 160);
             fc.Controls.Add(Boton("Registrar cotización", "btnRegistrarCotizacion", RegistrarCotizacion));
-            cotizacion.Controls.Add(fc);
-            flujo.Controls.Add(cotizacion);
+            fc.Controls.Add(Boton("Actualizar", "btnActualizarCotizaciones", delegate { RecargarTodo(); }));
+            flujo.Controls.Add(fc, 0, 1);
+            flujo.Controls.Add(new Label { Text = "Las altas se encuentran en Catálogos → Nuevo proveedor / Nuevo perfume.", AutoSize = true, Padding = new Padding(5, 15, 5, 5) }, 0, 2);
             tabCatalogos.Controls.Add(flujo);
         }
 
         private void ConstruirOrdenes()
         {
-            TableLayoutPanel layout = new TableLayoutPanel { Dock = DockStyle.Fill, RowCount = 4, ColumnCount = 1, Padding = new Padding(12) };
+            TableLayoutPanel layout = new TableLayoutPanel { Dock = DockStyle.Fill, RowCount = 5, ColumnCount = 1, Padding = new Padding(12) };
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 48));
-            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 100));
+            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
             layout.Controls.Add(Titulo("Orden de compra y envío a revisión contable"), 0, 0);
             FlowLayoutPanel barra = FlujoHorizontal();
-            AgregarCampo(barra, "Proveedor", cmbOrdenProveedor, 210);
-            AgregarCampo(barra, "Perfume", cmbOrdenProducto, 210);
-            AgregarCampo(barra, "Cantidad", nudOrdenCantidad, 85);
-            AgregarCampo(barra, "Precio compra", nudOrdenPrecio, 105);
-            barra.Controls.Add(Boton("Crear borrador", "btnCrearOrden", CrearOrden));
+            barra.Controls.Add(Boton("Nuevo borrador", "btnNuevoBorrador", delegate { formularioOrden.Visible = !formularioOrden.Visible; }));
             barra.Controls.Add(Boton("Enviar a Contabilidad", "btnEnviarRevision", EnviarRevision));
             barra.Controls.Add(Boton("Emitir al proveedor", "btnEmitirOrden", EmitirOrden));
-            barra.Controls.Add(Boton("Actualizar", "btnActualizarOrdenes", delegate { CargarOrdenes(); }));
+            barra.Controls.Add(Boton("Actualizar", "btnActualizarOrdenes", delegate { RecargarTodo(); }));
+            foreach (Button boton in barra.Controls.OfType<Button>()) boton.Margin = new Padding(3);
             layout.Controls.Add(barra, 0, 1);
+            formularioOrden = FlujoHorizontal(); formularioOrden.Name = "panelNuevaOrden"; formularioOrden.Visible = false;
+            AgregarCampo(formularioOrden, "Proveedor", cmbOrdenProveedor, 210);
+            AgregarCampo(formularioOrden, "Perfume", cmbOrdenProducto, 210);
+            AgregarCampo(formularioOrden, "Cantidad", nudOrdenCantidad, 85);
+            AgregarCampo(formularioOrden, "Precio compra", nudOrdenPrecio, 105);
+            formularioOrden.Controls.Add(Boton("Crear borrador", "btnCrearOrden", CrearOrden));
+            formularioOrden.Controls.Add(Boton("Cancelar", "btnCancelarNuevaOrden", delegate { formularioOrden.Visible = false; }));
+            layout.Controls.Add(formularioOrden, 0, 2);
             var archivos = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true, WrapContents = true, Padding = new Padding(5) };
             btnReporteOrdenesPdf = Boton("Reporte PDF", "btnReporteOrdenesPdf", GenerarReportePdf);
             btnExportarOrdenesXml = Boton("Exportar XML", "btnExportarOrdenesXml", ExportarOrdenesXml);
@@ -205,8 +207,8 @@ namespace UI.UserControls
             }
             archivos.Controls.Add(new Label { AutoSize = true, MaximumSize = new Size(430, 0), Margin = new Padding(10, 9, 3, 3),
                 Text = "PDF/XML: listado completo con detalles. Importar crea borradores nuevos." });
-            layout.Controls.Add(archivos, 0, 2);
-            layout.Controls.Add(dgvOrdenes, 0, 3);
+            layout.Controls.Add(archivos, 0, 3);
+            layout.Controls.Add(dgvOrdenes, 0, 4);
             tabOrdenes.Controls.Add(layout);
         }
 
@@ -214,14 +216,14 @@ namespace UI.UserControls
         {
             TableLayoutPanel layout = new TableLayoutPanel { Dock = DockStyle.Fill, RowCount = 3, ColumnCount = 1, Padding = new Padding(12) };
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 48));
-            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 70));
+            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
             layout.Controls.Add(Titulo("Revisión y aprobación presupuestaria por Contabilidad"), 0, 0);
             FlowLayoutPanel barra = FlujoHorizontal();
             barra.Controls.Add(Boton("Aprobar seleccionada", "btnAprobarOrden", AprobarOrden));
             AgregarCampo(barra, "Motivo de rechazo", txtMotivoRechazo, 330);
             barra.Controls.Add(Boton("Rechazar seleccionada", "btnRechazarOrden", RechazarOrden));
-            barra.Controls.Add(Boton("Actualizar", "btnActualizarPendientes", delegate { CargarPendientes(); }));
+            barra.Controls.Add(Boton("Actualizar", "btnActualizarPendientes", delegate { RecargarTodo(); }));
             layout.Controls.Add(barra, 0, 1);
             layout.Controls.Add(dgvPendientes, 0, 2);
             tabContabilidad.Controls.Add(layout);
@@ -231,9 +233,9 @@ namespace UI.UserControls
         {
             TableLayoutPanel layout = new TableLayoutPanel { Dock = DockStyle.Fill, RowCount = 5, ColumnCount = 1, Padding = new Padding(12) };
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 44));
-            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 112));
+            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 44));
-            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 72));
+            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
             layout.Controls.Add(Titulo("Recepción con lote, origen y trazabilidad"), 0, 0);
             FlowLayoutPanel recepcion = FlujoHorizontal();
@@ -245,6 +247,7 @@ namespace UI.UserControls
             AgregarCampo(recepcion, "Cantidad", nudLoteCantidad, 80);
             AgregarCampo(recepcion, "Vencimiento", dtpLoteVencimiento, 135);
             recepcion.Controls.Add(Boton("Registrar recepción", "btnRegistrarRecepcion", RegistrarRecepcion));
+            recepcion.Controls.Add(Boton("Actualizar", "btnActualizarRecepcion", delegate { RecargarTodo(); }));
             layout.Controls.Add(recepcion, 0, 1);
             layout.Controls.Add(Titulo("Consulta de stock y trazabilidad"), 0, 2);
             FlowLayoutPanel consulta = FlujoHorizontal();
@@ -273,17 +276,19 @@ namespace UI.UserControls
 
         private void RecargarTodo()
         {
-            try
+            if (recargando) return;
+            Ejecutar(delegate
             {
-                CargarCatalogos();
-                CargarOrdenes();
-                CargarPendientes();
-                CargarOrdenesRecepcion();
-            }
-            catch (Exception error)
-            {
-                MostrarError(error);
-            }
+                recargando = true;
+                try
+                {
+                    CargarCatalogos(); CargarOrdenes(); CargarPendientes(); CargarOrdenesRecepcion();
+                    if (TienePermiso(TipoPermiso.Inventario_Recepcionar)) CargarInventario();
+                    if (evaluacion != null) evaluacion.ActualizarCatalogos();
+                    estadoCarga.Text = "Datos actualizados a las " + DateTime.Now.ToString("HH:mm:ss") + ".";
+                }
+                finally { recargando = false; }
+            }, null);
         }
 
         private void CargarCatalogos()
@@ -299,10 +304,13 @@ namespace UI.UserControls
 
         private static void Enlazar(ComboBox combo, object datos, string mostrar, string valor)
         {
+            object anterior = combo.SelectedValue;
             combo.DataSource = null;
             combo.DisplayMember = mostrar;
             combo.ValueMember = valor;
             combo.DataSource = datos;
+            if (anterior is int && combo.Items.Cast<object>().Any(item => Convert.ToInt32(item.GetType().GetProperty(valor).GetValue(item, null)) == (int)anterior))
+                combo.SelectedValue = anterior;
         }
 
         private void CargarOrdenes()
@@ -314,12 +322,14 @@ namespace UI.UserControls
 
         private void MostrarOrdenes(DataGridView grilla, IEnumerable<OrdenCompra> ordenes)
         {
+            var seleccionada = Seleccion(grilla);
             // Include inactive catalog entries so historical orders keep their names.
             var proveedores = proveedorBLL.Listar(false).ToDictionary(p => p.IdProveedor);
             var productos = productoBLL.Listar(false).ToDictionary(p => p.IdProducto);
             grilla.DataSource = ordenes.Select(o => OrdenCompraVista.Crear(o, proveedores, productos)).ToList();
             grilla.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             grilla.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            grilla.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             grilla.Columns["IdOrdenCompra"].HeaderText = "Orden";
             grilla.Columns["IdOrdenCompra"].FillWeight = 50;
             grilla.Columns["Proveedor"].FillWeight = 140;
@@ -331,6 +341,10 @@ namespace UI.UserControls
             grilla.Columns["CreadaPor"].HeaderText = "Responsable";
             grilla.Columns["Unidades"].HeaderText = "Cantidad total";
             grilla.Columns["Unidades"].FillWeight = 65;
+            if (seleccionada != null)
+                foreach (DataGridViewRow fila in grilla.Rows)
+                    if (((OrdenCompraVista)fila.DataBoundItem).IdOrdenCompra == seleccionada.IdOrdenCompra)
+                    { grilla.CurrentCell = fila.Cells[0]; break; }
         }
 
         private ArchivoOrdenesCompra ObtenerListadoGrilla()
@@ -430,15 +444,15 @@ namespace UI.UserControls
             List<OrdenCompra> ordenes = aprovisionamientoBLL.ConsultarHistorialCompras(null)
                 .Where(o => o.Estado == EstadoOrdenCompra.Emitida || o.Estado == EstadoOrdenCompra.RecibidaParcial)
                 .ToList();
-            cmbOrdenRecepcion.DataSource = null;
-            cmbOrdenRecepcion.DisplayMember = "Descripcion";
-            cmbOrdenRecepcion.ValueMember = "IdOrdenCompra";
-            cmbOrdenRecepcion.DataSource = ordenes.Select(o => new OrdenRecepcionVista(o)).ToList();
+            enlazandoRecepcion = true;
+            try { Enlazar(cmbOrdenRecepcion, ordenes.Select(o => new OrdenRecepcionVista(o)).ToList(), "Descripcion", "IdOrdenCompra"); }
+            finally { enlazandoRecepcion = false; }
             CambiarOrdenRecepcion(null, EventArgs.Empty);
         }
 
         private void CambiarOrdenRecepcion(object sender, EventArgs e)
         {
+            if (enlazandoRecepcion) return;
             OrdenRecepcionVista vista = cmbOrdenRecepcion.SelectedItem as OrdenRecepcionVista;
             List<Producto> productos = new List<Producto>();
             if (vista != null)
@@ -450,39 +464,6 @@ namespace UI.UserControls
                 }
             }
             Enlazar(cmbRecepcionProducto, productos, "Nombre", "IdProducto");
-        }
-
-        private void GuardarProveedor(object sender, EventArgs e)
-        {
-            Ejecutar(delegate
-            {
-                proveedorBLL.Guardar(new Proveedor
-                {
-                    RazonSocial = txtProveedorRazon.Text.Trim(),
-                    Cuit = txtProveedorCuit.Text.Trim(),
-                    Contacto = txtProveedorContacto.Text.Trim(),
-                    AntiguedadMercado = Convert.ToInt32(nudProveedorAntiguedad.Value),
-                    IndicePrestigio = nudProveedorPrestigio.Value
-                });
-                CargarCatalogos();
-            }, "Proveedor guardado correctamente.");
-        }
-
-        private void GuardarProducto(object sender, EventArgs e)
-        {
-            Ejecutar(delegate
-            {
-                productoBLL.Guardar(new Producto
-                {
-                    Codigo = txtProductoCodigo.Text.Trim(),
-                    Nombre = txtProductoNombre.Text.Trim(),
-                    Marca = txtProductoMarca.Text.Trim(),
-                    FamiliaOlfativa = txtProductoFamilia.Text.Trim(),
-                    PrecioVenta = nudProductoPrecio.Value,
-                    StockMinimo = Convert.ToInt32(nudProductoStockMinimo.Value)
-                });
-                CargarCatalogos();
-            }, "Perfume guardado correctamente.");
         }
 
         private void RegistrarCotizacion(object sender, EventArgs e)
@@ -502,6 +483,7 @@ namespace UI.UserControls
                     PlazoEntregaDias = Convert.ToInt32(nudCotizacionPlazo.Value)
                 });
                 aprovisionamientoBLL.RegistrarCotizacion(cotizacion);
+                RecargarTodo();
             }, "Cotización registrada correctamente.");
         }
 
@@ -520,6 +502,10 @@ namespace UI.UserControls
                     }
                 });
                 CargarOrdenes();
+                foreach (DataGridViewRow fila in dgvOrdenes.Rows)
+                    if (((OrdenCompraVista)fila.DataBoundItem).IdOrdenCompra == orden.IdOrdenCompra)
+                    { dgvOrdenes.CurrentCell = fila.Cells[0]; break; }
+                formularioOrden.Visible = false;
             }, "Borrador de orden creado.");
         }
 
@@ -573,14 +559,17 @@ namespace UI.UserControls
 
         private void ConsultarInventario(object sender, EventArgs e)
         {
-            Ejecutar(delegate
-            {
+            Ejecutar(CargarInventario, null);
+        }
+
+        private void CargarInventario()
+        {
+                if (cmbInventarioProducto.SelectedValue == null) { lblStock.Text = "Stock disponible: -"; dgvTrazabilidad.DataSource = null; return; }
                 int idProducto = ValorSeleccionado(cmbInventarioProducto);
                 lblStock.Text = "Stock disponible: " + inventarioBLL.VerificarStock(idProducto);
                 dgvTrazabilidad.DataSource = inventarioBLL.ObtenerTrazabilidad(idProducto);
                 if (dgvTrazabilidad.Columns.Contains("CertificadoOrigen"))
                     dgvTrazabilidad.Columns["CertificadoOrigen"].Visible = false;
-            }, null);
         }
 
         private static int ValorSeleccionado(ComboBox combo)
@@ -625,19 +614,9 @@ namespace UI.UserControls
             if (!ModoPrueba) MessageBox.Show(mensaje, "Perfumería", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private static FlowLayoutPanel FlujoVertical()
-        {
-            return new FlowLayoutPanel { Dock = DockStyle.Fill, AutoScroll = true, FlowDirection = FlowDirection.TopDown, WrapContents = false, Padding = new Padding(12) };
-        }
-
         private static FlowLayoutPanel FlujoHorizontal()
         {
-            return new FlowLayoutPanel { Dock = DockStyle.Fill, AutoScroll = true, FlowDirection = FlowDirection.LeftToRight, WrapContents = false, Padding = new Padding(8) };
-        }
-
-        private static GroupBox Grupo(string texto, int ancho, int alto)
-        {
-            return new GroupBox { Text = texto, Width = ancho, Height = alto, Padding = new Padding(8) };
+            return new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true, FlowDirection = FlowDirection.LeftToRight, WrapContents = true, Padding = new Padding(8) };
         }
 
         private static Label Titulo(string texto)

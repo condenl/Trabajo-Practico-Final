@@ -28,7 +28,7 @@ try {
 if ($LASTEXITCODE -ne 0) { Get-Content (Join-Path $stage 'setup.log'); throw 'Fixture initialization failed' }
 $exe = Join-Path $stage 'TestEvaluacionProveedores.exe'
 Copy-Item (Join-Path $stage 'UI.exe.config') ($exe + '.config')
-$references = @('System.dll','System.Core.dll','System.Data.dll','System.Xml.dll','System.Configuration.dll','System.Drawing.dll','System.Windows.Forms.dll')
+$references = @('System.dll','System.Core.dll','System.Data.dll','System.Xml.dll','System.Configuration.dll','System.Drawing.dll','System.Windows.Forms.dll','System.Windows.Forms.DataVisualization.dll')
 $references += @('UI.exe','BE.dll','BLL.dll','DAL.dll','Servicios.dll') | ForEach-Object { Join-Path $stage $_ }
 $arguments = @('/nologo','/target:exe',('/out:' + $exe))
 $arguments += $references | ForEach-Object { '/reference:' + $_ }
