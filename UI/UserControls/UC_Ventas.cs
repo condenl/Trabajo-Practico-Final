@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,207 +12,154 @@ namespace UI.UserControls
         public bool ModoPrueba { get; set; }
         public string UltimoMensaje { get; private set; }
         public string UltimoError { get; private set; }
-
         private readonly VentaBLL ventaBLL = new VentaBLL();
         private readonly ProductoBLL productoBLL = new ProductoBLL();
+        private readonly InventarioBLL inventarioBLL = new InventarioBLL();
         private Cliente clienteActual;
-
-        private readonly TextBox txtEmail = new TextBox { Name = "txtEmail" };
-        private readonly TextBox txtNombre = new TextBox { Name = "txtNombre" };
-        private readonly TextBox txtApellido = new TextBox { Name = "txtApellido" };
-        private readonly TextBox txtTelefono = new TextBox { Name = "txtTelefono" };
-        private readonly TextBox txtPreferencias = new TextBox { Name = "txtPreferencias" };
-        private readonly CheckBox chkMarketing = new CheckBox { Name = "chkMarketing", Text = "Autoriza campañas de marketing", AutoSize = true };
-        private readonly CheckBox chkMembresia = new CheckBox { Name = "chkMembresia", Text = "Crear membresía", AutoSize = true, Checked = true };
-        private readonly NumericUpDown nudDescuento = new NumericUpDown { Name = "nudDescuento", Minimum = 0, Maximum = 30, Value = 10 };
-        private readonly ComboBox cmbProducto = new ComboBox { Name = "cmbProducto", DropDownStyle = ComboBoxStyle.DropDownList };
-        private readonly NumericUpDown nudCantidad = new NumericUpDown { Name = "nudCantidad", Minimum = 1, Maximum = 999, Value = 1 };
-        private readonly DataGridView grilla = new DataGridView();
-        private readonly Label lblCliente = new Label { AutoSize = true, Text = "Cliente ocasional" };
+        private Venta cotizacion;
+        private readonly TextBox txtEmail = new TextBox { Name = "txtEmail", Width = 245 };
+        private readonly ComboBox cmbProducto = new ComboBox { Name = "cmbProducto", DropDownStyle = ComboBoxStyle.DropDownList, Width = 260 };
+        private readonly NumericUpDown nudCantidad = new NumericUpDown { Name = "nudCantidad", Minimum = 1, Maximum = 999, Value = 1, Width = 75 };
+        private readonly DataGridView grilla = new DataGridView { Name = "dgvVenta", Dock = DockStyle.Fill, ReadOnly = true,
+            AllowUserToAddRows = false, AllowUserToDeleteRows = false, MultiSelect = false, SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+            AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill, ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize };
+        private readonly Label lblCliente = Etiqueta("lblCliente", "Venta ocasional · sin cliente seleccionado");
+        private readonly Label lblStock = Etiqueta("lblStockVenta", "Stock disponible: —");
+        private readonly Label resumen = Etiqueta("lblTotalesVenta", "");
+        private readonly Label estado = Etiqueta("lblEstadoVenta", "");
+        private Button confirmar;
 
         public UC_Ventas()
         {
-            Dock = DockStyle.Fill;
-            AutoScroll = true;
-            ConstruirInterfaz();
-            CargarProductos();
-        }
-
-        private void ConstruirInterfaz()
-        {
-            TableLayoutPanel layout = new TableLayoutPanel
-            {
-                Dock = DockStyle.Top,
-                AutoSize = true,
-                ColumnCount = 4,
-                Padding = new Padding(16)
+            Dock = DockStyle.Fill; BindingContext = new BindingContext();
+            var layout = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 7, Padding = new Padding(12), AutoScroll = true };
+            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+            for (int i = 0; i < 7; i++) layout.RowStyles.Add(new RowStyle(i == 4 ? SizeType.Percent : SizeType.AutoSize, i == 4 ? 100 : 0));
+            layout.Controls.Add(new Label { Text = "Venta", AutoSize = true, Font = new Font(Font.FontFamily, 16, FontStyle.Bold), Margin = new Padding(3, 3, 3, 12) }, 0, 0);
+            var clientes = Barra();
+            clientes.Controls.Add(Etiqueta("", "Correo del cliente")); clientes.Controls.Add(txtEmail);
+            clientes.Controls.Add(Boton("Buscar cliente", "btnBuscarCliente", BuscarCliente));
+            clientes.Controls.Add(Boton("Nuevo cliente...", "btnNuevoCliente", NuevoCliente));
+            clientes.Controls.Add(Boton("Venta ocasional", "btnQuitarCliente", delegate { QuitarCliente(); }));
+            layout.Controls.Add(clientes, 0, 1); layout.Controls.Add(lblCliente, 0, 2);
+            var productos = Barra();
+            productos.Controls.Add(Etiqueta("", "Perfume")); productos.Controls.Add(cmbProducto);
+            productos.Controls.Add(Etiqueta("", "Cantidad")); productos.Controls.Add(nudCantidad);
+            productos.Controls.Add(Boton("Agregar producto", "btnAgregarProducto", AgregarProducto));
+            productos.Controls.Add(Boton("Quitar producto", "btnQuitarProducto", delegate {
+                Ejecutar(delegate { if (grilla.CurrentRow != null) { grilla.Rows.Remove(grilla.CurrentRow); ActualizarTotales(); ActualizarStock(); } });
+            }));
+            productos.Controls.Add(Boton("Actualizar", "btnActualizarVenta", delegate { Ejecutar(delegate { CargarProductos(); ActualizarTotales(); }); }));
+            productos.Controls.Add(lblStock); layout.Controls.Add(productos, 0, 3);
+            grilla.Columns.Add("IdProducto", "Id"); grilla.Columns[0].Visible = false;
+            grilla.Columns.Add("Producto", "Producto"); grilla.Columns.Add("Cantidad", "Cantidad");
+            grilla.Columns.Add("Precio", "Precio unitario"); grilla.Columns.Add("Importe", "Subtotal");
+            grilla.Columns["Producto"].FillWeight = 220;
+            foreach (string c in new[] { "Precio", "Importe" }) { grilla.Columns[c].DefaultCellStyle.Format = "C2"; grilla.Columns[c].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; }
+            layout.Controls.Add(grilla, 0, 4);
+            var pie = Barra(); resumen.Font = new Font(Font, FontStyle.Bold); pie.Controls.Add(resumen);
+            confirmar = Boton("Confirmar venta", "btnConfirmarVenta", ConfirmarVenta); pie.Controls.Add(confirmar);
+            layout.Controls.Add(pie, 0, 5); layout.Controls.Add(estado, 0, 6); Controls.Add(layout);
+            txtEmail.TextChanged += delegate {
+                if (clienteActual != null && !string.Equals(txtEmail.Text.Trim(), clienteActual.Email, StringComparison.OrdinalIgnoreCase))
+                { clienteActual = null; MostrarCliente(); ActualizarTotales(); }
             };
-            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 150));
-            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
-            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 150));
-            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
-
-            Label titulo = new Label
-            {
-                Text = "Venta y fidelización de clientes",
-                Font = new Font(Font.FontFamily, 16, FontStyle.Bold),
-                AutoSize = true,
-                Margin = new Padding(3, 3, 3, 16)
-            };
-            layout.Controls.Add(titulo, 0, 0);
-            layout.SetColumnSpan(titulo, 4);
-
-            Button buscar = new Button { Text = "Buscar cliente", AutoSize = true };
-            buscar.Click += BuscarCliente;
-            layout.Controls.Add(new Label { Text = "Correo electrónico", AutoSize = true, Anchor = AnchorStyles.Left }, 0, 1);
-            txtEmail.Dock = DockStyle.Fill;
-            layout.Controls.Add(txtEmail, 1, 1);
-            layout.Controls.Add(buscar, 2, 1);
-            layout.Controls.Add(lblCliente, 3, 1);
-
-            AgregarFila(layout, 2, "Nombre", txtNombre, "Apellido", txtApellido);
-            AgregarFila(layout, 3, "Teléfono", txtTelefono, "Preferencias olfativas", txtPreferencias);
-            FlowLayoutPanel opcionesCliente = new FlowLayoutPanel
-            {
-                Name = "opcionesCliente",
-                Dock = DockStyle.Fill,
-                AutoSize = true,
-                AutoSizeMode = AutoSizeMode.GrowAndShrink,
-                WrapContents = true
-            };
-            chkMarketing.Margin = new Padding(3, 6, 18, 3);
-            chkMembresia.Margin = new Padding(3, 6, 18, 3);
-            opcionesCliente.Controls.Add(chkMarketing);
-            opcionesCliente.Controls.Add(chkMembresia);
-            opcionesCliente.Controls.Add(new Label { Text = "Descuento (%)", AutoSize = true, Margin = new Padding(3, 6, 3, 3) });
-            opcionesCliente.Controls.Add(nudDescuento);
-            layout.Controls.Add(opcionesCliente, 0, 4);
-            layout.SetColumnSpan(opcionesCliente, 4);
-
-            Button registrar = new Button { Text = "Registrar cliente", AutoSize = true };
-            registrar.Click += RegistrarCliente;
-            layout.Controls.Add(registrar, 1, 5);
-
-            Button agregar = new Button { Text = "Agregar producto", AutoSize = true };
-            agregar.Click += AgregarProducto;
-            AgregarFila(layout, 6, "Producto", cmbProducto, "Cantidad", nudCantidad);
-            layout.Controls.Add(agregar, 3, 7);
-
-            grilla.AllowUserToAddRows = false;
-            grilla.AllowUserToDeleteRows = true;
-            grilla.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            grilla.Height = 220;
-            grilla.Dock = DockStyle.Fill;
-            grilla.Columns.Add("IdProducto", "Id");
-            grilla.Columns.Add("Producto", "Producto");
-            grilla.Columns.Add("Cantidad", "Cantidad");
-            grilla.Columns.Add("Precio", "Precio unitario");
-            grilla.Columns[0].Visible = false;
-            layout.Controls.Add(grilla, 0, 8);
-            layout.SetColumnSpan(grilla, 4);
-
-            Button confirmar = new Button { Text = "Confirmar venta", AutoSize = true };
-            confirmar.Click += ConfirmarVenta;
-            layout.Controls.Add(confirmar, 3, 9);
-            Controls.Add(layout);
+            txtEmail.KeyDown += delegate(object s, KeyEventArgs e) { if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; BuscarCliente(s, EventArgs.Empty); } };
+            cmbProducto.SelectedIndexChanged += delegate { Ejecutar(ActualizarStock); };
+            Ejecutar(CargarProductos); ActualizarTotales();
         }
-
-        private static void AgregarFila(TableLayoutPanel layout, int fila, string etiqueta1, Control control1, string etiqueta2, Control control2)
-        {
-            layout.Controls.Add(new Label { Text = etiqueta1, AutoSize = true, Anchor = AnchorStyles.Left }, 0, fila);
-            control1.Dock = DockStyle.Fill;
-            layout.Controls.Add(control1, 1, fila);
-            layout.Controls.Add(new Label { Text = etiqueta2, AutoSize = true, Anchor = AnchorStyles.Left }, 2, fila);
-            control2.Dock = DockStyle.Fill;
-            layout.Controls.Add(control2, 3, fila);
-        }
-
+        private static Label Etiqueta(string nombre, string texto) { return new Label { Name = nombre, Text = texto, AutoSize = true, Margin = new Padding(3, 7, 10, 7) }; }
+        private static FlowLayoutPanel Barra() { return new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true, WrapContents = true, Padding = new Padding(0, 3, 0, 3) }; }
+        private static Button Boton(string texto, string nombre, EventHandler accion) { var b = new Button { Text = texto, Name = nombre, AutoSize = true, Padding = new Padding(5) }; b.Click += accion; return b; }
         private void CargarProductos()
         {
-            cmbProducto.DataSource = productoBLL.Listar(true);
-            cmbProducto.DisplayMember = "Nombre";
-            cmbProducto.ValueMember = "IdProducto";
+            var anterior = cmbProducto.SelectedItem as Producto;
+            cmbProducto.DisplayMember = "Nombre"; cmbProducto.ValueMember = "IdProducto"; cmbProducto.DataSource = productoBLL.Listar(true);
+            if (anterior != null && cmbProducto.Items.Cast<Producto>().Any(p => p.IdProducto == anterior.IdProducto)) cmbProducto.SelectedValue = anterior.IdProducto;
+            ActualizarStock();
         }
-
+        private void ActualizarStock()
+        {
+            var p = cmbProducto.SelectedItem as Producto;
+            if (p == null) { lblStock.Text = "Sin perfumes disponibles"; return; }
+            int reservado = grilla.Rows.Cast<DataGridViewRow>().Where(r => (int)r.Cells["IdProducto"].Value == p.IdProducto).Sum(r => (int)r.Cells["Cantidad"].Value);
+            lblStock.Text = "Stock vendible: " + inventarioBLL.ObtenerLotesDisponibles(p.IdProducto).Sum(l => l.CantidadDisponible) + " u. · En esta venta: " + reservado + " u.";
+        }
         private void BuscarCliente(object sender, EventArgs e)
         {
-            clienteActual = ventaBLL.BuscarClientePorEmail(txtEmail.Text);
-            lblCliente.Text = clienteActual == null ? "Cliente no registrado" : clienteActual.NombreCompleto;
+            Ejecutar(delegate {
+                clienteActual = ventaBLL.BuscarClientePorEmail(txtEmail.Text);
+                MostrarCliente(); ActualizarTotales();
+                if (clienteActual == null) Notificar("No se encontró el cliente. Puede registrarlo o continuar como venta ocasional.", false);
+            });
         }
-
-        private void RegistrarCliente(object sender, EventArgs e)
+        private void NuevoCliente(object sender, EventArgs e)
         {
-            try
-            {
-                Cliente cliente = new Cliente
-                {
-                    Nombre = txtNombre.Text,
-                    Apellido = txtApellido.Text,
-                    Email = txtEmail.Text,
-                    Telefono = txtTelefono.Text,
-                    PreferenciasOlfativas = txtPreferencias.Text,
-                    AutorizaMarketing = chkMarketing.Checked
-                };
-                ventaBLL.RegistrarCliente(cliente, chkMembresia.Checked, nudDescuento.Value);
-                clienteActual = cliente;
-                lblCliente.Text = cliente.NombreCompleto;
-                Notificar("Cliente registrado correctamente.", false);
-            }
-            catch (Exception error)
-            {
-                Notificar(error.Message, true);
-            }
+            Ejecutar(delegate {
+                using (var alta = new FormAltaCliente(txtEmail.Text))
+                    if (alta.ShowDialog(this) == DialogResult.OK) {
+                        clienteActual = null; txtEmail.Text = alta.ClienteCreado.Email; clienteActual = alta.ClienteCreado;
+                        MostrarCliente(); ActualizarTotales(); Notificar("Cliente registrado y seleccionado para esta venta.", false);
+                    }
+            });
         }
-
+        private void MostrarCliente() { lblCliente.Text = clienteActual == null ? "Venta ocasional · sin cliente seleccionado" : "Cliente: " + clienteActual.NombreCompleto + " · " + clienteActual.Email; }
+        private void QuitarCliente() { clienteActual = null; txtEmail.Clear(); MostrarCliente(); ActualizarTotales(); }
         private void AgregarProducto(object sender, EventArgs e)
         {
-            Producto producto = cmbProducto.SelectedItem as Producto;
-            if (producto == null) return;
-
-            DataGridViewRow existente = grilla.Rows.Cast<DataGridViewRow>()
-                .FirstOrDefault(r => Convert.ToInt32(r.Cells["IdProducto"].Value) == producto.IdProducto);
-            if (existente == null)
-                grilla.Rows.Add(producto.IdProducto, producto.Nombre, Convert.ToInt32(nudCantidad.Value), producto.PrecioVenta);
-            else
-                existente.Cells["Cantidad"].Value = Convert.ToInt32(existente.Cells["Cantidad"].Value) + Convert.ToInt32(nudCantidad.Value);
+            Ejecutar(delegate {
+                var p = cmbProducto.SelectedItem as Producto; if (p == null) return;
+                var fila = grilla.Rows.Cast<DataGridViewRow>().FirstOrDefault(r => (int)r.Cells["IdProducto"].Value == p.IdProducto);
+                int cantidad = (fila == null ? 0 : (int)fila.Cells["Cantidad"].Value) + (int)nudCantidad.Value;
+                if (cantidad > inventarioBLL.ObtenerLotesDisponibles(p.IdProducto).Sum(l => l.CantidadDisponible))
+                    throw new InvalidOperationException("No hay stock suficiente de " + p.Nombre + " para agregar esa cantidad.");
+                if (fila == null) grilla.Rows.Add(p.IdProducto, p.Nombre, cantidad, p.PrecioVenta, cantidad * p.PrecioVenta);
+                else fila.Cells["Cantidad"].Value = cantidad;
+                ActualizarTotales(); ActualizarStock();
+            });
         }
-
+        private Venta CrearVenta()
+        {
+            var venta = new Venta { IdCliente = clienteActual == null ? (int?)null : clienteActual.IdCliente };
+            foreach (DataGridViewRow fila in grilla.Rows) venta.Detalles.Add(new DetalleVenta { IdProducto = (int)fila.Cells["IdProducto"].Value, Cantidad = (int)fila.Cells["Cantidad"].Value });
+            return venta;
+        }
+        private void ActualizarTotales()
+        {
+            cotizacion = null; confirmar.Enabled = false;
+            if (grilla.Rows.Count == 0) {
+                resumen.Text = "Subtotal: $ 0 · Descuento: $ 0 · Total: $ 0";
+                estado.Text = "Agregue productos para revisar el total antes de confirmar."; estado.ForeColor = SystemColors.ControlText; UltimoError = null; return;
+            }
+            try {
+                var venta = CrearVenta(); ventaBLL.CotizarVenta(venta);
+                foreach (DataGridViewRow fila in grilla.Rows) {
+                    decimal precio = venta.Detalles.First(d => d.IdProducto == (int)fila.Cells["IdProducto"].Value).PrecioUnitario;
+                    fila.Cells["Precio"].Value = precio; fila.Cells["Importe"].Value = precio * (int)fila.Cells["Cantidad"].Value;
+                }
+                cotizacion = venta; confirmar.Enabled = true;
+                resumen.Text = "Subtotal: " + venta.Subtotal.ToString("C2") + " · Descuento: " + venta.Descuento.ToString("C2") + " · Total: " + venta.Total.ToString("C2");
+                estado.Text = "Importes calculados con precios actuales y membresía activa, si corresponde."; estado.ForeColor = SystemColors.ControlText;
+                UltimoError = null;
+            } catch (Exception ex) { resumen.Text = "Total pendiente de revisión"; Notificar(ex.Message, true); }
+        }
         private void ConfirmarVenta(object sender, EventArgs e)
         {
-            try
-            {
-                Venta venta = new Venta { IdCliente = clienteActual != null ? (int?)clienteActual.IdCliente : null };
-                foreach (DataGridViewRow fila in grilla.Rows)
-                {
-                    venta.Detalles.Add(new DetalleVenta
-                    {
-                        IdProducto = Convert.ToInt32(fila.Cells["IdProducto"].Value),
-                        Cantidad = Convert.ToInt32(fila.Cells["Cantidad"].Value)
-                    });
+            Ejecutar(delegate {
+                var anterior = cotizacion; ActualizarTotales(); if (cotizacion == null) return;
+                if (anterior == null || anterior.Total != cotizacion.Total || anterior.Subtotal != cotizacion.Subtotal || anterior.Descuento != cotizacion.Descuento) {
+                    Notificar("Los importes cambiaron. Revise el total actualizado y vuelva a confirmar.", false); return;
                 }
-
-                ventaBLL.RegistrarVenta(venta);
-                Notificar("Venta registrada. Total: " + venta.Total.ToString("C2") + " (descuento: " + venta.Descuento.ToString("C2") + ")", false);
-                grilla.Rows.Clear();
-            }
-            catch (Exception error)
-            {
-                Notificar(error.Message, true);
-            }
+                var venta = CrearVenta(); ventaBLL.RegistrarVenta(venta, cotizacion.Subtotal, cotizacion.Descuento);
+                grilla.Rows.Clear(); QuitarCliente();
+                Notificar("Venta #" + venta.IdVenta + " registrada. Total: " + venta.Total.ToString("C2") + ". Lista para una nueva venta ocasional.", false);
+                try { CargarProductos(); } catch (Exception ex) { Notificar("Venta #" + venta.IdVenta + " registrada. No se pudo refrescar el catálogo: " + ex.Message, true); }
+            });
         }
-
-        private void Notificar(string mensaje, bool error)
-        {
-            if (error) UltimoError = mensaje;
-            else
-            {
-                UltimoError = null;
-                UltimoMensaje = mensaje;
-            }
-
-            if (!ModoPrueba)
-                MessageBox.Show(mensaje, error ? "No se pudo completar la operación" : "Perfumería", MessageBoxButtons.OK,
-                    error ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
+        private void Ejecutar(Action accion) { try { accion(); } catch (Exception ex) { Notificar(ex.Message, true); } }
+        private void Notificar(string mensaje, bool error) {
+            UltimoError = error ? mensaje : null; if (!error) UltimoMensaje = mensaje;
+            estado.Text = mensaje; estado.ForeColor = error ? Color.Firebrick : SystemColors.ControlText;
         }
     }
 }

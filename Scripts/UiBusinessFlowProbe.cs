@@ -198,15 +198,19 @@ internal static class UiBusinessFlowProbe
         using (UC_Ventas ui = new UC_Ventas { ModoPrueba = true })
         using (Form host = Hospedar(ui))
         {
+            using (var alta = new FormAltaCliente(emailCliente)) {
+                alta.Show(host); Application.DoEvents();
+                Encontrar<TextBox>(alta, "txtNombre").Text = "Cliente";
+                Encontrar<TextBox>(alta, "txtApellido").Text = "Prueba UI";
+                Encontrar<TextBox>(alta, "txtTelefono").Text = "11111111";
+                Encontrar<TextBox>(alta, "txtPreferencias").Text = "Cítricos";
+                Encontrar<CheckBox>(alta, "chkMarketing").Checked = true;
+                Encontrar<NumericUpDown>(alta, "nudDescuento").Value = 10m;
+                PulsarPorTexto(alta, "Guardar y seleccionar");
+                Exigir(alta.ClienteCreado != null, "No se registro el cliente desde su ventana.");
+            }
             Encontrar<TextBox>(ui, "txtEmail").Text = emailCliente;
-            Encontrar<TextBox>(ui, "txtNombre").Text = "Cliente";
-            Encontrar<TextBox>(ui, "txtApellido").Text = "Prueba UI";
-            Encontrar<TextBox>(ui, "txtTelefono").Text = "11111111";
-            Encontrar<TextBox>(ui, "txtPreferencias").Text = "Cítricos";
-            Encontrar<CheckBox>(ui, "chkMarketing").Checked = true;
-            Encontrar<NumericUpDown>(ui, "nudDescuento").Value = 10m;
-            PulsarPorTexto(ui, "Registrar cliente");
-            SinError(ui, "registrar al cliente");
+            PulsarPorTexto(ui, "Buscar cliente");
 
             Seleccionar<Producto>(Encontrar<ComboBox>(ui, "cmbProducto"), p => p.Codigo == codigoProducto);
             Encontrar<NumericUpDown>(ui, "nudCantidad").Value = 1;

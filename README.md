@@ -10,6 +10,14 @@ En **Evaluación de proveedores**, **Comparar** muestra barras de puntaje y marg
 
 **Actualizar** recalcula una comparación todavía no confirmada y conserva su elección y fundamento en preparación. La comparación anterior permanece en el historial. Para una decisión confirmada, recarga ese registro; **Comparar** inicia otro análisis con datos actuales. Los gráficos usan el control incluido en .NET Framework y no requieren instalar otra biblioteca.
 
+## Uso de Ventas y administración
+
+En **Ventas**, seleccione un cliente por correo o use **Venta ocasional**. **Nuevo cliente...** abre una ventana independiente y, al guardar, lo selecciona para esa venta. Cambiar el correo quita al cliente anterior; confirmar una venta limpia tanto el carrito como el cliente para la siguiente operación. El carrito muestra precios de solo lectura, stock vendible y un botón **Quitar producto**. Subtotal, descuento de membresía y total aparecen antes de confirmar. Si los importes cambiaron desde la vista previa, se solicita revisarlos antes de registrar.
+
+Las órdenes se pueden filtrar por **proveedor, estado y fechas**. PDF y XML usan el listado filtrado. **Limpiar filtros** recupera el listado completo; crear un borrador también los limpia para poder seleccionar la nueva orden. Enviar a Contabilidad solo se habilita para borradores y Emitir al proveedor para órdenes aprobadas, con una indicación del siguiente paso.
+
+En **Usuarios**, **Nuevo usuario** limpia la selección y habilita Guardar nuevo usuario. Seleccionar una fila permite **Guardar cambios**; dejar la contraseña vacía la conserva. En **Auditoría**, **Revisar restauración...** compara los datos actuales con los que quedarán y requiere confirmación. Las credenciales se indican como ocultas. Las validaciones habituales se muestran junto al formulario.
+
 ## Usuarios de demostración
 
 Credenciales públicas y deliberadamente conocidas, **solo para pruebas y entregas académicas**. No habilitar estos datos en una base de producción ni reutilizar estas contraseñas para cuentas reales. El campo Usuario del login recibe el correo completo.
