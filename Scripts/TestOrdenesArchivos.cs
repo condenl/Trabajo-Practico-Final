@@ -11,6 +11,7 @@ using BE;
 using BLL;
 using DAL;
 using Servicios;
+using UI;
 using UI.UserControls;
 
 internal static class TestOrdenesArchivos
@@ -62,11 +63,76 @@ internal static class TestOrdenesArchivos
             }
             if (args.Length != 1 || args[0] != "--test") throw new Exception("Uso: TestOrdenesArchivos [--test]");
             using (connection = new SqlConnection(builder.ConnectionString))
+            using (var host = new Form { Width = 1180, Height = 740 })
             using (var ui = new UC_Aprovisionamiento(actor) { ModoPrueba = true })
             {
                 connection.Open();
+                host.Controls.Add(ui); host.Show(); Application.DoEvents();
                 ui.Controls.OfType<TabControl>().Single().SelectedIndex = 1;
                 Assert(ui.UltimoError == null, "La grilla carga sin errores");
+                Assert(!ui.Controls.Find("txtProveedorRazon", true).Any() && !ui.Controls.Find("txtProductoCodigo", true).Any(),
+                    "Compras presenta cotizaciones y ordenes sin formularios de alta incrustados");
+                var productosCombo = Find<ComboBox>(ui, "cmbOrdenProducto");
+                var proveedoresCombo = Find<ComboBox>(ui, "cmbOrdenProveedor");
+                int productoAnterior = (int)productosCombo.SelectedValue;
+                int proveedorAnterior = (int)proveedoresCombo.SelectedValue;
+                int productosEnLista = productosCombo.Items.Count, proveedoresEnLista = proveedoresCombo.Items.Count;
+                int proveedoresAntes = Count("Proveedor"), productosAntes = Count("Producto");
+                using (var alta = new FormAltaProveedor())
+                {
+                    InvokeButton(alta, "btnGuardarCatalogo");
+                    Assert(Find<Label>(alta, "lblErrorCatalogo").Text.Contains("razón social") && Count("Proveedor") == proveedoresAntes,
+                        "Alta separada mantiene validacion BLL y no cierra ni guarda datos invalidos");
+                    Find<TextBox>(alta, "txtProveedorRazon").Text = "ZZ Proveedor de prueba de refresco";
+                    Find<TextBox>(alta, "txtProveedorCuit").Text = "98123456789";
+                    InvokeButton(alta, "btnGuardarCatalogo");
+                    Assert(alta.DialogResult == DialogResult.OK && Count("Proveedor") == proveedoresAntes + 1, "Alta separada guarda proveedor real");
+                }
+                using (var cancelar = new FormAltaPerfume())
+                {
+                    Find<TextBox>(cancelar, "txtProductoCodigo").Text = "CANCELADO";
+                    InvokeButton(cancelar, "btnCancelarCatalogo");
+                    Assert(Count("Producto") == productosAntes, "Cancelar alta no modifica catalogos");
+                }
+                using (var alta = new FormAltaPerfume())
+                {
+                    Find<TextBox>(alta, "txtProductoCodigo").Text = "TEST-REFRESCO";
+                    Find<TextBox>(alta, "txtProductoNombre").Text = "ZZ Perfume de prueba de refresco";
+                    Find<NumericUpDown>(alta, "nudProductoPrecio").Value = 12300;
+                    InvokeButton(alta, "btnGuardarCatalogo");
+                    Assert(alta.DialogResult == DialogResult.OK && Count("Producto") == productosAntes + 1, "Alta separada guarda perfume real");
+                }
+                Assert(productosCombo.Items.Count == productosEnLista && proveedoresCombo.Items.Count == proveedoresEnLista,
+                    "Fixture reproduce listas de una vista abierta antes de cambios externos");
+                InvokeButton(ui, "btnActualizarOrdenes");
+                Assert(ui.UltimoError == null && productosCombo.Items.Count == productosEnLista + 1 && proveedoresCombo.Items.Count == proveedoresEnLista + 1 &&
+                    (int)productosCombo.SelectedValue == productoAnterior && (int)proveedoresCombo.SelectedValue == proveedorAnterior,
+                    "Actualizar ordenes consulta catalogos nuevos y conserva las selecciones vigentes");
+                int nuevoProducto = new ProductoBLL().Listar().Single(p => p.Codigo == "TEST-REFRESCO").IdProducto;
+                var inventarioCombo = Find<ComboBox>(ui, "cmbInventarioProducto"); inventarioCombo.SelectedValue = nuevoProducto;
+                new InventarioBLL().RegistrarIngresoLote(new Lote { IdProducto = nuevoProducto, IdProveedor = proveedorAnterior,
+                    CodigoLote = "TEST-REFRESCO", Origen = "Argentina (prueba)", CantidadIngresada = 4 });
+                InvokeButton(ui, "btnActualizarRecepcion");
+                Assert(ui.UltimoError == null && Find<Label>(ui, "lblStock").Text.EndsWith("4") && Find<DataGridView>(ui, "dgvTrazabilidad").Rows.Count == 1,
+                    "Actualizar recepcion vuelve a consultar stock y trazabilidad ingresados por otra sesion");
+                var grillaOrdenes = Find<DataGridView>(ui, "dgvOrdenes");
+                int ordenSeleccionada = (int)grillaOrdenes.CurrentRow.Cells["IdOrdenCompra"].Value;
+                var nuevaOrden = Borrador(proveedorAnterior, productoAnterior);
+                AprovisionamientoDAL.Instancia.InsertarOrdenes(new List<OrdenCompra> { nuevaOrden });
+                InvokeButton(ui, "btnActualizarOrdenes");
+                Assert(grillaOrdenes.Rows.Count == Count("OrdenCompra") && (int)grillaOrdenes.CurrentRow.Cells["IdOrdenCompra"].Value == ordenSeleccionada,
+                    "Actualizar incorpora orden externa sin perder la fila seleccionada");
+                InvokeButton(ui, "btnActualizarCotizaciones");
+                Assert(ui.UltimoError == null && Find<ComboBox>(ui, "cmbCotizacionProducto").Items.Cast<Producto>().Any(p => p.IdProducto == nuevoProducto),
+                    "Actualizar cotizaciones incorpora los catalogos actuales");
+                int antesDeCrear = Count("OrdenCompra");
+                InvokeButton(ui, "btnNuevoBorrador"); InvokeButton(ui, "btnCancelarNuevaOrden");
+                Assert(Count("OrdenCompra") == antesDeCrear, "Cancelar el formulario desplegable no crea una compra");
+                InvokeButton(ui, "btnNuevoBorrador"); Find<NumericUpDown>(ui, "nudOrdenPrecio").Value = 1000;
+                InvokeButton(ui, "btnCrearOrden");
+                Assert(ui.UltimoError == null && Count("OrdenCompra") == antesDeCrear + 1 &&
+                    (int)grillaOrdenes.CurrentRow.Cells["IdOrdenCompra"].Value == Convert.ToInt32(Query("SELECT MAX(IdOrdenCompra) FROM OrdenCompra").Rows[0][0]),
+                    "Nuevo borrador guarda la orden y selecciona la fila recien creada");
                 int inicial = Count("OrdenCompra"), detalles = Count("DetalleOrdenCompra"), stock = Count("MovimientoStock");
                 var ejemploDemo = OrdenesXml.Leer(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ordenes-compra-3.xml"));
                 Assert(ejemploDemo.Ordenes.Count == 3 && new IntercambioOrdenesBLL().ValidarImportacion(ejemploDemo) == 3,
@@ -141,7 +207,18 @@ internal static class TestOrdenesArchivos
                 InvokeButton(ui, "btnExportarOrdenesXml");
                 Assert(ui.UltimoError != null && !File.Exists(ui.RutaArchivoPrueba), "BLL rechaza exportacion aunque se fuerce un evento de otra sesion");
                 using (var soloContable = new UC_Aprovisionamiento(contable) { ModoPrueba = true })
+                {
                     Assert(soloContable.Controls.OfType<TabControl>().Single().TabPages.Count == 1, "Contabilidad no ve botones de importacion ni exportacion de Compras");
+                    Assert(!soloContable.Controls.OfType<MenuStrip>().Any(), "El menu de altas respeta el actor de Compras");
+                    var pendientes = Find<DataGridView>(soloContable, "dgvPendientes"); int cantidadPendiente = pendientes.Rows.Count;
+                    int ordenPendiente = (int)pendientes.Rows[0].Cells["IdOrdenCompra"].Value;
+                    new AprovisionamientoBLL().AprobarOrdenCompra(ordenPendiente, contable.Id);
+                    InvokeButton(soloContable, "btnActualizarPendientes");
+                    Assert(soloContable.UltimoError == null && pendientes.Rows.Count == cantidadPendiente - 1,
+                        "Actualizar Contabilidad retira una orden aprobada fuera de la vista");
+                }
+                try { using (var prohibida = new FormAltaProveedor()) { } throw new Exception("Contabilidad pudo abrir un alta"); }
+                catch (UnauthorizedAccessException) { Assert(true, "Las ventanas de alta verifican el permiso aunque se fuerce su apertura"); }
                 Console.WriteLine("RESULTADO: " + assertions + " verificaciones OK; BASE=" + builder.InitialCatalog);
                 Console.WriteLine("ARTEFACTOS=" + root);
             }

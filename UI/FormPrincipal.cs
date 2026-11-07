@@ -19,6 +19,7 @@ namespace UI
         public FormPrincipal(Usuario usuario)
         {
             InitializeComponent();
+            ConfigurarVentana();
             _usuarioLogueado = usuario;
             idiomaBLL = new IdiomaBLL();
             traduccionBLL = new TraduccionBLL();
@@ -29,8 +30,30 @@ namespace UI
         public FormPrincipal()
         {
             InitializeComponent();
+            ConfigurarVentana();
             idiomaBLL = new IdiomaBLL();
             traduccionBLL = new TraduccionBLL();
+        }
+
+        private void ConfigurarVentana()
+        {
+            StartPosition = FormStartPosition.CenterScreen;
+            MinimumSize = new System.Drawing.Size(1000, 570);
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            cmbIdioma.Anchor = btnCerrarSesion.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+            var area = Screen.FromControl(this).WorkingArea;
+            ClientSize = new System.Drawing.Size(Math.Min(1520, area.Width - 32), Math.Min(760, area.Height - 64));
+        }
+
+        private void MostrarVista(UserControl vista)
+        {
+            foreach (Control anterior in new List<Control>(ObtenerVistas())) anterior.Dispose();
+            vista.Dock = DockStyle.Fill; panel1.Controls.Add(vista); vista.Show();
+        }
+
+        private IEnumerable<Control> ObtenerVistas()
+        {
+            foreach (Control control in panel1.Controls) yield return control;
         }
 
         private void ConfigurarAccesos()
@@ -64,6 +87,11 @@ namespace UI
                 siguiente += boton.Height + separacion;
             }
             ResumeLayout(false);
+            if (panel1.Controls.Count == 0)
+            {
+                if (btnAprovisionamiento.Visible) btnAprovisionamiento_Click(this, EventArgs.Empty);
+                else if (btnVentas.Visible) btnVentas_Click(this, EventArgs.Empty);
+            }
         }
 
         private void ConfigurarIdiomas()
@@ -128,8 +156,7 @@ namespace UI
         private void btnBitacora_Click(object sender, EventArgs e)
         {
             UC_Bitacora bitacora = new UC_Bitacora();
-            panel1.Controls.Clear();
-            panel1.Controls.Add(bitacora);
+            MostrarVista(bitacora);
             bitacora.Show();
         }
 
@@ -151,33 +178,25 @@ namespace UI
         private void btnUsuarios_Click(object sender, EventArgs e)
         {
             UC_Usuarios usuarios = new UC_Usuarios();
-            panel1.Controls.Clear();
-            panel1.Controls.Add(usuarios);
-            usuarios.Show();
+            MostrarVista(usuarios);
         }
 
         private void btnRoles_Click(object sender, EventArgs e)
         {
             UC_Roles roles = new UC_Roles();
-            panel1.Controls.Clear();
-            panel1.Controls.Add(roles);
-            roles.Show();
+            MostrarVista(roles);
         }
 
         private void btnSoporteTecnico_Click(object sender, EventArgs e)
         {
             UC_SoporteAdmin soporteadmin = new UC_SoporteAdmin();
-            panel1.Controls.Clear();
-            panel1.Controls.Add(soporteadmin);
-            soporteadmin.Show();
+            MostrarVista(soporteadmin);
         }
 
         private void btnTraducciones_Click(object sender, EventArgs e)
         {
             UC_Traducciones traducciones = new UC_Traducciones();
-            panel1.Controls.Clear();
-            panel1.Controls.Add(traducciones);
-            traducciones.Show();
+            MostrarVista(traducciones);
         }
 
         private void FormPrincipal_Load(object sender, EventArgs e)
@@ -205,25 +224,19 @@ namespace UI
         private void btnAuditoria_Click(object sender, EventArgs e)
         {
             UC_AuditoriaUsuarios auditoria = new UC_AuditoriaUsuarios();
-            panel1.Controls.Clear();
-            panel1.Controls.Add(auditoria);
-            auditoria.Show();
+            MostrarVista(auditoria);
         }
 
         private void btnVentas_Click(object sender, EventArgs e)
         {
             UC_Ventas ventas = new UC_Ventas();
-            panel1.Controls.Clear();
-            panel1.Controls.Add(ventas);
-            ventas.Show();
+            MostrarVista(ventas);
         }
 
         private void btnAprovisionamiento_Click(object sender, EventArgs e)
         {
             UC_Aprovisionamiento aprovisionamiento = new UC_Aprovisionamiento(_usuarioLogueado);
-            panel1.Controls.Clear();
-            panel1.Controls.Add(aprovisionamiento);
-            aprovisionamiento.Show();
+            MostrarVista(aprovisionamiento);
         }
     }
 }
