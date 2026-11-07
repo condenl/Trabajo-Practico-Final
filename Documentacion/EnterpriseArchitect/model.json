@@ -1,4 +1,4 @@
-﻿[
+[
     {
         "code":  "N01-01",
         "title":  "N01 · Casos de uso principales",
@@ -505,306 +505,418 @@
                   ]
     },
     {
-        "code":  "N02-02",
-        "title":  "N02 · Proceso de venta y fidelización",
-        "kind":  "Activity",
-        "notes":  "",
-        "nodes":  [
-                      {
-                          "key":  "lane0",
-                          "name":  "Cliente",
-                          "x":  20,
-                          "y":  20,
-                          "w":  260,
-                          "h":  1550,
-                          "kind":  "ActivityPartition"
-                      },
-                      {
-                          "key":  "lane1",
-                          "name":  "Personal de Ventas",
-                          "x":  290,
-                          "y":  20,
-                          "w":  260,
-                          "h":  1550,
-                          "kind":  "ActivityPartition"
-                      },
-                      {
-                          "key":  "lane2",
-                          "name":  "Caja / Entrega",
-                          "x":  560,
-                          "y":  20,
-                          "w":  260,
-                          "h":  1550,
-                          "kind":  "ActivityPartition"
-                      },
-                      {
-                          "key":  "start",
-                          "name":  "",
-                          "x":  132,
-                          "y":  85,
-                          "w":  35,
-                          "h":  35,
-                          "kind":  "StateNode",
-                          "subtype":  100
-                      },
-                      {
-                          "key":  "request",
-                          "name":  "Seleccionar perfumes y cantidades",
-                          "x":  42,
-                          "y":  210,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "stock",
-                          "name":  "Revisar existencias y vencimientos",
-                          "x":  312,
-                          "y":  210,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "enough",
-                          "name":  "¿Hay stock?",
-                          "x":  372,
-                          "y":  335,
-                          "w":  95,
-                          "h":  65,
-                          "kind":  "Decision"
-                      },
-                      {
-                          "key":  "nostock",
-                          "name":  "Informar faltante y no concretar venta",
-                          "x":  42,
-                          "y":  460,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "endstock",
-                          "name":  "",
-                          "x":  132,
-                          "y":  585,
-                          "w":  35,
-                          "h":  35,
-                          "kind":  "StateNode",
-                          "subtype":  101
-                      },
-                      {
-                          "key":  "member",
-                          "name":  "Consultar pertenencia al programa",
-                          "x":  312,
-                          "y":  460,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "join",
-                          "name":  "¿Desea adherir?",
-                          "x":  102,
-                          "y":  710,
-                          "w":  95,
-                          "h":  65,
-                          "kind":  "Decision"
-                      },
-                      {
-                          "key":  "data",
-                          "name":  "Brindar datos y consentimiento de contacto",
-                          "x":  42,
-                          "y":  835,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "register",
-                          "name":  "Completar ficha y asignar membresía",
-                          "x":  312,
-                          "y":  835,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "benefit",
-                          "name":  "Verificar beneficio vigente; sin membresía, tarifa general",
-                          "x":  312,
-                          "y":  960,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "total",
-                          "name":  "Calcular total y confirmar compra",
-                          "x":  582,
-                          "y":  1085,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "pay",
-                          "name":  "Efectuar pago",
-                          "x":  42,
-                          "y":  1085,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "deliver",
-                          "name":  "Entregar lotes con vencimiento más próximo (FEFO)",
-                          "x":  582,
-                          "y":  1210,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "record",
-                          "name":  "Conservar venta, movimientos e historial del cliente",
-                          "x":  312,
-                          "y":  1335,
-                          "w":  215,
-                          "h":  70,
-                          "kind":  "Activity"
-                      },
-                      {
-                          "key":  "endok",
-                          "name":  "",
-                          "x":  402,
-                          "y":  1460,
-                          "w":  35,
-                          "h":  35,
-                          "kind":  "StateNode",
-                          "subtype":  101
-                      },
-                      {
-                          "w":  130,
-                          "key":  "object-flow-register",
-                          "name":  "Membresía",
-                          "x":  395,
-                          "y":  915,
-                          "notes":  "Objeto de negocio producido por «Completar ficha y asignar membresía» y utilizado por «Verificar beneficio vigente; sin membresía, tarifa general». Flujo de objetos UML; no representa un componente de software.",
-                          "kind":  "Object",
-                          "h":  35
-                      }
-                  ],
-        "links":  [
-                      {
-                          "source":  "start",
-                          "target":  "request",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "request",
-                          "target":  "stock",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "stock",
-                          "target":  "enough",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "enough",
-                          "target":  "nostock",
-                          "name":  "No",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "nostock",
-                          "target":  "endstock",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "enough",
-                          "target":  "member",
-                          "name":  "Sí",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "member",
-                          "target":  "join",
-                          "name":  "No es miembro",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "member",
-                          "target":  "benefit",
-                          "name":  "Ya es miembro",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "join",
-                          "target":  "data",
-                          "name":  "Sí",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "join",
-                          "target":  "benefit",
-                          "name":  "No",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "data",
-                          "target":  "register",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "benefit",
-                          "target":  "total",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "total",
-                          "target":  "pay",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "pay",
-                          "target":  "deliver",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "deliver",
-                          "target":  "record",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "source":  "record",
-                          "target":  "endok",
-                          "name":  "",
-                          "kind":  "ControlFlow"
-                      },
-                      {
-                          "target":  "object-flow-register",
-                          "name":  "",
-                          "source":  "register",
-                          "kind":  "ObjectFlow"
-                      },
-                      {
-                          "target":  "benefit",
-                          "name":  "",
-                          "source":  "object-flow-register",
-                          "kind":  "ObjectFlow"
-                      }
-                  ]
+        "code": "N02-02",
+        "title": "N02 · Proceso de venta y fidelización",
+        "kind": "Activity",
+        "notes": "Actividades organizacionales de venta y fidelización. Las alternativas se reúnen mediante nodos merge, no joins implícitos. Membresía vigente es el objeto crucial producido al recuperar una membresía existente o al crearla, y consumido al aplicar el beneficio. La autorización de marketing es independiente de la adhesión. Las campañas siguen siendo diseño propuesto y no forman parte de esta venta.",
+        "nodes": [
+            {
+                "key": "lane0",
+                "name": "Cliente",
+                "x": 20,
+                "y": 25,
+                "w": 300,
+                "h": 1540,
+                "kind": "ActivityPartition",
+                "fontSize": 12
+            },
+            {
+                "key": "lane1",
+                "name": "Personal de Ventas",
+                "x": 335,
+                "y": 25,
+                "w": 410,
+                "h": 1540,
+                "kind": "ActivityPartition",
+                "fontSize": 12
+            },
+            {
+                "key": "lane2",
+                "name": "Caja / Entrega",
+                "x": 760,
+                "y": 25,
+                "w": 320,
+                "h": 1540,
+                "kind": "ActivityPartition",
+                "fontSize": 12
+            },
+            {
+                "key": "start",
+                "name": "",
+                "x": 150,
+                "y": 70,
+                "w": 30,
+                "h": 30,
+                "kind": "StateNode",
+                "fontSize": 12,
+                "subtype": 100
+            },
+            {
+                "key": "request",
+                "name": "Elegir perfumes y cantidades",
+                "x": 55,
+                "y": 130,
+                "w": 235,
+                "h": 65,
+                "kind": "Activity",
+                "fontSize": 12
+            },
+            {
+                "key": "stock",
+                "name": "Revisar existencias utilizables y vencimientos",
+                "x": 400,
+                "y": 130,
+                "w": 270,
+                "h": 65,
+                "kind": "Activity",
+                "fontSize": 12
+            },
+            {
+                "key": "enough",
+                "name": "¿Hay stock?",
+                "x": 500,
+                "y": 235,
+                "w": 75,
+                "h": 55,
+                "kind": "Decision",
+                "fontSize": 12
+            },
+            {
+                "key": "nostock",
+                "name": "Conocer el faltante y desistir de la compra",
+                "x": 55,
+                "y": 235,
+                "w": 235,
+                "h": 65,
+                "kind": "Activity",
+                "fontSize": 12
+            },
+            {
+                "key": "endstock",
+                "name": "",
+                "x": 150,
+                "y": 335,
+                "w": 30,
+                "h": 30,
+                "kind": "StateNode",
+                "fontSize": 12,
+                "subtype": 101
+            },
+            {
+                "key": "identify",
+                "name": "Identificar al cliente y consultar su membresía",
+                "x": 400,
+                "y": 345,
+                "w": 270,
+                "h": 65,
+                "kind": "Activity",
+                "fontSize": 12
+            },
+            {
+                "key": "member",
+                "name": "¿Membresía vigente?",
+                "x": 500,
+                "y": 455,
+                "w": 75,
+                "h": 55,
+                "kind": "Decision",
+                "fontSize": 12
+            },
+            {
+                "key": "join",
+                "name": "¿Desea adherirse?",
+                "x": 135,
+                "y": 550,
+                "w": 75,
+                "h": 55,
+                "kind": "Decision",
+                "fontSize": 12
+            },
+            {
+                "key": "data",
+                "name": "Brindar datos y autorización de marketing",
+                "x": 55,
+                "y": 650,
+                "w": 235,
+                "h": 65,
+                "kind": "Activity",
+                "fontSize": 12
+            },
+            {
+                "key": "register",
+                "name": "Registrar cliente y asignar membresía",
+                "x": 365,
+                "y": 650,
+                "w": 205,
+                "h": 65,
+                "kind": "Activity",
+                "fontSize": 12
+            },
+            {
+                "key": "existing",
+                "name": "Recuperar beneficio vigente",
+                "x": 585,
+                "y": 550,
+                "w": 140,
+                "h": 65,
+                "kind": "Activity",
+                "fontSize": 12
+            },
+            {
+                "key": "membership",
+                "name": "Membresía vigente",
+                "x": 565,
+                "y": 750,
+                "w": 155,
+                "h": 45,
+                "kind": "Object",
+                "fontSize": 12
+            },
+            {
+                "key": "benefit",
+                "name": "Aplicar descuento de membresía",
+                "x": 525,
+                "y": 850,
+                "w": 195,
+                "h": 65,
+                "kind": "Activity",
+                "fontSize": 12
+            },
+            {
+                "key": "general",
+                "name": "Mantener precio general",
+                "x": 365,
+                "y": 850,
+                "w": 140,
+                "h": 65,
+                "kind": "Activity",
+                "fontSize": 12
+            },
+            {
+                "key": "merge",
+                "name": "",
+                "x": 505,
+                "y": 965,
+                "w": 30,
+                "h": 30,
+                "kind": "Decision",
+                "fontSize": 12,
+                "notes": "Merge de alternativas excluyentes: precio general o beneficio de membresía. No sincroniza ramas."
+            },
+            {
+                "key": "total",
+                "name": "Informar subtotal, descuento y total",
+                "x": 800,
+                "y": 1030,
+                "w": 245,
+                "h": 65,
+                "kind": "Activity",
+                "fontSize": 12
+            },
+            {
+                "key": "pay",
+                "name": "Confirmar compra y efectuar pago",
+                "x": 55,
+                "y": 1130,
+                "w": 235,
+                "h": 65,
+                "kind": "Activity",
+                "fontSize": 12
+            },
+            {
+                "key": "collect",
+                "name": "Confirmar cobro",
+                "x": 800,
+                "y": 1230,
+                "w": 245,
+                "h": 65,
+                "kind": "Activity",
+                "fontSize": 12
+            },
+            {
+                "key": "record",
+                "name": "Registrar venta y descontar stock por lote (FEFO)",
+                "x": 400,
+                "y": 1330,
+                "w": 270,
+                "h": 65,
+                "kind": "Activity",
+                "fontSize": 12
+            },
+            {
+                "key": "deliver",
+                "name": "Entregar los perfumes y comprobante",
+                "x": 800,
+                "y": 1430,
+                "w": 245,
+                "h": 65,
+                "kind": "Activity",
+                "fontSize": 12
+            },
+            {
+                "key": "endok",
+                "name": "",
+                "x": 905,
+                "y": 1520,
+                "w": 30,
+                "h": 30,
+                "kind": "StateNode",
+                "fontSize": 12,
+                "subtype": 101
+            },
+            {
+                "key": "note",
+                "name": "",
+                "x": 55,
+                "y": 1320,
+                "w": 265,
+                "h": 125,
+                "kind": "Note",
+                "fontSize": 12,
+                "notes": "La membresía puede otorgar descuento aunque el cliente no autorice marketing.\nLa venta a un cliente ocasional conserva el precio general."
+            }
+        ],
+        "links": [
+            {
+                "source": "start",
+                "target": "request",
+                "name": "",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "request",
+                "target": "stock",
+                "name": "",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "stock",
+                "target": "enough",
+                "name": "",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "enough",
+                "target": "nostock",
+                "name": "[No]",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "nostock",
+                "target": "endstock",
+                "name": "",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "enough",
+                "target": "identify",
+                "name": "[Sí]",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "identify",
+                "target": "member",
+                "name": "",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "member",
+                "target": "existing",
+                "name": "[Sí]",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "member",
+                "target": "join",
+                "name": "[No]",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "join",
+                "target": "data",
+                "name": "[Sí]",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "data",
+                "target": "register",
+                "name": "",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "join",
+                "target": "general",
+                "name": "[No]",
+                "kind": "ControlFlow",
+                "path": "330:-577;330:-882;"
+            },
+            {
+                "source": "benefit",
+                "target": "merge",
+                "name": "",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "general",
+                "target": "merge",
+                "name": "",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "merge",
+                "target": "total",
+                "name": "",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "total",
+                "target": "pay",
+                "name": "",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "pay",
+                "target": "collect",
+                "name": "",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "collect",
+                "target": "record",
+                "name": "",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "record",
+                "target": "deliver",
+                "name": "",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "deliver",
+                "target": "endok",
+                "name": "",
+                "kind": "ControlFlow"
+            },
+            {
+                "source": "existing",
+                "target": "membership",
+                "name": "",
+                "kind": "ObjectFlow"
+            },
+            {
+                "source": "register",
+                "target": "membership",
+                "name": "",
+                "kind": "ObjectFlow"
+            },
+            {
+                "source": "membership",
+                "target": "benefit",
+                "name": "",
+                "kind": "ObjectFlow"
+            }
+        ]
     },
     {
         "code":  "N01-03",

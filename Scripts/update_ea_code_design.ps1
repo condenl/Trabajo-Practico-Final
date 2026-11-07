@@ -90,6 +90,7 @@ foreach($s in $specs) {
         if($l.targetCardinality){$c.SupplierEnd.Cardinality=$l.targetCardinality}
         [void]$c.Update()
         if($l.kind -eq 'Sequence'){
+            if($l.stateFlags){$c.StateFlags=$l.stateFlags}
             $c.Properties.Item('IsReturn').Value=[bool]$l.isReturn
             [void]$c.Update()
         }

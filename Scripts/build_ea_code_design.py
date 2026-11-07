@@ -287,6 +287,8 @@ def sequence(code, participants, calls, frames=(), notes=""):
         target = calls[first-1][0]
         key = 'actor-'+str(first)
         before[starts[first]] = dict(source=actor,target=target,name=request,kind='Sequence',callId=key,isReturn=False,returnType=outcome,actorInteraction=True)
+        if code == 'N03-06':
+            before[starts[first]]['stateFlags'] = 'ForceActivation=1;'
         closing=max(returns[j] for j in range(first,last+1))
         after[closing] = dict(source=target,target=actor,name=outcome,kind='Sequence',replyTo=key,isReturn=True,returnType=outcome,actorInteraction=True)
     expanded, positions = [], {}

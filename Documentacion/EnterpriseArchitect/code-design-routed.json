@@ -12158,7 +12158,8 @@
         "isReturn": false,
         "returnType": "Comparación guardada / error",
         "actorInteraction": true,
-        "sequence": 1
+        "sequence": 1,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "UC_EvaluacionProveedores",
@@ -12356,7 +12357,8 @@
         "isReturn": false,
         "returnType": "Decisión fundamentada / error",
         "actorInteraction": true,
-        "sequence": 19
+        "sequence": 19,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "UC_EvaluacionProveedores",
@@ -12532,7 +12534,8 @@
         "isReturn": false,
         "returnType": "Número de orden / error",
         "actorInteraction": true,
-        "sequence": 35
+        "sequence": 35,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "UC_EvaluacionProveedores",
