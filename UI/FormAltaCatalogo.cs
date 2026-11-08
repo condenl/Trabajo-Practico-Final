@@ -59,8 +59,8 @@ namespace UI
         private readonly TextBox razon = new TextBox { Name = "txtProveedorRazon", MaxLength = 150 };
         private readonly TextBox cuit = new TextBox { Name = "txtProveedorCuit", MaxLength = 20 };
         private readonly TextBox contacto = new TextBox { Name = "txtProveedorContacto", MaxLength = 200 };
-        private readonly NumericUpDown antiguedad = new NumericUpDown { Name = "nudProveedorAntiguedad", Maximum = 200 };
-        private readonly NumericUpDown prestigio = new NumericUpDown { Name = "nudProveedorPrestigio", Maximum = 100, DecimalPlaces = 2, Value = 50 };
+        private readonly NumericUpDown antiguedad = new NumeroRegional { Name = "nudProveedorAntiguedad", Maximum = 200 };
+        private readonly NumericUpDown prestigio = new NumeroRegional { Name = "nudProveedorPrestigio", Maximum = 100, DecimalPlaces = 2, Value = 50 };
         public FormAltaProveedor() : base("Nuevo proveedor")
         {
             Campo("Razón social", razon); Campo("CUIT (11 dígitos)", cuit); Campo("Contacto", contacto);
@@ -79,8 +79,8 @@ namespace UI
         private readonly TextBox nombre = new TextBox { Name = "txtProductoNombre", MaxLength = 150 };
         private readonly TextBox marca = new TextBox { Name = "txtProductoMarca", MaxLength = 100 };
         private readonly TextBox familia = new TextBox { Name = "txtProductoFamilia", MaxLength = 100 };
-        private readonly NumericUpDown precio = new NumericUpDown { Name = "nudProductoPrecio", Maximum = 100000000, DecimalPlaces = 2, ThousandsSeparator = true };
-        private readonly NumericUpDown minimo = new NumericUpDown { Name = "nudProductoStockMinimo", Maximum = 100000 };
+        private readonly NumericUpDown precio = new NumeroRegional { Name = "nudProductoPrecio", Maximum = 100000000, DecimalPlaces = 2, ThousandsSeparator = true };
+        private readonly NumericUpDown minimo = new NumeroRegional { Name = "nudProductoStockMinimo", Maximum = 100000 };
         public FormAltaPerfume() : base("Nuevo perfume")
         {
             Campo("Código", codigo); Campo("Nombre", nombre); Campo("Marca", marca); Campo("Familia olfativa", familia);

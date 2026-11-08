@@ -20,7 +20,7 @@ namespace UI.UserControls
         private Venta cotizacion;
         private readonly TextBox txtEmail = new TextBox { Name = "txtEmail", Width = 245 };
         private readonly ComboBox cmbProducto = new ComboBox { Name = "cmbProducto", DropDownStyle = ComboBoxStyle.DropDownList, Width = 260 };
-        private readonly NumericUpDown nudCantidad = new NumericUpDown { Name = "nudCantidad", Minimum = 1, Maximum = 999, Value = 1, Width = 75 };
+        private readonly NumericUpDown nudCantidad = new NumeroRegional { Name = "nudCantidad", Minimum = 1, Maximum = 999, Value = 1, Width = 75 };
         private readonly DataGridView grilla = new DataGridView { Name = "dgvVenta", Dock = DockStyle.Fill, ReadOnly = true,
             AllowUserToAddRows = false, AllowUserToDeleteRows = false, MultiSelect = false, SelectionMode = DataGridViewSelectionMode.FullRowSelect,
             AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill, ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize };
@@ -139,7 +139,7 @@ namespace UI.UserControls
                     fila.Cells["Precio"].Value = precio; fila.Cells["Importe"].Value = precio * (int)fila.Cells["Cantidad"].Value;
                 }
                 cotizacion = venta; confirmar.Enabled = true;
-                resumen.Text = "Subtotal: " + venta.Subtotal.ToString("C2") + " · Descuento: " + venta.Descuento.ToString("C2") + " · Total: " + venta.Total.ToString("C2");
+                resumen.Text = "Subtotal: " + venta.Subtotal.ToString("C2", FormatoPresentacion.Cultura) + " · Descuento: " + venta.Descuento.ToString("C2", FormatoPresentacion.Cultura) + " · Total: " + venta.Total.ToString("C2", FormatoPresentacion.Cultura);
                 estado.Text = "Importes calculados con precios actuales y membresía activa, si corresponde."; estado.ForeColor = TemaAplicacion.Texto;
                 UltimoError = null;
             } catch (Exception ex) { resumen.Text = "Total pendiente de revisión"; Notificar(ex.Message, true); }
@@ -153,7 +153,7 @@ namespace UI.UserControls
                 }
                 var venta = CrearVenta(); ventaBLL.RegistrarVenta(venta, cotizacion.Subtotal, cotizacion.Descuento);
                 grilla.Rows.Clear(); QuitarCliente();
-                Notificar("Venta #" + venta.IdVenta + " registrada. Total: " + venta.Total.ToString("C2") + ". Lista para una nueva venta ocasional.", false);
+                Notificar("Venta #" + venta.IdVenta + " registrada. Total: " + venta.Total.ToString("C2", FormatoPresentacion.Cultura) + ". Lista para una nueva venta ocasional.", false);
                 try { CargarProductos(); } catch (Exception ex) { Notificar("Venta #" + venta.IdVenta + " registrada. No se pudo refrescar el catálogo: " + ex.Message, true); }
             });
         }

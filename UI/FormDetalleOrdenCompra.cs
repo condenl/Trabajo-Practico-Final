@@ -30,7 +30,7 @@ namespace UI
             grilla.DefaultCellStyle.WrapMode = DataGridViewTriState.True; layout.Controls.Add(grilla, 0, 1);
             string revision = orden.FechaAprobacion.HasValue ? "Aprobación: " + orden.FechaAprobacion.Value.ToString("dd/MM/yyyy HH:mm") + " · " + (aprobador ?? "Responsable no disponible") : "Sin aprobación contable registrada.";
             if (!string.IsNullOrWhiteSpace(orden.MotivoRechazo)) revision += "\nMotivo del rechazo: " + orden.MotivoRechazo;
-            layout.Controls.Add(new Label { Name = "lblRevisionOrden", AutoSize = true, Dock = DockStyle.Fill, Padding = new Padding(0, 10, 0, 10), Text = "Total: " + orden.Total.ToString("C2") + "\n" + revision }, 0, 2);
+            layout.Controls.Add(new Label { Name = "lblRevisionOrden", AutoSize = true, Dock = DockStyle.Fill, Padding = new Padding(0, 10, 0, 10), Text = "Total: " + orden.Total.ToString("C2", FormatoPresentacion.Cultura) + "\n" + revision }, 0, 2);
             var cerrar = new Button { Name = "btnCerrarDetalleOrden", Text = "Cerrar", AutoSize = true, Padding = new Padding(5), DialogResult = DialogResult.Cancel };
             layout.Controls.Add(cerrar, 0, 3); Controls.Add(layout); CancelButton = cerrar;
             TemaAplicacion.Aplicar(this);

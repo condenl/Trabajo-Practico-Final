@@ -27,7 +27,8 @@ namespace UI.UserControls
         private readonly Label contexto = new Label { Name = "lblResumenEvaluacion", Dock = DockStyle.Fill, AutoSize = true, Padding = new Padding(4), Text = "Seleccione un perfume y pulse Comparar." };
         private readonly Label detalle = new Label { Name = "lblDetalleProveedor", Dock = DockStyle.Fill, AutoSize = true, Padding = new Padding(4) };
         private readonly Label estado = new Label { Name = "lblActualizacionEvaluacion", AutoSize = true, Padding = new Padding(4) };
-        private readonly TextBox motivo = new TextBox { Name = "txtMotivoSeleccion", Width = 310, MaxLength = 500 };
+        private readonly TextBox motivo = new TextBox { Name = "txtMotivoSeleccion", Width = 430, Height = 54, MaxLength = 500,
+            Multiline = true, WordWrap = true, ScrollBars = ScrollBars.Vertical, AcceptsReturn = true };
         private readonly ComboBox historial = new ComboBox { Name = "cmbHistorialEvaluacion", Width = 350, FormattingEnabled = true, DropDownStyle = ComboBoxStyle.DropDownList };
         private readonly Chart puntajes = Grafico("chartPuntajes", "Puntaje de conveniencia / 100");
         private readonly Chart margenes = Grafico("chartMargenes", "Margen bruto estimado (%)");
@@ -95,11 +96,14 @@ namespace UI.UserControls
             producto.SelectedIndexChanged += delegate { if (!cargando) { Invalidar(); Ejecutar(CargarHistorial); } };
             foreach (var n in new[] { cantidad, precio, prestigio, antiguedad }) n.ValueChanged += delegate { if (!cargando) Invalidar(); };
             foreach (var chart in new[] { puntajes, margenes }) chart.MouseClick += ElegirDesdeGrafico;
-            Resize += delegate { contexto.MaximumSize = detalle.MaximumSize = new Size(Math.Max(100, ClientSize.Width - 24), 0); };
+            Resize += delegate {
+                contexto.MaximumSize = detalle.MaximumSize = new Size(Math.Max(100, ClientSize.Width - 24), 0);
+                motivo.Width = Math.Max(220, Math.Min(500, ClientSize.Width - confirmar.PreferredSize.Width - crear.PreferredSize.Width - 96));
+            };
             ActualizarBotones(); Ejecutar(ActualizarCatalogos);
         }
 
-        private static NumericUpDown Numero(string nombre, int min, int max, int valor) { return new NumericUpDown { Name = nombre, Minimum = min, Maximum = max, Value = valor, Width = 80 }; }
+        private static NumericUpDown Numero(string nombre, int min, int max, int valor) { return new NumeroRegional { Name = nombre, Minimum = min, Maximum = max, Value = valor, Width = 80 }; }
         private static FlowLayoutPanel Flujo() { return new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true, WrapContents = true, Padding = new Padding(1) }; }
         private static void Campo(FlowLayoutPanel panel, string etiqueta, Control control)
         { var campo = new FlowLayoutPanel { FlowDirection = FlowDirection.TopDown, AutoSize = true, WrapContents = false, Margin = new Padding(3, 2, 6, 3) }; campo.Controls.Add(new Label { Text = etiqueta, AutoSize = true }); campo.Controls.Add(control); panel.Controls.Add(campo); }

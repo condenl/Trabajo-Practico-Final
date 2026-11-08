@@ -138,7 +138,7 @@ namespace BLL
                 if (usuario.Permisos == null || usuario.Permisos.Count == 0)
                 {
                     GestorEventos.Instancia.Notificar(new EventoBitacora(email, "SEGURIDAD", "Acceso denegado: Usuario sin roles en el sistema."));
-                    throw new UsuarioSinRolException("Su cuenta no tiene un perfil asignado.\nPor favor, contacte a Soporte Técnico o al Administrador del Edificio.");
+                    throw new UsuarioSinRolException("Su cuenta no tiene un perfil asignado.\nPor favor, contacte a Soporte Técnico o al administrador de la perfumería.");
                 }
 
                 Session.Instance.Login(usuario);
