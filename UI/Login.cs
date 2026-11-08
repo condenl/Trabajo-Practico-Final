@@ -33,6 +33,10 @@ namespace UI
 
             panel1.Controls.Clear();
             panel1.Visible = false;
+            txtEmail.TabIndex = 0; txtPassword.TabIndex = 1; btnIniciarSesion.TabIndex = 2;
+            btnRegistro.TabIndex = 3; btnSoporte.TabIndex = 4; cmbIdioma.TabIndex = 5; panel1.TabIndex = 6;
+            AcceptButton = btnIniciarSesion;
+            ActiveControl = txtEmail;
         }
 
         private void ConfigurarIdiomas()
@@ -178,7 +182,6 @@ namespace UI
 
         private void NavegarAlSistema(Usuario usuario)
         {
-            MessageBox.Show($"{traduccionBLL.Traducir("msg_welcome")}: {usuario.Nombre}", traduccionBLL.Traducir("lbl_success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             FormPrincipal formPrincipal = new FormPrincipal(usuario);
             AbrirFormularioPrincipal(formPrincipal);
         }
@@ -195,9 +198,9 @@ namespace UI
             visitanteBLL.Logout();
             txtEmail.Clear();
             txtPassword.Clear();
-            txtEmail.Focus();
             this.Show();
             ActualizarTextos();
+            AcceptButton = btnIniciarSesion; ActiveControl = txtEmail;
         }
 
         private void MostrarRegistro()
@@ -210,6 +213,7 @@ namespace UI
             panel1.Controls.Add(registro);
             panel1.Visible = true;
             panel1.BringToFront();
+            AcceptButton = null;
         }
 
         private void MostrarPanelSoporte()
@@ -222,18 +226,21 @@ namespace UI
             panel1.Controls.Add(panelSoporte);
             panel1.Visible = true;
             panel1.BringToFront();
+            AcceptButton = null;
         }
 
         private void Soporte_OnCerrar(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
             panel1.Visible = false;
+            AcceptButton = btnIniciarSesion; ActiveControl = txtEmail;
         }
 
         private void Registro_OnRegresar(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
             panel1.Visible = false;
+            AcceptButton = btnIniciarSesion; ActiveControl = txtEmail;
         }
 
         private void Login_Load(object sender, EventArgs e)

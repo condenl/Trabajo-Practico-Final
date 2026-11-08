@@ -22,6 +22,8 @@ En **Usuarios**, **Nuevo usuario** limpia la selección y habilita Guardar nuevo
 
 Cambiar de sección o cerrar la aplicación solicita confirmación si se perdería un carrito, datos de compra/recepción, un fundamento de evaluación o una edición de usuario sin guardar. Cancelar mantiene la vista y sus datos; sin trabajo pendiente se continúa directamente.
 
+El acceso comienza en **correo**: Tab lleva a contraseña y Enter inicia sesión directamente. El encabezado del menú muestra **nombre completo, rol y correo del actor activo**. Al volver de Registro, Soporte o de una sesión se recupera el acceso por teclado; Enter no dispara el login mientras se trabaja en Registro o Soporte. Los éxitos de Compras y Evaluación se muestran dentro de la vista, sin un diálogo adicional de Aceptar.
+
 La interfaz usa un tema oscuro común en `UI/TemaAplicacion.cs`: fondos carbón, superficies gris oscuro, texto claro y acentos pizarra discretos. Las tablas alternan filas y resaltan la selección; las acciones principales y la sección activa comparten el acento. Los gráficos conservan sus colores para distinguir proveedores y márgenes, con rótulos claros de alto contraste. Las ventanas auxiliares y los controles agregados al navegar reciben el mismo estilo y tipografía Segoe UI. La paleta está centralizada y no requiere librerías adicionales; se respeta el modo de alto contraste de Windows.
 
 ## Usuarios de demostración

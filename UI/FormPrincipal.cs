@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using BE;
 using UI.UserControls;
@@ -16,6 +17,11 @@ namespace UI
         private readonly IdiomaBLL idiomaBLL;
         private readonly TraduccionBLL traduccionBLL;
         private Button accesoActivo;
+        private readonly Label sesionActiva = new Label { Name = "lblSesionActiva", AutoEllipsis = true,
+            TextAlign = System.Drawing.ContentAlignment.MiddleLeft, Padding = new Padding(10, 0, 10, 0),
+            Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+            BackColor = SystemInformation.HighContrast ? System.Drawing.SystemColors.Control : TemaAplicacion.Elevado,
+            Font = new System.Drawing.Font(System.Drawing.SystemFonts.DefaultFont, System.Drawing.FontStyle.Bold) };
 
         public FormPrincipal(Usuario usuario)
         {
@@ -44,6 +50,9 @@ namespace UI
             cmbIdioma.Anchor = btnCerrarSesion.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             var area = Screen.FromControl(this).WorkingArea;
             ClientSize = new System.Drawing.Size(Math.Min(1520, area.Width - 32), Math.Min(760, area.Height - 64));
+            sesionActiva.SetBounds(panel1.Left, panel1.Top, panel1.Width, 32);
+            panel1.Top += 38; panel1.Height -= 38;
+            Controls.Add(sesionActiva);
             TemaAplicacion.Aplicar(this);
             if (!SystemInformation.HighContrast) BackColor = TemaAplicacion.Navegacion;
             foreach (Button boton in new[] { btnBitacora, btnUsuarios, btnRoles, btnSoporteTecnico,
@@ -93,6 +102,14 @@ namespace UI
                 _usuarioLogueado.TienePermiso(TipoPermiso.Aprovisionamiento_Gestion) ||
                 _usuarioLogueado.TienePermiso(TipoPermiso.Contabilidad_AprobarCompras) ||
                 _usuarioLogueado.TienePermiso(TipoPermiso.Inventario_Recepcionar);
+            ActualizarSesionActiva();
+        }
+
+        private void ActualizarSesionActiva()
+        {
+            if (_usuarioLogueado == null) { sesionActiva.Text = ""; return; }
+            string roles = string.Join(", ", _usuarioLogueado.Permisos.OfType<Familia>().Select(r => r.Nombre).Distinct());
+            sesionActiva.Text = _usuarioLogueado.NombreCompleto + (roles.Length == 0 ? "" : "  ·  " + roles) + "  ·  " + _usuarioLogueado.Email;
         }
 
         protected override void OnShown(EventArgs e)
@@ -173,7 +190,8 @@ namespace UI
             if (_usuarioLogueado != null)
             {
                 string title = traduccionBLL.Traducir("main_form_title");
-                this.Text = $"{title} - {traduccionBLL.Traducir("login_user")}: {_usuarioLogueado.Nombre}";
+                this.Text = $"{title} - {traduccionBLL.Traducir("login_user")}: {_usuarioLogueado.NombreCompleto}";
+                ActualizarSesionActiva();
             }
         }
 

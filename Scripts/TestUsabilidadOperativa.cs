@@ -47,6 +47,42 @@ internal static class TestUsabilidadOperativa
         public MenuPrueba(Usuario actor) : base(actor) { }
         protected override bool ConfirmarDescartePendiente() { Consultas++; return Descartar; }
     }
+    private static void ComprobarAcceso()
+    {
+        using (var login = new Login()) {
+            login.Show(); Application.DoEvents();
+            var correo = Find<TextBox>(login, "txtEmail"); var clave = Find<TextBox>(login, "txtPassword");
+            Assert(login.ActiveControl == correo, "El acceso comienza en el correo");
+            Click(login, "btnSoporte"); Assert(login.AcceptButton == null, "Enter en Soporte no inicia una sesion accidentalmente");
+            Click(login, "btnCancelar"); Assert(login.AcceptButton == Find<Button>(login, "btnIniciarSesion") && login.ActiveControl == correo, "Volver de Soporte recupera el acceso por teclado");
+            Click(login, "btnRegistro"); Assert(login.AcceptButton == null, "Enter en Registro no envia el login");
+            Click(login, "btnVolver"); Assert(login.AcceptButton == Find<Button>(login, "btnIniciarSesion") && login.ActiveControl == correo, "Volver de Registro recupera el acceso por teclado");
+            typeof(Form).GetMethod("ProcessDialogKey", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(login, new object[] { Keys.Tab });
+            Assert(login.ActiveControl == clave, "Tab lleva del correo a la contraseña");
+            correo.Text = "demo.dueno@perfumeria.example"; clave.Text = "DemoDueno2026!";
+            typeof(Form).GetMethod("ProcessDialogKey", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(login, new object[] { Keys.Enter }); Application.DoEvents();
+            var menu = Application.OpenForms.OfType<FormPrincipal>().Single();
+            Assert(!login.Visible && menu.Visible, "Enter autentica y abre el menu sin pedir aceptar una bienvenida");
+            Assert(Find<Label>(menu, "lblSesionActiva").Text.Contains("Compras") && Find<Label>(menu, "lblSesionActiva").Text.Contains(correo.Text), "La sesion de Compras identifica nombre completo, rol y correo");
+            menu.Close(); Application.DoEvents();
+            Assert(login.Visible && correo.Text == "" && clave.Text == "" && login.ActiveControl == correo, "Cerrar el menu limpia las credenciales y vuelve al correo");
+            login.Close();
+        }
+        foreach (string[] datos in new[] {
+            new[] { "contabilidad", "DemoContabilidad2026!" }, new[] { "deposito", "DemoDeposito2026!" }, new[] { "ventas", "DemoVentas2026!" } }) {
+            var actor = new UsuarioBLL().Login("demo." + datos[0] + "@perfumeria.example", datos[1]);
+            using (var menu = new FormPrincipal(actor)) {
+                menu.Show(); menu.ClientSize = new Size(1000, 570); Application.DoEvents();
+                var sesion = Find<Label>(menu, "lblSesionActiva"); var cuerpo = Find<Panel>(menu, "panel1");
+                Assert(sesion.Text.Contains(actor.NombreCompleto) && actor.Permisos.OfType<Familia>().All(r => sesion.Text.Contains(r.Nombre)) &&
+                    menu.ClientRectangle.Contains(sesion.Bounds) && sesion.Bottom <= cuerpo.Top &&
+                    TextRenderer.MeasureText(sesion.Text, sesion.Font).Width <= sesion.ClientSize.Width - sesion.Padding.Horizontal,
+                    "Actor visible y legible sin superponer la vista: " + datos[0]);
+                menu.Close();
+            }
+            new UsuarioBLL().Logout();
+        }
+    }
     [STAThread]
     private static int Main(string[] args)
     {
@@ -58,7 +94,7 @@ internal static class TestUsabilidadOperativa
             if (owner == null) throw new Exception("No se pudo iniciar sesión demo.");
             if (args.Length == 0) { Session.Instance.Login(Admin(owner)); Application.Run(new FormPrincipal(Session.Instance.Usuario)); return 0; }
             using (cn = new SqlConnection(cs.ConnectionString)) using (var host = new Form { ClientSize = new Size(1080, 680) }) {
-                cn.Open(); int clients = Count("Cliente");
+                cn.Open(); ComprobarAcceso(); Session.Instance.Login(owner); int clients = Count("Cliente");
                 using (var alta = new FormAltaCliente("test.venta@example.com")) {
                     Click(alta, "btnRegistrarCliente");
                     Assert(Find<Label>(alta, "lblEstadoAltaCliente").Text.Contains("nombre") && Count("Cliente") == clients, "Alta de cliente invalida queda abierta con aviso y sin escrituras");
@@ -114,6 +150,11 @@ internal static class TestUsabilidadOperativa
                 Find<CheckBox>(compras, "chkFechasOrdenes").Checked = true; Find<DateTimePicker>(compras, "dtpOrdenDesde").Value = DateTime.Today.AddYears(5);
                 Assert(orders.Rows.Count == 0 && !Find<Button>(compras, "btnEmitirOrden").Enabled && !Find<Button>(compras, "btnExportarOrdenesXml").Enabled, "Sin resultados no se habilitan acciones ni exportacion");
                 Click(compras, "btnLimpiarFiltrosOrdenes"); Assert(orders.Rows.Count == Count("OrdenCompra"), "Limpiar filtros recupera todas las ordenes");
+                SelectOrder(orders, EstadoOrdenCompra.Aprobada); int emitida = (int)orders.CurrentRow.Cells["IdOrdenCompra"].Value;
+                compras.ModoPrueba = false; Click(compras, "btnEmitirOrden"); compras.ModoPrueba = true;
+                Assert(Find<Label>(compras, "lblActualizacionCompras").Text == compras.UltimoMensaje && compras.UltimoMensaje.Contains("emitida") &&
+                    new AprovisionamientoBLL().ConsultarHistorialCompras(null).Single(o => o.IdOrdenCompra == emitida).Estado == EstadoOrdenCompra.Emitida,
+                    "Emitir guarda y muestra el resultado en la vista sin modal de exito");
                 int providerId = providers.Items.Cast<Proveedor>().First(p => p.IdProveedor != 0).IdProveedor;
                 providers.SelectedValue = providerId;
                 string providerName = ((Proveedor)providers.SelectedItem).RazonSocial;
@@ -145,7 +186,10 @@ internal static class TestUsabilidadOperativa
                 Assert(Find<NumericUpDown>(evaluation, "nudEvaluacionCantidad").Value == 7 && !evaluation.TieneCambiosPendientes, "Usar cantidad sugerida vuelve a comparar sin confirmar ni crear compras");
                 Find<TextBox>(evaluation, "txtMotivoSeleccion").Text = "Compra de reposicion fundamentada en stock y conveniencia.";
                 Assert(compras.TieneCambiosPendientes, "El fundamento de N03 sin confirmar cuenta como trabajo pendiente");
-                Click(evaluation, "btnConfirmarProveedor"); int ordersBefore = Count("OrdenCompra"); Click(evaluation, "btnOrdenEvaluacion");
+                evaluation.ModoPrueba = false; Click(evaluation, "btnConfirmarProveedor"); evaluation.ModoPrueba = true;
+                Assert(Find<Label>(evaluation, "lblActualizacionEvaluacion").Text == evaluation.UltimoMensaje && evaluation.UltimoMensaje.Contains("Proveedor confirmado"),
+                    "Confirmar proveedor muestra el siguiente paso sin modal de exito");
+                int ordersBefore = Count("OrdenCompra"); Click(evaluation, "btnOrdenEvaluacion");
                 Assert(Find<Button>(evaluation, "btnOrdenEvaluacion").Enabled && Find<Button>(evaluation, "btnOrdenEvaluacion").Text.StartsWith("Abrir orden"), "El borrador vinculado ofrece abrir la orden existente");
                 int linked = Convert.ToInt32(Query("SELECT MAX(IdOrdenCompra) FROM OrdenCompra").Rows[0][0]); Click(evaluation, "btnOrdenEvaluacion");
                 Assert(rootTabs.SelectedTab.Text == "Órdenes de compra" && (int)orders.CurrentRow.Cells["IdOrdenCompra"].Value == linked && Count("OrdenCompra") == ordersBefore + 1,
