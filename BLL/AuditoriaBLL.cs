@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BE;
+using BE.Seguridad;
 using DAL;
 using Servicios;
 
@@ -11,11 +12,13 @@ namespace BLL
     {
         public List<UsuarioAuditoria> ListarHistorial()
         {
+            ExigirPermiso(TipoPermiso.Auditoria_Ver);
             return AuditoriaDAL.Instancia.Listar();
         }
 
         public void HacerRollback(UsuarioAuditoria snapshot)
         {
+            ExigirPermiso(TipoPermiso.Auditoria_Restaurar);
             if (snapshot == null) throw new ArgumentNullException("snapshot");
             if (snapshot.AuditAction != "UPDATE" && snapshot.AuditAction != "DELETE")
                 throw new InvalidOperationException("Esta versión no admite restauración.");
@@ -61,6 +64,12 @@ namespace BLL
                 "ROLLBACK_AUDITORIA",
                 $"Se restauró al usuario {snapshot.Email} al estado exacto del {snapshot.AuditDate:dd/MM/yyyy HH:mm:ss}"
             ));
+        }
+
+        private static void ExigirPermiso(TipoPermiso permiso)
+        {
+            if (Session.Instance.Usuario == null || !Session.Instance.Usuario.TienePermiso(permiso))
+                throw new UnauthorizedAccessException("No tiene permiso para " + (permiso == TipoPermiso.Auditoria_Ver ? "consultar la auditoría." : "restaurar usuarios desde la auditoría."));
         }
     }
 }

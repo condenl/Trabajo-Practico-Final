@@ -4,6 +4,7 @@ using System.Linq;
 using System.Drawing;
 using System.Windows.Forms;
 using BE;
+using BE.Seguridad;
 using BE.Interfaces;
 using BLL;
 using Servicios;
@@ -19,6 +20,8 @@ namespace UI.UserControls
 
         public UC_AuditoriaUsuarios()
         {
+            if (Session.Instance.Usuario == null || !Session.Instance.Usuario.TienePermiso(TipoPermiso.Auditoria_Ver))
+                throw new UnauthorizedAccessException("No tiene permiso para consultar la auditoría.");
             InitializeComponent();
             BindingContext = new BindingContext();
             auditoriaBLL = new AuditoriaBLL();
@@ -44,7 +47,8 @@ namespace UI.UserControls
             layout.Controls.Add(dgvHistorial, 0, 2); Controls.Add(layout);
             dgvHistorial.CurrentCellChanged += delegate {
                 var version = dgvHistorial.CurrentRow == null ? null : dgvHistorial.CurrentRow.DataBoundItem as UsuarioAuditoria;
-                btnRollback.Enabled = version != null && (version.AuditAction == "UPDATE" || version.AuditAction == "DELETE");
+                btnRollback.Enabled = Session.Instance.Usuario != null && Session.Instance.Usuario.TienePermiso(TipoPermiso.Auditoria_Restaurar) &&
+                    version != null && (version.AuditAction == "UPDATE" || version.AuditAction == "DELETE");
             };
             btnRollback.Enabled = false;
             txtBuscar.KeyDown += delegate(object s, KeyEventArgs e) { if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; btnBuscar_Click(s, EventArgs.Empty); } };
@@ -160,6 +164,9 @@ namespace UI.UserControls
         {
             try
             {
+                if (Session.Instance.Usuario == null || !Session.Instance.Usuario.TienePermiso(TipoPermiso.Auditoria_Restaurar)) {
+                    Informar("No tiene permiso para restaurar usuarios desde la auditoría.", true); return;
+                }
                 if (dgvHistorial.CurrentRow == null || !btnRollback.Enabled) { Informar("Seleccione una versión restaurable del listado.", true); return; }
                 var snapshot = (UsuarioAuditoria)dgvHistorial.CurrentRow.DataBoundItem;
                 var actual = new UsuarioBLL().ListarTodos().FirstOrDefault(u => u.Id == snapshot.Id);

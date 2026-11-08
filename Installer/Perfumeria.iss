@@ -41,6 +41,7 @@ Source: "..\SQL\Trabajo Practico Final 3.bak"; DestDir: "{app}\Installer"; DestN
 Source: "..\SQL\Iteracion2_Aprovisionamiento.sql"; DestDir: "{app}\Installer\Migraciones"; Flags: ignoreversion
 Source: "..\SQL\Iteracion2_Ventas_Fidelizacion.sql"; DestDir: "{app}\Installer\Migraciones"; Flags: ignoreversion
 Source: "..\SQL\Iteracion3_Evaluacion_Proveedores.sql"; DestDir: "{app}\Installer\Migraciones"; Flags: ignoreversion
+Source: "..\SQL\Iteracion3_Pulido_Demo.sql"; DestDir: "{app}\Installer\Migraciones"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\Perfumeria"; Filename: "{app}\{#MyAppExeName}"

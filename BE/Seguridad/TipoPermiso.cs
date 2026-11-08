@@ -15,6 +15,9 @@ namespace BE.Seguridad
         Aprovisionamiento_Gestion,
         Contabilidad_AprobarCompras,
         Inventario_Recepcionar,
-        Ventas_Registrar
+        Ventas_Registrar,
+        Auditoria_Ver,
+        Auditoria_Restaurar,
+        Soporte_Gestion
     }
 }
