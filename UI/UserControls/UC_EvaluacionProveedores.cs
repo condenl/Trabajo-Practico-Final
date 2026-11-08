@@ -118,7 +118,7 @@ namespace UI.UserControls
         }
         private void Ejecutar(Action accion)
         { try { UltimoError = null; UltimoMensaje = null; accion(); } catch (Exception e) { UltimoError = e.Message; if (!ModoPrueba) MessageBox.Show(this, e.Message, "Evaluación de proveedores", MessageBoxButtons.OK, MessageBoxIcon.Information); } }
-        private void Informar(string texto) { UltimoMensaje = texto; if (!ModoPrueba) MessageBox.Show(this, texto, "Evaluación de proveedores", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+        private void Informar(string texto) { UltimoMensaje = texto; estado.Text = texto; estado.ForeColor = TemaAplicacion.Texto; }
         private int IdProducto { get { return producto.SelectedItem is Producto ? ((Producto)producto.SelectedItem).IdProducto : 0; } }
 
         public void ActualizarCatalogos()

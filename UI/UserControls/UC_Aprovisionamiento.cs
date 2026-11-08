@@ -90,6 +90,7 @@ namespace UI.UserControls
         {
             usuario = usuarioActual;
             Dock = DockStyle.Fill;
+            SizeChanged += delegate { estadoCarga.MaximumSize = new Size(Math.Max(100, ClientSize.Width), 0); };
             BindingContext = new BindingContext();
             ConstruirInterfaz();
             ConfigurarAcceso();
@@ -752,7 +753,8 @@ namespace UI.UserControls
         private void Informar(string mensaje)
         {
             UltimoMensaje = mensaje;
-            if (!ModoPrueba) MessageBox.Show(mensaje, "Perfumería", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            estadoCarga.Text = mensaje;
+            estadoCarga.ForeColor = TemaAplicacion.Texto;
         }
 
         private static FlowLayoutPanel FlujoHorizontal()
