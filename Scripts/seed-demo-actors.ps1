@@ -21,6 +21,7 @@ $arguments+=$references|ForEach-Object {'/reference:'+$_}
 $arguments+=Join-Path $PSScriptRoot 'SeedDemoActors.cs'
 $arguments+=Join-Path $PSScriptRoot 'SeedDemoScenarios.cs'
 $arguments+=Join-Path $PSScriptRoot 'SeedDemoEvaluacion.cs'
+$arguments+=Join-Path $PSScriptRoot 'SeedDemoReposicion.cs'
 $arguments+=Join-Path $PSScriptRoot 'SeedDemoTargetPolicy.cs'
 & $compiler @arguments
 if($LASTEXITCODE -ne 0){throw 'No se pudo compilar la herramienta de precarga.'}

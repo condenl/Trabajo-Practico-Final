@@ -12,8 +12,9 @@ namespace UI.UserControls
     public class UC_EvaluacionProveedores : UserControl, IVistaConCambiosPendientes
     {
         public event Action<int> AbrirOrdenSolicitada;
-        public bool TieneCambiosPendientes { get { return actual != null && !actual.IdProveedorSeleccionado.HasValue &&
-            (!string.IsNullOrWhiteSpace(motivo.Text) || (proveedorSeleccionado.HasValue && proveedorSeleccionado != actual.IdProveedorRecomendado)); } }
+        public bool TieneCambiosPendientes { get { return (actual == null || !actual.IdProveedorSeleccionado.HasValue) &&
+            (!string.IsNullOrWhiteSpace(motivo.Text) || proveedorBorrador.HasValue ||
+            (actual != null && proveedorSeleccionado.HasValue && proveedorSeleccionado != actual.IdProveedorRecomendado)); } }
         private static readonly CultureInfo Cultura = CultureInfo.GetCultureInfo("es-AR");
         private readonly EvaluacionProveedorBLL bll = new EvaluacionProveedorBLL();
         private readonly ComboBox producto = new ComboBox { Name = "cmbEvaluacionProducto", Width = 260, DropDownStyle = ComboBoxStyle.DropDownList };
@@ -39,6 +40,8 @@ namespace UI.UserControls
         private Button confirmar, crear;
         private EvaluacionProveedor actual;
         private int? proveedorSeleccionado;
+        private int? proveedorBorrador;
+        private int productoEnVista;
         private bool cargando;
         public bool ModoPrueba { get; set; }
         public string UltimoError { get; private set; }
@@ -78,11 +81,14 @@ namespace UI.UserControls
             grilla.CellFormatting += delegate(object sender, DataGridViewCellFormattingEventArgs e) {
                 if (e.ColumnIndex >= 0 && grilla.Columns[e.ColumnIndex].DataPropertyName == "Elegible" && e.Value is bool) { e.Value = (bool)e.Value ? "Sí" : "No"; e.FormattingApplied = true; }
             };
-            grilla.SelectionChanged += delegate {
+            EventHandler seleccionarFila = delegate {
+                if (actual == null) return;
                 var fila = grilla.CurrentRow == null ? null : grilla.CurrentRow.DataBoundItem as ResultadoProveedor;
                 if (fila != null) proveedorSeleccionado = fila.IdProveedor;
                 MostrarDetalle();
             };
+            grilla.SelectionChanged += seleccionarFila;
+            grilla.CurrentCellChanged += seleccionarFila;
             listado.Controls.Add(grilla); resultados.TabPages.Add(resumen); resultados.TabPages.Add(listado);
             layout.Controls.Add(resultados, 0, 4); layout.Controls.Add(detalle, 0, 5);
             var decision = Flujo(); Campo(decision, "Fundamento de la elección (10 a 500 caracteres)", motivo);
@@ -91,10 +97,10 @@ namespace UI.UserControls
             decision.Controls.Add(confirmar); decision.Controls.Add(crear); layout.Controls.Add(decision, 0, 6);
             Campo(pie, "Comparaciones guardadas", historial);
             historial.Format += delegate(object sender, ListControlConvertEventArgs e) { var r = (ResumenEvaluacion)e.ListItem; e.Value = "#" + r.IdEvaluacion + " · " + r.Fecha.ToString("dd/MM HH:mm") + " · " + r.ProveedorSeleccionado; };
-            pie.Controls.Add(Boton("Abrir", "btnAbrirEvaluacion", delegate { var h = historial.SelectedItem as ResumenEvaluacion; if (h != null) Mostrar(bll.Obtener(h.IdEvaluacion)); }));
+            pie.Controls.Add(Boton("Abrir", "btnAbrirEvaluacion", AbrirHistorial));
             layout.Controls.Add(pie, 0, 7); layout.Controls.Add(estado, 0, 8); Controls.Add(layout);
-            producto.SelectedIndexChanged += delegate { if (!cargando) { Invalidar(); Ejecutar(CargarHistorial); } };
-            foreach (var n in new[] { cantidad, precio, prestigio, antiguedad }) n.ValueChanged += delegate { if (!cargando) Invalidar(); };
+            producto.SelectedIndexChanged += delegate { if (!cargando) CambiarProducto(); };
+            foreach (var n in new[] { cantidad, precio, prestigio, antiguedad }) n.ValueChanged += delegate { if (!cargando) Invalidar(true); };
             foreach (var chart in new[] { puntajes, margenes }) chart.MouseClick += ElegirDesdeGrafico;
             Resize += delegate {
                 contexto.MaximumSize = detalle.MaximumSize = new Size(Math.Max(100, ClientSize.Width - 24), 0);
@@ -127,22 +133,27 @@ namespace UI.UserControls
 
         public void ActualizarCatalogos()
         {
-            int anterior = IdProducto; cargando = true;
-            try { producto.DisplayMember = "Nombre"; producto.ValueMember = "IdProducto"; producto.DataSource = new ProductoBLL().Listar(true); if (producto.Items.Cast<Producto>().Any(p => p.IdProducto == anterior)) producto.SelectedValue = anterior; }
+            var anterior = producto.SelectedItem as Producto; cargando = true;
+            try {
+                var productos = new ProductoBLL().Listar(true);
+                // Una baja externa no debe asociar el fundamento a otro perfume al refrescar.
+                if (anterior != null && TieneCambiosPendientes && !productos.Any(p => p.IdProducto == anterior.IdProducto)) productos.Add(anterior);
+                producto.DisplayMember = "Nombre"; producto.ValueMember = "IdProducto"; producto.DataSource = productos;
+                if (anterior != null && productos.Any(p => p.IdProducto == anterior.IdProducto)) producto.SelectedValue = anterior.IdProducto;
+            }
             finally { cargando = false; }
-            if (actual != null && actual.Solicitud.IdProducto != IdProducto) Invalidar();
+            if (actual != null && actual.Solicitud.IdProducto != IdProducto) Invalidar(false);
+            productoEnVista = IdProducto;
             CargarHistorial();
         }
         private void Actualizar()
         {
-            var anterior = actual; var proveedor = Fila; string fundamento = motivo.Text; ActualizarCatalogos();
+            var anterior = actual; ActualizarCatalogos();
             if (anterior != null && anterior.Solicitud.IdProducto == IdProducto)
             {
                 if (!anterior.IdProveedorSeleccionado.HasValue)
                 {
                     Comparar();
-                    if (proveedor != null) ElegirProveedor(proveedor.IdProveedor);
-                    motivo.Text = fundamento;
                 }
                 else { Mostrar(bll.Obtener(anterior.IdEvaluacion)); estado.Text = "Decisión guardada. Pulse Comparar para evaluar los datos actuales."; }
             }
@@ -154,16 +165,45 @@ namespace UI.UserControls
             historial.ValueMember = "IdEvaluacion"; historial.DataSource = IdProducto > 0 ? bll.ConsultarHistorial(IdProducto) : null;
             if (anterior != null && historial.Items.Cast<ResumenEvaluacion>().Any(h => h.IdEvaluacion == anterior.IdEvaluacion)) historial.SelectedValue = anterior.IdEvaluacion;
         }
-        private void Invalidar()
+        protected virtual bool ConfirmarDescarteFundamento()
         {
-            actual = null; proveedorSeleccionado = null; grilla.DataSource = null; motivo.Clear(); detalle.Text = "";
+            return MessageBox.Show(this, "Hay una elección o un fundamento sin guardar. ¿Desea descartarlos y continuar?", "Decisión sin guardar",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes;
+        }
+        private void CambiarProducto()
+        {
+            if (IdProducto == productoEnVista) return;
+            if (TieneCambiosPendientes && !ConfirmarDescarteFundamento()) {
+                cargando = true;
+                try { producto.SelectedValue = productoEnVista; } finally { cargando = false; }
+                return;
+            }
+            productoEnVista = IdProducto; Invalidar(false); Ejecutar(CargarHistorial);
+        }
+        private void AbrirHistorial()
+        {
+            var h = historial.SelectedItem as ResumenEvaluacion;
+            if (h == null || (TieneCambiosPendientes && !ConfirmarDescarteFundamento())) return;
+            Mostrar(bll.Obtener(h.IdEvaluacion));
+        }
+        private void Invalidar(bool conservarFundamento)
+        {
+            bool conservar = conservarFundamento && (actual == null || !actual.IdProveedorSeleccionado.HasValue);
+            if (conservar && actual != null) proveedorBorrador = proveedorSeleccionado != actual.IdProveedorRecomendado ? proveedorSeleccionado : null;
+            if (!conservar) { motivo.Clear(); proveedorBorrador = null; }
+            actual = null; proveedorSeleccionado = null; grilla.DataSource = null; detalle.Text = "";
             puntajes.Series[0].Points.Clear(); margenes.Series[0].Points.Clear();
             stock.Text = "Stock utilizable\n—"; pendientes.Text = "Por recibir\n—"; ventas.Text = "Ventas en 90 días\n—"; reposicion.Text = "Reponer (30 días)\n—";
             contexto.Text = "Pulse Comparar para evaluar los datos actuales."; estado.Text = ""; ActualizarBotones();
         }
         private void Comparar()
         {
+            bool conservar = actual == null || !actual.IdProveedorSeleccionado.HasValue;
+            string fundamento = conservar ? motivo.Text : "";
+            int? eleccion = conservar ? proveedorBorrador ?? proveedorSeleccionado : null;
             Mostrar(bll.Evaluar(new SolicitudEvaluacion { IdProducto = IdProducto, Cantidad = (int)cantidad.Value, PesoPrecio = precio.Value, PesoPrestigio = prestigio.Value, PesoAntiguedad = antiguedad.Value }));
+            if (eleccion.HasValue) ElegirProveedor(eleccion.Value);
+            motivo.Text = fundamento;
             CargarHistorial(); estado.Text = "Comparación actualizada a las " + DateTime.Now.ToString("HH:mm:ss") + ". Pulse una barra para elegir proveedor.";
             if (actual.Resultados.Count > 8) estado.Text += " Gráficos: primeros 8; listado: todos.";
         }
@@ -181,17 +221,39 @@ namespace UI.UserControls
             cargando = true;
             try { cantidad.Value = e.Solicitud.Cantidad; precio.Value = e.Solicitud.PesoPrecio; prestigio.Value = e.Solicitud.PesoPrestigio; antiguedad.Value = e.Solicitud.PesoAntiguedad; }
             finally { cargando = false; }
-            actual = e; proveedorSeleccionado = null; grilla.BindingContext = BindingContext; grilla.DataSource = e.Resultados; motivo.Text = e.MotivoSeleccion ?? "";
+            actual = e; proveedorSeleccionado = proveedorBorrador = null; grilla.BindingContext = BindingContext; grilla.DataSource = e.Resultados; motivo.Text = e.MotivoSeleccion ?? "";
             stock.Text = "Stock utilizable\n" + e.Datos.StockDisponible + " u."; pendientes.Text = "Por recibir\n" + e.Datos.ComprasPendientes + " u.";
             ventas.Text = "Ventas en 90 días\n" + e.Datos.UnidadesVendidas90Dias + " u."; reposicion.Text = "Reponer (30 días)\n" + e.CantidadSugerida + " u.";
             contexto.Text = e.IdProveedorSeleccionado.HasValue ? "Proveedor confirmado: " + e.Resultados.First(r => r.IdProveedor == e.IdProveedorSeleccionado).Proveedor :
                 e.IdProveedorRecomendado.HasValue ? "Recomendado: " + e.Resultados.First(r => r.IdProveedor == e.IdProveedorRecomendado).Proveedor : "Sin recomendación. Consulte las ofertas excluidas en el listado.";
             contexto.Text += " · #" + e.IdEvaluacion + " del " + e.FechaEvaluacion.ToString("dd/MM/yyyy HH:mm");
+            string explicacion = ExplicarRecomendacion(e);
+            if (explicacion.Length > 0) contexto.Text += Environment.NewLine + explicacion;
             estado.Text = "Comparación guardada. Precio " + e.Solicitud.PesoPrecio + "% · Prestigio " + e.Solicitud.PesoPrestigio + "% · Antigüedad " + e.Solicitud.PesoAntiguedad + "%.";
             DibujarGraficos(e);
             int? elegir = e.IdProveedorSeleccionado ?? e.IdProveedorRecomendado ?? e.Resultados.Select(r => (int?)r.IdProveedor).FirstOrDefault();
             if (elegir.HasValue) ElegirProveedor(elegir.Value);
             MostrarDetalle(); ActualizarBotones();
+        }
+        private static string ExplicarRecomendacion(EvaluacionProveedor e)
+        {
+            var recomendado = e.Resultados.FirstOrDefault(r => r.IdProveedor == e.IdProveedorRecomendado);
+            if (recomendado == null) return "";
+            var elegibles = e.Resultados.Where(r => r.Elegible).OrderBy(r => r.PrecioUnitario).ThenByDescending(r => r.PuntajePonderadoFinal).ToList();
+            var barato = elegibles.First();
+            string razon;
+            if (elegibles.Count == 1) razon = "Es la única oferta elegible.";
+            else if (recomendado.PrecioUnitario > barato.PrecioUnitario) {
+                var ventajas = new[] {
+                    new { Nombre = "prestigio", Aporte = (recomendado.PuntajePrestigio - barato.PuntajePrestigio) * e.Solicitud.PesoPrestigio },
+                    new { Nombre = "antigüedad", Aporte = (recomendado.PuntajeAntiguedad - barato.PuntajeAntiguedad) * e.Solicitud.PesoAntiguedad }
+                }.Where(v => v.Aporte > 0).OrderByDescending(v => v.Aporte).Select(v => v.Nombre);
+                razon = "Gana por " + string.Join(" y ", ventajas) + " (" + recomendado.PuntajePonderadoFinal.ToString("N1", Cultura) + " vs " + barato.PuntajePonderadoFinal.ToString("N1", Cultura) + " pts).";
+            } else razon = "Puntaje " + recomendado.PuntajePonderadoFinal.ToString("N1", Cultura) + "/100 y el menor costo entre las ofertas elegibles.";
+            string costo = " Compra: " + FormatoPresentacion.Moneda(recomendado.CostoTotal);
+            if (recomendado.PrecioUnitario > barato.PrecioUnitario) costo += " (" + FormatoPresentacion.Moneda(recomendado.CostoTotal - barato.CostoTotal) + " más que la más barata elegible)";
+            string nombre = e.IdProveedorSeleccionado.HasValue && e.IdProveedorSeleccionado != e.IdProveedorRecomendado ? "Recomendación original: " + recomendado.Proveedor + ". " : "";
+            return nombre + razon + costo + "; margen bruto " + recomendado.MargenEstimado.ToString("N1", Cultura) + " %.";
         }
         private void DibujarGraficos(EvaluacionProveedor e)
         {

@@ -107,6 +107,17 @@ internal static class TestDemoScenarios
                 for (int i = 1; i <= states.Length; i++) State(i, (EstadoOrdenCompra)states[i - 1]);
                 Assert(Inventory.VerificarStock(floral) == 14 && Inventory.VerificarStock(wood) == 7 && Inventory.VerificarStock(citrus) == 0, "Stock inicial 14 / 7 / 0");
                 Assert(Inventory.ObtenerTrazabilidad(floral).Count == 3 && Inventory.ObtenerTrazabilidad(wood).Count == 2, "Cinco lotes con trazabilidad");
+                int reposicion=Id("SELECT IdProducto FROM Producto WHERE Codigo=@p0", "DEMO-EVAL-REPOSICION");
+                int parcialReposicion=Id("SELECT IdOrdenCompra FROM OrdenCompra WHERE CreadaPor=@p0", "DEMO-REP-PARCIAL | demo.dueno@perfumeria.example");
+                var datosReposicion=DAL.EvaluacionProveedorDAL.Instancia.ObtenerDatos(reposicion,DateTime.Today);
+                Assert(datosReposicion.StockDisponible==10 && datosReposicion.ComprasPendientes==8 && datosReposicion.UnidadesVendidas90Dias==90 && datosReposicion.ImporteNetoVentas90Dias==1458000m,
+                    "Precarga N03: existencias, recepcion pendiente y ventas netas de descuento coherentes");
+                Assert(Query(@"SELECT v.IdVenta FROM Venta v JOIN DetalleVenta d ON d.IdVenta=v.IdVenta WHERE d.IdProducto=@p0
+ GROUP BY v.IdVenta,v.Subtotal,v.Descuento,v.Total HAVING SUM(d.Cantidad)=30 AND v.Subtotal=540000 AND v.Descuento=54000 AND v.Total=486000",reposicion).Rows.Count==3,
+                    "Tres ventas historicas de 30 unidades conservan subtotal, descuento del 10 por ciento y total");
+                Assert(Inventory.ObtenerTrazabilidad(reposicion).Sum(l=>l.CantidadIngresada)==100 &&
+                    Query("SELECT IdDetalleVenta FROM DetalleVenta WHERE IdProducto=@p0",reposicion).Rows.Count==4,
+                    "Cien unidades recibidas y ultima venta repartida en dos lotes respetan FEFO");
                 string before = Snapshot();
                 RunSeed("--check", true);
                 Assert(before == Snapshot(), "Prevalidacion sin escrituras");
@@ -134,6 +145,9 @@ internal static class TestDemoScenarios
                 Assert(Purchases.EnviarOrdenARevisionContable(Order(8)), "Agregar segunda cotizacion desbloquea escenario 08");
 
                 Login("deposito", "DemoDeposito2026!");
+                Assert(Purchases.RecepcionarMercaderia(parcialReposicion,new List<Lote> {
+                    new Lote { IdProducto=reposicion,CodigoLote="TEST-REP-COMPLETADA",CantidadIngresada=8,Origen="Argentina (test)",FechaVencimiento=DateTime.Today.AddDays(365) }
+                }) && Inventory.VerificarStock(reposicion)==18, "El escenario nuevo admite completar la recepcion pendiente por el circuito real");
                 before = Snapshot();
                 Reject<InvalidOperationException>(() => Purchases.RecepcionarMercaderia(Order(6), Lots(floral, wood, 7, 3, "TEST-EXCESO")), "Recepcion no supera pendiente");
                 Assert(before == Snapshot(), "Recepcion rechazada sin efectos parciales");
@@ -166,6 +180,8 @@ internal static class TestDemoScenarios
                 State(5, EstadoOrdenCompra.Recibida); State(6, EstadoOrdenCompra.Recibida);
 
                 Login("ventas", "DemoVentas2026!");
+                Sales.RegistrarVenta(new Venta { Detalles=new List<DetalleVenta> { new DetalleVenta { IdProducto=reposicion,Cantidad=1 } } });
+                Assert(Inventory.VerificarStock(reposicion)==17, "El escenario enriquecido admite nuevas ventas y consume su stock");
                 int stock = Inventory.VerificarStock(floral);
                 var sale = new Venta { IdCliente=Sales.BuscarClientePorEmail("demo.cliente@perfumeria.example").IdCliente,
                     Detalles=new List<DetalleVenta> { new DetalleVenta { IdProducto=floral, Cantidad=2 }, new DetalleVenta { IdProducto=wood, Cantidad=1 } } };

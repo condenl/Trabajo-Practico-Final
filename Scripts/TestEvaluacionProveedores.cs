@@ -21,6 +21,94 @@ internal static class TestEvaluacionProveedores
     { using (var cmd = new SqlCommand(sql, connection)) using (var adapter = new SqlDataAdapter(cmd)) { var result = new DataTable(); adapter.Fill(result); return result; } }
     private static int Number(string sql) { return Convert.ToInt32(Query(sql).Rows[0][0]); }
     private static void Exec(string sql) { using (var cmd = new SqlCommand(sql, connection)) cmd.ExecuteNonQuery(); }
+    private sealed class EvaluacionPrueba : UC_EvaluacionProveedores
+    {
+        public bool Descartar; public int Confirmaciones;
+        protected override bool ConfirmarDescarteFundamento() { Confirmaciones++; return Descartar; }
+    }
+    private static string Explicacion(EvaluacionProveedor e)
+    { return (string)typeof(UC_EvaluacionProveedores).GetMethod("ExplicarRecomendacion", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, new object[] { e }); }
+    private static void ComprobarPreparacionN03()
+    {
+        int producto = Number("SELECT IdProducto FROM Producto WHERE Codigo='DEMO-EVAL-REPOSICION'");
+        int otro = Number("SELECT IdProducto FROM Producto WHERE Codigo='DEMO-EVAL-VALOR'");
+        var bll = new EvaluacionProveedorBLL();
+        var e = bll.Evaluar(new SolicitudEvaluacion { IdProducto=producto });
+        Assert(e.Datos.StockDisponible==10 && e.Datos.ComprasPendientes==8 && e.Datos.UnidadesVendidas90Dias==90 && e.CantidadSugerida==12,
+            "La nueva demo cruza demanda 90, stock 10 y pendientes 8 para sugerir 12 unidades");
+        Assert(e.Datos.ImporteNetoVentas90Dias==1458000m && e.PrecioVentaReferencia==16200m,
+            "El margen de la nueva demo usa ventas reales netas del descuento del 10 por ciento");
+        var ganador = e.Resultados.Single(r=>r.IdProveedor==e.IdProveedorRecomendado);
+        Assert(ganador.UnidadesCompradas180Dias==108 && ganador.UnidadesRecibidas180Dias==100 &&
+            e.Resultados.Any(r=>r.Advertencias.Contains("agotarse")), "Historial de recepciones y riesgo de agotamiento son visibles en la nueva demo");
+        string explicacion=Explicacion(e);
+        Assert(explicacion.Contains("prestigio y antigüedad") && explicacion.Contains("20.000,00") && explicacion.Contains("25,9 %"),
+            "La explicacion identifica las ventajas, sobrecosto y margen neto de descuentos del recomendado");
+        var soloPrecio=bll.Evaluar(new SolicitudEvaluacion { IdProducto=producto,PesoPrecio=100,PesoPrestigio=0,PesoAntiguedad=0 });
+        Assert(Explicacion(soloPrecio).Contains("menor costo") && !Explicacion(soloPrecio).Contains("Gana por prestigio"),
+            "Con precio al 100 por ciento la explicacion cambia al menor costo sin inventar ventajas");
+        var excluido = soloPrecio.Resultados.First(r=>r.IdProveedor!=soloPrecio.IdProveedorRecomendado); excluido.PrecioUnitario=1; excluido.CostoTotal=10; excluido.Elegible=false;
+        Assert(!Explicacion(soloPrecio).Contains("más que"), "La explicacion no compara costos contra una oferta excluida");
+        foreach(var r in soloPrecio.Resultados) r.Elegible=r.IdProveedor==soloPrecio.IdProveedorRecomendado;
+        Assert(Explicacion(soloPrecio).Contains("única oferta elegible"), "Una unica oferta elegible se explica sin simular competencia");
+        soloPrecio.IdProveedorRecomendado=null;
+        Assert(Explicacion(soloPrecio)=="", "Sin recomendacion no se presenta una explicacion de ganador");
+        using(var form=new Form { Width=1180,Height=820 })
+        using(var ui=new EvaluacionPrueba { ModoPrueba=true }) {
+            form.Controls.Add(ui); UI.TemaAplicacion.Aplicar(form); form.Show(); Application.DoEvents();
+            var productos=Find<ComboBox>(ui,"cmbEvaluacionProducto"); var fundamento=Find<TextBox>(ui,"txtMotivoSeleccion");
+            productos.SelectedValue=producto; Click(ui,"btnCompararProveedores");
+            string texto="La trayectoria y el margen justifican la compra."+Environment.NewLine+"Se revisara la cantidad sugerida.";
+            fundamento.Text=texto;
+            var grid=Find<DataGridView>(ui,"dgvEvaluacion"); grid.CurrentCell=grid.Rows[1].Cells[0];
+            int alternativa=((ResultadoProveedor)grid.CurrentRow.DataBoundItem).IdProveedor;
+            Find<NumericUpDown>(ui,"nudEvaluacionCantidad").Value=11;
+            Assert(fundamento.Text==texto && ui.TieneCambiosPendientes && !Find<Button>(ui,"btnConfirmarProveedor").Enabled,
+                "Cambiar cantidad conserva el fundamento y mantiene el control de cambios, exigiendo recalcular");
+            productos.SelectedValue=otro;
+            Assert((int)productos.SelectedValue==producto && fundamento.Text==texto && ui.Confirmaciones==1,
+                "Cancelar cambio de perfume conserva tambien un fundamento con resultados invalidados");
+            Click(ui,"btnCompararProveedores");
+            Assert(fundamento.Text==texto && ((ResultadoProveedor)grid.CurrentRow.DataBoundItem).IdProveedor==alternativa,
+                "Recalcular conserva fundamento y alternativa elegida");
+            Find<NumericUpDown>(ui,"nudPesoPrecio").Value=60;
+            Click(ui,"btnCompararProveedores");
+            Assert(ui.UltimoError!=null && fundamento.Text==texto && ui.TieneCambiosPendientes,
+                "Una ponderacion invalida no borra el fundamento ni el trabajo pendiente");
+            Find<NumericUpDown>(ui,"nudPesoPrestigio").Value=20; Click(ui,"btnCompararProveedores");
+            Assert(ui.UltimoError==null && fundamento.Text==texto, "Ajustar ponderaciones y volver a comparar conserva el texto");
+            Click(ui,"btnUsarCantidadSugerida");
+            Assert(Find<NumericUpDown>(ui,"nudEvaluacionCantidad").Value==12 && fundamento.Text==texto,
+                "Usar la cantidad sugerida conserva el fundamento al generar otra comparacion");
+            Click(ui,"btnHistorialEvaluacion"); Click(ui,"btnAbrirEvaluacion");
+            Assert(ui.Confirmaciones==2 && fundamento.Text==texto, "Cancelar apertura del historial conserva el fundamento actual");
+            ui.Descartar=true; Click(ui,"btnAbrirEvaluacion");
+            Assert(ui.Confirmaciones==3 && fundamento.Text=="" && !ui.TieneCambiosPendientes, "Aceptar apertura del historial descarta solo el borrador de decision");
+            fundamento.Text=texto; ui.Descartar=false; productos.SelectedValue=otro;
+            Assert((int)productos.SelectedValue==producto && fundamento.Text==texto, "Cancelar cambio de producto conserva comparacion y fundamento");
+            ui.Descartar=true; productos.SelectedValue=otro;
+            Assert((int)productos.SelectedValue==otro && fundamento.Text=="" && !ui.TieneCambiosPendientes,
+                "Aceptar cambio de producto limpia el fundamento para evitar asociarlo al perfume equivocado");
+            productos.SelectedValue=producto; Click(ui,"btnCompararProveedores"); fundamento.Text=texto;
+            Exec("UPDATE Producto SET Activo=0 WHERE IdProducto="+producto);
+            try { Click(ui,"btnActualizarEvaluacion"); Assert((int)productos.SelectedValue==producto && fundamento.Text==texto && ui.UltimoError!=null,
+                "Una baja externa del perfume no traslada ni borra el fundamento al refrescar"); }
+            finally { Exec("UPDATE Producto SET Activo=1 WHERE IdProducto="+producto); }
+            Click(ui,"btnCompararProveedores");
+            grid.CurrentCell=grid.Rows[1].Cells[0]; Application.DoEvents();
+            Assert(Find<Label>(ui,"lblDetalleProveedor").Text.StartsWith(((ResultadoProveedor)grid.Rows[1].DataBoundItem).Proveedor),
+                "Seleccionar una celda de otra fila actualiza el proveedor que se confirmara");
+            Click(ui,"btnConfirmarProveedor");
+            Assert(ui.UltimoError==null && Find<Label>(ui,"lblResumenEvaluacion").Text.Contains("Recomendación original:"),
+                "Confirmar otra alternativa distingue la decision del usuario de la recomendacion original");
+            Find<NumericUpDown>(ui,"nudEvaluacionCantidad").Value=13; Click(ui,"btnCompararProveedores");
+            Assert(fundamento.Text=="" && !ui.TieneCambiosPendientes, "Una nueva comparacion no reutiliza el fundamento de una decision ya guardada");
+            Click(ui,"btnCriteriosEvaluacion"); Click(ui,"btnHistorialEvaluacion");
+            form.ClientSize=new System.Drawing.Size(1000,570); Application.DoEvents();
+            Assert(Find<Chart>(ui,"chartPuntajes").Height>=100 && fundamento.Bottom<=fundamento.Parent.ClientSize.Height,
+                "El resumen explicativo conserva un area util de graficos y fundamento en ventana reducida");
+        }
+    }
     private static T Find<T>(Control c, string name) where T : Control { return (T)c.Controls.Find(name, true).Single(); }
     private static void Click(Control c, string name) { typeof(Button).GetMethod("OnClick", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(Find<Button>(c, name), new object[] { EventArgs.Empty }); }
     private static void ClickBar(Chart chart, int indice)
@@ -55,6 +143,7 @@ internal static class TestEvaluacionProveedores
             using (connection = new SqlConnection(builder.ConnectionString))
             {
                 connection.Open();
+                ComprobarPreparacionN03();
                 int producto = Number("SELECT IdProducto FROM Producto WHERE Codigo='DEMO-FLORAL'");
                 int proveedor = Number("SELECT IdProveedor FROM Proveedor WHERE Cuit='99000000001'");
                 // Demonstrate that the cheapest offer is not necessarily the recommended one.

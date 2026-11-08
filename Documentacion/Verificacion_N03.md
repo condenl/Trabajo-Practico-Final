@@ -1,5 +1,7 @@
 # Verificación de N03 — 01/11/2026
 
+Actualización **08/11/2026**: **53 verificaciones N03 correctas en SQL Server 16 y 53 en LocalDB 17**, incluyendo protección del fundamento, elección de proveedor por celda/barra, explicación de recomendación y el escenario con historial de reposición. La precarga ampliada pasó **62 verificaciones N01/N02/N03**, incluidas idempotencia, conservación de ventas/recepciones posteriores y rollback. La regresión operativa completó **136** y PDF/XML **39**; las pruebas unitarias/arquitectura conservaron **70 correctas**. Detalle en [Verificacion_Usabilidad.md](Verificacion_Usabilidad.md#fundamento-explicación-y-escenario-completo-de-n03).
+
 - **64 pruebas unitarias correctas**, incluyendo 15 casos de evaluación: ponderación, elección distinta del menor precio, demanda/stock/pendientes, precio neto de descuentos, cotizaciones futuras/vencidas, proveedor inactivo, margen, empates, antigüedad, pesos, identidad del actor y evidencia serializada.
 - **20 verificaciones de integración correctas en SQL Server 16**: base aislada `Perfumeria_Evaluacion_Test_d107113d78f9404fa7b311b537b4ea6c`.
 - **20 verificaciones de integración correctas en LocalDB 17**: base aislada `Perfumeria_Evaluacion_Test_576178c98c6b47108a7fd862f5bbe2c3`.
