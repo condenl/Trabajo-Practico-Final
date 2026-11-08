@@ -6,6 +6,7 @@ internal static partial class SeedDemoActors
     private static readonly string[] EvaluationCodes = { "DEMO-EVAL-VALOR", "DEMO-EVAL-SIN-MARGEN" };
     private static void CheckEvaluationConflicts()
     {
+        CheckReplenishmentConflicts();
         var provider = Query("SELECT RazonSocial FROM Proveedor WHERE Cuit='99000000003'");
         Require(provider.Rows.Count == 0 || (provider.Rows.Count == 1 && (string)provider.Rows[0][0] == "DEMO Proveedor economico N03"), "CUIT reservado N03 utilizado por otro proveedor.");
         foreach (string code in EvaluationCodes)
@@ -41,9 +42,11 @@ internal static partial class SeedDemoActors
             foreach (int product in products)
                 InsertId("INSERT DetalleCotizacionProveedor(IdCotizacion,IdProducto,PrecioUnitario,PlazoEntregaDias) VALUES(@p0,@p1,@p2,@p3)", quote, product, i == 1 ? 12000m : i == 2 ? 12500m : 10000m, i == 3 ? 14 : 5);
         }
+        ApplyReplenishmentScenario();
     }
     private static void VerifyEvaluationScenarios()
     {
+        VerifyReplenishmentScenario();
         CheckEvaluationConflicts();
         foreach (string code in EvaluationCodes) FixtureId("SELECT IdProducto FROM Producto WHERE Codigo=@p0", code);
         for (int i = 1; i <= 3; i++)
