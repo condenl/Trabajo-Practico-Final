@@ -1569,6 +1569,58 @@
         "abstract": false
       },
       {
+        "name": "RegistrarVenta",
+        "type": "int",
+        "parameters": [
+          {
+            "name": "venta",
+            "type": "Venta",
+            "default": ""
+          },
+          {
+            "name": "subtotalEsperado",
+            "type": "decimal?",
+            "default": ""
+          },
+          {
+            "name": "descuentoEsperado",
+            "type": "decimal?",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "CotizarVenta",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "venta",
+            "type": "Venta",
+            "default": ""
+          }
+        ],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "CalcularVenta",
+        "type": "void",
+        "parameters": [
+          {
+            "name": "venta",
+            "type": "Venta",
+            "default": ""
+          }
+        ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
         "name": "ConsultarHistorialCliente",
         "type": "List<Venta>",
         "parameters": [
@@ -2913,6 +2965,11 @@
     "stereotype": "UI",
     "attributes": [
       {
+        "name": "TieneCambiosPendientes",
+        "type": "bool",
+        "visibility": "Public"
+      },
+      {
         "name": "ModoPrueba",
         "type": "bool",
         "visibility": "Public"
@@ -3119,6 +3176,11 @@
     "stereotype": "UI",
     "attributes": [
       {
+        "name": "TieneCambiosPendientes",
+        "type": "bool",
+        "visibility": "Public"
+      },
+      {
         "name": "ModoPrueba",
         "type": "bool",
         "visibility": "Public"
@@ -3155,7 +3217,7 @@
         "abstract": false
       },
       {
-        "name": "RegistrarCliente",
+        "name": "NuevoCliente",
         "type": "void",
         "parameters": [
           {
@@ -3169,6 +3231,14 @@
             "default": ""
           }
         ],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      },
+      {
+        "name": "ActualizarTotales",
+        "type": "void",
+        "parameters": [],
         "visibility": "Private",
         "static": false,
         "abstract": false
@@ -3217,6 +3287,34 @@
     "source": "UI/UserControls/UC_Ventas.cs",
     "proposed": false,
     "namespace": "UI.UserControls"
+  },
+  "FormAltaCliente": {
+    "key": "FormAltaCliente",
+    "name": "FormAltaCliente",
+    "kind": "Class",
+    "stereotype": "UI",
+    "attributes": [
+      {
+        "name": "ClienteCreado",
+        "type": "Cliente",
+        "visibility": "Public"
+      }
+    ],
+    "methods": [
+      {
+        "name": "Guardar",
+        "type": "void",
+        "parameters": [],
+        "visibility": "Private",
+        "static": false,
+        "abstract": false
+      }
+    ],
+    "abstract": false,
+    "notes": "UI/FormAltaCliente.cs",
+    "source": "UI/FormAltaCliente.cs",
+    "proposed": false,
+    "namespace": "UI"
   },
   "SolicitudEvaluacion": {
     "key": "SolicitudEvaluacion",
@@ -4150,6 +4248,11 @@
     "stereotype": "UI",
     "attributes": [
       {
+        "name": "TieneCambiosPendientes",
+        "type": "bool",
+        "visibility": "Public"
+      },
+      {
         "name": "ModoPrueba",
         "type": "bool",
         "visibility": "Public"
@@ -4166,6 +4269,14 @@
       }
     ],
     "methods": [
+      {
+        "name": "ActualizarCatalogos",
+        "type": "void",
+        "parameters": [],
+        "visibility": "Public",
+        "static": false,
+        "abstract": false
+      },
       {
         "name": "Comparar",
         "type": "void",

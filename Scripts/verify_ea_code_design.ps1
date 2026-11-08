@@ -78,6 +78,7 @@ foreach($s in $specs){
             $source=if($se.Type -eq 'Actor'){$se.Name}else{$repo.GetElementByID($se.ClassifierID).Name}
             if($c.Name -cne $l.name -or $target -cne $l.target -or $source -cne $l.source -or $c.SequenceNo -ne $l.sequence){throw ('Mensaje incorrecto '+$s.code)}
             if([bool]$c.Properties.Item('IsReturn').Value -ne [bool]$l.isReturn){throw ('Tipo de mensaje incorrecto '+$s.code)}
+            if($l.stateFlags -and -not $c.StateFlags.Contains($l.stateFlags)){throw ('Activacion incompleta '+$s.code)}
             if($l.isReturn){
                 if(-not $stack.Count){throw 'Retorno sin llamada'}
                 $call=$stack.Pop()

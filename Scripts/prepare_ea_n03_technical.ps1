@@ -1,4 +1,4 @@
-# Add the missing N03 BLL/DAL view and refresh hidden sequence classifiers.
+# Register N03 if missing and synchronize every hidden sequence classifier with the code catalog.
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $out=Join-Path $root 'Documentacion\EnterpriseArchitect'
@@ -22,16 +22,17 @@ $specs=Get-Content (Join-Path $out 'code-design.json') -Raw -Encoding UTF8|Conve
 $all=Get-Content (Join-Path $out 'manifest.json') -Raw -Encoding UTF8|ConvertFrom-Json
 $all+=$manifest
 $count=0
-foreach($s in $specs|Where-Object {$_.kind -eq 'Sequence' -and $_.code -ne 'N03-06'}){
+foreach($s in $specs|Where-Object {$_.kind -eq 'Sequence'}){
     $d=$repo.GetDiagramByGuid(($all|Where-Object code -eq $s.code).guid)
     foreach($o in $d.DiagramObjects){
         $object=$repo.GetElementByID($o.ElementID)
         if($object.Type -ne 'Object' -or $object.ClassifierID -le 0){continue}
         $e=$repo.GetElementByID($object.ClassifierID)
-        if($e.Name -notin @('UC_Aprovisionamiento','AprovisionamientoDAL','UC_Ventas')){continue}
+        if(-not $catalog.PSObject.Properties[$e.Name]){throw ('Clasificador sin fuente canonica: '+$e.Name)}
         $n=$catalog.($e.Name)
         for($i=$e.Attributes.Count-1;$i -ge 0;$i--){$e.Attributes.DeleteAt($i,$false)}
         for($i=$e.Methods.Count-1;$i -ge 0;$i--){$e.Methods.DeleteAt($i,$false)}
+        $e.Attributes.Refresh();$e.Methods.Refresh()
         foreach($a in $n.attributes){$member=$e.Attributes.AddNew($a.name,$a.type);$member.Visibility=$a.visibility;[void]$member.Update()}
         foreach($m in $n.methods){
             $member=$e.Methods.AddNew($m.name,$m.type);$member.Visibility=$m.visibility;$member.IsStatic=[bool]$m.static;[void]$member.Update()

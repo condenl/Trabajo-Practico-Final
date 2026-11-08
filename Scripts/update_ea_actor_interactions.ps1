@@ -58,12 +58,14 @@ foreach($s in @($specs|Where-Object {$_.kind -eq 'Sequence' -and -not $SpecsOnly
     [void]$repo.GetProjectInterface().PutDiagramImageToFile($d.DiagramGUID,$m.file,1)
     Write-Output ('UPDATED '+$s.code)
 }
-$text=Get-Content (Join-Path $root 'Documentacion\casos de uso\Casos_de_Uso_N01_N02.md') -Raw -Encoding UTF8
-foreach($match in [regex]::Matches($text,'## (CU-N\d+-\d+)[^\n]*\n(.*?)(?=\n## |\z)','Singleline')){
+$text=@('Casos_de_Uso_N01_N02.md','Caso_de_Uso_N03.md'|ForEach-Object { Get-Content (Join-Path $root ('Documentacion\casos de uso\'+$_)) -Raw -Encoding UTF8 }) -join "`n`n"
+foreach($match in [regex]::Matches($text,'## (CU-N\d+-\d+|CU018(?:\.\d+)?)[^\n]*\n(.*?)(?=\n## |\z)','Singleline')){
     $code=$match.Groups[1].Value;$notes=$match.Groups[2].Value.Replace('<br>',"`n")
     $sql="SELECT Name,ea_guid FROM t_object WHERE Object_Type='UseCase'"
     [xml]$result=$repo.SQLQuery($sql)
-    $rows=@($result.SelectNodes('//Row')|Where-Object {$_.Name.StartsWith($code)})
+    $rows=@($result.SelectNodes('//Row')|Where-Object {[regex]::IsMatch($_.Name,('^'+[regex]::Escape($code)+'(?:[\s:]|$)'))})
+    # CU018 is the aggregate specification in Google Docs; EA decomposes it into four use cases.
+    if(-not $rows.Count -and $code -eq 'CU018'){continue}
     if(-not $rows.Count){throw ('Use case not found: '+$code)}
     foreach($row in $rows){$e=$repo.GetElementByGuid($row.ea_guid);$e.Notes=$notes;[void]$e.Update();Write-Output ('SPEC '+$e.Name)}
 }

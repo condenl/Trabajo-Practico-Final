@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true)][string]$OutDirectory)
+param([Parameter(Mandatory=$true)][string]$OutDirectory, [string]$Codes='N02-02,N03-01,N03-02,N03-06')
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $repo=([Runtime.InteropServices.Marshal]::GetActiveObject('EA.App')).Repository
@@ -8,13 +8,13 @@ $manifests=@('manifest.json','manifest-n03.json','manifest-reconciliation.json')
 $manifest=@()
 foreach($name in $manifests){$manifest+=Get-Content (Join-Path $root ('Documentacion\EnterpriseArchitect\'+$name)) -Raw -Encoding UTF8|ConvertFrom-Json}
 $report=@()
-foreach($code in @('N02-02','N03-01','N03-02','N03-06')){
+foreach($code in ($Codes -split ',')){
     $entry=@($manifest|Where-Object code -eq $code)
     if($entry.Count -ne 1){throw ('Manifest ambiguo: '+$code)}
     $d=$repo.GetDiagramByGuid($entry[0].guid)
     $nodes=@($d.DiagramObjects|ForEach-Object {
         $o=$_;$e=$repo.GetElementByID($o.ElementID)
-        @{id=$e.ElementID;guid=$e.ElementGUID;name=$e.Name;type=$e.Type;classifier=$e.ClassifierID;
+        @{id=$e.ElementID;guid=$e.ElementGUID;name=$e.Name;type=$e.Type;subtype=$e.Subtype;classifier=$e.ClassifierID;
           notes=$e.Notes;style=$o.Style;styleEx=$o.StyleEx;x=$o.left;y=-$o.top;w=$o.right-$o.left;h=$o.top-$o.bottom}
     })
     $links=@($d.DiagramLinks|ForEach-Object {

@@ -1,0 +1,87 @@
+{
+  "verification": "native structure against business sources; unchanged captures",
+  "results": [
+    {
+      "code": "N02-02",
+      "preserved_guid": true,
+      "nodes": 26,
+      "connectors": 23,
+      "merges": [
+        "merge"
+      ],
+      "objects": [
+        {
+          "name": "Membresía vigente",
+          "partition": "Personal de Ventas"
+        }
+      ]
+    },
+    {
+      "code": "N03-01",
+      "preserved_guid": true,
+      "nodes": 10,
+      "connectors": 8,
+      "merges": [],
+      "objects": []
+    },
+    {
+      "code": "N03-02",
+      "preserved_guid": true,
+      "nodes": 26,
+      "connectors": 23,
+      "merges": [
+        "merge"
+      ],
+      "objects": [
+        {
+          "name": "Propuestas comerciales",
+          "partition": "Proveedores"
+        },
+        {
+          "name": "Comparación de proveedores",
+          "partition": "Dueño / Departamento de Compras"
+        },
+        {
+          "name": "Orden de compra [Borrador]",
+          "partition": "Dueño / Departamento de Compras"
+        }
+      ]
+    },
+    {
+      "code": "N03-06",
+      "preserved_messages": 52,
+      "paired_returns": 26,
+      "actor_requests_with_extended_activation": 3
+    }
+  ],
+  "unchanged_native_captures": [
+    "N02-02",
+    "N03-01",
+    "N03-02",
+    "N03-06"
+  ],
+  "remaining_views": [
+    {
+      "code": "N01-01",
+      "nodes": 7,
+      "connectors": 6,
+      "matches_source_graph": true,
+      "unchanged_native_capture": true
+    },
+    {
+      "code": "N02-01",
+      "nodes": 4,
+      "connectors": 4,
+      "matches_source_graph": true,
+      "unchanged_native_capture": true
+    },
+    {
+      "code": "N01-02",
+      "nodes": 22,
+      "connectors": 18,
+      "matches_source_graph": true,
+      "unchanged_native_capture": true
+    }
+  ],
+  "remaining_views_note": "Compared UML nodes and directed connectors. Existing native layout corrections to rejection/claim partitions are preserved."
+}

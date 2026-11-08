@@ -1,6 +1,14 @@
 # Diagramas de Enterprise Architect
 
-Estado al **07/11/2026**. Proyecto editable: `../../diagramas.EAP`. Capturas nativas incorporadas al [documento de Google Docs](https://docs.google.com/document/d/1kzEZpgX8bMnYrq-REzqYnlg_LAO2toCLVCEgpALjPnM/edit).
+Estado al **08/11/2026**. Proyecto editable: `../../diagramas.EAP`. Capturas nativas incorporadas al [documento de Google Docs](https://docs.google.com/document/d/1kzEZpgX8bMnYrq-REzqYnlg_LAO2toCLVCEgpALjPnM/edit).
+
+## Sincronización de Ventas y revisión integral
+
+N02-06a representa el alta desde FormAltaCliente.Guardar y la selección del cliente al volver a Ventas. N02-06b incorpora la vista previa CotizarVenta, el cálculo compartido CalcularVenta y la sobrecarga de registro que comprueba los importes revisados antes de persistir. Sus consultas repetidas se explican en las notas para mantener legible el escenario. N02-06c conserva MarketingBLL como propuesta y actualiza el origen del consentimiento. Los actores, retornos tipados al llamador y activaciones extendidas se verifican contra las fuentes.
+
+N02-04, N02-05 y G07-01 comparten las mismas operaciones de VentaBLL. Las seis capturas se sustituyeron en sus secciones existentes de Google Docs, restableciendo las proporciones cuando Google heredó un recorte. `verification-ux-document.json` confirma 27 diagramas EA únicos, 48 imágenes, 13 tablas, las 21 imágenes anteriores y todo el texto ajeno a las 20 modificaciones de casos de uso de `ux-usecase-replacements.json`. No se agregaron secciones al documento. Las notas de los cuatro casos CU018.1–CU018.4 se sincronizan desde `Documentacion/casos de uso/Caso_de_Uso_N03.md`; Google Docs mantiene su especificación principal CU018.
+
+La verificación técnica revisó 14 vistas, 130 representaciones de clases y 198 mensajes. La auditoría integral cubrió los 27 diagramas: 15 vistas de clases/datos, seis secuencias, tres actividades y tres casos de uso. `verification-ux-uml.json` comprueba 109 asociaciones, 50 dependencias, 17 realizaciones y tres generalizaciones, además de las interfaces y clases abstractas. Los DER no requieren cambios de esquema. Se volvieron a verificar las diez columnas y tres FK de EvaluacionProveedor, las referencias opcionales y únicas, y las dos vistas de clases N03 sin cruces ni recorridos por dentro de las clases. `verification-ux-business.json` documenta los grafos de negocio y las capturas nativas conservadas: las mejoras de navegación no cambian el proceso organizacional.
 
 ## Revisión de actividades y casos de uso N02 y N03
 
@@ -24,7 +32,7 @@ Las dos capturas corregidas se sustituyeron en Google Docs. `verification-n03-ro
 
 La secuencia N03-06 refleja `UC_EvaluacionProveedores`, `EvaluacionProveedorBLL`, `EvaluacionProveedorDAL`, `ArchivoEvaluacion` y la inserción transaccional de `AprovisionamientoDAL`. El actor Dueño / Departamento de Compras inicia comparar, confirmar y crear el borrador. Sus **52 mensajes** incluyen llamadas con nombres del código y respuestas discontinuas con el tipo real, dirigidas al emisor de la llamada. Se conserva el orden de activaciones y retornos. Las notas del diagrama explican las consultas auxiliares omitidas, la validación de vigencia, las excepciones y el reintento que devuelve la orden existente.
 
-Las entidades se detallan en **N03-04**; BLL, interfaz de repositorio, DAL y serialización, en **N03-05**. **G07-01** comparte exactamente sus atributos y operaciones, además del resto de los procesos. `class-catalog.json` contiene 49 definiciones canónicas; las 14 vistas técnicas reutilizan esas definiciones. N01-05 incorpora los métodos de inserción por lote y la sobrecarga transaccional usada por N03. Las BE conservan propiedades y constructores reales; no se les inventan operaciones de negocio. MarketingBLL sigue identificado como diseño propuesto; N03 ya representa código implementado.
+Las entidades se detallan en **N03-04**; BLL, interfaz de repositorio, DAL y serialización, en **N03-05**. **G07-01** comparte exactamente sus atributos y operaciones, además del resto de los procesos. `class-catalog.json` contiene 50 definiciones canónicas; las 14 vistas técnicas reutilizan esas definiciones. N01-05 incorpora los métodos de inserción por lote y la sobrecarga transaccional usada por N03. Las BE conservan propiedades y constructores reales; no se les inventan operaciones de negocio. MarketingBLL sigue identificado como diseño propuesto; N03 ya representa código implementado.
 
 **N03-07 y G08-01** derivan las diez columnas y tres referencias de `SQL/Iteracion3_Evaluacion_Proveedores.sql`. Criterios, ofertas y resultados se conservan en `SnapshotXml`; no existen columnas independientes de pesos ni `EsPrioritario`. Proveedor elegido y orden son opcionales. El índice único filtrado de IdOrdenCompra se refleja con multiplicidad 0..1. Las relaciones son asociaciones «FK», sin flechas de herencia. El DER global se redistribuyó para evitar superponer EvaluacionProveedor y MovimientoStock.
 
@@ -55,7 +63,7 @@ Sobre el proyecto existente:
 3. `python Scripts/sync_ea_n03_technical.py`
 4. `python Scripts/route_ea_globals.py --input n03-data-design.json --output n03-data-routed.json`
 5. `Scripts/prepare_ea_n03_technical.ps1` registra N03-05 si falta y actualiza los clasificadores internos compartidos que no aparecen dibujados.
-6. `Scripts/update_ea_code_design.ps1 -Codes 'N01-05,N03-04,N03-05,G07-01,N03-06'`
+6. `Scripts/update_ea_code_design.ps1 -Codes 'N01-05,N02-04,N02-05,N02-06a,N02-06b,N02-06c,N03-04,N03-05,G07-01,N03-06'`
 7. `Scripts/update_ea_code_design.ps1 -ModelFile n03-data-design.json -Codes N03-07`
 8. `Scripts/update_ea_code_design.ps1 -ModelFile n03-data-routed.json -Codes G08-01`
 9. `Scripts/verify_ea_code_design.ps1` y `Scripts/verify_ea_n03_data.ps1` verifican el modelo sin modificarlo.
