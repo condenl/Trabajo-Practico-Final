@@ -22,7 +22,7 @@ En **Usuarios**, **Nuevo usuario** limpia la selección y habilita Guardar nuevo
 
 Cambiar de sección o cerrar la aplicación solicita confirmación si se perdería un carrito, datos de compra/recepción, un fundamento de evaluación o una edición de usuario sin guardar. Cancelar mantiene la vista y sus datos; sin trabajo pendiente se continúa directamente.
 
-La interfaz usa un tema común en `UI/TemaAplicacion.cs`: azul petróleo para navegación y acciones principales, fondos claros, tablas con filas alternadas y tipografía Segoe UI. Las ventanas auxiliares y los controles agregados al navegar reciben el mismo estilo. La paleta está centralizada y no requiere librerías adicionales; el modo de alto contraste de Windows conserva sus colores del sistema.
+La interfaz usa un tema oscuro común en `UI/TemaAplicacion.cs`: fondos carbón, superficies gris oscuro, texto claro y acentos pizarra discretos. Las tablas alternan filas y resaltan la selección; las acciones principales y la sección activa comparten el acento. Los gráficos conservan sus colores para distinguir proveedores y márgenes, con rótulos claros de alto contraste. Las ventanas auxiliares y los controles agregados al navegar reciben el mismo estilo y tipografía Segoe UI. La paleta está centralizada y no requiere librerías adicionales; se respeta el modo de alto contraste de Windows.
 
 ## Usuarios de demostración
 

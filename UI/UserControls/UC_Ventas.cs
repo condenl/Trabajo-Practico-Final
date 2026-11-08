@@ -130,7 +130,7 @@ namespace UI.UserControls
             cotizacion = null; confirmar.Enabled = false;
             if (grilla.Rows.Count == 0) {
                 resumen.Text = "Subtotal: $ 0 · Descuento: $ 0 · Total: $ 0";
-                estado.Text = "Agregue productos para revisar el total antes de confirmar."; estado.ForeColor = SystemColors.ControlText; UltimoError = null; return;
+                estado.Text = "Agregue productos para revisar el total antes de confirmar."; estado.ForeColor = TemaAplicacion.Texto; UltimoError = null; return;
             }
             try {
                 var venta = CrearVenta(); ventaBLL.CotizarVenta(venta);
@@ -140,7 +140,7 @@ namespace UI.UserControls
                 }
                 cotizacion = venta; confirmar.Enabled = true;
                 resumen.Text = "Subtotal: " + venta.Subtotal.ToString("C2") + " · Descuento: " + venta.Descuento.ToString("C2") + " · Total: " + venta.Total.ToString("C2");
-                estado.Text = "Importes calculados con precios actuales y membresía activa, si corresponde."; estado.ForeColor = SystemColors.ControlText;
+                estado.Text = "Importes calculados con precios actuales y membresía activa, si corresponde."; estado.ForeColor = TemaAplicacion.Texto;
                 UltimoError = null;
             } catch (Exception ex) { resumen.Text = "Total pendiente de revisión"; Notificar(ex.Message, true); }
         }
@@ -160,7 +160,7 @@ namespace UI.UserControls
         private void Ejecutar(Action accion) { try { accion(); } catch (Exception ex) { Notificar(ex.Message, true); } }
         private void Notificar(string mensaje, bool error) {
             UltimoError = error ? mensaje : null; if (!error) UltimoMensaje = mensaje;
-            estado.Text = mensaje; estado.ForeColor = error ? Color.Firebrick : SystemColors.ControlText;
+            estado.Text = mensaje; estado.ForeColor = TemaAplicacion.ColorMensaje(error);
         }
     }
 }

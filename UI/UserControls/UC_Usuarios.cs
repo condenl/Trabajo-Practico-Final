@@ -93,7 +93,7 @@ namespace UI.UserControls
 
         private void MostrarAviso(string mensaje, string titulo, MessageBoxButtons botones, MessageBoxIcon icono)
         {
-            aviso.Text = mensaje; aviso.ForeColor = icono == MessageBoxIcon.Error || icono == MessageBoxIcon.Warning || icono == MessageBoxIcon.Stop ? Color.Firebrick : SystemColors.ControlText;
+            aviso.Text = mensaje; aviso.ForeColor = TemaAplicacion.ColorMensaje(icono == MessageBoxIcon.Error || icono == MessageBoxIcon.Warning || icono == MessageBoxIcon.Stop);
         }
 
         public void ActualizarIdioma(Idioma idioma)

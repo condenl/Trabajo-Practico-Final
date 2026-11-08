@@ -50,7 +50,7 @@ namespace UI.UserControls
             txtBuscar.KeyDown += delegate(object s, KeyEventArgs e) { if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; btnBuscar_Click(s, EventArgs.Empty); } };
         }
 
-        private void Informar(string texto, bool error = false) { aviso.Text = texto; aviso.ForeColor = error ? Color.Firebrick : SystemColors.ControlText; }
+        private void Informar(string texto, bool error = false) { aviso.Text = texto; aviso.ForeColor = TemaAplicacion.ColorMensaje(error); }
 
         public void ActualizarIdioma(Idioma idioma)
         {
