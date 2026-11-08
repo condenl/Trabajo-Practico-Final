@@ -240,13 +240,13 @@ internal static class TestUsabilidadOperativa
                 Assert(orders.Rows.Count > 0 && orders.Rows.Cast<DataGridViewRow>().All(r => (string)r.Cells["Proveedor"].Value == providerName), "Filtro de proveedor usa su nombre");
                 Click(compras, "btnActualizarOrdenes"); Assert((int)providers.SelectedValue == providerId, "Actualizar mantiene los filtros disponibles");
                 var receipt = Find<ComboBox>(compras, "cmbOrdenRecepcion");
-                receipt.SelectedItem = receipt.Items.Cast<object>().First(i => ((OrdenCompra)i.GetType().GetProperty("Orden").GetValue(i, null)).Estado == EstadoOrdenCompra.RecibidaParcial);
+                receipt.SelectedItem = receipt.Items.Cast<object>().First(i => ((OrdenCompra)i.GetType().GetProperty("Orden").GetValue(i, null)).CreadaPor.StartsWith("DEMO-OC-06 |"));
                 var receiptProduct = Find<ComboBox>(compras, "cmbRecepcionProducto"); receiptProduct.SelectedValue = floral.IdProducto;
                 Assert(Find<Label>(compras, "lblSaldoRecepcion").Text.Contains("Pedidas: 10") && Find<Label>(compras, "lblSaldoRecepcion").Text.Contains("Recibidas: 4") &&
                     Find<NumericUpDown>(compras, "nudLoteCantidad").Maximum == 6, "Recepcion muestra proveedor, cantidades y limita el saldo de Floral a seis");
                 receiptProduct.SelectedIndex = receiptProduct.Items.Count - 1;
                 Assert(Find<NumericUpDown>(compras, "nudLoteCantidad").Maximum == 3, "Cambiar perfume limita al saldo de Madera");
-                receipt.SelectedIndex = -1; Assert(!Find<Button>(compras, "btnRegistrarRecepcion").Enabled, "Sin orden pendiente no se habilita recepcion");
+                receipt.DataSource = null; Assert(!Find<Button>(compras, "btnRegistrarRecepcion").Enabled, "Sin orden pendiente no se habilita recepcion");
                 var detailOrder = new AprovisionamientoBLL().ConsultarHistorialCompras(null).First(o => o.Estado == EstadoOrdenCompra.Rechazada);
                 using (var detail = new FormDetalleOrdenCompra(detailOrder, "Proveedor de prueba", new ProductoBLL().Listar(false), null)) {
                     Assert(Find<DataGridView>(detail, "dgvDetalleOrden").ReadOnly && Find<DataGridView>(detail, "dgvDetalleOrden").Rows.Count == detailOrder.Detalles.Count &&
