@@ -222,7 +222,8 @@ try {
     $migrationNames = @(
         'Iteracion2_Aprovisionamiento.sql',
         'Iteracion2_Ventas_Fidelizacion.sql',
-        'Iteracion3_Evaluacion_Proveedores.sql'
+        'Iteracion3_Evaluacion_Proveedores.sql',
+        'Iteracion3_Pulido_Demo.sql'
     )
     foreach ($migrationName in $migrationNames) {
         $migrationPath = Join-Path $MigrationDirectory $migrationName

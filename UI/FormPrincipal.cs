@@ -97,6 +97,8 @@ namespace UI
             btnRoles.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.Roles_Gestion);
             btnBitacora.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.VerReportes);
             btnTraducciones.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.Traduccion_Gestion);
+            btnAuditoria.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.Auditoria_Ver);
+            btnSoporteTecnico.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.Soporte_Gestion);
             btnVentas.Visible = _usuarioLogueado.TienePermiso(TipoPermiso.Ventas_Registrar);
             btnAprovisionamiento.Visible =
                 _usuarioLogueado.TienePermiso(TipoPermiso.Aprovisionamiento_Gestion) ||
@@ -190,7 +192,7 @@ namespace UI
             if (_usuarioLogueado != null)
             {
                 string title = traduccionBLL.Traducir("main_form_title");
-                this.Text = $"{title} - {traduccionBLL.Traducir("login_user")}: {_usuarioLogueado.NombreCompleto}";
+                this.Text = $"{title} - {_usuarioLogueado.NombreCompleto}";
                 ActualizarSesionActiva();
             }
         }

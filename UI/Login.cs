@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using BE;
 using BLL;
@@ -15,6 +16,7 @@ namespace UI
         private readonly IVisitante visitanteBLL;
         private readonly IdiomaBLL idiomaBLL;
         private readonly TraduccionBLL traduccionBLL;
+        private Control panelAcceso;
 
         public Login()
         {
@@ -32,7 +34,44 @@ namespace UI
                 txtPassword.UseSystemPasswordChar = true;
 
             panel1.Controls.Clear();
-            panel1.Visible = false;
+            panel1.Visible = false; panel1.Dock = DockStyle.Fill; panel1.AutoScroll = true;
+            StartPosition = FormStartPosition.CenterScreen;
+            ClientSize = new Size(660, 540); MinimumSize = new Size(520, 430);
+            var acceso = new TableLayoutPanel { Name = "layoutAcceso", Dock = DockStyle.Top, AutoSize = true,
+                ColumnCount = 2, RowCount = 5, Padding = new Padding(24, 18, 24, 18) };
+            acceso.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100)); acceso.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+            for (int i = 0; i < 5; i++) acceso.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            label3.Font = new Font("Segoe UI", 16, FontStyle.Bold); label3.Text = "Perfumería";
+            label4.Text = "Gestioná compras, inventario, ventas y proveedores. Iniciá sesión para continuar.";
+            label6.Text = "Correo electrónico"; label1.Text = "Contraseña";
+            label2.Text = "¿Todavía no tenés una cuenta?"; label5.Text = "¿Necesitás ayuda para acceder?";
+            cmbIdioma.Width = 145; cmbIdioma.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            acceso.Controls.Add(label3, 0, 0); acceso.Controls.Add(cmbIdioma, 1, 0);
+            acceso.Controls.Add(label4, 0, 1); acceso.SetColumnSpan(label4, 2);
+            label4.Margin = new Padding(0, 8, 0, 12);
+            var campos = new TableLayoutPanel { Name = "camposAcceso", Dock = DockStyle.Top, AutoSize = true, ColumnCount = 1, TabIndex = 0 };
+            int fila = 0;
+            foreach (Control campo in new Control[] { label6, txtEmail, label1, txtPassword, btnIniciarSesion }) {
+                campos.RowCount++; campos.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                campo.Margin = new Padding(0, 4, 0, 8); campos.Controls.Add(campo, 0, fila++);
+            }
+            txtEmail.Dock = txtPassword.Dock = DockStyle.Top;
+            btnIniciarSesion.AutoSize = true; btnIniciarSesion.Size = new Size(145, 36); btnIniciarSesion.Padding = new Padding(8, 3, 8, 3);
+            acceso.Controls.Add(campos, 0, 2); acceso.SetColumnSpan(campos, 2);
+            int filaAccion = 3;
+            foreach (var par in new[] { new Control[] { label2, btnRegistro }, new Control[] { label5, btnSoporte } }) {
+                var acciones = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true, WrapContents = true, TabIndex = filaAccion };
+                par[0].Margin = new Padding(0, 12, 12, 8);
+                var boton = (Button)par[1]; boton.AutoSize = true; boton.Size = new Size(130, 36); boton.Padding = new Padding(6, 3, 6, 3);
+                acciones.Controls.Add(par[0]); acciones.Controls.Add(boton);
+                acceso.Controls.Add(acciones, 0, filaAccion++); acceso.SetColumnSpan(acciones, 2);
+            }
+            acceso.SizeChanged += delegate {
+                var limite = new Size(Math.Max(220, acceso.ClientSize.Width - acceso.Padding.Horizontal), 0);
+                label4.MaximumSize = label2.MaximumSize = label5.MaximumSize = limite;
+            };
+            panelAcceso = new Panel { Name = "panelAcceso", Dock = DockStyle.Fill, AutoScroll = true, TabIndex = 0 };
+            panelAcceso.Controls.Add(acceso); Controls.Clear(); Controls.Add(panelAcceso); Controls.Add(panel1);
             txtEmail.TabIndex = 0; txtPassword.TabIndex = 1; btnIniciarSesion.TabIndex = 2;
             btnRegistro.TabIndex = 3; btnSoporte.TabIndex = 4; cmbIdioma.TabIndex = 5; panel1.TabIndex = 6;
             AcceptButton = btnIniciarSesion;
@@ -92,14 +131,20 @@ namespace UI
 
         private void ActualizarTextos()
         {
-            foreach (Control control in this.Controls)
-            {
-                if (control.Tag != null)
-                {
-                    control.Text = traduccionBLL.Traducir(control.Tag.ToString());
+            ActualizarTextosHijos(this);
+            string titulo = traduccionBLL.Traducir("login_form_title");
+            this.Text = string.IsNullOrWhiteSpace(titulo) || titulo == "login_form_title" || titulo == "[login_form_title]" ? "Perfumería" : titulo;
+        }
+
+        private void ActualizarTextosHijos(Control padre)
+        {
+            foreach (Control hijo in padre.Controls) {
+                if (hijo.Tag != null) {
+                    string etiqueta = hijo.Tag.ToString(); string texto = traduccionBLL.Traducir(etiqueta);
+                    if (!string.IsNullOrWhiteSpace(texto) && texto != etiqueta && texto != "[" + etiqueta + "]") hijo.Text = texto;
                 }
+                ActualizarTextosHijos(hijo);
             }
-            this.Text = traduccionBLL.Traducir("login_form_title");
         }
 
         private void btnIniciarSesion_Click(object sender, EventArgs e)
@@ -206,6 +251,7 @@ namespace UI
         private void MostrarRegistro()
         {
             UC_Registro registro = new UC_Registro();
+            registro.AutoScroll = true; panelAcceso.Enabled = false;
             registro.Dock = DockStyle.Fill;
             registro.OnRegresar += Registro_OnRegresar;
 
@@ -219,6 +265,7 @@ namespace UI
         private void MostrarPanelSoporte()
         {
             UC_Soporte panelSoporte = new UC_Soporte(txtEmail.Text.Trim());
+            panelSoporte.AutoScroll = true; panelAcceso.Enabled = false;
             panelSoporte.Dock = DockStyle.Fill;
             panelSoporte.OnCerrar += Soporte_OnCerrar;
 
@@ -233,6 +280,7 @@ namespace UI
         {
             panel1.Controls.Clear();
             panel1.Visible = false;
+            panelAcceso.Enabled = true;
             AcceptButton = btnIniciarSesion; ActiveControl = txtEmail;
         }
 
@@ -240,6 +288,7 @@ namespace UI
         {
             panel1.Controls.Clear();
             panel1.Visible = false;
+            panelAcceso.Enabled = true;
             AcceptButton = btnIniciarSesion; ActiveControl = txtEmail;
         }
 

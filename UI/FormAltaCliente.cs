@@ -18,7 +18,7 @@ namespace UI
         private readonly TextBox preferencias = new TextBox { Name = "txtPreferencias", MaxLength = 250 };
         private readonly CheckBox marketing = new CheckBox { Name = "chkMarketing", Text = "Autoriza campañas de marketing", AutoSize = true };
         private readonly CheckBox membresia = new CheckBox { Name = "chkMembresia", Text = "Crear membresía", Checked = true, AutoSize = true };
-        private readonly NumericUpDown descuento = new NumericUpDown { Name = "nudDescuento", Minimum = 0, Maximum = 30, Value = 10 };
+        private readonly NumericUpDown descuento = new NumeroRegional { Name = "nudDescuento", Minimum = 0, Maximum = 30, Value = 10 };
         private readonly Label estado = new Label { Name = "lblEstadoAltaCliente", AutoSize = true, ForeColor = Color.Firebrick, Dock = DockStyle.Top, Padding = new Padding(12, 5, 12, 5) };
         public FormAltaCliente(string correo = "")
         {

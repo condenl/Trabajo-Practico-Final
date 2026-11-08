@@ -13,7 +13,7 @@ Este directorio implementa el entregable **A01 de la Iteracion 2** siguiendo la 
 - comprueba la conexión al pulsar Siguiente en la página de SQL y nuevamente antes de instalar; distingue motor ausente, instancia incorrecta y servicio detenido;
 - muestra **Descargar SQL Server** únicamente si el diagnóstico confirma motor ausente o una versión anterior a 16; abre la [página oficial de Microsoft en español](https://www.microsoft.com/es-es/sql-server/sql-server-downloads). Para un servicio detenido muestra **Abrir servicios**;
 - restaura la base inicial si todavia no existe;
-- ejecuta las migraciones idempotentes de N01, N02 y N03;
+- ejecuta las migraciones idempotentes de N01, N02 y N03, más `Iteracion3_Pulido_Demo.sql` para permisos administrativos y textos del acceso;
 - actualiza `UI.exe.config` con la instancia elegida y autenticacion integrada;
 - conserva un registro en `Installer\instalacion-base-datos.log`.
 

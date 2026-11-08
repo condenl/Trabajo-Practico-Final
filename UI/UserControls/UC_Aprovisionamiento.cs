@@ -58,13 +58,13 @@ namespace UI.UserControls
         private readonly ComboBox cmbCotizacionProveedor = Combo("cmbCotizacionProveedor");
         private readonly ComboBox cmbCotizacionProducto = Combo("cmbCotizacionProducto");
         private readonly NumericUpDown nudCotizacionPrecio = Dinero("nudCotizacionPrecio");
-        private readonly NumericUpDown nudCotizacionPlazo = new NumericUpDown { Name = "nudCotizacionPlazo", Maximum = 365 };
+        private readonly NumericUpDown nudCotizacionPlazo = new NumeroRegional { Name = "nudCotizacionPlazo", Maximum = 365 };
         private readonly DateTimePicker dtpCotizacionVigencia = new DateTimePicker { Name = "dtpCotizacionVigencia", Format = DateTimePickerFormat.Custom, CustomFormat = "dd/MM/yyyy", Value = DateTime.Today.AddMonths(1) };
         private readonly TextBox txtCotizacionCondiciones = new TextBox { Name = "txtCotizacionCondiciones" };
 
         private readonly ComboBox cmbOrdenProveedor = Combo("cmbOrdenProveedor");
         private readonly ComboBox cmbOrdenProducto = Combo("cmbOrdenProducto");
-        private readonly NumericUpDown nudOrdenCantidad = new NumericUpDown { Name = "nudOrdenCantidad", Minimum = 1, Maximum = 100000, Value = 1 };
+        private readonly NumericUpDown nudOrdenCantidad = new NumeroRegional { Name = "nudOrdenCantidad", Minimum = 1, Maximum = 100000, Value = 1 };
         private readonly NumericUpDown nudOrdenPrecio = Dinero("nudOrdenPrecio");
         private readonly DataGridView dgvOrdenes = Grilla("dgvOrdenes");
 
@@ -75,7 +75,7 @@ namespace UI.UserControls
         private readonly ComboBox cmbRecepcionProducto = Combo("cmbRecepcionProducto");
         private readonly TextBox txtLoteCodigo = new TextBox { Name = "txtLoteCodigo" };
         private readonly TextBox txtLoteOrigen = new TextBox { Name = "txtLoteOrigen" };
-        private readonly NumericUpDown nudLoteCantidad = new NumericUpDown { Name = "nudLoteCantidad", Minimum = 1, Maximum = 100000, Value = 1 };
+        private readonly NumericUpDown nudLoteCantidad = new NumeroRegional { Name = "nudLoteCantidad", Minimum = 1, Maximum = 100000, Value = 1 };
         private readonly DateTimePicker dtpLoteVencimiento = new DateTimePicker { Name = "dtpLoteVencimiento", Format = DateTimePickerFormat.Custom, CustomFormat = "dd/MM/yyyy", Value = DateTime.Today.AddYears(2), ShowCheckBox = true, Checked = true };
         private readonly ComboBox cmbInventarioProducto = Combo("cmbInventarioProducto");
         private readonly Label lblStock = new Label { Name = "lblStock", AutoSize = true, Text = "Stock disponible: -" };
@@ -106,7 +106,7 @@ namespace UI.UserControls
 
         private static NumericUpDown Dinero(string nombre)
         {
-            return new NumericUpDown { Name = nombre, DecimalPlaces = 2, Maximum = 100000000, Minimum = 0, ThousandsSeparator = true };
+            return new NumeroRegional { Name = nombre, DecimalPlaces = 2, Maximum = 100000000, Minimum = 0, ThousandsSeparator = true };
         }
 
         private static DataGridView Grilla(string nombre)

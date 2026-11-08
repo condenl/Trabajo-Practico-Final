@@ -8,6 +8,7 @@ Copy-Item (Join-Path $root 'UI\bin\Release\*.dll') $stage
 Copy-Item (Join-Path $root 'UI\bin\Release\UI.exe') $stage
 Copy-Item (Join-Path $root 'UI\bin\Release\UI.exe.config') (Join-Path $stage 'UI.exe.config')
 Copy-Item (Join-Path $root 'Installer\bin\SeedDemoActors.exe') $stage
+Copy-Item (Join-Path $root 'SQL\Iteracion3_Pulido_Demo.sql') $stage
 $database = 'Perfumeria_Usabilidad_Test_' + [guid]::NewGuid().ToString('N')
 $builder = New-Object System.Data.SqlClient.SqlConnectionStringBuilder
 $builder['Data Source'] = $ServerInstance

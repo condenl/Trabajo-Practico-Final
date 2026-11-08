@@ -61,6 +61,8 @@
     <Compile Include="IVistaConCambiosPendientes.cs" />
     <Compile Include="TemaAplicacion.cs" />
     <Compile Include="PestanasTematicas.cs" />
+    <Compile Include="FormatoPresentacion.cs" />
+    <Compile Include="NumeroRegional.cs" />
     <Compile Include="FormRestaurarUsuario.cs" />
     <Compile Include="UserControls\UC_EvaluacionProveedores.cs" />
     <Compile Include="FormPrincipal.cs">

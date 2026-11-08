@@ -52,8 +52,7 @@
             this.label4.Size = new System.Drawing.Size(683, 17);
             this.label4.TabIndex = 45;
             this.label4.Tag = "login_welcome";
-            this.label4.Text = "Bienvenido al sistema de gestion de edificios inteligentes mas elegido de la actu" +
-    "alidad! Inicia sesion para continuar.";
+            this.label4.Text = "Gestioná compras, inventario, ventas y proveedores. Iniciá sesión para continuar.";
             // 
             // label3
             // 
@@ -64,7 +63,7 @@
             this.label3.Size = new System.Drawing.Size(408, 30);
             this.label3.TabIndex = 44;
             this.label3.Tag = "login_title";
-            this.label3.Text = "SCA: SISTEMA DE CONTROL DE ACCESO";
+            this.label3.Text = "Perfumería";
             // 
             // btnIniciarSesion
             // 
@@ -184,7 +183,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1520, 623);
+            this.ClientSize = new System.Drawing.Size(660, 540);
             this.Controls.Add(this.cmbIdioma);
             this.Controls.Add(this.btnSoporte);
             this.Controls.Add(this.label5);
@@ -199,7 +198,7 @@
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.panel1);
             this.Name = "Login";
-            this.Text = "Login";
+            this.Text = "Perfumería · Iniciar sesión";
             this.Load += new System.EventHandler(this.Login_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

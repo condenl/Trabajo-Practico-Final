@@ -7,6 +7,7 @@ using BLL;
 using Servicios;
 using BE.Interfaces;
 using BE;
+using BE.Seguridad;
 
 namespace UI.UserControls
 {
@@ -18,6 +19,8 @@ namespace UI.UserControls
 
         public UC_SoporteAdmin()
         {
+            if (Session.Instance.Usuario == null || !Session.Instance.Usuario.TienePermiso(TipoPermiso.Soporte_Gestion))
+                throw new UnauthorizedAccessException("No tiene permiso para administrar solicitudes de soporte.");
             InitializeComponent();
             soporteBLL = new SoporteBLL();
             traduccionBLL = new TraduccionBLL();

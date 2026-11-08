@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using BE;
 using BE.Soporte;
+using BE.Seguridad;
 using DAL;
 using Servicios;
 
@@ -24,6 +25,7 @@ namespace BLL
 
         public void ModificarSolicitudPorAdmin(SolicitudSoporte solicitud)
         {
+            ExigirGestion();
             SoporteDAL.Instancia.Actualizar(solicitud);
             string adminEmail = Session.Instance.Usuario?.Email ?? "ADMIN_DESCONOCIDO";
 
@@ -34,9 +36,16 @@ namespace BLL
             ));
         }
 
-        public List<SolicitudSoporte> ListarSolicitudes(int? idEstado = null) => SoporteDAL.Instancia.Listar(idEstado);
+        public List<SolicitudSoporte> ListarSolicitudes(int? idEstado = null)
+        { ExigirGestion(); return SoporteDAL.Instancia.Listar(idEstado); }
         public List<TipoProblema> ObtenerTipos() => SoporteDAL.Instancia.ObtenerTipos();
         public List<EstadoSolicitud> ObtenerEstados() => SoporteDAL.Instancia.ObtenerEstados();
+
+        private static void ExigirGestion()
+        {
+            if (Session.Instance.Usuario == null || !Session.Instance.Usuario.TienePermiso(TipoPermiso.Soporte_Gestion))
+                throw new UnauthorizedAccessException("No tiene permiso para administrar solicitudes de soporte.");
+        }
 
         private void ValidarEntradas(SolicitudSoporte s)
         {

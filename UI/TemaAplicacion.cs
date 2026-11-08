@@ -34,6 +34,7 @@ namespace UI
 
         public static void Aplicar(Control control)
         {
+            FormatoPresentacion.Aplicar(control);
             if (SystemInformation.HighContrast) return;
             control.SuspendLayout();
             // El tamaño de los contenedores sigue a cargo de su diseño y del escalado de Windows.
