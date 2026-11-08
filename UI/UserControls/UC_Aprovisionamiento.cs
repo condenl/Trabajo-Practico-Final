@@ -49,7 +49,7 @@ namespace UI.UserControls
         private bool cargandoFiltros;
         private readonly Label estadoCarga = new Label { Name = "lblActualizacionCompras", Dock = DockStyle.Bottom, AutoSize = true, Padding = new Padding(10, 4, 10, 4) };
 
-        private readonly TabControl tabs = new TabControl { Dock = DockStyle.Fill };
+        private readonly TabControl tabs = new PestanasTematicas { Dock = DockStyle.Fill };
         private readonly TabPage tabCatalogos = new TabPage("Cotizaciones");
         private readonly TabPage tabOrdenes = new TabPage("Órdenes de compra");
         private readonly TabPage tabContabilidad = new TabPage("Aprobación contable");

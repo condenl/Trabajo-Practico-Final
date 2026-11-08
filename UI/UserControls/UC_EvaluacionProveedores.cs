@@ -62,7 +62,7 @@ namespace UI.UserControls
             layout.Controls.Add(filtros, 0, 0); layout.Controls.Add(criterios, 0, 1); layout.Controls.Add(contexto, 0, 2);
             var tarjetas = Flujo(); foreach (var tarjeta in new[] { stock, pendientes, ventas, reposicion }) tarjetas.Controls.Add(tarjeta);
             layout.Controls.Add(tarjetas, 0, 3);
-            var resultados = new TabControl { Name = "tabsResultadosEvaluacion", Dock = DockStyle.Fill };
+            var resultados = new PestanasTematicas { Name = "tabsResultadosEvaluacion", Dock = DockStyle.Fill };
             var resumen = new TabPage("Resumen visual"); var listado = new TabPage("Listado completo");
             var graficos = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 1 };
             graficos.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50)); graficos.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
@@ -104,7 +104,7 @@ namespace UI.UserControls
         private static void Campo(FlowLayoutPanel panel, string etiqueta, Control control)
         { var campo = new FlowLayoutPanel { FlowDirection = FlowDirection.TopDown, AutoSize = true, WrapContents = false, Margin = new Padding(3, 2, 6, 3) }; campo.Controls.Add(new Label { Text = etiqueta, AutoSize = true }); campo.Controls.Add(control); panel.Controls.Add(campo); }
         private Button Boton(string texto, string nombre, Action accion) { var b = new Button { Text = texto, Name = nombre, AutoSize = true, Padding = new Padding(4, 3, 4, 3), Margin = new Padding(4, 18, 4, 3) }; b.Click += delegate { Ejecutar(accion); }; return b; }
-        private static Label Tarjeta(string nombre, string titulo) { return new Label { Name = nombre, Text = titulo + "\n—", Width = 165, Height = 56, Padding = new Padding(8, 5, 8, 5), Margin = new Padding(3), BackColor = TemaAplicacion.AcentoSuave, ForeColor = TemaAplicacion.Acento, Font = new Font("Segoe UI", 10, FontStyle.Bold) }; }
+        private static Label Tarjeta(string nombre, string titulo) { return new Label { Name = nombre, Text = titulo + "\n—", Width = 165, Height = 56, Padding = new Padding(8, 5, 8, 5), Margin = new Padding(3), BackColor = TemaAplicacion.AcentoSuave, ForeColor = TemaAplicacion.Texto, Font = new Font("Segoe UI", 10, FontStyle.Bold) }; }
         private static Chart Grafico(string nombre, string titulo)
         {
             var chart = new Chart { Name = nombre, Dock = DockStyle.Fill, BackColor = Color.White };
@@ -114,7 +114,7 @@ namespace UI.UserControls
             area.AxisY.MajorGrid.LineColor = Color.Gainsboro; area.AxisY.LabelStyle.Format = "0.#";
             chart.ChartAreas.Add(area);
             var serie = new Series("Proveedores") { ChartType = SeriesChartType.Bar, IsXValueIndexed = true, IsValueShownAsLabel = true, LabelFormat = "N1", Font = new Font(SystemFonts.DefaultFont.FontFamily, 8) };
-            serie["BarLabelStyle"] = "Center"; chart.Series.Add(serie); return chart;
+            serie["BarLabelStyle"] = "Outside"; chart.Series.Add(serie); return chart;
         }
         private void Ejecutar(Action accion)
         { try { UltimoError = null; UltimoMensaje = null; accion(); } catch (Exception e) { UltimoError = e.Message; if (!ModoPrueba) MessageBox.Show(this, e.Message, "Evaluación de proveedores", MessageBoxButtons.OK, MessageBoxIcon.Information); } }
@@ -199,14 +199,16 @@ namespace UI.UserControls
                 if (!r.Elegible) nombre += " (excl.)";
                 var score = new DataPoint(0, (double)r.PuntajePonderadoFinal) { AxisLabel = nombre, Tag = r.IdProveedor,
                     Label = r.PuntajePonderadoFinal.ToString("N1", Cultura),
-                    Color = !r.Elegible ? TemaAplicacion.Neutro : e.IdProveedorRecomendado == r.IdProveedor ? TemaAplicacion.Acento : Color.FromArgb(104, 151, 159),
-                    LabelForeColor = r.Elegible && e.IdProveedorRecomendado == r.IdProveedor ? Color.White : TemaAplicacion.Texto,
+                    Color = !r.Elegible ? TemaAplicacion.Neutro : e.IdProveedorRecomendado == r.IdProveedor ? Color.FromArgb(32, 91, 101) : Color.FromArgb(104, 151, 159),
+                    LabelForeColor = TemaAplicacion.Texto,
+                    LabelBackColor = TemaAplicacion.Superficie,
                     ToolTip = r.Proveedor + "\n" + r.Fundamentos + "\nPrecio: " + r.PuntajePrecio.ToString("N1", Cultura) + " · Prestigio: " + r.PuntajePrestigio.ToString("N1", Cultura) + " · Antigüedad: " + r.PuntajeAntiguedad.ToString("N1", Cultura) };
                 puntajes.Series[0].Points.Add(score);
                 margenes.Series[0].Points.Add(new DataPoint(0, (double)r.MargenEstimado) { AxisLabel = nombre, Tag = r.IdProveedor,
                     Label = r.MargenEstimado.ToString("N1", Cultura),
                     Color = r.MargenEstimado <= 0 ? TemaAplicacion.Negativo : r.Elegible ? TemaAplicacion.Positivo : TemaAplicacion.Neutro,
-                    LabelForeColor = r.MargenEstimado <= 0 || r.Elegible ? Color.White : TemaAplicacion.Texto,
+                    LabelForeColor = TemaAplicacion.Texto,
+                    LabelBackColor = TemaAplicacion.Superficie,
                     ToolTip = r.Proveedor + "\nMargen: " + r.MargenEstimado.ToString("N1", Cultura) + "%\nBeneficio bruto estimado: " + r.BeneficioBrutoEstimado.ToString("C2", Cultura) });
             }
             if (e.Resultados.Count > 8) estado.Text += " Gráficos: primeros 8; el listado incluye todos.";
@@ -231,7 +233,7 @@ namespace UI.UserControls
             detalle.Text = r == null ? "" : r.Proveedor + " · " + (r.Elegible ? "Elegible" : r.Fundamentos) + " · Entrega: " + r.PlazoEntregaDias + " días · Beneficio bruto: " + r.BeneficioBrutoEstimado.ToString("C2", Cultura) + Environment.NewLine + r.Advertencias.Trim();
             foreach (var chart in new[] { puntajes, margenes })
                 foreach (var punto in chart.Series[0].Points)
-                { punto.BorderWidth = r != null && (int)punto.Tag == r.IdProveedor ? 2 : 0; punto.BorderColor = Color.FromArgb(35, 45, 55); }
+                { punto.BorderWidth = r != null && (int)punto.Tag == r.IdProveedor ? 2 : 0; punto.BorderColor = TemaAplicacion.Texto; }
             ActualizarBotones();
         }
         private void ActualizarBotones()
