@@ -37,3 +37,11 @@ El 08/11/2026 se incorporó `UI/TemaAplicacion.cs`; la paleta final usa fondos c
 La compilación Release pasó junto con las **60 verificaciones operativas**, **30 de N03** y **nueve combinaciones de tamaño/fuente** de `VentasLayoutProbe --check`, en bases aisladas. La revisión visual nativa comprobó Compras, Ventas, Nuevo cliente y una comparación con tres proveedores, incluidos una oferta excluida y sus rótulos. El instalador se recompiló con el tema. No se modificó el diseño del negocio ni sus diagramas.
 
 La adaptación oscura volvió a superar las **60 verificaciones operativas y 30 de N03** sobre bases nuevas aisladas. La revisión nativa adicional comprobó filas seleccionadas, pestañas, desplegables, botones deshabilitados, textos de validación y gráficos de proveedores. Se regeneró el instalador con la paleta oscura.
+
+## Acceso y confirmaciones para la demo
+
+La revisión del 08/11/2026 amplió el script operativo a **74 verificaciones**. Se probó el login real con Tab desde correo a contraseña y Enter para abrir el menú directamente, sin aviso de bienvenida. Registro y Soporte suspenden el botón predeterminado del login; al volver se recuperan el correo y Enter. Cerrar el menú limpia las credenciales y devuelve el foco al correo.
+
+El encabezado identifica nombre completo, roles asignados y correo, sin modificar permisos. Los cuatro actores demo se verificaron con sus cuentas reales; en ventana reducida el encabezado queda legible y no se superpone con la vista. Emitir una orden y confirmar un proveedor se ejecutaron con los avisos de prueba desactivados: persistieron correctamente y mostraron el éxito y siguiente paso dentro de la vista. Los avisos de Compras se adaptan al ancho disponible.
+
+Las regresiones completaron **39 verificaciones de órdenes/PDF/XML y 30 de N03**, en bases nuevas aisladas de SQL Server 16. La inspección nativa comprobó el encabezado y la disposición de Compras y Evaluación, y confirmó un proveedor en el escenario valor frente a precio mostrando el resultado y siguiente paso dentro de la vista. Se recompiló el instalador; los procesos, las reglas de negocio y las confirmaciones existentes de importación o descarte no cambiaron.
