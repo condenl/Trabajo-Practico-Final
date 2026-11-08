@@ -45,10 +45,26 @@ namespace UI
             ClientSize = new System.Drawing.Size(Math.Min(1520, area.Width - 32), Math.Min(760, area.Height - 64));
         }
 
-        private void MostrarVista(UserControl vista)
+        private void MostrarVista(Func<UserControl> crearVista)
         {
+            if (!PuedeAbandonarVista()) return;
+            var vista = crearVista();
             foreach (Control anterior in new List<Control>(ObtenerVistas())) anterior.Dispose();
             vista.Dock = DockStyle.Fill; panel1.Controls.Add(vista); vista.Show();
+        }
+
+        private bool PuedeAbandonarVista()
+        {
+            foreach (Control vista in panel1.Controls)
+                if (vista is IVistaConCambiosPendientes && ((IVistaConCambiosPendientes)vista).TieneCambiosPendientes)
+                    return ConfirmarDescartePendiente();
+            return true;
+        }
+
+        protected virtual bool ConfirmarDescartePendiente()
+        {
+            return MessageBox.Show(this, "Hay datos sin guardar en esta vista. ¿Desea descartarlos y continuar?", "Datos sin guardar",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes;
         }
 
         private IEnumerable<Control> ObtenerVistas()
@@ -155,9 +171,7 @@ namespace UI
 
         private void btnBitacora_Click(object sender, EventArgs e)
         {
-            UC_Bitacora bitacora = new UC_Bitacora();
-            MostrarVista(bitacora);
-            bitacora.Show();
+            MostrarVista(delegate { return new UC_Bitacora(); });
         }
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)
@@ -177,26 +191,22 @@ namespace UI
 
         private void btnUsuarios_Click(object sender, EventArgs e)
         {
-            UC_Usuarios usuarios = new UC_Usuarios();
-            MostrarVista(usuarios);
+            MostrarVista(delegate { return new UC_Usuarios(); });
         }
 
         private void btnRoles_Click(object sender, EventArgs e)
         {
-            UC_Roles roles = new UC_Roles();
-            MostrarVista(roles);
+            MostrarVista(delegate { return new UC_Roles(); });
         }
 
         private void btnSoporteTecnico_Click(object sender, EventArgs e)
         {
-            UC_SoporteAdmin soporteadmin = new UC_SoporteAdmin();
-            MostrarVista(soporteadmin);
+            MostrarVista(delegate { return new UC_SoporteAdmin(); });
         }
 
         private void btnTraducciones_Click(object sender, EventArgs e)
         {
-            UC_Traducciones traducciones = new UC_Traducciones();
-            MostrarVista(traducciones);
+            MostrarVista(delegate { return new UC_Traducciones(); });
         }
 
         private void FormPrincipal_Load(object sender, EventArgs e)
@@ -218,25 +228,23 @@ namespace UI
 
         private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (!PuedeAbandonarVista()) { e.Cancel = true; return; }
             GestorIdioma.Instancia.Desuscribir(this);
         }
 
         private void btnAuditoria_Click(object sender, EventArgs e)
         {
-            UC_AuditoriaUsuarios auditoria = new UC_AuditoriaUsuarios();
-            MostrarVista(auditoria);
+            MostrarVista(delegate { return new UC_AuditoriaUsuarios(); });
         }
 
         private void btnVentas_Click(object sender, EventArgs e)
         {
-            UC_Ventas ventas = new UC_Ventas();
-            MostrarVista(ventas);
+            MostrarVista(delegate { return new UC_Ventas(); });
         }
 
         private void btnAprovisionamiento_Click(object sender, EventArgs e)
         {
-            UC_Aprovisionamiento aprovisionamiento = new UC_Aprovisionamiento(_usuarioLogueado);
-            MostrarVista(aprovisionamiento);
+            MostrarVista(delegate { return new UC_Aprovisionamiento(_usuarioLogueado); });
         }
     }
 }

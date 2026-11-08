@@ -42,6 +42,11 @@ internal static class TestUsabilidadOperativa
             admin.Permisos.Add(new Patente { Nombre = p.ToString(), PermisoAsociado = p });
         return admin;
     }
+    private sealed class MenuPrueba : FormPrincipal {
+        public bool Descartar; public int Consultas;
+        public MenuPrueba(Usuario actor) : base(actor) { }
+        protected override bool ConfirmarDescartePendiente() { Consultas++; return Descartar; }
+    }
     [STAThread]
     private static int Main(string[] args)
     {
@@ -114,6 +119,49 @@ internal static class TestUsabilidadOperativa
                 string providerName = ((Proveedor)providers.SelectedItem).RazonSocial;
                 Assert(orders.Rows.Count > 0 && orders.Rows.Cast<DataGridViewRow>().All(r => (string)r.Cells["Proveedor"].Value == providerName), "Filtro de proveedor usa su nombre");
                 Click(compras, "btnActualizarOrdenes"); Assert((int)providers.SelectedValue == providerId, "Actualizar mantiene los filtros disponibles");
+                var receipt = Find<ComboBox>(compras, "cmbOrdenRecepcion");
+                receipt.SelectedItem = receipt.Items.Cast<object>().First(i => ((OrdenCompra)i.GetType().GetProperty("Orden").GetValue(i, null)).Estado == EstadoOrdenCompra.RecibidaParcial);
+                var receiptProduct = Find<ComboBox>(compras, "cmbRecepcionProducto"); receiptProduct.SelectedValue = floral.IdProducto;
+                Assert(Find<Label>(compras, "lblSaldoRecepcion").Text.Contains("Pedidas: 10") && Find<Label>(compras, "lblSaldoRecepcion").Text.Contains("Recibidas: 4") &&
+                    Find<NumericUpDown>(compras, "nudLoteCantidad").Maximum == 6, "Recepcion muestra proveedor, cantidades y limita el saldo de Floral a seis");
+                receiptProduct.SelectedIndex = receiptProduct.Items.Count - 1;
+                Assert(Find<NumericUpDown>(compras, "nudLoteCantidad").Maximum == 3, "Cambiar perfume limita al saldo de Madera");
+                receipt.SelectedIndex = -1; Assert(!Find<Button>(compras, "btnRegistrarRecepcion").Enabled, "Sin orden pendiente no se habilita recepcion");
+                var detailOrder = new AprovisionamientoBLL().ConsultarHistorialCompras(null).First(o => o.Estado == EstadoOrdenCompra.Rechazada);
+                using (var detail = new FormDetalleOrdenCompra(detailOrder, "Proveedor de prueba", new ProductoBLL().Listar(false), null)) {
+                    Assert(Find<DataGridView>(detail, "dgvDetalleOrden").ReadOnly && Find<DataGridView>(detail, "dgvDetalleOrden").Rows.Count == detailOrder.Detalles.Count &&
+                        Find<Label>(detail, "lblRevisionOrden").Text.Contains(detailOrder.MotivoRechazo), "Detalle de solo lectura muestra precios, saldos y motivo de rechazo");
+                }
+                var suggestedProduct = new Producto { Codigo = "TEST-CONTINUIDAD", Nombre = "Producto de continuidad", PrecioVenta = 100, StockMinimo = 7 };
+                new ProductoBLL().Guardar(suggestedProduct);
+                int suggestedId = new ProductoBLL().Listar().Single(p => p.Codigo == suggestedProduct.Codigo).IdProducto;
+                foreach (var supplier in new ProveedorBLL().Listar(true).Take(2)) {
+                    var quote = new CotizacionProveedor { IdProveedor = supplier.IdProveedor, FechaVigencia = DateTime.Today.AddMonths(1) };
+                    quote.Detalles.Add(new DetalleCotizacionProveedor { IdProducto = suggestedId, PrecioUnitario = 40, PlazoEntregaDias = 3 }); new AprovisionamientoBLL().RegistrarCotizacion(quote);
+                }
+                var rootTabs = compras.Controls.OfType<TabControl>().Single(); rootTabs.SelectedTab = rootTabs.TabPages.Cast<TabPage>().Single(t => t.Text == "Evaluación de proveedores");
+                var evaluation = (UC_EvaluacionProveedores)Field(compras, "evaluacion"); evaluation.ModoPrueba = true;
+                Find<ComboBox>(evaluation, "cmbEvaluacionProducto").SelectedValue = suggestedId; Click(evaluation, "btnCompararProveedores"); Click(evaluation, "btnUsarCantidadSugerida");
+                Assert(Find<NumericUpDown>(evaluation, "nudEvaluacionCantidad").Value == 7 && !evaluation.TieneCambiosPendientes, "Usar cantidad sugerida vuelve a comparar sin confirmar ni crear compras");
+                Find<TextBox>(evaluation, "txtMotivoSeleccion").Text = "Compra de reposicion fundamentada en stock y conveniencia.";
+                Assert(compras.TieneCambiosPendientes, "El fundamento de N03 sin confirmar cuenta como trabajo pendiente");
+                Click(evaluation, "btnConfirmarProveedor"); int ordersBefore = Count("OrdenCompra"); Click(evaluation, "btnOrdenEvaluacion");
+                Assert(Find<Button>(evaluation, "btnOrdenEvaluacion").Enabled && Find<Button>(evaluation, "btnOrdenEvaluacion").Text.StartsWith("Abrir orden"), "El borrador vinculado ofrece abrir la orden existente");
+                int linked = Convert.ToInt32(Query("SELECT MAX(IdOrdenCompra) FROM OrdenCompra").Rows[0][0]); Click(evaluation, "btnOrdenEvaluacion");
+                Assert(rootTabs.SelectedTab.Text == "Órdenes de compra" && (int)orders.CurrentRow.Cells["IdOrdenCompra"].Value == linked && Count("OrdenCompra") == ordersBefore + 1,
+                    "Abrir orden navega y selecciona el borrador sin duplicarlo ni mantener filtros que lo oculten");
+                using (var menu = new MenuPrueba(owner)) {
+                    menu.Show(); Application.DoEvents(); Click(menu, "btnVentas");
+                    var saleView = Find<ComboBox>(menu, "cmbProducto"); saleView.SelectedValue = floral.IdProducto; Click(menu, "btnAgregarProducto");
+                    int recordedSales = Count("Venta"); Click(menu, "btnAprovisionamiento");
+                    Assert(menu.Consultas == 1 && Find<DataGridView>(menu, "dgvVenta").Rows.Count == 1, "Cancelar navegacion conserva el carrito y la vista original");
+                    menu.Descartar = true; Click(menu, "btnAprovisionamiento");
+                    Assert(menu.Consultas == 2 && !menu.Controls.Find("dgvVenta", true).Any() && Count("Venta") == recordedSales, "Descartar permite navegar sin registrar la venta");
+                    Click(menu, "btnVentas"); Assert(menu.Consultas == 2, "Navegar sin datos pendientes no muestra avisos");
+                    Find<ComboBox>(menu, "cmbProducto").SelectedValue = floral.IdProducto; Click(menu, "btnAgregarProducto"); menu.Descartar = false; menu.Close();
+                    Assert(!menu.IsDisposed && menu.Consultas == 3, "Cancelar cierre conserva la venta en preparacion");
+                    menu.Descartar = true; menu.Close();
+                }
                 Session.Instance.Login(Admin(owner)); var usuarios = new UC_Usuarios(); Host(host, usuarios);
                 Assert(Find<Button>(usuarios, "btnAgregar").Enabled && !Find<Button>(usuarios, "btnModificar").Enabled && !Find<Button>(usuarios, "btnBaja").Enabled, "Nuevo usuario no permite modificar ni desactivar otro usuario");
                 Click(usuarios, "btnAgregar"); Assert(!string.IsNullOrWhiteSpace(Find<Label>(usuarios, "lblEstadoUsuarios").Text), "Campos obligatorios de usuario muestran aviso junto al formulario");

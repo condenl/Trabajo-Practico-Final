@@ -11,8 +11,15 @@ using BE.Interfaces;
 
 namespace UI.UserControls
 {
-    public partial class UC_Usuarios : UserControl, IIdiomaObserver
+    public partial class UC_Usuarios : UserControl, IIdiomaObserver, IVistaConCambiosPendientes
     {
+        public bool TieneCambiosPendientes { get {
+            if (!btnAgregar.Enabled && !btnModificar.Enabled) return false;
+            if (usuarioSeleccionado == null) return new[] { txtDni, txtNombre, txtApellido, txtEmail, txtContrasenia }.Any(t => !string.IsNullOrWhiteSpace(t.Text)) || cmbRoles.SelectedIndex >= 0;
+            var rol = usuarioSeleccionado.Permisos.FirstOrDefault(p => p is Familia);
+            return txtDni.Text.Trim() != usuarioSeleccionado.Dni || txtNombre.Text.Trim() != usuarioSeleccionado.Nombre || txtApellido.Text.Trim() != usuarioSeleccionado.Apellido ||
+                txtEmail.Text.Trim() != usuarioSeleccionado.Email || txtContrasenia.Text.Length > 0 || (cmbRoles.Enabled && (cmbRoles.SelectedValue as int?) != (rol == null ? (int?)null : rol.Id));
+        } }
         private UsuarioBLL usuarioBLL;
         private SeguridadBLL seguridadBLL;
         private TraduccionBLL traduccionBLL;

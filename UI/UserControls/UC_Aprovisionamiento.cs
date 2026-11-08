@@ -11,8 +11,13 @@ using UI.Reportes;
 
 namespace UI.UserControls
 {
-    public class UC_Aprovisionamiento : UserControl
+    public class UC_Aprovisionamiento : UserControl, IVistaConCambiosPendientes
     {
+        public bool TieneCambiosPendientes { get { return
+            (formularioOrden != null && formularioOrden.Visible && (nudOrdenPrecio.Value > 0 || nudOrdenCantidad.Value != 1)) ||
+            nudCotizacionPrecio.Value > 0 || !string.IsNullOrWhiteSpace(txtCotizacionCondiciones.Text) ||
+            !string.IsNullOrWhiteSpace(txtLoteCodigo.Text) || !string.IsNullOrWhiteSpace(txtLoteOrigen.Text) ||
+            (evaluacion != null && evaluacion.TieneCambiosPendientes); } }
         public bool ModoPrueba { get; set; }
         public string UltimoMensaje { get; private set; }
         public string UltimoError { get; private set; }
@@ -30,6 +35,8 @@ namespace UI.UserControls
         private UC_EvaluacionProveedores evaluacion;
         private bool recargando;
         private bool enlazandoRecepcion;
+        private Button registrarRecepcion;
+        private readonly Label saldoRecepcion = new Label { Name = "lblSaldoRecepcion", AutoSize = true, Dock = DockStyle.Fill, Padding = new Padding(4, 8, 4, 8) };
         private FlowLayoutPanel formularioOrden;
         private Button enviarRevision, emitirProveedor;
         private readonly Label ayudaOrden = new Label { Name = "lblAccionOrden", AutoSize = true, Margin = new Padding(6, 8, 3, 3), MaximumSize = new Size(460, 0) };
@@ -52,7 +59,7 @@ namespace UI.UserControls
         private readonly ComboBox cmbCotizacionProducto = Combo("cmbCotizacionProducto");
         private readonly NumericUpDown nudCotizacionPrecio = Dinero("nudCotizacionPrecio");
         private readonly NumericUpDown nudCotizacionPlazo = new NumericUpDown { Name = "nudCotizacionPlazo", Maximum = 365 };
-        private readonly DateTimePicker dtpCotizacionVigencia = new DateTimePicker { Name = "dtpCotizacionVigencia", Value = DateTime.Today.AddMonths(1) };
+        private readonly DateTimePicker dtpCotizacionVigencia = new DateTimePicker { Name = "dtpCotizacionVigencia", Format = DateTimePickerFormat.Custom, CustomFormat = "dd/MM/yyyy", Value = DateTime.Today.AddMonths(1) };
         private readonly TextBox txtCotizacionCondiciones = new TextBox { Name = "txtCotizacionCondiciones" };
 
         private readonly ComboBox cmbOrdenProveedor = Combo("cmbOrdenProveedor");
@@ -69,7 +76,7 @@ namespace UI.UserControls
         private readonly TextBox txtLoteCodigo = new TextBox { Name = "txtLoteCodigo" };
         private readonly TextBox txtLoteOrigen = new TextBox { Name = "txtLoteOrigen" };
         private readonly NumericUpDown nudLoteCantidad = new NumericUpDown { Name = "nudLoteCantidad", Minimum = 1, Maximum = 100000, Value = 1 };
-        private readonly DateTimePicker dtpLoteVencimiento = new DateTimePicker { Name = "dtpLoteVencimiento", Value = DateTime.Today.AddYears(2), ShowCheckBox = true, Checked = true };
+        private readonly DateTimePicker dtpLoteVencimiento = new DateTimePicker { Name = "dtpLoteVencimiento", Format = DateTimePickerFormat.Custom, CustomFormat = "dd/MM/yyyy", Value = DateTime.Today.AddYears(2), ShowCheckBox = true, Checked = true };
         private readonly ComboBox cmbInventarioProducto = Combo("cmbInventarioProducto");
         private readonly Label lblStock = new Label { Name = "lblStock", AutoSize = true, Text = "Stock disponible: -" };
         private readonly DataGridView dgvTrazabilidad = Grilla("dgvTrazabilidad");
@@ -130,6 +137,7 @@ namespace UI.UserControls
             {
                 var paginaEvaluacion = new TabPage("Evaluación de proveedores");
                 evaluacion = new UC_EvaluacionProveedores();
+                evaluacion.AbrirOrdenSolicitada += AbrirOrden;
                 paginaEvaluacion.Controls.Add(evaluacion);
                 tabs.TabPages.Add(paginaEvaluacion);
             }
@@ -196,6 +204,7 @@ namespace UI.UserControls
             emitirProveedor = Boton("Emitir al proveedor", "btnEmitirOrden", EmitirOrden);
             barra.Controls.Add(enviarRevision); barra.Controls.Add(emitirProveedor);
             barra.Controls.Add(Boton("Actualizar", "btnActualizarOrdenes", delegate { RecargarTodo(); }));
+            AgregarDetalleOrden(barra, dgvOrdenes, "btnDetalleOrden");
             barra.Controls.Add(ayudaOrden);
             dgvOrdenes.SelectionChanged += delegate { ActualizarAccionesOrden(); };
             dgvOrdenes.CurrentCellChanged += delegate { ActualizarAccionesOrden(); };
@@ -252,6 +261,7 @@ namespace UI.UserControls
             AgregarCampo(barra, "Motivo de rechazo", txtMotivoRechazo, 330);
             barra.Controls.Add(Boton("Rechazar seleccionada", "btnRechazarOrden", RechazarOrden));
             barra.Controls.Add(Boton("Actualizar", "btnActualizarPendientes", delegate { RecargarTodo(); }));
+            AgregarDetalleOrden(barra, dgvPendientes, "btnDetallePendiente");
             layout.Controls.Add(barra, 0, 1);
             layout.Controls.Add(dgvPendientes, 0, 2);
             tabContabilidad.Controls.Add(layout);
@@ -259,8 +269,10 @@ namespace UI.UserControls
 
         private void ConstruirRecepcion()
         {
-            TableLayoutPanel layout = new TableLayoutPanel { Dock = DockStyle.Fill, RowCount = 5, ColumnCount = 1, Padding = new Padding(12) };
+            TableLayoutPanel layout = new TableLayoutPanel { Dock = DockStyle.Fill, RowCount = 6, ColumnCount = 1, Padding = new Padding(12) };
+            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 44));
+            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 44));
             layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
@@ -268,22 +280,26 @@ namespace UI.UserControls
             layout.Controls.Add(Titulo("Recepción con lote, origen y trazabilidad"), 0, 0);
             FlowLayoutPanel recepcion = FlujoHorizontal();
             AgregarCampo(recepcion, "Orden emitida", cmbOrdenRecepcion, 180);
+            cmbOrdenRecepcion.DropDownWidth = 520;
             cmbOrdenRecepcion.SelectedIndexChanged += CambiarOrdenRecepcion;
             AgregarCampo(recepcion, "Perfume", cmbRecepcionProducto, 200);
+            cmbRecepcionProducto.SelectedIndexChanged += delegate { ActualizarSaldoRecepcion(); };
             AgregarCampo(recepcion, "Código lote", txtLoteCodigo, 110);
             AgregarCampo(recepcion, "Origen", txtLoteOrigen, 130);
             AgregarCampo(recepcion, "Cantidad", nudLoteCantidad, 80);
             AgregarCampo(recepcion, "Vencimiento", dtpLoteVencimiento, 135);
-            recepcion.Controls.Add(Boton("Registrar recepción", "btnRegistrarRecepcion", RegistrarRecepcion));
+            registrarRecepcion = Boton("Registrar recepción", "btnRegistrarRecepcion", RegistrarRecepcion);
+            recepcion.Controls.Add(registrarRecepcion);
             recepcion.Controls.Add(Boton("Actualizar", "btnActualizarRecepcion", delegate { RecargarTodo(); }));
             layout.Controls.Add(recepcion, 0, 1);
-            layout.Controls.Add(Titulo("Consulta de stock y trazabilidad"), 0, 2);
+            layout.Controls.Add(saldoRecepcion, 0, 2);
+            layout.Controls.Add(Titulo("Consulta de stock y trazabilidad"), 0, 3);
             FlowLayoutPanel consulta = FlujoHorizontal();
             AgregarCampo(consulta, "Perfume", cmbInventarioProducto, 240);
             consulta.Controls.Add(Boton("Consultar", "btnConsultarInventario", ConsultarInventario));
             consulta.Controls.Add(lblStock);
-            layout.Controls.Add(consulta, 0, 3);
-            layout.Controls.Add(dgvTrazabilidad, 0, 4);
+            layout.Controls.Add(consulta, 0, 4);
+            layout.Controls.Add(dgvTrazabilidad, 0, 5);
             tabRecepcion.Controls.Add(layout);
         }
 
@@ -521,8 +537,9 @@ namespace UI.UserControls
             List<OrdenCompra> ordenes = aprovisionamientoBLL.ConsultarHistorialCompras(null)
                 .Where(o => o.Estado == EstadoOrdenCompra.Emitida || o.Estado == EstadoOrdenCompra.RecibidaParcial)
                 .ToList();
+            var proveedores = proveedorBLL.Listar(false).ToDictionary(p => p.IdProveedor, p => p.RazonSocial);
             enlazandoRecepcion = true;
-            try { Enlazar(cmbOrdenRecepcion, ordenes.Select(o => new OrdenRecepcionVista(o)).ToList(), "Descripcion", "IdOrdenCompra"); }
+            try { Enlazar(cmbOrdenRecepcion, ordenes.Select(o => new OrdenRecepcionVista(o, proveedores.ContainsKey(o.IdProveedor) ? proveedores[o.IdProveedor] : "Proveedor no disponible")).ToList(), "Descripcion", "IdOrdenCompra"); }
             finally { enlazandoRecepcion = false; }
             CambiarOrdenRecepcion(null, EventArgs.Empty);
         }
@@ -541,6 +558,51 @@ namespace UI.UserControls
                 }
             }
             Enlazar(cmbRecepcionProducto, productos, "Nombre", "IdProducto");
+            ActualizarSaldoRecepcion();
+        }
+
+        private void ActualizarSaldoRecepcion()
+        {
+            var vista = cmbOrdenRecepcion.SelectedItem as OrdenRecepcionVista;
+            var producto = cmbRecepcionProducto.SelectedItem as Producto;
+            var detalle = vista == null || producto == null ? null : vista.Orden.Detalles.FirstOrDefault(d => d.IdProducto == producto.IdProducto);
+            int saldo = detalle == null ? 0 : detalle.Cantidad - detalle.CantidadRecibida;
+            nudLoteCantidad.Maximum = Math.Max(1, saldo); nudLoteCantidad.Enabled = saldo > 0;
+            if (registrarRecepcion != null) registrarRecepcion.Enabled = saldo > 0;
+            saldoRecepcion.Text = detalle == null ? "No hay productos pendientes de recepción en la orden seleccionada." :
+                vista.Proveedor + " · " + producto.Nombre + " · Pedidas: " + detalle.Cantidad + " u. · Recibidas: " + detalle.CantidadRecibida + " u. · Pendientes: " + saldo + " u.";
+        }
+
+        private void AgregarDetalleOrden(FlowLayoutPanel barra, DataGridView grilla, string nombre)
+        {
+            var boton = Boton("Ver detalle...", nombre, delegate { MostrarDetalleOrden(grilla); });
+            boton.Enabled = false; barra.Controls.Add(boton);
+            grilla.CurrentCellChanged += delegate { boton.Enabled = Seleccion(grilla) != null; };
+            grilla.CellDoubleClick += delegate(object s, DataGridViewCellEventArgs e) { if (e.RowIndex >= 0) MostrarDetalleOrden(grilla); };
+        }
+
+        private void MostrarDetalleOrden(DataGridView grilla)
+        {
+            var seleccion = Seleccion(grilla); if (seleccion == null) return;
+            Ejecutar(delegate {
+                var orden = aprovisionamientoBLL.ConsultarHistorialCompras(null).FirstOrDefault(o => o.IdOrdenCompra == seleccion.IdOrdenCompra);
+                if (orden == null) throw new InvalidOperationException("La orden ya no está disponible. Actualice el listado.");
+                var proveedor = proveedorBLL.Listar(false).FirstOrDefault(p => p.IdProveedor == orden.IdProveedor);
+                var aprobador = orden.IdUsuarioAprobadorContable.HasValue ? new UsuarioBLL().ListarTodos().FirstOrDefault(u => u.Id == orden.IdUsuarioAprobadorContable) : null;
+                using (var detalle = new FormDetalleOrdenCompra(orden, proveedor == null ? "Proveedor no disponible" : proveedor.RazonSocial,
+                    productoBLL.Listar(false), aprobador == null ? null : aprobador.NombreCompleto + " · " + aprobador.Email)) detalle.ShowDialog(this);
+            }, null);
+        }
+
+        private void AbrirOrden(int id)
+        {
+            tabs.SelectedTab = tabOrdenes; RecargarTodo(); LimpiarFiltrosOrdenes();
+            foreach (DataGridViewRow fila in dgvOrdenes.Rows)
+                if (((OrdenCompraVista)fila.DataBoundItem).IdOrdenCompra == id) {
+                    dgvOrdenes.CurrentCell = fila.Cells["IdOrdenCompra"]; dgvOrdenes.FirstDisplayedScrollingRowIndex = fila.Index;
+                    estadoCarga.Text = "Orden #" + id + " seleccionada. " + ayudaOrden.Text; return;
+                }
+            estadoCarga.Text = "La orden #" + id + " ya no está disponible en el listado.";
         }
 
         private void RegistrarCotizacion(object sender, EventArgs e)
@@ -560,6 +622,7 @@ namespace UI.UserControls
                     PlazoEntregaDias = Convert.ToInt32(nudCotizacionPlazo.Value)
                 });
                 aprovisionamientoBLL.RegistrarCotizacion(cotizacion);
+                nudCotizacionPrecio.Value = 0; nudCotizacionPlazo.Value = 0; txtCotizacionCondiciones.Clear();
                 RecargarTodo();
             }, "Cotización registrada correctamente.");
         }
@@ -631,7 +694,7 @@ namespace UI.UserControls
                 };
                 aprovisionamientoBLL.RecepcionarMercaderia(orden.IdOrdenCompra, new List<Lote> { lote });
                 CargarOrdenesRecepcion();
-                txtLoteCodigo.Clear();
+                txtLoteCodigo.Clear(); txtLoteOrigen.Clear();
             }, "Recepción registrada con trazabilidad de origen.");
         }
 
@@ -758,11 +821,12 @@ namespace UI.UserControls
         {
             public OrdenCompra Orden { get; private set; }
             public int IdOrdenCompra { get { return Orden.IdOrdenCompra; } }
-            public string Descripcion { get { return "Orden " + Orden.IdOrdenCompra + " - " + NombreEstado(Orden.Estado); } }
+            public string Proveedor { get; private set; }
+            public string Descripcion { get { return "Orden " + Orden.IdOrdenCompra + " · " + Proveedor + " · " + NombreEstado(Orden.Estado); } }
 
-            public OrdenRecepcionVista(OrdenCompra orden)
+            public OrdenRecepcionVista(OrdenCompra orden, string proveedor)
             {
-                Orden = orden;
+                Orden = orden; Proveedor = proveedor;
             }
         }
     }

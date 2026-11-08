@@ -10,6 +10,8 @@ La vista principal presenta gráficos de barras del puntaje y margen bruto por p
 
 Actualizar vuelve a consultar los catálogos y el historial. Si la comparación sigue en preparación, genera otra con los datos actuales y conserva la oferta elegida y el fundamento escrito; la instantánea anterior permanece disponible. Si ya existe una decisión confirmada, recarga su registro sin recalcular ni modificar la evidencia. Comparar permite iniciar una evaluación nueva.
 
+**Usar cantidad sugerida** toma la reposición calculada y vuelve a comparar para esa cantidad; no confirma una oferta. Si la sugerencia es cero, se explica que el stock y las compras pendientes cubren el objetivo. Después de crear un borrador, el mismo control ofrece **Abrir orden #...**, que selecciona la orden existente en Compras. El fundamento todavía no confirmado se considera trabajo pendiente al abandonar la sección.
+
 ## Información cruzada y reglas
 
 | Información | Uso en la decisión |
@@ -82,7 +84,7 @@ Flujo normal:
 1. El actor solicita crear una orden en Borrador.
 2. El sistema comprueba la vigencia de los datos y crea el borrador con el proveedor, producto, cantidad y precio evaluados.
 3. El sistema informa su número y conserva la relación con la evaluación.
-4. El actor continúa el procedimiento habitual de compras y revisión contable de N01.
+4. El actor solicita abrir el borrador y el sistema lo selecciona en Compras para continuar la revisión contable de N01.
 
 Excepciones: si cambiaron los datos, se solicita una comparación nueva sin dejar una orden parcial. Si el actor reintenta la misma solicitud, el sistema devuelve la orden ya vinculada; dos solicitudes concurrentes tampoco la duplican.
 

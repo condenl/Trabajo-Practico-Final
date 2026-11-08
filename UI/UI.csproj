@@ -57,6 +57,8 @@
     <Compile Include="Reportes\ReporteOrdenesPdf.cs" />
     <Compile Include="FormAltaCatalogo.cs" />
     <Compile Include="FormAltaCliente.cs" />
+    <Compile Include="FormDetalleOrdenCompra.cs" />
+    <Compile Include="IVistaConCambiosPendientes.cs" />
     <Compile Include="FormRestaurarUsuario.cs" />
     <Compile Include="UserControls\UC_EvaluacionProveedores.cs" />
     <Compile Include="FormPrincipal.cs">
