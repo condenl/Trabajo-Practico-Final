@@ -23,6 +23,7 @@ namespace UI
             idiomaBLL = new IdiomaBLL();
             traduccionBLL = new TraduccionBLL();
             ConfigurarFormulario();
+            TemaAplicacion.Aplicar(this);
         }
 
         private void ConfigurarFormulario()

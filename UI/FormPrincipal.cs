@@ -15,6 +15,7 @@ namespace UI
         private Usuario _usuarioLogueado;
         private readonly IdiomaBLL idiomaBLL;
         private readonly TraduccionBLL traduccionBLL;
+        private Button accesoActivo;
 
         public FormPrincipal(Usuario usuario)
         {
@@ -43,14 +44,21 @@ namespace UI
             cmbIdioma.Anchor = btnCerrarSesion.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             var area = Screen.FromControl(this).WorkingArea;
             ClientSize = new System.Drawing.Size(Math.Min(1520, area.Width - 32), Math.Min(760, area.Height - 64));
+            TemaAplicacion.Aplicar(this);
+            if (!SystemInformation.HighContrast) BackColor = TemaAplicacion.Navegacion;
+            foreach (Button boton in new[] { btnBitacora, btnUsuarios, btnRoles, btnSoporteTecnico,
+                btnTraducciones, btnAuditoria, btnVentas, btnAprovisionamiento, btnCerrarSesion })
+                TemaAplicacion.AplicarNavegacion(boton, false);
         }
 
-        private void MostrarVista(Func<UserControl> crearVista)
+        private void MostrarVista(Func<UserControl> crearVista, Button acceso)
         {
             if (!PuedeAbandonarVista()) return;
             var vista = crearVista();
             foreach (Control anterior in new List<Control>(ObtenerVistas())) anterior.Dispose();
             vista.Dock = DockStyle.Fill; panel1.Controls.Add(vista); vista.Show();
+            if (accesoActivo != null) TemaAplicacion.AplicarNavegacion(accesoActivo, false);
+            accesoActivo = acceso; TemaAplicacion.AplicarNavegacion(accesoActivo, true);
         }
 
         private bool PuedeAbandonarVista()
@@ -171,7 +179,7 @@ namespace UI
 
         private void btnBitacora_Click(object sender, EventArgs e)
         {
-            MostrarVista(delegate { return new UC_Bitacora(); });
+            MostrarVista(delegate { return new UC_Bitacora(); }, btnBitacora);
         }
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)
@@ -191,22 +199,22 @@ namespace UI
 
         private void btnUsuarios_Click(object sender, EventArgs e)
         {
-            MostrarVista(delegate { return new UC_Usuarios(); });
+            MostrarVista(delegate { return new UC_Usuarios(); }, btnUsuarios);
         }
 
         private void btnRoles_Click(object sender, EventArgs e)
         {
-            MostrarVista(delegate { return new UC_Roles(); });
+            MostrarVista(delegate { return new UC_Roles(); }, btnRoles);
         }
 
         private void btnSoporteTecnico_Click(object sender, EventArgs e)
         {
-            MostrarVista(delegate { return new UC_SoporteAdmin(); });
+            MostrarVista(delegate { return new UC_SoporteAdmin(); }, btnSoporteTecnico);
         }
 
         private void btnTraducciones_Click(object sender, EventArgs e)
         {
-            MostrarVista(delegate { return new UC_Traducciones(); });
+            MostrarVista(delegate { return new UC_Traducciones(); }, btnTraducciones);
         }
 
         private void FormPrincipal_Load(object sender, EventArgs e)
@@ -234,17 +242,17 @@ namespace UI
 
         private void btnAuditoria_Click(object sender, EventArgs e)
         {
-            MostrarVista(delegate { return new UC_AuditoriaUsuarios(); });
+            MostrarVista(delegate { return new UC_AuditoriaUsuarios(); }, btnAuditoria);
         }
 
         private void btnVentas_Click(object sender, EventArgs e)
         {
-            MostrarVista(delegate { return new UC_Ventas(); });
+            MostrarVista(delegate { return new UC_Ventas(); }, btnVentas);
         }
 
         private void btnAprovisionamiento_Click(object sender, EventArgs e)
         {
-            MostrarVista(delegate { return new UC_Aprovisionamiento(_usuarioLogueado); });
+            MostrarVista(delegate { return new UC_Aprovisionamiento(_usuarioLogueado); }, btnAprovisionamiento);
         }
     }
 }

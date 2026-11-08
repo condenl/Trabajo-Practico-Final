@@ -46,6 +46,7 @@ namespace UI
             var cancelar = new Button { Name = "btnCancelarCliente", Text = "Cancelar", AutoSize = true, Padding = new Padding(5), DialogResult = DialogResult.Cancel };
             guardar.Click += delegate { Guardar(); }; pie.Controls.Add(guardar); pie.Controls.Add(cancelar);
             Controls.Add(cuerpo); Controls.Add(estado); Controls.Add(pie); AcceptButton = guardar; CancelButton = cancelar;
+            TemaAplicacion.Aplicar(this);
         }
         private static void ExigirPermiso() {
             if (Session.Instance.Usuario == null || !Session.Instance.Usuario.TienePermiso(TipoPermiso.Ventas_Registrar))
