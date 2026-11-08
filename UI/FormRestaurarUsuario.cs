@@ -45,6 +45,7 @@ namespace UI
             var cancelar = new Button { Name = "btnCancelarRestauracion", Text = "Cancelar", AutoSize = true, Padding = new Padding(6), DialogResult = DialogResult.Cancel };
             pie.Controls.Add(confirmar); pie.Controls.Add(cancelar); layout.Controls.Add(pie, 0, 3); Controls.Add(layout);
             CancelButton = cancelar; // Enter must not accidentally commit a restore.
+            TemaAplicacion.Aplicar(this);
         }
     }
 }

@@ -30,6 +30,7 @@ namespace UI
             pie.Controls.Add(guardar); pie.Controls.Add(cancelar);
             Controls.Add(contenido); Controls.Add(error); Controls.Add(pie);
             AcceptButton = guardar; CancelButton = cancelar;
+            TemaAplicacion.Aplicar(this);
         }
         protected void Campo(string etiqueta, Control control)
         {

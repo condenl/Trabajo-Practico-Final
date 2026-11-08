@@ -32,6 +32,7 @@ namespace UI
             btnSalir.Tag = "integridad_btn_salir";
 
             GestorIdioma.Instancia.Suscribir(this);
+            TemaAplicacion.Aplicar(this);
         }
 
         private void FormIntegridad_Load(object sender, EventArgs e)

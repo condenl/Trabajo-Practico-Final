@@ -22,6 +22,8 @@ En **Usuarios**, **Nuevo usuario** limpia la selección y habilita Guardar nuevo
 
 Cambiar de sección o cerrar la aplicación solicita confirmación si se perdería un carrito, datos de compra/recepción, un fundamento de evaluación o una edición de usuario sin guardar. Cancelar mantiene la vista y sus datos; sin trabajo pendiente se continúa directamente.
 
+La interfaz usa un tema común en `UI/TemaAplicacion.cs`: azul petróleo para navegación y acciones principales, fondos claros, tablas con filas alternadas y tipografía Segoe UI. Las ventanas auxiliares y los controles agregados al navegar reciben el mismo estilo. La paleta está centralizada y no requiere librerías adicionales; el modo de alto contraste de Windows conserva sus colores del sistema.
+
 ## Usuarios de demostración
 
 Credenciales públicas y deliberadamente conocidas, **solo para pruebas y entregas académicas**. No habilitar estos datos en una base de producción ni reutilizar estas contraseñas para cuentas reales. El campo Usuario del login recibe el correo completo.

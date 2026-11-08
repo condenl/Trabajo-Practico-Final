@@ -104,7 +104,7 @@ namespace UI.UserControls
         private static void Campo(FlowLayoutPanel panel, string etiqueta, Control control)
         { var campo = new FlowLayoutPanel { FlowDirection = FlowDirection.TopDown, AutoSize = true, WrapContents = false, Margin = new Padding(3, 2, 6, 3) }; campo.Controls.Add(new Label { Text = etiqueta, AutoSize = true }); campo.Controls.Add(control); panel.Controls.Add(campo); }
         private Button Boton(string texto, string nombre, Action accion) { var b = new Button { Text = texto, Name = nombre, AutoSize = true, Padding = new Padding(4, 3, 4, 3), Margin = new Padding(4, 18, 4, 3) }; b.Click += delegate { Ejecutar(accion); }; return b; }
-        private static Label Tarjeta(string nombre, string titulo) { return new Label { Name = nombre, Text = titulo + "\n—", Width = 165, Height = 50, Padding = new Padding(8, 5, 8, 5), Margin = new Padding(3), BackColor = Color.FromArgb(238, 244, 250), Font = new Font(SystemFonts.DefaultFont.FontFamily, 10, FontStyle.Bold) }; }
+        private static Label Tarjeta(string nombre, string titulo) { return new Label { Name = nombre, Text = titulo + "\n—", Width = 165, Height = 56, Padding = new Padding(8, 5, 8, 5), Margin = new Padding(3), BackColor = TemaAplicacion.AcentoSuave, ForeColor = TemaAplicacion.Acento, Font = new Font("Segoe UI", 10, FontStyle.Bold) }; }
         private static Chart Grafico(string nombre, string titulo)
         {
             var chart = new Chart { Name = nombre, Dock = DockStyle.Fill, BackColor = Color.White };
@@ -199,12 +199,14 @@ namespace UI.UserControls
                 if (!r.Elegible) nombre += " (excl.)";
                 var score = new DataPoint(0, (double)r.PuntajePonderadoFinal) { AxisLabel = nombre, Tag = r.IdProveedor,
                     Label = r.PuntajePonderadoFinal.ToString("N1", Cultura),
-                    Color = !r.Elegible ? Color.Silver : e.IdProveedorRecomendado == r.IdProveedor ? Color.SteelBlue : Color.CadetBlue,
+                    Color = !r.Elegible ? TemaAplicacion.Neutro : e.IdProveedorRecomendado == r.IdProveedor ? TemaAplicacion.Acento : Color.FromArgb(104, 151, 159),
+                    LabelForeColor = r.Elegible && e.IdProveedorRecomendado == r.IdProveedor ? Color.White : TemaAplicacion.Texto,
                     ToolTip = r.Proveedor + "\n" + r.Fundamentos + "\nPrecio: " + r.PuntajePrecio.ToString("N1", Cultura) + " · Prestigio: " + r.PuntajePrestigio.ToString("N1", Cultura) + " · Antigüedad: " + r.PuntajeAntiguedad.ToString("N1", Cultura) };
                 puntajes.Series[0].Points.Add(score);
                 margenes.Series[0].Points.Add(new DataPoint(0, (double)r.MargenEstimado) { AxisLabel = nombre, Tag = r.IdProveedor,
                     Label = r.MargenEstimado.ToString("N1", Cultura),
-                    Color = r.MargenEstimado <= 0 ? Color.IndianRed : r.Elegible ? Color.SeaGreen : Color.Silver,
+                    Color = r.MargenEstimado <= 0 ? TemaAplicacion.Negativo : r.Elegible ? TemaAplicacion.Positivo : TemaAplicacion.Neutro,
+                    LabelForeColor = r.MargenEstimado <= 0 || r.Elegible ? Color.White : TemaAplicacion.Texto,
                     ToolTip = r.Proveedor + "\nMargen: " + r.MargenEstimado.ToString("N1", Cultura) + "%\nBeneficio bruto estimado: " + r.BeneficioBrutoEstimado.ToString("C2", Cultura) });
             }
             if (e.Resultados.Count > 8) estado.Text += " Gráficos: primeros 8; el listado incluye todos.";

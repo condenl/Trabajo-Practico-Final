@@ -33,6 +33,7 @@ namespace UI
             layout.Controls.Add(new Label { Name = "lblRevisionOrden", AutoSize = true, Dock = DockStyle.Fill, Padding = new Padding(0, 10, 0, 10), Text = "Total: " + orden.Total.ToString("C2") + "\n" + revision }, 0, 2);
             var cerrar = new Button { Name = "btnCerrarDetalleOrden", Text = "Cerrar", AutoSize = true, Padding = new Padding(5), DialogResult = DialogResult.Cancel };
             layout.Controls.Add(cerrar, 0, 3); Controls.Add(layout); CancelButton = cerrar;
+            TemaAplicacion.Aplicar(this);
         }
     }
 }
