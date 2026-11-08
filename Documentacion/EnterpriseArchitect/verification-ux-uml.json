@@ -1,0 +1,41 @@
+{
+  "native_diagrams_reviewed": [
+    "N01-03",
+    "N01-04a",
+    "N01-04b",
+    "N01-05",
+    "N01-07a",
+    "N01-07b",
+    "N02-03",
+    "N02-04",
+    "N02-05",
+    "N02-07",
+    "G07-01",
+    "G08-01",
+    "N03-04",
+    "N03-07",
+    "N03-05"
+  ],
+  "connector_counts": {
+    "Association": 109,
+    "Dependency": 50,
+    "Realisation": 17,
+    "Generalization": 3
+  },
+  "abstract_classes": [
+    "Componente",
+    "Persona"
+  ],
+  "native_interfaces": [
+    "IAprovisionamientoRepository",
+    "IEvaluacionProveedorRepository",
+    "IInventarioRepository",
+    "IProductoRepository",
+    "IProveedorRepository",
+    "IRegistroActividad",
+    "IVentaRepository"
+  ],
+  "data_relationships": "FK associations with multiplicities; no inheritance or aggregation",
+  "inheritance": "subclass to superclass",
+  "realizations": "implementation to interface"
+}

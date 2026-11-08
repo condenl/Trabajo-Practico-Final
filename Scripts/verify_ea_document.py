@@ -42,7 +42,7 @@ def verify(baseline, current, images, reviewed_images=None, use_case_replacement
     expected_tables = tables(before)
     changes = json.loads(Path(use_case_replacements).read_text(encoding='utf-8')) if use_case_replacements else []
     for table in expected_tables:
-        codes={c for row in table for c in row if c.startswith('CU-N')}
+        codes={c for row in table for c in row if c in {change['code'] for change in changes}}
         for row in table:
             for change in changes:
                 if change['code'] in codes and row[0]==change['field']:

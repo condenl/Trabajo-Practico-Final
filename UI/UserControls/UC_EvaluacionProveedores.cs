@@ -9,8 +9,11 @@ using BLL;
 
 namespace UI.UserControls
 {
-    public class UC_EvaluacionProveedores : UserControl
+    public class UC_EvaluacionProveedores : UserControl, IVistaConCambiosPendientes
     {
+        public event Action<int> AbrirOrdenSolicitada;
+        public bool TieneCambiosPendientes { get { return actual != null && !actual.IdProveedorSeleccionado.HasValue &&
+            (!string.IsNullOrWhiteSpace(motivo.Text) || (proveedorSeleccionado.HasValue && proveedorSeleccionado != actual.IdProveedorRecomendado)); } }
         private static readonly CultureInfo Cultura = CultureInfo.GetCultureInfo("es-AR");
         private readonly EvaluacionProveedorBLL bll = new EvaluacionProveedorBLL();
         private readonly ComboBox producto = new ComboBox { Name = "cmbEvaluacionProducto", Width = 260, DropDownStyle = ComboBoxStyle.DropDownList };
@@ -48,6 +51,8 @@ namespace UI.UserControls
             var filtros = Flujo(); Campo(filtros, "Perfume", producto); Campo(filtros, "Cantidad a comprar", cantidad);
             filtros.Controls.Add(Boton("Comparar", "btnCompararProveedores", Comparar));
             filtros.Controls.Add(Boton("Actualizar", "btnActualizarEvaluacion", Actualizar));
+            var usarSugerida = Boton("Usar cantidad sugerida", "btnUsarCantidadSugerida", UsarCantidadSugerida);
+            filtros.Controls.Add(usarSugerida);
             var criterios = Flujo(); criterios.Visible = false;
             var pie = Flujo(); pie.Visible = false;
             Campo(criterios, "Precio %", precio); Campo(criterios, "Prestigio %", prestigio); Campo(criterios, "Antigüedad %", antiguedad);
@@ -158,6 +163,15 @@ namespace UI.UserControls
             CargarHistorial(); estado.Text = "Comparación actualizada a las " + DateTime.Now.ToString("HH:mm:ss") + ". Pulse una barra para elegir proveedor.";
             if (actual.Resultados.Count > 8) estado.Text += " Gráficos: primeros 8; listado: todos.";
         }
+        private void UsarCantidadSugerida()
+        {
+            if (actual == null) { estado.Text = "Primero compare las ofertas para calcular la reposición sugerida."; return; }
+            int sugerida = actual.CantidadSugerida;
+            if (sugerida <= 0) { estado.Text = "No se sugiere reponer: el stock y las compras pendientes cubren el objetivo."; return; }
+            if (actual.IdProveedorSeleccionado.HasValue) { estado.Text = "La decisión está guardada. Inicie otra comparación para cambiar la cantidad."; return; }
+            cantidad.Value = sugerida; Comparar();
+            estado.Text = "Se compararon las ofertas para la cantidad sugerida: " + sugerida + " u. Revise el proveedor antes de confirmar.";
+        }
         private void Mostrar(EvaluacionProveedor e)
         {
             cargando = true;
@@ -223,12 +237,17 @@ namespace UI.UserControls
             if (confirmar == null) return;
             motivo.ReadOnly = actual != null && actual.IdProveedorSeleccionado.HasValue;
             confirmar.Enabled = actual != null && !actual.IdProveedorSeleccionado.HasValue && Fila != null && Fila.Elegible;
-            crear.Enabled = actual != null && actual.IdProveedorSeleccionado.HasValue && !actual.IdOrdenCompra.HasValue;
-            crear.Text = actual != null && actual.IdOrdenCompra.HasValue ? "Orden #" + actual.IdOrdenCompra + " creada" : "Crear orden en Borrador";
+            crear.Enabled = actual != null && actual.IdProveedorSeleccionado.HasValue && (!actual.IdOrdenCompra.HasValue || AbrirOrdenSolicitada != null);
+            crear.Text = actual != null && actual.IdOrdenCompra.HasValue ? "Abrir orden #" + actual.IdOrdenCompra : "Crear orden en Borrador";
         }
         private void Confirmar()
         { if (actual == null || Fila == null) return; bll.SeleccionarPrioritario(actual.IdEvaluacion, Fila.IdProveedor, motivo.Text); Mostrar(bll.Obtener(actual.IdEvaluacion)); CargarHistorial(); Informar("Proveedor confirmado. Puede iniciar la compra con un borrador."); }
         private void CrearOrden()
-        { if (actual == null) return; int id = bll.CrearOrdenBorrador(actual.IdEvaluacion); Mostrar(bll.Obtener(actual.IdEvaluacion)); CargarHistorial(); Informar("Orden en Borrador: " + id + ". Continúa por la revisión de Contabilidad."); }
+        {
+            if (actual == null) return;
+            if (actual.IdOrdenCompra.HasValue) { if (AbrirOrdenSolicitada != null) AbrirOrdenSolicitada(actual.IdOrdenCompra.Value); return; }
+            int id = bll.CrearOrdenBorrador(actual.IdEvaluacion); Mostrar(bll.Obtener(actual.IdEvaluacion)); CargarHistorial();
+            estado.Text = "Orden #" + id + " creada. Pulse Abrir orden para continuar con la revisión de Contabilidad.";
+        }
     }
 }

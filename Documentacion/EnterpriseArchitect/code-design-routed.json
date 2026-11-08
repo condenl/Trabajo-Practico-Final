@@ -1854,6 +1854,58 @@
             "abstract": false
           },
           {
+            "name": "RegistrarVenta",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "venta",
+                "type": "Venta",
+                "default": ""
+              },
+              {
+                "name": "subtotalEsperado",
+                "type": "decimal?",
+                "default": ""
+              },
+              {
+                "name": "descuentoEsperado",
+                "type": "decimal?",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "CotizarVenta",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "venta",
+                "type": "Venta",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "CalcularVenta",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "venta",
+                "type": "Venta",
+                "default": ""
+              }
+            ],
+            "visibility": "Private",
+            "static": false,
+            "abstract": false
+          },
+          {
             "name": "ConsultarHistorialCliente",
             "type": "List<Venta>",
             "parameters": [
@@ -1890,7 +1942,7 @@
         "x": 40,
         "y": 791,
         "w": 443,
-        "h": 243,
+        "h": 294,
         "fontSize": 11
       },
       {
@@ -1947,7 +1999,7 @@
         "x": 583,
         "y": 791,
         "w": 443,
-        "h": 243,
+        "h": 294,
         "fontSize": 11
       }
     ],
@@ -2002,28 +2054,28 @@
         "target": "Cliente",
         "name": "",
         "kind": "Dependency",
-        "path": "10:-910;10:-180;"
+        "path": "10:-940;10:-180;"
       },
       {
         "source": "VentaBLL",
         "target": "Venta",
         "name": "",
         "kind": "Dependency",
-        "path": "510:-910;510:-740;1090:-740;1090:-180;1100:-180;"
+        "path": "510:-940;510:-740;1090:-740;1090:-180;1100:-180;"
       },
       {
         "source": "VentaBLL",
         "target": "Membresia",
         "name": "",
         "kind": "Dependency",
-        "path": "510:-910;550:-910;550:-180;"
+        "path": "510:-940;550:-940;550:-180;"
       },
       {
         "source": "MarketingBLL",
         "target": "Cliente",
         "name": "",
         "kind": "Dependency",
-        "path": "550:-910;540:-910;540:-190;510:-190;510:-180;"
+        "path": "550:-940;540:-940;540:-190;510:-190;510:-180;"
       }
     ],
     "notes": "Atributos y operaciones compartidos con G07-01. Firmas verificadas en el código. Las clases propuestas están identificadas explícitamente. Las BE conservan sus constructores y propiedades; la lógica reside en BLL."
@@ -3520,6 +3572,58 @@
             "abstract": false
           },
           {
+            "name": "RegistrarVenta",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "venta",
+                "type": "Venta",
+                "default": ""
+              },
+              {
+                "name": "subtotalEsperado",
+                "type": "decimal?",
+                "default": ""
+              },
+              {
+                "name": "descuentoEsperado",
+                "type": "decimal?",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "CotizarVenta",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "venta",
+                "type": "Venta",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "CalcularVenta",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "venta",
+                "type": "Venta",
+                "default": ""
+              }
+            ],
+            "visibility": "Private",
+            "static": false,
+            "abstract": false
+          },
+          {
             "name": "ConsultarHistorialCliente",
             "type": "List<Venta>",
             "parameters": [
@@ -3556,7 +3660,7 @@
         "x": 40,
         "y": 40,
         "w": 779,
-        "h": 243,
+        "h": 294,
         "fontSize": 11
       },
       {
@@ -3652,7 +3756,7 @@
         "x": 919,
         "y": 40,
         "w": 779,
-        "h": 243,
+        "h": 294,
         "fontSize": 11
       },
       {
@@ -3819,7 +3923,7 @@
         "x": 1798,
         "y": 40,
         "w": 779,
-        "h": 243,
+        "h": 294,
         "fontSize": 11
       },
       {
@@ -3872,7 +3976,7 @@
         "proposed": false,
         "namespace": "DAL.Interfaces",
         "x": 40,
-        "y": 373,
+        "y": 424,
         "w": 779,
         "h": 175,
         "fontSize": 11
@@ -3939,7 +4043,7 @@
         "proposed": false,
         "namespace": "DAL",
         "x": 919,
-        "y": 373,
+        "y": 424,
         "w": 779,
         "h": 175,
         "fontSize": 11
@@ -4043,7 +4147,7 @@
         "proposed": false,
         "namespace": "DAL.Interfaces",
         "x": 1798,
-        "y": 373,
+        "y": 424,
         "w": 779,
         "h": 175,
         "fontSize": 11
@@ -4231,7 +4335,7 @@
         "proposed": false,
         "namespace": "DAL",
         "x": 40,
-        "y": 638,
+        "y": 689,
         "w": 779,
         "h": 226,
         "fontSize": 11
@@ -4267,7 +4371,7 @@
         "proposed": false,
         "namespace": "BE.Interfaces",
         "x": 919,
-        "y": 638,
+        "y": 689,
         "w": 779,
         "h": 226,
         "fontSize": 11
@@ -4305,7 +4409,7 @@
         "proposed": false,
         "namespace": "BLL",
         "x": 1798,
-        "y": 638,
+        "y": 689,
         "w": 779,
         "h": 226,
         "fontSize": 11
@@ -4362,7 +4466,7 @@
           }
         ],
         "x": 40,
-        "y": 954,
+        "y": 1005,
         "w": 779,
         "h": 141,
         "fontSize": 11
@@ -4374,63 +4478,63 @@
         "target": "IVentaRepository",
         "name": "usa",
         "kind": "Dependency",
-        "path": "850:-160;890:-160;"
+        "path": "850:-190;890:-190;"
       },
       {
         "source": "VentaBLL",
         "target": "IProductoRepository",
         "name": "usa",
         "kind": "Dependency",
-        "path": "430:-310;430:-340;"
+        "path": "430:-360;430:-390;"
       },
       {
         "source": "VentaBLL",
         "target": "IInventarioRepository",
         "name": "usa",
         "kind": "Dependency",
-        "path": "850:-160;850:-350;1770:-350;1770:-460;"
+        "path": "850:-190;850:-400;1770:-400;1770:-510;"
       },
       {
         "source": "VentaBLL",
         "target": "IRegistroActividad",
         "name": "usa",
         "kind": "Dependency",
-        "path": "850:-160;840:-160;840:-750;890:-750;"
+        "path": "850:-190;840:-190;840:-800;890:-800;"
       },
       {
         "source": "MarketingBLL",
         "target": "VentaBLL",
         "name": "",
         "kind": "Dependency",
-        "path": "10:-1020;10:-160;"
+        "path": "10:-1080;10:-190;"
       },
       {
         "source": "InventarioDAL",
         "target": "IInventarioRepository",
         "name": "",
         "kind": "Realization",
-        "path": "850:-750;850:-570;1770:-570;1770:-460;"
+        "path": "850:-800;850:-620;1770:-620;1770:-510;"
       },
       {
         "source": "ProductoDAL",
         "target": "IProductoRepository",
         "name": "",
         "kind": "Realization",
-        "path": "890:-460;850:-460;"
+        "path": "890:-510;850:-510;"
       },
       {
         "source": "VentaDAL",
         "target": "IVentaRepository",
         "name": "",
         "kind": "Realization",
-        "path": "1770:-160;1730:-160;"
+        "path": "1770:-190;1730:-190;"
       },
       {
         "source": "RegistroActividadBitacora",
         "target": "IRegistroActividad",
         "name": "",
         "kind": "Realization",
-        "path": "1770:-750;1730:-750;"
+        "path": "1770:-800;1730:-800;"
       }
     ],
     "notes": "Atributos y operaciones compartidos con G07-01. Firmas verificadas en el código. Las clases propuestas están identificadas explícitamente. Las BE conservan sus constructores y propiedades; la lógica reside en BLL."
@@ -6758,7 +6862,7 @@
         "x": 40,
         "y": 1226,
         "w": 779,
-        "h": 260,
+        "h": 294,
         "fontSize": 11
       },
       {
@@ -6842,6 +6946,58 @@
             "abstract": false
           },
           {
+            "name": "RegistrarVenta",
+            "type": "int",
+            "parameters": [
+              {
+                "name": "venta",
+                "type": "Venta",
+                "default": ""
+              },
+              {
+                "name": "subtotalEsperado",
+                "type": "decimal?",
+                "default": ""
+              },
+              {
+                "name": "descuentoEsperado",
+                "type": "decimal?",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "CotizarVenta",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "venta",
+                "type": "Venta",
+                "default": ""
+              }
+            ],
+            "visibility": "Public",
+            "static": false,
+            "abstract": false
+          },
+          {
+            "name": "CalcularVenta",
+            "type": "void",
+            "parameters": [
+              {
+                "name": "venta",
+                "type": "Venta",
+                "default": ""
+              }
+            ],
+            "visibility": "Private",
+            "static": false,
+            "abstract": false
+          },
+          {
             "name": "ConsultarHistorialCliente",
             "type": "List<Venta>",
             "parameters": [
@@ -6878,7 +7034,7 @@
         "x": 919,
         "y": 1226,
         "w": 779,
-        "h": 260,
+        "h": 294,
         "fontSize": 11
       },
       {
@@ -6935,7 +7091,7 @@
         "x": 1798,
         "y": 1226,
         "w": 779,
-        "h": 260,
+        "h": 294,
         "fontSize": 11
       },
       {
@@ -7090,7 +7246,7 @@
         "x": 2677,
         "y": 1226,
         "w": 779,
-        "h": 260,
+        "h": 294,
         "fontSize": 11
       },
       {
@@ -7291,7 +7447,7 @@
         "x": 3556,
         "y": 1226,
         "w": 779,
-        "h": 260,
+        "h": 294,
         "fontSize": 11
       },
       {
@@ -7393,7 +7549,7 @@
         "proposed": false,
         "namespace": "DAL.Interfaces",
         "x": 40,
-        "y": 1576,
+        "y": 1610,
         "w": 779,
         "h": 226,
         "fontSize": 11
@@ -7581,7 +7737,7 @@
         "proposed": false,
         "namespace": "DAL",
         "x": 919,
-        "y": 1576,
+        "y": 1610,
         "w": 779,
         "h": 226,
         "fontSize": 11
@@ -7636,7 +7792,7 @@
         "proposed": false,
         "namespace": "DAL.Interfaces",
         "x": 1798,
-        "y": 1576,
+        "y": 1610,
         "w": 779,
         "h": 226,
         "fontSize": 11
@@ -7703,7 +7859,7 @@
         "proposed": false,
         "namespace": "DAL",
         "x": 2677,
-        "y": 1576,
+        "y": 1610,
         "w": 779,
         "h": 226,
         "fontSize": 11
@@ -7758,7 +7914,7 @@
         "proposed": false,
         "namespace": "DAL.Interfaces",
         "x": 3556,
-        "y": 1576,
+        "y": 1610,
         "w": 779,
         "h": 226,
         "fontSize": 11
@@ -7825,7 +7981,7 @@
         "proposed": false,
         "namespace": "DAL",
         "x": 40,
-        "y": 1892,
+        "y": 1926,
         "w": 779,
         "h": 243,
         "fontSize": 11
@@ -7861,7 +8017,7 @@
         "proposed": false,
         "namespace": "BE.Interfaces",
         "x": 919,
-        "y": 1892,
+        "y": 1926,
         "w": 779,
         "h": 243,
         "fontSize": 11
@@ -7899,7 +8055,7 @@
         "proposed": false,
         "namespace": "BLL",
         "x": 1798,
-        "y": 1892,
+        "y": 1926,
         "w": 779,
         "h": 243,
         "fontSize": 11
@@ -7995,7 +8151,7 @@
         "proposed": false,
         "namespace": "DAL.Interfaces",
         "x": 2677,
-        "y": 1892,
+        "y": 1926,
         "w": 779,
         "h": 243,
         "fontSize": 11
@@ -8162,7 +8318,7 @@
         "proposed": false,
         "namespace": "DAL",
         "x": 3556,
-        "y": 1892,
+        "y": 1926,
         "w": 779,
         "h": 243,
         "fontSize": 11
@@ -8256,7 +8412,7 @@
         "proposed": false,
         "namespace": "BE",
         "x": 40,
-        "y": 2225,
+        "y": 2259,
         "w": 779,
         "h": 379,
         "fontSize": 11
@@ -8300,7 +8456,7 @@
         "proposed": false,
         "namespace": "BE",
         "x": 919,
-        "y": 2225,
+        "y": 2259,
         "w": 779,
         "h": 379,
         "fontSize": 11
@@ -8354,7 +8510,7 @@
         "proposed": false,
         "namespace": "BE",
         "x": 1798,
-        "y": 2225,
+        "y": 2259,
         "w": 779,
         "h": 379,
         "fontSize": 11
@@ -8438,7 +8594,7 @@
         "proposed": false,
         "namespace": "BE",
         "x": 2677,
-        "y": 2225,
+        "y": 2259,
         "w": 779,
         "h": 379,
         "fontSize": 11
@@ -8542,7 +8698,7 @@
         "proposed": false,
         "namespace": "BE",
         "x": 3556,
-        "y": 2225,
+        "y": 2259,
         "w": 779,
         "h": 379,
         "fontSize": 11
@@ -8586,7 +8742,7 @@
         "proposed": false,
         "namespace": "BE",
         "x": 40,
-        "y": 2694,
+        "y": 2728,
         "w": 779,
         "h": 260,
         "fontSize": 11
@@ -8744,7 +8900,7 @@
         "proposed": false,
         "namespace": "BLL",
         "x": 919,
-        "y": 2694,
+        "y": 2728,
         "w": 779,
         "h": 260,
         "fontSize": 11
@@ -8860,7 +9016,7 @@
         "proposed": false,
         "namespace": "DAL.Interfaces",
         "x": 1798,
-        "y": 2694,
+        "y": 2728,
         "w": 779,
         "h": 260,
         "fontSize": 11
@@ -9076,7 +9232,7 @@
         "proposed": false,
         "namespace": "DAL",
         "x": 2677,
-        "y": 2694,
+        "y": 2728,
         "w": 779,
         "h": 260,
         "fontSize": 11
@@ -9137,7 +9293,7 @@
         "proposed": false,
         "namespace": "Servicios",
         "x": 3556,
-        "y": 2694,
+        "y": 2728,
         "w": 779,
         "h": 260,
         "fontSize": 11
@@ -9209,7 +9365,7 @@
         "proposed": false,
         "namespace": "BE",
         "x": 40,
-        "y": 3044,
+        "y": 3078,
         "w": 779,
         "h": 277,
         "fontSize": 11
@@ -9298,7 +9454,7 @@
         "proposed": false,
         "namespace": "BE",
         "x": 919,
-        "y": 3044,
+        "y": 3078,
         "w": 779,
         "h": 277,
         "fontSize": 11
@@ -9385,7 +9541,7 @@
         "proposed": false,
         "namespace": "BE.Seguridad",
         "x": 1798,
-        "y": 3044,
+        "y": 3078,
         "w": 779,
         "h": 277,
         "fontSize": 11
@@ -9462,7 +9618,7 @@
         "proposed": false,
         "namespace": "BE.Seguridad",
         "x": 2677,
-        "y": 3044,
+        "y": 3078,
         "w": 779,
         "h": 277,
         "fontSize": 11
@@ -9533,7 +9689,7 @@
         "proposed": false,
         "namespace": "BE.Seguridad",
         "x": 3556,
-        "y": 3044,
+        "y": 3078,
         "w": 779,
         "h": 277,
         "fontSize": 11
@@ -9608,7 +9764,7 @@
         "proposed": false,
         "namespace": "BE",
         "x": 40,
-        "y": 3411,
+        "y": 3445,
         "w": 779,
         "h": 209,
         "fontSize": 11
@@ -9712,7 +9868,7 @@
         "kind": "Association",
         "sourceCardinality": "1",
         "targetCardinality": "1..*",
-        "path": "3530:-1000;3530:-1200;850:-1200;850:-1360;"
+        "path": "3530:-1000;3530:-1200;850:-1200;850:-1370;"
       },
       {
         "source": "DetalleVenta",
@@ -9721,7 +9877,7 @@
         "kind": "Association",
         "sourceCardinality": "0..*",
         "targetCardinality": "1",
-        "path": "10:-1360;10:-590;"
+        "path": "10:-1370;10:-590;"
       },
       {
         "source": "DetalleVenta",
@@ -9730,7 +9886,7 @@
         "kind": "Association",
         "sourceCardinality": "0..*",
         "targetCardinality": "1",
-        "path": "850:-1360;840:-1360;840:-800;3510:-800;3510:-590;3530:-590;"
+        "path": "850:-1370;840:-1370;840:-800;3510:-800;3510:-590;3530:-590;"
       },
       {
         "source": "Cliente",
@@ -9757,7 +9913,7 @@
         "kind": "Association",
         "sourceCardinality": "0..*",
         "targetCardinality": "0..*",
-        "path": "1730:-3180;1770:-3180;"
+        "path": "1730:-3220;1770:-3220;"
       },
       {
         "source": "Familia",
@@ -9766,28 +9922,28 @@
         "kind": "Association",
         "sourceCardinality": "0..*",
         "targetCardinality": "0..*",
-        "path": "2650:-3180;2610:-3180;"
+        "path": "2650:-3220;2610:-3220;"
       },
       {
         "source": "Usuario",
         "target": "Persona",
         "name": "",
         "kind": "Generalization",
-        "path": "890:-3180;850:-3180;"
+        "path": "890:-3220;850:-3220;"
       },
       {
         "source": "Familia",
         "target": "Componente",
         "name": "",
         "kind": "Generalization",
-        "path": "2650:-3180;2610:-3180;"
+        "path": "2650:-3220;2610:-3220;"
       },
       {
         "source": "Patente",
         "target": "Componente",
         "name": "",
         "kind": "Generalization",
-        "path": "3530:-3180;3530:-3020;2610:-3020;2610:-3180;"
+        "path": "3530:-3220;3530:-3380;2610:-3380;2610:-3220;"
       },
       {
         "source": "Usuario",
@@ -9796,7 +9952,7 @@
         "kind": "Association",
         "sourceCardinality": "0..1",
         "targetCardinality": "0..*",
-        "path": "1730:-3180;1730:-810;2650:-810;2650:-180;"
+        "path": "1730:-3220;1730:-810;2650:-810;2650:-180;"
       },
       {
         "source": "Usuario",
@@ -9805,7 +9961,7 @@
         "kind": "Association",
         "sourceCardinality": "0..1",
         "targetCardinality": "0..*",
-        "path": "1730:-3180;1740:-3180;1740:-1170;3510:-1170;3510:-1000;3530:-1000;"
+        "path": "1730:-3220;1740:-3220;1740:-1170;3510:-1170;3510:-1000;3530:-1000;"
       },
       {
         "source": "ProveedorBLL",
@@ -9854,21 +10010,21 @@
         "target": "Cliente",
         "name": "",
         "kind": "Dependency",
-        "path": "1730:-1360;1760:-1360;1760:-1000;1770:-1000;"
+        "path": "1730:-1370;1760:-1370;1760:-1000;1770:-1000;"
       },
       {
         "source": "VentaBLL",
         "target": "Venta",
         "name": "",
         "kind": "Dependency",
-        "path": "1730:-1360;1770:-1360;1770:-1180;3500:-1180;3500:-990;3530:-990;3530:-1000;"
+        "path": "1730:-1370;1770:-1370;1770:-1180;3500:-1180;3500:-990;3530:-990;3530:-1000;"
       },
       {
         "source": "VentaBLL",
         "target": "Membresia",
         "name": "",
         "kind": "Dependency",
-        "path": "1730:-1360;1720:-1360;1720:-1190;2650:-1190;2650:-1000;"
+        "path": "1730:-1370;1720:-1370;1720:-1190;2650:-1190;2650:-1000;"
       },
       {
         "source": "MarketingBLL",
@@ -9882,119 +10038,119 @@
         "target": "IAprovisionamientoRepository",
         "name": "usa",
         "kind": "Dependency",
-        "path": "2610:-590;2630:-590;2630:-1360;2650:-1360;"
+        "path": "2610:-590;2630:-590;2630:-1370;2650:-1370;"
       },
       {
         "source": "AprovisionamientoBLL",
         "target": "IProveedorRepository",
         "name": "usa",
         "kind": "Dependency",
-        "path": "1770:-590;1770:-990;1750:-990;1750:-1690;1770:-1690;"
+        "path": "1770:-590;1770:-990;1750:-990;1750:-1720;1770:-1720;"
       },
       {
         "source": "AprovisionamientoBLL",
         "target": "IProductoRepository",
         "name": "usa",
         "kind": "Dependency",
-        "path": "2610:-590;2610:-990;2620:-990;2620:-1550;3530:-1550;3530:-1690;"
+        "path": "2610:-590;2610:-990;2620:-990;2620:-1590;3530:-1590;3530:-1720;"
       },
       {
         "source": "AprovisionamientoBLL",
         "target": "IRegistroActividad",
         "name": "usa",
         "kind": "Dependency",
-        "path": "1770:-590;1770:-600;1720:-600;1720:-2010;1730:-2010;"
+        "path": "1770:-590;1770:-600;1720:-600;1720:-2050;1730:-2050;"
       },
       {
         "source": "InventarioBLL",
         "target": "IInventarioRepository",
         "name": "usa",
         "kind": "Dependency",
-        "path": "890:-1000;890:-1690;850:-1690;"
+        "path": "890:-1000;890:-1720;850:-1720;"
       },
       {
         "source": "InventarioBLL",
         "target": "IRegistroActividad",
         "name": "usa",
         "kind": "Dependency",
-        "path": "890:-1000;880:-1000;880:-2010;890:-2010;"
+        "path": "890:-1000;880:-1000;880:-2050;890:-2050;"
       },
       {
         "source": "AprovisionamientoDAL",
         "target": "IAprovisionamientoRepository",
         "name": "",
         "kind": "Realization",
-        "path": "3530:-1360;3490:-1360;"
+        "path": "3530:-1370;3490:-1370;"
       },
       {
         "source": "InventarioDAL",
         "target": "IInventarioRepository",
         "name": "",
         "kind": "Realization",
-        "path": "890:-1690;850:-1690;"
+        "path": "890:-1720;850:-1720;"
       },
       {
         "source": "ProductoDAL",
         "target": "IProductoRepository",
         "name": "",
         "kind": "Realization",
-        "path": "850:-2010;850:-1830;3530:-1830;3530:-1690;"
+        "path": "850:-2050;850:-1860;3530:-1860;3530:-1720;"
       },
       {
         "source": "ProveedorDAL",
         "target": "IProveedorRepository",
         "name": "",
         "kind": "Realization",
-        "path": "2650:-1690;2610:-1690;"
+        "path": "2650:-1720;2610:-1720;"
       },
       {
         "source": "RegistroActividadBitacora",
         "target": "IRegistroActividad",
         "name": "",
         "kind": "Realization",
-        "path": "1770:-2010;1730:-2010;"
+        "path": "1770:-2050;1730:-2050;"
       },
       {
         "source": "VentaBLL",
         "target": "IVentaRepository",
         "name": "usa",
         "kind": "Dependency",
-        "path": "1730:-1360;1730:-1370;1770:-1370;1770:-1870;2650:-1870;2650:-2010;"
+        "path": "1730:-1370;1730:-1380;1770:-1380;1770:-1900;2650:-1900;2650:-2050;"
       },
       {
         "source": "VentaBLL",
         "target": "IProductoRepository",
         "name": "usa",
         "kind": "Dependency",
-        "path": "1730:-1360;1730:-1380;1760:-1380;1760:-1540;3520:-1540;3520:-1690;3530:-1690;"
+        "path": "1730:-1370;1730:-1390;1760:-1390;1760:-1580;3520:-1580;3520:-1720;3530:-1720;"
       },
       {
         "source": "VentaBLL",
         "target": "IInventarioRepository",
         "name": "usa",
         "kind": "Dependency",
-        "path": "890:-1360;850:-1360;850:-1690;"
+        "path": "890:-1370;850:-1370;850:-1720;"
       },
       {
         "source": "VentaBLL",
         "target": "IRegistroActividad",
         "name": "usa",
         "kind": "Dependency",
-        "path": "890:-1360;870:-1360;870:-2010;890:-2010;"
+        "path": "890:-1370;870:-1370;870:-2050;890:-2050;"
       },
       {
         "source": "MarketingBLL",
         "target": "VentaBLL",
         "name": "",
         "kind": "Dependency",
-        "path": "1770:-1360;1730:-1360;"
+        "path": "1770:-1370;1730:-1370;"
       },
       {
         "source": "VentaDAL",
         "target": "IVentaRepository",
         "name": "",
         "kind": "Realization",
-        "path": "3530:-2010;3490:-2010;"
+        "path": "3530:-2050;3490:-2050;"
       },
       {
         "source": "EvaluacionProveedor",
@@ -10003,7 +10159,7 @@
         "name": "",
         "sourceCardinality": "0..*",
         "targetCardinality": "1",
-        "path": "850:-2410;890:-2410;"
+        "path": "850:-2450;890:-2450;"
       },
       {
         "source": "EvaluacionProveedor",
@@ -10012,7 +10168,7 @@
         "name": "",
         "sourceCardinality": "0..*",
         "targetCardinality": "1",
-        "path": "850:-2410;850:-2200;1770:-2200;1770:-2410;"
+        "path": "850:-2450;850:-2660;1770:-2660;1770:-2450;"
       },
       {
         "source": "EvaluacionProveedor",
@@ -10021,7 +10177,7 @@
         "name": "",
         "sourceCardinality": "0..*",
         "targetCardinality": "0..*",
-        "path": "850:-2410;850:-2630;3530:-2630;3530:-2410;"
+        "path": "850:-2450;850:-2230;3530:-2230;3530:-2450;"
       },
       {
         "source": "DatosEvaluacion",
@@ -10030,35 +10186,35 @@
         "name": "",
         "sourceCardinality": "0..*",
         "targetCardinality": "0..*",
-        "path": "2610:-2410;2650:-2410;"
+        "path": "2610:-2450;2650:-2450;"
       },
       {
         "source": "EvaluacionProveedorBLL",
         "target": "IEvaluacionProveedorRepository",
         "name": "",
         "kind": "Dependency",
-        "path": "1730:-2820;1770:-2820;"
+        "path": "1730:-2860;1770:-2860;"
       },
       {
         "source": "EvaluacionProveedorBLL",
         "target": "ArchivoEvaluacion",
         "name": "",
         "kind": "Dependency",
-        "path": "1730:-2820;1750:-2820;1750:-2670;3530:-2670;3530:-2820;"
+        "path": "1730:-2860;1750:-2860;1750:-3010;3530:-3010;3530:-2860;"
       },
       {
         "source": "EvaluacionProveedorDAL",
         "target": "ArchivoEvaluacion",
         "name": "",
         "kind": "Dependency",
-        "path": "3490:-2820;3530:-2820;"
+        "path": "3490:-2860;3530:-2860;"
       },
       {
         "source": "EvaluacionProveedorDAL",
         "target": "IEvaluacionProveedorRepository",
         "name": "",
         "kind": "Realization",
-        "path": "2650:-2820;2610:-2820;"
+        "path": "2650:-2860;2610:-2860;"
       },
       {
         "source": "DatosEvaluacion",
@@ -10067,7 +10223,7 @@
         "name": "",
         "sourceCardinality": "0..*",
         "targetCardinality": "1",
-        "path": "1770:-2410;1720:-2410;1720:-2160;860:-2160;860:-810;840:-810;840:-590;850:-590;"
+        "path": "1770:-2450;1770:-2190;860:-2190;860:-810;840:-810;840:-590;850:-590;"
       },
       {
         "source": "SolicitudEvaluacion",
@@ -10076,7 +10232,7 @@
         "name": "",
         "sourceCardinality": "0..*",
         "targetCardinality": "1",
-        "path": "890:-2410;890:-2170;840:-2170;840:-1350;870:-1350;870:-590;850:-590;"
+        "path": "890:-2450;890:-2200;840:-2200;840:-1360;870:-1360;870:-590;850:-590;"
       },
       {
         "source": "OfertaEvaluable",
@@ -10085,7 +10241,7 @@
         "name": "",
         "sourceCardinality": "0..*",
         "targetCardinality": "1",
-        "path": "2650:-2410;2640:-2410;2640:-340;840:-340;840:-180;850:-180;"
+        "path": "2650:-2450;2640:-2450;2640:-340;840:-340;840:-180;850:-180;"
       },
       {
         "source": "ResultadoProveedor",
@@ -10094,7 +10250,7 @@
         "name": "",
         "sourceCardinality": "0..*",
         "targetCardinality": "1",
-        "path": "3530:-2410;3480:-2410;3480:-350;870:-350;870:-180;850:-180;"
+        "path": "3530:-2450;3480:-2450;3480:-350;870:-350;870:-180;850:-180;"
       },
       {
         "source": "EvaluacionProveedor",
@@ -10103,7 +10259,7 @@
         "name": "",
         "sourceCardinality": "0..*",
         "targetCardinality": "0..1",
-        "path": "10:-2410;0:-2410;0:-180;10:-180;"
+        "path": "10:-2450;0:-2450;0:-180;10:-180;"
       },
       {
         "source": "EvaluacionProveedor",
@@ -10112,21 +10268,21 @@
         "name": "",
         "sourceCardinality": "0..*",
         "targetCardinality": "0..1",
-        "path": "850:-2410;840:-2410;840:-2180;2600:-2180;2600:-980;2620:-980;2620:-850;2600:-850;2600:-170;2650:-170;2650:-180;"
+        "path": "850:-2450;840:-2450;840:-2210;2600:-2210;2600:-980;2620:-980;2620:-850;2600:-850;2600:-170;2650:-170;2650:-180;"
       },
       {
         "source": "EvaluacionProveedorBLL",
         "target": "EvaluacionProveedor",
         "kind": "Dependency",
         "name": "",
-        "path": "890:-2820;840:-2820;840:-2410;850:-2410;"
+        "path": "890:-2860;840:-2860;840:-2450;850:-2450;"
       },
       {
         "source": "EvaluacionProveedorDAL",
         "target": "AprovisionamientoDAL",
         "kind": "Dependency",
         "name": "",
-        "path": "3490:-2820;3490:-1370;3530:-1370;3530:-1360;"
+        "path": "3490:-2860;3490:-1380;3530:-1380;3530:-1370;"
       }
     ],
     "notes": "Atributos y operaciones compartidos con G07-01. Firmas verificadas en el código. Las clases propuestas están identificadas explícitamente. Las BE conservan sus constructores y propiedades; la lógica reside en BLL."
@@ -11219,10 +11375,10 @@
     "kind": "Sequence",
     "nodes": [
       {
-        "key": "UC_Ventas",
-        "name": "UC_Ventas",
+        "key": "FormAltaCliente",
+        "name": "FormAltaCliente",
         "kind": "Object",
-        "classifier": "UC_Ventas",
+        "classifier": "FormAltaCliente",
         "x": 530,
         "y": 50,
         "w": 255,
@@ -11275,44 +11431,59 @@
     "links": [
       {
         "source": "Personal de Ventas",
-        "target": "UC_Ventas",
+        "target": "FormAltaCliente",
         "name": "Registrar cliente y adhesión",
         "kind": "Sequence",
         "callId": "actor-1",
         "isReturn": false,
         "returnType": "Resultado del alta y membresía",
         "actorInteraction": true,
+        "stateFlags": "ForceActivation=1;",
         "sequence": 1
       },
       {
-        "source": "UC_Ventas",
-        "target": "VentaBLL",
-        "name": "RegistrarCliente",
+        "source": "FormAltaCliente",
+        "target": "FormAltaCliente",
+        "name": "Guardar",
         "kind": "Sequence",
         "sequence": 2,
         "callId": 1,
         "isReturn": false,
+        "returnType": "void",
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
+      },
+      {
+        "source": "FormAltaCliente",
+        "target": "VentaBLL",
+        "name": "RegistrarCliente",
+        "kind": "Sequence",
+        "sequence": 3,
+        "callId": 2,
+        "isReturn": false,
         "returnType": "int",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "VentaBLL",
         "target": "VentaBLL",
         "name": "ValidarCliente",
         "kind": "Sequence",
-        "sequence": 3,
-        "callId": 2,
+        "sequence": 4,
+        "callId": 3,
         "isReturn": false,
         "returnType": "void",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "VentaBLL",
         "target": "VentaBLL",
         "name": "void",
         "kind": "Sequence",
-        "sequence": 4,
-        "replyTo": 2,
+        "sequence": 5,
+        "replyTo": 3,
         "isReturn": true,
         "returnType": "void",
         "proposed": false
@@ -11322,19 +11493,20 @@
         "target": "VentaDAL",
         "name": "BuscarClientePorEmail",
         "kind": "Sequence",
-        "sequence": 5,
-        "callId": 3,
+        "sequence": 6,
+        "callId": 4,
         "isReturn": false,
         "returnType": "Cliente",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "VentaDAL",
         "target": "VentaBLL",
         "name": "Cliente",
         "kind": "Sequence",
-        "sequence": 6,
-        "replyTo": 3,
+        "sequence": 7,
+        "replyTo": 4,
         "isReturn": true,
         "returnType": "Cliente",
         "proposed": false
@@ -11344,19 +11516,20 @@
         "target": "VentaDAL",
         "name": "GuardarCliente",
         "kind": "Sequence",
-        "sequence": 7,
-        "callId": 4,
+        "sequence": 8,
+        "callId": 5,
         "isReturn": false,
         "returnType": "int",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "VentaDAL",
         "target": "VentaBLL",
         "name": "int",
         "kind": "Sequence",
-        "sequence": 8,
-        "replyTo": 4,
+        "sequence": 9,
+        "replyTo": 5,
         "isReturn": true,
         "returnType": "int",
         "proposed": false
@@ -11366,19 +11539,20 @@
         "target": "VentaDAL",
         "name": "CrearMembresia",
         "kind": "Sequence",
-        "sequence": 9,
-        "callId": 5,
+        "sequence": 10,
+        "callId": 6,
         "isReturn": false,
         "returnType": "int",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "VentaDAL",
         "target": "VentaBLL",
         "name": "int",
         "kind": "Sequence",
-        "sequence": 10,
-        "replyTo": 5,
+        "sequence": 11,
+        "replyTo": 6,
         "isReturn": true,
         "returnType": "int",
         "proposed": false
@@ -11388,58 +11562,48 @@
         "target": "RegistroActividadBitacora",
         "name": "Registrar",
         "kind": "Sequence",
-        "sequence": 11,
-        "callId": 6,
+        "sequence": 12,
+        "callId": 7,
         "isReturn": false,
         "returnType": "void",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "RegistroActividadBitacora",
         "target": "VentaBLL",
         "name": "void",
         "kind": "Sequence",
-        "sequence": 12,
-        "replyTo": 6,
-        "isReturn": true,
-        "returnType": "void",
-        "proposed": false
-      },
-      {
-        "source": "VentaBLL",
-        "target": "UC_Ventas",
-        "name": "int",
-        "kind": "Sequence",
         "sequence": 13,
-        "replyTo": 1,
-        "isReturn": true,
-        "returnType": "int",
-        "proposed": false
-      },
-      {
-        "source": "UC_Ventas",
-        "target": "UC_Ventas",
-        "name": "Notificar",
-        "kind": "Sequence",
-        "sequence": 14,
-        "callId": 7,
-        "isReturn": false,
-        "returnType": "void",
-        "proposed": false
-      },
-      {
-        "source": "UC_Ventas",
-        "target": "UC_Ventas",
-        "name": "void",
-        "kind": "Sequence",
-        "sequence": 15,
         "replyTo": 7,
         "isReturn": true,
         "returnType": "void",
         "proposed": false
       },
       {
-        "source": "UC_Ventas",
+        "source": "VentaBLL",
+        "target": "FormAltaCliente",
+        "name": "int",
+        "kind": "Sequence",
+        "sequence": 14,
+        "replyTo": 2,
+        "isReturn": true,
+        "returnType": "int",
+        "proposed": false
+      },
+      {
+        "source": "FormAltaCliente",
+        "target": "FormAltaCliente",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 15,
+        "replyTo": 1,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "FormAltaCliente",
         "target": "Personal de Ventas",
         "name": "Resultado del alta y membresía",
         "kind": "Sequence",
@@ -11453,15 +11617,15 @@
     "frames": [
       {
         "kind": 1,
-        "first": 9,
-        "last": 10,
+        "first": 10,
+        "last": 11,
         "guards": [
           "crearMembresia"
         ],
         "size": 50
       }
     ],
-    "notes": "Realización en clases. Las llamadas usan nombres exactos de operaciones. Cada respuesta discontinua vuelve al emisor de la llamada e indica su tipo de retorno; void representa fin de ejecución sin valor. Los retornos corresponden al flujo normal; las excepciones se describen en las notas. El consentimiento de marketing se conserva en Cliente.AutorizaMarketing. NombreCompleto es propiedad calculada, no método. Datos inválidos o correo duplicado producen excepción y la UI llama a Notificar(error.Message, true). El orden de llamadas refleja el código, no una transacción de alta inexistente. Los actores organizacionales inician las solicitudes y reciben el resultado visible; sus mensajes expresan acciones de usuario, no métodos C#. Las líneas de vida internas conservan clases, operaciones y retornos tipados."
+    "notes": "Realización en clases. Las llamadas usan nombres exactos de operaciones. Cada respuesta discontinua vuelve al emisor de la llamada e indica su tipo de retorno; void representa fin de ejecución sin valor. Los retornos corresponden al flujo normal; las excepciones se describen en las notas. UC_Ventas.NuevoCliente abre FormAltaCliente. Guardar confirma el alta; al volver con DialogResult.OK, UC_Ventas selecciona ClienteCreado. El consentimiento de marketing se conserva en Cliente.AutorizaMarketing. Datos inválidos o correo duplicado se muestran junto al formulario, que permanece abierto. Cancelar no registra datos. No se representa una transacción de alta inexistente. Los actores organizacionales inician las solicitudes y reciben el resultado visible; sus mensajes expresan acciones de usuario, no métodos C#. Las líneas de vida internas conservan clases, operaciones y retornos tipados."
   },
   {
     "code": "N02-06b",
@@ -11548,54 +11712,70 @@
       {
         "source": "Personal de Ventas",
         "target": "UC_Ventas",
-        "name": "Confirmar venta",
+        "name": "Revisar productos, cliente e importes",
         "kind": "Sequence",
         "callId": "actor-1",
         "isReturn": false,
-        "returnType": "Venta confirmada o motivo de rechazo",
+        "returnType": "Subtotal, descuento y total",
         "actorInteraction": true,
+        "stateFlags": "ForceActivation=1;",
         "sequence": 1
       },
       {
         "source": "UC_Ventas",
         "target": "UC_Ventas",
-        "name": "ConfirmarVenta",
+        "name": "ActualizarTotales",
         "kind": "Sequence",
         "sequence": 2,
         "callId": 1,
         "isReturn": false,
         "returnType": "void",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "UC_Ventas",
         "target": "VentaBLL",
-        "name": "RegistrarVenta",
+        "name": "CotizarVenta",
         "kind": "Sequence",
         "sequence": 3,
         "callId": 2,
         "isReturn": false,
-        "returnType": "int",
-        "proposed": false
+        "returnType": "void",
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
+      },
+      {
+        "source": "VentaBLL",
+        "target": "VentaBLL",
+        "name": "CalcularVenta",
+        "kind": "Sequence",
+        "sequence": 4,
+        "callId": 3,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "VentaBLL",
         "target": "VentaDAL",
         "name": "ObtenerMembresiaActiva",
         "kind": "Sequence",
-        "sequence": 4,
-        "callId": 3,
+        "sequence": 5,
+        "callId": 4,
         "isReturn": false,
         "returnType": "Membresia",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "VentaDAL",
         "target": "VentaBLL",
         "name": "Membresia",
         "kind": "Sequence",
-        "sequence": 5,
-        "replyTo": 3,
+        "sequence": 6,
+        "replyTo": 4,
         "isReturn": true,
         "returnType": "Membresia",
         "proposed": false
@@ -11605,19 +11785,20 @@
         "target": "ProductoDAL",
         "name": "Obtener",
         "kind": "Sequence",
-        "sequence": 6,
-        "callId": 4,
+        "sequence": 7,
+        "callId": 5,
         "isReturn": false,
         "returnType": "Producto",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "ProductoDAL",
         "target": "VentaBLL",
         "name": "Producto",
         "kind": "Sequence",
-        "sequence": 7,
-        "replyTo": 4,
+        "sequence": 8,
+        "replyTo": 5,
         "isReturn": true,
         "returnType": "Producto",
         "proposed": false
@@ -11627,21 +11808,125 @@
         "target": "InventarioDAL",
         "name": "ObtenerLotesDisponibles",
         "kind": "Sequence",
-        "sequence": 8,
-        "callId": 5,
+        "sequence": 9,
+        "callId": 6,
         "isReturn": false,
         "returnType": "IList<Lote>",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "InventarioDAL",
         "target": "VentaBLL",
         "name": "IList<Lote>",
         "kind": "Sequence",
-        "sequence": 9,
-        "replyTo": 5,
+        "sequence": 10,
+        "replyTo": 6,
         "isReturn": true,
         "returnType": "IList<Lote>",
+        "proposed": false
+      },
+      {
+        "source": "VentaBLL",
+        "target": "VentaBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 11,
+        "replyTo": 3,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "VentaBLL",
+        "target": "UC_Ventas",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 12,
+        "replyTo": 2,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "UC_Ventas",
+        "target": "UC_Ventas",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 13,
+        "replyTo": 1,
+        "isReturn": true,
+        "returnType": "void",
+        "proposed": false
+      },
+      {
+        "source": "UC_Ventas",
+        "target": "Personal de Ventas",
+        "name": "Subtotal, descuento y total",
+        "kind": "Sequence",
+        "replyTo": "actor-1",
+        "isReturn": true,
+        "returnType": "Subtotal, descuento y total",
+        "actorInteraction": true,
+        "sequence": 14
+      },
+      {
+        "source": "Personal de Ventas",
+        "target": "UC_Ventas",
+        "name": "Confirmar venta",
+        "kind": "Sequence",
+        "callId": "actor-7",
+        "isReturn": false,
+        "returnType": "Venta confirmada o motivo de rechazo",
+        "actorInteraction": true,
+        "stateFlags": "ForceActivation=1;",
+        "sequence": 15
+      },
+      {
+        "source": "UC_Ventas",
+        "target": "UC_Ventas",
+        "name": "ConfirmarVenta",
+        "kind": "Sequence",
+        "sequence": 16,
+        "callId": 7,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
+      },
+      {
+        "source": "UC_Ventas",
+        "target": "VentaBLL",
+        "name": "RegistrarVenta",
+        "kind": "Sequence",
+        "sequence": 17,
+        "callId": 8,
+        "isReturn": false,
+        "returnType": "int",
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
+      },
+      {
+        "source": "VentaBLL",
+        "target": "VentaBLL",
+        "name": "CalcularVenta",
+        "kind": "Sequence",
+        "sequence": 18,
+        "callId": 9,
+        "isReturn": false,
+        "returnType": "void",
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
+      },
+      {
+        "source": "VentaBLL",
+        "target": "VentaBLL",
+        "name": "void",
+        "kind": "Sequence",
+        "sequence": 19,
+        "replyTo": 9,
+        "isReturn": true,
+        "returnType": "void",
         "proposed": false
       },
       {
@@ -11649,30 +11934,32 @@
         "target": "VentaDAL",
         "name": "RegistrarVenta",
         "kind": "Sequence",
-        "sequence": 10,
-        "callId": 6,
+        "sequence": 20,
+        "callId": 10,
         "isReturn": false,
         "returnType": "int",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "VentaDAL",
         "target": "VentaDAL",
         "name": "InsertarVenta",
         "kind": "Sequence",
-        "sequence": 11,
-        "callId": 7,
+        "sequence": 21,
+        "callId": 11,
         "isReturn": false,
         "returnType": "int",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "VentaDAL",
         "target": "VentaDAL",
         "name": "int",
         "kind": "Sequence",
-        "sequence": 12,
-        "replyTo": 7,
+        "sequence": 22,
+        "replyTo": 11,
         "isReturn": true,
         "returnType": "int",
         "proposed": false
@@ -11682,19 +11969,20 @@
         "target": "VentaDAL",
         "name": "InsertarDetalle",
         "kind": "Sequence",
-        "sequence": 13,
-        "callId": 8,
+        "sequence": 23,
+        "callId": 12,
         "isReturn": false,
         "returnType": "void",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "VentaDAL",
         "target": "VentaDAL",
         "name": "void",
         "kind": "Sequence",
-        "sequence": 14,
-        "replyTo": 8,
+        "sequence": 24,
+        "replyTo": 12,
         "isReturn": true,
         "returnType": "void",
         "proposed": false
@@ -11704,19 +11992,20 @@
         "target": "InventarioDAL",
         "name": "InsertarMovimiento",
         "kind": "Sequence",
-        "sequence": 15,
-        "callId": 9,
+        "sequence": 25,
+        "callId": 13,
         "isReturn": false,
         "returnType": "void",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "InventarioDAL",
         "target": "VentaDAL",
         "name": "void",
         "kind": "Sequence",
-        "sequence": 16,
-        "replyTo": 9,
+        "sequence": 26,
+        "replyTo": 13,
         "isReturn": true,
         "returnType": "void",
         "proposed": false
@@ -11726,8 +12015,8 @@
         "target": "VentaBLL",
         "name": "int",
         "kind": "Sequence",
-        "sequence": 17,
-        "replyTo": 6,
+        "sequence": 27,
+        "replyTo": 10,
         "isReturn": true,
         "returnType": "int",
         "proposed": false
@@ -11737,19 +12026,20 @@
         "target": "RegistroActividadBitacora",
         "name": "Registrar",
         "kind": "Sequence",
-        "sequence": 18,
-        "callId": 10,
+        "sequence": 28,
+        "callId": 14,
         "isReturn": false,
         "returnType": "void",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "RegistroActividadBitacora",
         "target": "VentaBLL",
         "name": "void",
         "kind": "Sequence",
-        "sequence": 19,
-        "replyTo": 10,
+        "sequence": 29,
+        "replyTo": 14,
         "isReturn": true,
         "returnType": "void",
         "proposed": false
@@ -11759,8 +12049,8 @@
         "target": "UC_Ventas",
         "name": "int",
         "kind": "Sequence",
-        "sequence": 20,
-        "replyTo": 2,
+        "sequence": 30,
+        "replyTo": 8,
         "isReturn": true,
         "returnType": "int",
         "proposed": false
@@ -11770,19 +12060,20 @@
         "target": "UC_Ventas",
         "name": "Notificar",
         "kind": "Sequence",
-        "sequence": 21,
-        "callId": 11,
+        "sequence": 31,
+        "callId": 15,
         "isReturn": false,
         "returnType": "void",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "UC_Ventas",
         "target": "UC_Ventas",
         "name": "void",
         "kind": "Sequence",
-        "sequence": 22,
-        "replyTo": 11,
+        "sequence": 32,
+        "replyTo": 15,
         "isReturn": true,
         "returnType": "void",
         "proposed": false
@@ -11792,8 +12083,8 @@
         "target": "UC_Ventas",
         "name": "void",
         "kind": "Sequence",
-        "sequence": 23,
-        "replyTo": 1,
+        "sequence": 33,
+        "replyTo": 7,
         "isReturn": true,
         "returnType": "void",
         "proposed": false
@@ -11803,18 +12094,18 @@
         "target": "Personal de Ventas",
         "name": "Venta confirmada o motivo de rechazo",
         "kind": "Sequence",
-        "replyTo": "actor-1",
+        "replyTo": "actor-7",
         "isReturn": true,
         "returnType": "Venta confirmada o motivo de rechazo",
         "actorInteraction": true,
-        "sequence": 24
+        "sequence": 34
       }
     ],
     "frames": [
       {
         "kind": 1,
-        "first": 4,
-        "last": 5,
+        "first": 5,
+        "last": 6,
         "guards": [
           "IdCliente.HasValue"
         ],
@@ -11822,8 +12113,8 @@
       },
       {
         "kind": 4,
-        "first": 6,
-        "last": 9,
+        "first": 7,
+        "last": 10,
         "guards": [
           "Por producto"
         ],
@@ -11831,15 +12122,15 @@
       },
       {
         "kind": 4,
-        "first": 13,
-        "last": 16,
+        "first": 23,
+        "last": 26,
         "guards": [
           "Por detalle FEFO"
         ],
         "size": 70
       }
     ],
-    "notes": "Realización en clases. Las llamadas usan nombres exactos de operaciones. Cada respuesta discontinua vuelve al emisor de la llamada e indica su tipo de retorno; void representa fin de ejecución sin valor. Los retornos corresponden al flujo normal; las excepciones se describen en las notas. RegistrarVenta de BLL calcula FEFO, descuento y totales dentro del método. VentaDAL descuenta stock mediante SQL en su transacción, no invoca DescontarStockLote. Fallos de stock cancelan la persistencia; los métodos de UI notifican el error. Los actores organizacionales inician las solicitudes y reciben el resultado visible; sus mensajes expresan acciones de usuario, no métodos C#. Las líneas de vida internas conservan clases, operaciones y retornos tipados."
+    "notes": "Realización en clases. Las llamadas usan nombres exactos de operaciones. Cada respuesta discontinua vuelve al emisor de la llamada e indica su tipo de retorno; void representa fin de ejecución sin valor. Los retornos corresponden al flujo normal; las excepciones se describen en las notas. CotizarVenta comparte CalcularVenta con el registro y no escribe ventas ni stock. ConfirmarVenta vuelve a actualizar los importes; se omite esa repetición de ActualizarTotales. RegistrarVenta usa la sobrecarga con subtotalEsperado y descuentoEsperado, recalcula y rechaza diferencias antes de persistir. En su segundo CalcularVenta se repiten las consultas de membresía, producto y lotes ya detalladas en la vista previa. VentaDAL descuenta stock por SQL en su transacción. Al guardar se limpian carrito y cliente; los errores mantienen la venta en preparación y se muestran junto al formulario. Los actores organizacionales inician las solicitudes y reciben el resultado visible; sus mensajes expresan acciones de usuario, no métodos C#. Las líneas de vida internas conservan clases, operaciones y retornos tipados."
   },
   {
     "code": "N02-06c",
@@ -11847,10 +12138,10 @@
     "kind": "Sequence",
     "nodes": [
       {
-        "key": "UC_Ventas",
-        "name": "UC_Ventas",
+        "key": "FormAltaCliente",
+        "name": "FormAltaCliente",
         "kind": "Object",
-        "classifier": "UC_Ventas",
+        "classifier": "FormAltaCliente",
         "x": 840,
         "y": 50,
         "w": 255,
@@ -11912,17 +12203,18 @@
     "links": [
       {
         "source": "Personal de Ventas",
-        "target": "UC_Ventas",
+        "target": "FormAltaCliente",
         "name": "Registrar consentimiento",
         "kind": "Sequence",
         "callId": "actor-1",
         "isReturn": false,
         "returnType": "Resultado del registro",
         "actorInteraction": true,
+        "stateFlags": "ForceActivation=1;",
         "sequence": 1
       },
       {
-        "source": "UC_Ventas",
+        "source": "FormAltaCliente",
         "target": "VentaBLL",
         "name": "RegistrarCliente",
         "kind": "Sequence",
@@ -11930,7 +12222,8 @@
         "callId": 1,
         "isReturn": false,
         "returnType": "int",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "VentaBLL",
@@ -11941,7 +12234,8 @@
         "callId": 2,
         "isReturn": false,
         "returnType": "int",
-        "proposed": false
+        "proposed": false,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "VentaDAL",
@@ -11956,7 +12250,7 @@
       },
       {
         "source": "VentaBLL",
-        "target": "UC_Ventas",
+        "target": "FormAltaCliente",
         "name": "int",
         "kind": "Sequence",
         "sequence": 5,
@@ -11966,7 +12260,7 @@
         "proposed": false
       },
       {
-        "source": "UC_Ventas",
+        "source": "FormAltaCliente",
         "target": "Personal de Ventas",
         "name": "Resultado del registro",
         "kind": "Sequence",
@@ -11985,6 +12279,7 @@
         "isReturn": false,
         "returnType": "Resultado de campaña",
         "actorInteraction": true,
+        "stateFlags": "ForceActivation=1;",
         "sequence": 7
       },
       {
@@ -11996,7 +12291,8 @@
         "callId": 3,
         "isReturn": false,
         "returnType": "List<Cliente>",
-        "proposed": true
+        "proposed": true,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "MarketingBLL",
@@ -12018,7 +12314,8 @@
         "callId": 4,
         "isReturn": false,
         "returnType": "string",
-        "proposed": true
+        "proposed": true,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "MarketingBLL",
@@ -12040,7 +12337,8 @@
         "callId": 5,
         "isReturn": false,
         "returnType": "void",
-        "proposed": true
+        "proposed": true,
+        "stateFlags": "ForceActivation=1;"
       },
       {
         "source": "MarketingBLL",
@@ -12158,8 +12456,8 @@
         "isReturn": false,
         "returnType": "Comparación guardada / error",
         "actorInteraction": true,
-        "sequence": 1,
-        "stateFlags": "ForceActivation=1;"
+        "stateFlags": "ForceActivation=1;",
+        "sequence": 1
       },
       {
         "source": "UC_EvaluacionProveedores",
@@ -12357,8 +12655,8 @@
         "isReturn": false,
         "returnType": "Decisión fundamentada / error",
         "actorInteraction": true,
-        "sequence": 19,
-        "stateFlags": "ForceActivation=1;"
+        "stateFlags": "ForceActivation=1;",
+        "sequence": 19
       },
       {
         "source": "UC_EvaluacionProveedores",
@@ -12534,8 +12832,8 @@
         "isReturn": false,
         "returnType": "Número de orden / error",
         "actorInteraction": true,
-        "sequence": 35,
-        "stateFlags": "ForceActivation=1;"
+        "stateFlags": "ForceActivation=1;",
+        "sequence": 35
       },
       {
         "source": "UC_EvaluacionProveedores",
@@ -12736,6 +13034,6 @@
         "size": 280
       }
     ],
-    "notes": "Realización en clases. Las llamadas usan nombres exactos de operaciones. Cada respuesta discontinua vuelve al emisor de la llamada e indica su tipo de retorno; void representa fin de ejecución sin valor. Los retornos corresponden al flujo normal; las excepciones se describen en las notas. Implementación N03: comparar y guardar evidencia, confirmar una oferta elegible con fundamento, crear un único borrador. Se muestran las colaboraciones principales; se omiten consultas auxiliares de refresco e historial. ObtenerDatos y las escrituras usan transacciones serializables. ComprobarVigencia rechaza cambios de datos o de fecha antes de escribir. Reintentar CrearOrdenBorrador devuelve el ID existente; no emite, aprueba ni recepciona la orden. Las respuestas void de UI representan finalización; las excepciones se comunican al actor mediante Ejecutar/Informar. Los actores organizacionales inician las solicitudes y reciben el resultado visible; sus mensajes expresan acciones de usuario, no métodos C#. Las líneas de vida internas conservan clases, operaciones y retornos tipados."
+    "notes": "Realización en clases. Las llamadas usan nombres exactos de operaciones. Cada respuesta discontinua vuelve al emisor de la llamada e indica su tipo de retorno; void representa fin de ejecución sin valor. Los retornos corresponden al flujo normal; las excepciones se describen en las notas. Implementación N03: comparar y guardar evidencia, confirmar una oferta elegible con fundamento, crear un único borrador. Se muestran las colaboraciones principales; se omiten consultas auxiliares de refresco e historial. ObtenerDatos y las escrituras usan transacciones serializables. ComprobarVigencia rechaza cambios de datos o de fecha antes de escribir. Reintentar CrearOrdenBorrador devuelve el ID existente; no emite, aprueba ni recepciona la orden. Una vez vinculado el borrador, CrearOrden de UI solicita AbrirOrdenSolicitada y UC_Aprovisionamiento.AbrirOrden selecciona esa orden; no se llama otra vez a crear la compra. Adoptar una cantidad sugerida inicia otra comparación antes de confirmar. Las respuestas void de UI representan finalización; las excepciones se comunican al actor mediante Ejecutar/Informar. Los actores organizacionales inician las solicitudes y reciben el resultado visible; sus mensajes expresan acciones de usuario, no métodos C#. Las líneas de vida internas conservan clases, operaciones y retornos tipados."
   }
 ]

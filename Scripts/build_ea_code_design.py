@@ -90,7 +90,7 @@ for name in ["Componente", "Familia", "Patente"]:
     load_class(name, f"BE/Seguridad/{name}.cs", include_fields=True)
 for name in ["AprovisionamientoBLL", "InventarioBLL", "VentaBLL", "ProveedorBLL", "ProductoBLL", "RegistroActividadBitacora"]:
     extras = {"AprovisionamientoBLL": ["ValidarCotizacion", "ValidarOrdenPreliminar", "CambiarEstado"],
-              "InventarioBLL": ["ValidarLote"], "VentaBLL": ["ValidarCliente"]}.get(name, [])
+              "InventarioBLL": ["ValidarLote"], "VentaBLL": ["ValidarCliente", "CalcularVenta"]}.get(name, [])
     load_class(name, f"BLL/{name}.cs", extras, include_fields=True)
 for name in ["IAprovisionamientoRepository", "IInventarioRepository", "IProductoRepository", "IProveedorRepository", "IVentaRepository", "IRegistroActividad"]:
     folder = "BE" if name == "IRegistroActividad" else "DAL"
@@ -98,7 +98,8 @@ for name in ["IAprovisionamientoRepository", "IInventarioRepository", "IProducto
 for name in ["AprovisionamientoDAL", "InventarioDAL", "VentaDAL", "ProductoDAL", "ProveedorDAL"]:
     load_class(name, f"DAL/{name}.cs", ["InsertarLote", "InsertarMovimiento", "InsertarVenta", "InsertarDetalle"])
 for name in ["UC_Aprovisionamiento", "UC_Ventas"]:
-    load_class(name, f"UI/UserControls/{name}.cs", ["RegistrarCotizacion", "CrearOrden", "EnviarRevision", "AprobarOrden", "RechazarOrden", "EmitirOrden", "RegistrarRecepcion", "ConsultarInventario", "RegistrarCliente", "BuscarCliente", "ConfirmarVenta", "Notificar", "MostrarError"])
+    load_class(name, f"UI/UserControls/{name}.cs", ["RegistrarCotizacion", "CrearOrden", "EnviarRevision", "AprobarOrden", "RechazarOrden", "EmitirOrden", "RegistrarRecepcion", "ConsultarInventario", "NuevoCliente", "BuscarCliente", "ConfirmarVenta", "ActualizarTotales", "Notificar", "MostrarError"])
+load_class('FormAltaCliente', 'UI/FormAltaCliente.cs', ['Guardar'])
 
 for name in ['SolicitudEvaluacion', 'DatosEvaluacion', 'OfertaEvaluable', 'ResultadoProveedor', 'EvaluacionProveedor', 'ResumenEvaluacion']:
     load_class(name, 'BE/EvaluacionProveedor.cs')
@@ -221,8 +222,8 @@ class_view("G07-01", global_names, columns=5, links=normalize_links(global_links
 SEQUENCE_ENDS = {
     "N01-06a": {1:3, 4:6, 7:11, 10:11, 12:14, 13:14, 15:17, 16:17, 18:21, 19:20},
     "N01-06b": {1:7, 4:6, 8:9, 10:11},
-    "N02-06a": {1:6},
-    "N02-06b": {1:11, 2:10, 6:9},
+    "N02-06a": {1:7, 2:7},
+    "N02-06b": {1:6, 2:6, 3:6, 7:15, 8:14, 10:13},
     "N02-06c": {1:2},
     "N03-06": {1:8,2:8,5:6,7:8,9:15,10:15,12:15,13:15,16:23,17:22,18:22,19:21},
 }
@@ -232,7 +233,7 @@ ACTOR_GROUPS = {
     'N01-06a': [(1,3,'Dueño / Departamento de Compras','Registrar cotización','Cotización registrada'),(4,6,'Dueño / Departamento de Compras','Preparar orden','OrdenCompra'),(7,11,'Dueño / Departamento de Compras','Enviar a revisión','Estado de la orden'),(12,14,'Equipo de Contabilidad','Rechazar compra','Estado de la orden'),(15,17,'Equipo de Contabilidad','Aprobar compra','Estado de la orden'),(18,21,'Dueño / Departamento de Compras','Emitir orden aprobada','Estado de la orden')],
     'N01-06b': [(1,7,'Recepción / Depósito','Confirmar recepción','Resultado de recepción'),(8,9,'Recepción / Depósito','Consultar existencias','int'),(10,11,'Recepción / Depósito','Consultar origen','Trazabilidad del lote')],
     'N02-06a': [(1,7,'Personal de Ventas','Registrar cliente y adhesión','Resultado del alta y membresía')],
-    'N02-06b': [(1,11,'Personal de Ventas','Confirmar venta','Venta confirmada o motivo de rechazo')],
+    'N02-06b': [(1,6,'Personal de Ventas','Revisar productos, cliente e importes','Subtotal, descuento y total'),(7,15,'Personal de Ventas','Confirmar venta','Venta confirmada o motivo de rechazo')],
     'N02-06c': [(1,2,'Personal de Ventas','Registrar consentimiento','Resultado del registro'),(3,5,'Responsable de Marketing','Solicitar campaña autorizada','Resultado de campaña')],
     'N03-06': [(1,8,'Dueño / Departamento de Compras','Comparar proveedores','Comparación guardada / error'),
         (9,15,'Dueño / Departamento de Compras','Confirmar proveedor','Decisión fundamentada / error'),
@@ -258,6 +259,8 @@ def sequence(code, participants, calls, frames=(), notes=""):
         call = dict(source=a, target=b, name=name, kind="Sequence", sequence=len(d["links"])+1,
                     callId=i, isReturn=False, returnType=types.pop(),
                     proposed=bool(registry[b].get("proposed")))
+        if code.startswith('N02-06'):
+            call['stateFlags'] = 'ForceActivation=1;'
         starts[i] = call["sequence"]
         d["links"].append(call)
         stack.append(dict(call, end=end))
@@ -287,7 +290,7 @@ def sequence(code, participants, calls, frames=(), notes=""):
         target = calls[first-1][0]
         key = 'actor-'+str(first)
         before[starts[first]] = dict(source=actor,target=target,name=request,kind='Sequence',callId=key,isReturn=False,returnType=outcome,actorInteraction=True)
-        if code == 'N03-06':
+        if code == 'N03-06' or code.startswith('N02-06'):
             before[starts[first]]['stateFlags'] = 'ForceActivation=1;'
         closing=max(returns[j] for j in range(first,last+1))
         after[closing] = dict(source=target,target=actor,name=outcome,kind='Sequence',replyTo=key,isReturn=True,returnType=outcome,actorInteraction=True)
@@ -337,21 +340,24 @@ sequence("N01-06b", [U,A,D,I,"InventarioDAL",R], [
     (U,I,"ObtenerTrazabilidad"),(I,"InventarioDAL","ObtenerTrazabilidad")],
     [dict(kind=4, first=5, last=6, guards=["Por lote recibido"], size=70)],
     "Los controles de pertenencia y cantidad se realizan dentro de RecepcionarMercaderia. RegistrarRecepcion usa una transacción y actualiza el estado parcial/completo; no llama a RegistrarIngresoLote. ConsultarInventario permite verificar stock y trazabilidad después de la recepción.")
-U,V,VD = "UC_Ventas", "VentaBLL", "VentaDAL"
+U,V,VD = "FormAltaCliente", "VentaBLL", "VentaDAL"
 sequence("N02-06a", [U,V,VD,R], [
-    (U,V,"RegistrarCliente"),(V,V,"ValidarCliente"),(V,VD,"BuscarClientePorEmail"),(V,VD,"GuardarCliente"),
-    (V,VD,"CrearMembresia"),(V,R,"Registrar"),(U,U,"Notificar")],
-    [dict(kind=1, first=5, last=5, guards=["crearMembresia"], size=50)],
-    "El consentimiento de marketing se conserva en Cliente.AutorizaMarketing. NombreCompleto es propiedad calculada, no método. Datos inválidos o correo duplicado producen excepción y la UI llama a Notificar(error.Message, true). El orden de llamadas refleja el código, no una transacción de alta inexistente.")
+    (U,U,"Guardar"),(U,V,"RegistrarCliente"),(V,V,"ValidarCliente"),(V,VD,"BuscarClientePorEmail"),(V,VD,"GuardarCliente"),
+    (V,VD,"CrearMembresia"),(V,R,"Registrar")],
+    [dict(kind=1, first=6, last=6, guards=["crearMembresia"], size=50)],
+    "UC_Ventas.NuevoCliente abre FormAltaCliente. Guardar confirma el alta; al volver con DialogResult.OK, UC_Ventas selecciona ClienteCreado. El consentimiento de marketing se conserva en Cliente.AutorizaMarketing. Datos inválidos o correo duplicado se muestran junto al formulario, que permanece abierto. Cancelar no registra datos. No se representa una transacción de alta inexistente.")
+U='UC_Ventas'
 sequence("N02-06b", [U,V,VD,"ProductoDAL","InventarioDAL",R], [
-    (U,U,"ConfirmarVenta"),(U,V,"RegistrarVenta"),(V,VD,"ObtenerMembresiaActiva"),
+    (U,U,"ActualizarTotales"),(U,V,"CotizarVenta"),(V,V,"CalcularVenta"),(V,VD,"ObtenerMembresiaActiva"),
     (V,"ProductoDAL","Obtener"),(V,"InventarioDAL","ObtenerLotesDisponibles"),
+    (U,U,"ConfirmarVenta"),(U,V,"RegistrarVenta"),(V,V,"CalcularVenta"),
     (V,VD,"RegistrarVenta"),(VD,VD,"InsertarVenta"),(VD,VD,"InsertarDetalle"),
     (VD,"InventarioDAL","InsertarMovimiento"),(V,R,"Registrar"),(U,U,"Notificar")],
-    [dict(kind=1, first=3, last=3, guards=["IdCliente.HasValue"], size=50),
-     dict(kind=4, first=4, last=5, guards=["Por producto"], size=70),
-     dict(kind=4, first=8, last=9, guards=["Por detalle FEFO"], size=70)],
-    "RegistrarVenta de BLL calcula FEFO, descuento y totales dentro del método. VentaDAL descuenta stock mediante SQL en su transacción, no invoca DescontarStockLote. Fallos de stock cancelan la persistencia; los métodos de UI notifican el error.")
+    [dict(kind=1, first=4, last=4, guards=["IdCliente.HasValue"], size=50),
+     dict(kind=4, first=5, last=6, guards=["Por producto"], size=70),
+     dict(kind=4, first=12, last=13, guards=["Por detalle FEFO"], size=70)],
+    "CotizarVenta comparte CalcularVenta con el registro y no escribe ventas ni stock. ConfirmarVenta vuelve a actualizar los importes; se omite esa repetición de ActualizarTotales. RegistrarVenta usa la sobrecarga con subtotalEsperado y descuentoEsperado, recalcula y rechaza diferencias antes de persistir. En su segundo CalcularVenta se repiten las consultas de membresía, producto y lotes ya detalladas en la vista previa. VentaDAL descuenta stock por SQL en su transacción. Al guardar se limpian carrito y cliente; los errores mantienen la venta en preparación y se muestran junto al formulario.")
+U='FormAltaCliente'
 sequence("N02-06c", [U,V,VD,"MarketingBLL"], [
     (U,V,"RegistrarCliente"),(V,VD,"GuardarCliente"),
     ("MarketingBLL","MarketingBLL","SeleccionarDestinatarios"),
@@ -364,7 +370,7 @@ sequence("N03-06", [U,E,D,F,P], [
     (U,U,'Comparar'),(U,E,'Evaluar'),(E,E,'ValidarEvaluacion'),(E,D,'ObtenerDatos'),(E,E,'Calcular'),(E,F,'Firma'),(E,D,'GuardarEvaluacion'),(D,F,'Serializar'),
     (U,U,'Confirmar'),(U,E,'SeleccionarPrioritario'),(E,E,'Obtener'),(E,D,'SeleccionarPrioritario'),(D,D,'ComprobarVigencia'),(D,D,'LeerDatos'),(D,F,'Firma'),
     (U,U,'CrearOrden'),(U,E,'CrearOrdenBorrador'),(E,D,'CrearOrdenBorrador'),(D,D,'ComprobarVigencia'),(D,D,'LeerDatos'),(D,F,'Firma'),(D,P,'InsertarOrden'),(U,E,'Obtener')],
-    [dict(kind=1, first=19, last=22, guards=['No hay orden vinculada; datos vigentes'], size=280)], "Implementación N03: comparar y guardar evidencia, confirmar una oferta elegible con fundamento, crear un único borrador. Se muestran las colaboraciones principales; se omiten consultas auxiliares de refresco e historial. ObtenerDatos y las escrituras usan transacciones serializables. ComprobarVigencia rechaza cambios de datos o de fecha antes de escribir. Reintentar CrearOrdenBorrador devuelve el ID existente; no emite, aprueba ni recepciona la orden. Las respuestas void de UI representan finalización; las excepciones se comunican al actor mediante Ejecutar/Informar.")
+    [dict(kind=1, first=19, last=22, guards=['No hay orden vinculada; datos vigentes'], size=280)], "Implementación N03: comparar y guardar evidencia, confirmar una oferta elegible con fundamento, crear un único borrador. Se muestran las colaboraciones principales; se omiten consultas auxiliares de refresco e historial. ObtenerDatos y las escrituras usan transacciones serializables. ComprobarVigencia rechaza cambios de datos o de fecha antes de escribir. Reintentar CrearOrdenBorrador devuelve el ID existente; no emite, aprueba ni recepciona la orden. Una vez vinculado el borrador, CrearOrden de UI solicita AbrirOrdenSolicitada y UC_Aprovisionamiento.AbrirOrden selecciona esa orden; no se llama otra vez a crear la compra. Adoptar una cantidad sugerida inicia otra comparación antes de confirmar. Las respuestas void de UI representan finalización; las excepciones se comunican al actor mediante Ejecutar/Informar.")
 
 # Verify repeated class representations are generated from one definition.
 for d in diagrams:

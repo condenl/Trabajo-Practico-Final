@@ -18,6 +18,10 @@ Las órdenes se pueden filtrar por **proveedor, estado y fechas**. PDF y XML usa
 
 En **Usuarios**, **Nuevo usuario** limpia la selección y habilita Guardar nuevo usuario. Seleccionar una fila permite **Guardar cambios**; dejar la contraseña vacía la conserva. En **Auditoría**, **Revisar restauración...** compara los datos actuales con los que quedarán y requiere confirmación. Las credenciales se indican como ocultas. Las validaciones habituales se muestran junto al formulario.
 
+**Ver detalle...** en Compras y Contabilidad muestra precios unitarios, cantidades pedidas/recibidas/pendientes y datos de aprobación o rechazo. En Recepción se informa el proveedor y el saldo del perfume; la cantidad ingresada no puede superar ese saldo. En N03, **Usar cantidad sugerida** realiza otra comparación para esa cantidad, sin confirmar una decisión; después de crear el borrador, **Abrir orden #...** lo selecciona en Compras sin duplicarlo.
+
+Cambiar de sección o cerrar la aplicación solicita confirmación si se perdería un carrito, datos de compra/recepción, un fundamento de evaluación o una edición de usuario sin guardar. Cancelar mantiene la vista y sus datos; sin trabajo pendiente se continúa directamente.
+
 ## Usuarios de demostración
 
 Credenciales públicas y deliberadamente conocidas, **solo para pruebas y entregas académicas**. No habilitar estos datos en una base de producción ni reutilizar estas contraseñas para cuentas reales. El campo Usuario del login recibe el correo completo.

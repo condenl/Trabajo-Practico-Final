@@ -7,8 +7,9 @@ using BLL;
 
 namespace UI.UserControls
 {
-    public class UC_Ventas : UserControl
+    public class UC_Ventas : UserControl, IVistaConCambiosPendientes
     {
+        public bool TieneCambiosPendientes { get { return grilla.Rows.Count > 0; } }
         public bool ModoPrueba { get; set; }
         public string UltimoMensaje { get; private set; }
         public string UltimoError { get; private set; }
