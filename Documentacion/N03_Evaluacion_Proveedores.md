@@ -52,10 +52,13 @@ Flujo normal:
 2. El sistema muestra los criterios predeterminados; el actor puede ajustarlos si lo necesita.
 3. El actor solicita comparar proveedores.
 4. El sistema presenta el ranking, costos, margen estimado, antecedentes y necesidades de reposición, indicando las ofertas excluidas y sus causas.
+   El resumen explica la ventaja del recomendado, el costo frente a la oferta elegible más barata y el margen bruto, utilizando los mismos datos de la comparación guardada.
 5. El actor consulta el detalle de las alternativas.
 6. El sistema conserva una comparación fechada, con su responsable y los datos utilizados, disponible en el historial.
 
 Excepciones: producto inactivo, cantidad inválida o pesos que no suman 100 impiden comparar. Menos de dos ofertas comparables o ausencia de margen positivo producen una comparación sin recomendación y explican la causa.
+
+Cambiar cantidad o ponderaciones invalida los resultados para confirmar, conservando el fundamento en preparación hasta recalcular. Cambiar de perfume o abrir una comparación histórica solicita confirmar el descarte si hay una elección sin guardar; cancelar conserva producto, texto y elección. El fundamento de una decisión ya guardada no se copia a una comparación nueva. Una selección manual distinta se presenta junto a la recomendación original, sin alterar el ranking.
 
 **Postcondición:** comparación guardada; no se emite una compra ni se mueve stock.
 
@@ -102,6 +105,7 @@ La tabla `EvaluacionProveedor` guarda producto, responsable, fecha, instantánea
 
 - **DEMO Evaluacion - valor vs precio:** tres cotizaciones. Con los pesos 50/30/20, el proveedor con trayectoria supera a la alternativa más barata. Con Precio 100, Prestigio 0 y Antigüedad 0, gana el económico. Para 10 unidades, los costos de las alternativas principales son $120000 y $100000.
 - **DEMO Evaluacion - sin margen:** las tres ofertas superan el precio de venta de referencia. Se explica por qué no se recomienda comprar.
+- **DEMO Reposicion con historial:** 90 unidades vendidas en tres ventas con descuento del 10 %, 10 en stock y 8 pendientes de una recepción parcial. El objetivo de 30 días es 30 unidades y la sugerencia inicial, 12. El promedio neto vendido es $16200; el proveedor recomendado cotiza $12000 (25,9 % de margen bruto). La oferta económica entrega en 14 días, frente a una cobertura de stock de 10. Las dos compras, lotes, ventas y movimientos permiten consultar los antecedentes y continuar recibiendo o vendiendo por los circuitos normales.
 - **DEMO Citrico sin stock:** una sola cotización comparable; requiere conseguir otra antes de seleccionar.
 
 Las nuevas cotizaciones se crean con vigencia de un año y no se renuevan al reintentar el seed. Las evaluaciones no se precargan: se generan desde la vista para demostrar el proceso.
