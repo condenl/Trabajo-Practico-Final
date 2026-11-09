@@ -1,0 +1,74 @@
+[
+  {
+    "code": "CU018",
+    "field": "Precondiciones",
+    "old": "El actor posee permiso de Compras/Evaluación y el producto está activo. Las propuestas disponibles pueden consultarse para determinar si permiten recomendar un proveedor.",
+    "new": "Compras está autorizado para evaluar proveedores y el producto está activo."
+  },
+  {
+    "code": "CU018",
+    "field": "Poscondiciones",
+    "old": "Se conserva una comparación fechada. Si Compras confirma una oferta elegible, queda registrada la decisión fundamentada; iniciar un borrador vinculado es opcional.",
+    "new": "Se conserva la comparación y, si se confirma una oferta, la decisión fundamentada. Iniciar una compra mediante un borrador vinculado es opcional."
+  },
+  {
+    "code": "CU018",
+    "field": "Flujo Normal",
+    "old": "1. El Dueño / Departamento de Compras indica el producto, la cantidad y los criterios que desea considerar y solicita comparar proveedores.",
+    "new": "1. Compras indica producto, cantidad y criterios y solicita comparar proveedores."
+  },
+  {
+    "code": "CU018",
+    "field": "Flujo Normal",
+    "old": "2. El sistema presenta el ranking, margen, plazos y antecedentes, junto con stock utilizable, ventas, compras pendientes y reposición sugerida; identifica las ofertas excluidas y sus causas.",
+    "new": "2. El sistema presenta el ranking justificado, costos, margen y reposición sugerida según stock, ventas y compras pendientes; explica exclusiones y advertencias."
+  },
+  {
+    "code": "CU018",
+    "field": "Flujo Normal",
+    "old": "3. Compras revisa los resultados y confirma la selección del proveedor prioritario, indicando el fundamento de la decisión.",
+    "new": "3. Compras revisa las alternativas, elige una oferta y fundamenta su decisión."
+  },
+  {
+    "code": "CU018",
+    "field": "Flujo Normal",
+    "old": "4. El sistema valida la vigencia de la evaluación y registra la decisión fundamentada.",
+    "new": "4. El sistema comprueba la vigencia de la comparación y registra la elección, distinguiéndola de la recomendación."
+  },
+  {
+    "code": "CU018",
+    "field": "Flujo Normal",
+    "old": "5. Compras solicita, si decide realizar la compra, una orden en borrador basada en la decisión confirmada.",
+    "new": "5. Compras solicita iniciar la compra, si corresponde."
+  },
+  {
+    "code": "CU018",
+    "field": "Flujo Normal",
+    "old": "6. El sistema informa el número del borrador vinculado y permite abrirlo para continuar por el circuito de compras y revisión contable de N01.",
+    "new": "6. El sistema informa el borrador vinculado y permite abrirlo para continuar la revisión contable de N01."
+  },
+  {
+    "code": "CU018",
+    "field": "Excepciones",
+    "old": "E1: Datos inválidos, modificados o de otra fecha. El sistema solicita corregir los datos o comparar nuevamente antes de confirmar una decisión o crear una compra; la evidencia anterior se conserva.",
+    "new": "E1: Datos inválidos o evaluación desactualizada. El sistema solicita corregir o comparar nuevamente; conserva la evidencia y el fundamento en preparación al cambiar cantidad o criterios."
+  },
+  {
+    "code": "CU018",
+    "field": "Excepciones",
+    "old": "E2: Falta de fundamento o motivo. El sistema requiere especificar el motivo de la selección; Compras completa la información requerida.",
+    "new": "E2: Elección inválida o sin fundamento. El sistema solicita revisar la oferta y justificar la decisión."
+  },
+  {
+    "code": "CU018",
+    "field": "Excepciones",
+    "old": "E3: Sin ofertas comparables o elegibles. El sistema conserva la comparación sin recomendación y explica la causa; Compras puede solicitar nuevas cotizaciones. Si cambia la cantidad, incluso para adoptar la reposición sugerida, debe comparar nuevamente antes de confirmar.",
+    "new": "E3: Sin ofertas comparables o elegibles. El sistema conserva la comparación sin recomendación y explica la causa."
+  },
+  {
+    "code": "CU018",
+    "field": "Excepciones",
+    "old": "E4: Sin permiso. El sistema informa que el actor no está autorizado para realizar la evaluación.",
+    "new": "E4: Decisión sin guardar. Al cambiar de producto o abrir otra evaluación, el sistema pide confirmar su descarte; cancelar conserva el trabajo.\nE5: Sin autorización. El sistema informa que el actor no puede realizar la evaluación."
+  }
+]

@@ -1,6 +1,14 @@
 # Diagramas de Enterprise Architect
 
-Estado al **08/11/2026**. Proyecto editable: `../../diagramas.EAP`. Capturas nativas incorporadas al [documento de Google Docs](https://docs.google.com/document/d/1kzEZpgX8bMnYrq-REzqYnlg_LAO2toCLVCEgpALjPnM/edit).
+Estado al **09/11/2026**. Proyecto editable: `../../diagramas.EAP`. Capturas nativas incorporadas al [documento de Google Docs](https://docs.google.com/document/d/1kzEZpgX8bMnYrq-REzqYnlg_LAO2toCLVCEgpALjPnM/edit).
+
+## Especificación breve de CU018
+
+CU018 conserva una sola tabla en Google Docs, con seis pasos y cinco excepciones, centrados en el intercambio entre Compras y el sistema. Explica la recomendación, la conservación del fundamento al comparar nuevamente y la posibilidad de cancelar un descarte. Se abreviaron las precondiciones y los pasos: la tabla pasó de 339 a 282 palabras, sin métodos, clases ni detalles de persistencia. No se agregaron secciones.
+
+Las cuatro especificaciones CU018.1–CU018.4 del EAP coinciden con `Documentacion/casos de uso/Caso_de_Uso_N03.md`; tres notas se actualizaron y la de iniciar la compra ya era válida. `build_ea_business_review.py` reutiliza esa fuente al regenerar las vistas. `sync_ea_cu018_specs.ps1` sincroniza únicamente las notas de los casos activos y admite `-VerifyOnly`.
+
+La revisión mantuvo nodos, relaciones y distribución del diagrama N03-01; sus exportaciones anterior y posterior son idénticas en píxeles. Los restantes diagramas siguen representando los mismos procesos y contratos. La exportación final de Google Docs conserva las 13 tablas, las 48 imágenes y los 27 diagramas EA únicos, sin duplicados ni cambios de texto ajenos a las 12 sustituciones autorizadas de CU018. Se revisaron visualmente las páginas 39 y 40 del PDF de 60 páginas. Evidencia: `verification-cu018-ea.json`, `verification-cu018-document.json` y `cu018-usecase-replacements.json`.
 
 ## Sincronización de Ventas y revisión integral
 

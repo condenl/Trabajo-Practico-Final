@@ -34,7 +34,7 @@
         "h": 125,
         "kind": "UseCase",
         "fontSize": 12,
-        "notes": "N03-A / CU018.1. Producto, cantidad y pesos; comparación fechada con ranking, exclusiones, margen, antecedentes y reposición sugerida. Se conserva incluso sin ofertas elegibles."
+        "notes": "| Campo | Descripción |\n|---|---|\n| **Objetivo** | Comparar ofertas mediante información comercial, inventario, ventas y compras pendientes. |\n| **Precondiciones** | Compras posee permiso de evaluación y el producto está activo. |\n| **Poscondiciones** | Se conserva una comparación fechada con sus fuentes y resultados, sin movimientos de stock. |\n| **Eventos Disparadores** | Compras necesita decidir de quién abastecerse. |\n| **Flujo Normal** | 1. Compras indica producto, cantidad y criterios y solicita comparar.\n2. El sistema presenta la recomendación justificada, alternativas, costos, margen y reposición sugerida.\n3. Compras revisa las ofertas y puede ajustar cantidad o criterios.\n4. El sistema renueva la comparación solicitada y conserva el fundamento en preparación para su revisión. |\n| **Excepciones** | E1: Datos inválidos: el sistema solicita corregirlos.\nE2: Sin ofertas comparables o elegibles: se conserva la comparación sin recomendación y se explica la causa.\nE3: Cambio de producto con una decisión sin guardar: el sistema consulta si se desea descartarla; cancelar conserva el trabajo. |"
       },
       {
         "key": "select",
@@ -45,7 +45,7 @@
         "h": 125,
         "kind": "UseCase",
         "fontSize": 12,
-        "notes": "N03-B / CU018.2. Comparación con oferta elegible; elegir proveedor y conservar motivo de 10 a 500 caracteres, fecha y responsable. La decisión confirmada no se sobrescribe."
+        "notes": "| Campo | Descripción |\n|---|---|\n| **Objetivo** | Conservar la elección de una oferta elegible y su justificación. |\n| **Precondiciones** | Existe una comparación vigente con una oferta elegible y el actor tiene permiso de Compras. |\n| **Poscondiciones** | Quedan registrados proveedor, fundamento, responsable y fecha; no se crea una compra. |\n| **Eventos Disparadores** | Compras decide qué oferta conviene. |\n| **Flujo Normal** | 1. Compras selecciona una oferta.\n2. El sistema muestra sus costos, margen y advertencias, junto con la recomendación justificada.\n3. Compras fundamenta su elección y solicita confirmarla.\n4. El sistema registra la decisión, la distingue de la recomendación y permite iniciar opcionalmente una compra. |\n| **Excepciones** | E1: Motivo insuficiente u oferta excluida: el sistema solicita corregir la selección.\nE2: Datos modificados o de otra fecha: se requiere comparar nuevamente.\nE3: Decisión ya confirmada: se conserva y se inicia otra comparación si se desea reconsiderarla. |"
       },
       {
         "key": "order",
@@ -56,7 +56,7 @@
         "h": 125,
         "kind": "UseCase",
         "fontSize": 12,
-        "notes": "N03-C / CU018.3. Proveedor previamente confirmado. Crear un único borrador vinculado a la evaluación; reintentar devuelve la misma orden. Continúa por N01, sin aprobación ni ingreso de stock automático."
+        "notes": "| Campo | Descripción |\n|---|---|\n| **Objetivo** | Continuar una decisión de abastecimiento por el circuito habitual de compras. |\n| **Precondiciones** | Compras confirmó una oferta elegible y decide realizar la compra. |\n| **Poscondiciones** | Existe un único borrador vinculado a la evaluación, sin aprobación ni recepción. |\n| **Eventos Disparadores** | Compras solicita iniciar la compra de la oferta elegida. |\n| **Flujo Normal** | 1. Compras solicita crear el borrador.\n2. El sistema informa su número y conserva proveedor, producto, cantidad y precio evaluados.\n3. Compras solicita abrir la orden.\n4. El sistema presenta y selecciona ese borrador para continuar la revisión contable de N01. |\n| **Excepciones** | E1: Datos modificados o de otra fecha: se requiere una nueva comparación sin crear una orden parcial.\nE2: Borrador ya vinculado: se presenta la orden existente; no se duplica por reintentos. |"
       },
       {
         "key": "history",
@@ -67,7 +67,7 @@
         "h": 105,
         "kind": "UseCase",
         "fontSize": 12,
-        "notes": "Consultar las comparaciones del producto y recuperar sus resultados y decisiones. No obliga a generar una nueva comparación."
+        "notes": "| Campo | Descripción |\n|---|---|\n| **Objetivo** | Consultar la evidencia y las decisiones anteriores de abastecimiento. |\n| **Precondiciones** | El actor tiene permiso de Compras y seleccionó un producto. |\n| **Poscondiciones** | Se muestran los resultados guardados sin alterar la evidencia. |\n| **Eventos Disparadores** | Compras necesita explicar o revisar una evaluación anterior. |\n| **Flujo Normal** | 1. Compras solicita consultar el historial.\n2. El sistema presenta las comparaciones fechadas del producto.\n3. Compras elige una comparación.\n4. El sistema muestra sus criterios, fuentes, resultados, decisión y orden vinculada, si existen. |\n| **Excepciones** | E1: Sin comparaciones: el sistema informa que todavía no hay historial para el producto.\nE2: Se necesita decidir con datos actuales: Compras solicita una nueva comparación; la anterior permanece disponible.\nE3: Decisión actual sin guardar: el sistema solicita confirmar su descarte antes de abrir otra evaluación; cancelar conserva el trabajo. |"
       },
       {
         "key": "sources",
