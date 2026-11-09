@@ -1,0 +1,32 @@
+﻿{
+    "date":  "2026-11-09",
+    "graphUnchanged":  true,
+    "specifications":  [
+                           {
+                               "code":  "CU018.1",
+                               "guid":  "{850C9E8E-418B-426f-9A15-CD8FC8A18812}",
+                               "matchesCanonical":  true,
+                               "updated":  true
+                           },
+                           {
+                               "code":  "CU018.2",
+                               "guid":  "{291B2052-DF82-4f17-BF79-A6E34FA19FBC}",
+                               "matchesCanonical":  true,
+                               "updated":  true
+                           },
+                           {
+                               "code":  "CU018.3",
+                               "guid":  "{7F14C3BB-228C-4f70-B66C-464C7FC26E06}",
+                               "matchesCanonical":  true,
+                               "updated":  false
+                           },
+                           {
+                               "code":  "CU018.4",
+                               "guid":  "{B175942E-0E38-456f-BAD1-114EB08BD859}",
+                               "matchesCanonical":  true,
+                               "updated":  true
+                           }
+                       ],
+    "diagram":  "N03-01",
+    "diagramGuid":  "{F43455F1-02BB-4416-83F2-D56D6018EA0F}"
+}

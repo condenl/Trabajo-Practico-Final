@@ -1,5 +1,6 @@
 """Synchronize the business views of N02/N03 without rebuilding unrelated EA views."""
 import json
+import re
 from pathlib import Path
 
 OUT = Path(__file__).resolve().parents[1] / 'Documentacion/EnterpriseArchitect'
@@ -17,7 +18,9 @@ def replace_views(path, replacements, source=None):
         item, end = decoder.raw_decode(source, cursor)
         if item['code'] in replacements:
             indent = ' ' * (cursor - source.rfind('\n', 0, cursor) - 1)
-            replacement = json.dumps(replacements[item['code']], ensure_ascii=False, indent=4).replace('\n', '\n' + indent)
+            first_property = re.search(r'\n([ \t]+)"', source[cursor:end])
+            step = len(first_property[1]) - len(indent) if first_property else 4
+            replacement = json.dumps(replacements[item['code']], ensure_ascii=False, indent=max(1, step)).replace('\n', '\n' + indent)
             spans.append((cursor, end, replacement))
         cursor = end
     assert len(spans) == len(replacements)
@@ -106,6 +109,13 @@ def build():
             'value':'Al menos dos cotizaciones vigentes de proveedores distintos. Puntaje ponderado y margen bruto estimado positivo. Explicar exclusiones y advertencias; el responsable puede elegir otra oferta elegible.',
             'current':'Antes de confirmar o crear un borrador, comprobar que no cambió la fecha ni la información considerada; de cambiar, solicitar una nueva comparación.'
         }[key])
+    source = (OUT.parent / 'casos de uso' / 'Caso_de_Uso_N03.md').read_text('utf-8')
+    specifications = {code: body.replace('<br>', '\n').strip() for code, body in
+                      re.findall(r'^## (CU018\.\d+)[^\n]*\n(.*?)(?=\n## |\Z)', source, re.M | re.S)}
+    for case in d['nodes']:
+        code = case['name'].split('\n')[0]
+        if code in specifications:
+            case['notes'] = specifications[code]
     for target in ['compare','select','order','history']:
         edge(d,'owner',target,kind='Association')
     for a,b in [('compare','sources'),('compare','value'),('select','current'),('order','current')]:
